@@ -23,7 +23,6 @@ build/
 .vscode/*
 !.vscode/extensions.json
 .idea/
-.DS_Store
 *.suo
 *.ntvs*
 *.njsproj
@@ -34,7 +33,6 @@ build/
 __pycache__/
 *.py[cod]
 *$py.class
-*.so
 .Python
 env/
 venv/

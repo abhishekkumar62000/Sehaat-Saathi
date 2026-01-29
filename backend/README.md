@@ -26,20 +26,22 @@ backend/
 
 ## Common Backend Frameworks
 
+**Note**: Some framework CLIs require an empty directory. You may need to remove this README first.
+
 ### Node.js
 - **Express**: `npm init -y && npm install express`
-- **NestJS**: `npm i -g @nestjs/cli && nest new .`
+- **NestJS**: `npm i -g @nestjs/cli && nest new my-project && mv my-project/* . && rm -rf my-project`
 - **Fastify**: `npm install fastify`
 
 ### Python
 - **Flask**: `pip install flask`
-- **Django**: `django-admin startproject myproject .`
+- **Django**: `django-admin startproject sehaat_saathi .` (change project name as needed)
 - **FastAPI**: `pip install fastapi uvicorn`
 
 ### Others
-- **Go**: `go mod init`
-- **Java Spring Boot**: Use Spring Initializr
-- **Ruby on Rails**: `rails new .`
+- **Go**: `go mod init github.com/yourusername/sehaat-saathi`
+- **Java Spring Boot**: Use Spring Initializr (https://start.spring.io/)
+- **Ruby on Rails**: `rails new my-project && mv my-project/* . && rm -rf my-project`
 
 ## Getting Started
 

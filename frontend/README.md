@@ -25,10 +25,16 @@ frontend/
 
 ## Common Frontend Frameworks
 
-- **React**: `npx create-react-app .`
+**Note**: Most framework CLIs require an empty directory. You may need to remove this README first or initialize in a temporary location and move files.
+
+- **React**: `npx create-react-app my-app && mv my-app/* . && rm -rf my-app`
 - **Vue**: `npm init vue@latest`
-- **Angular**: `ng new frontend`
-- **Next.js**: `npx create-next-app@latest`
+- **Angular**: `ng new my-app && mv my-app/* . && rm -rf my-app`
+- **Next.js**: `npx create-next-app@latest my-app && mv my-app/* . && rm -rf my-app`
+
+Or simply delete this README and initialize directly:
+- **React**: `rm README.md && npx create-react-app .`
+- **Vue**: `rm README.md && npm init vue@latest`
 
 ## Getting Started
 
