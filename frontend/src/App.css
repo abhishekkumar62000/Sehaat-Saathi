@@ -1,0 +1,65 @@
+/* google fonts */
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Manrope", sans-serif;
+}
+
+/* this css for swiper slide */
+
+.swiper {
+  width: 100%;
+  padding-top: 10px;
+}
+
+.swiper-slide {
+  background-position: center;
+  background-size: cover;
+}
+
+@media only screen and (max-width: 1023px) {
+  .swiper-slide {
+    width: 320px;
+    height: 320px;
+  }
+}
+
+.swiper-pagination-bullet {
+  width: 10px !important;
+  height: 10px !important;
+  border: 1px solid #181a1e !important;
+  opacity: 100% !important;
+  background: #fff !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: #8b00fc !important;
+  border: none !important;
+}
+@media only screen and (max-width: 768px) {
+  .swiper-pagination-bullet {
+    width: 8px !important;
+    height: 8px !important;
+  }
+}
+
+/* ====infinite scroller==== */
+@keyframes firstLineInfinite {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.firstLine-logos-slide {
+  display: flex;
+  white-space: nowrap;
+  animation: 8s firstLineInfinite infinite linear;
+}

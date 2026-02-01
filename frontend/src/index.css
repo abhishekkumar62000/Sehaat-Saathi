@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .container {
+    @apply max-w-full w-[1440px] px-10 mx-auto;
+  }
+
+  .customBtn {
+    @apply border border-green-700 text-green-700 font-[500] px-[26px] py-[11px] rounded-md hover:bg-violet-700 hover:text-white transition duration-300;
+  }
+
+  .heading {
+    @apply text-[35px] font-serif font-bold mb-2 underline decoration-[#0077ff] text-[#0d0a50];
+  }
+
+  .text_para {
+    @apply text-[18px] leading-[30px] font-[400] text-textColor mt-[18px];
+  }
+
+  .form_label {
+    @apply text-[16px] font-semibold leading-7 text-textColor mb-2;
+  }
+
+  .form_input {
+    @apply w-full px-4 py-3 border border-solid border-[#0066ff61] focus:outline-none focus:border-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer rounded-md;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .container {
+    @apply w-full;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .heading {
+    @apply text-[28px] leading-[36px];
+  }
+
+  .text_para {
+    @apply text-[16px] leading-7 mt-3;
+  }
+
+  .customBtn {
+    @apply font-[400] px-[16px] py-[10px];
+  }
+}

@@ -1,0 +1,51 @@
+import CountdownBg from "../../assets/images/home/CountdownBg.png";
+
+const Countdown = () => {
+  return (
+    <section className="container mb-10">
+      <div
+        className="bg-cover bg-center py-6 rounded-md"
+        style={{
+          backgroundImage: `url(${CountdownBg})`,
+        }}
+      >
+        <div className="container mx-auto text-center text-gray-900">
+          <h1 className="text-xl lg:text-2xl font-bold mb-5 font-mono text-green-600">
+            Why Choose Sehaat Saathi?
+
+          </h1>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2">
+            {/* Year of Experiences */}
+            <div className="">
+              <h3 className="text-5xl font-bold">1+</h3>
+              <p className="mt-2 text-lg">Year of Innovation</p>
+            </div>
+
+            {/* Patients Satisfaction */}
+            <div className="">
+              <h3 className="text-5xl font-bold">99%</h3>
+              <p className="mt-2 text-lg">Patients Satisfaction</p>
+            </div>
+            {/* Patients Served */}
+            <div className="">
+              <h3 className="text-5xl font-bold">1,000+</h3>
+              <p className="mt-2 text-lg">Happy Patients</p>
+            </div>
+            {/* Strategic Partners */}
+            <div className="">
+              <h3 className="text-5xl font-bold">5+</h3>
+              <p className="mt-2 text-lg">Strategic Partners</p>
+            </div>
+            {/* Doctors & Staffs */}
+            <div className="">
+              <h3 className="text-5xl font-bold">50+</h3>
+              <p className="mt-2 text-lg">Specialized Doctors</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Countdown;
