@@ -1,10 +1,7 @@
-## [Sehaat Saathi](https://mna-diagnostics-center.onrender.com)
-
-#### (Digital Diagnostics Lab)
 
 ---
 
-**Live Website**: [Sehaat Saathi](https://mna-diagnostics-center.onrender.com)
+**Live Website**: [Sehaat Saathi](https://sehaat-saathi.vercel.app/)
 
 ---
 
