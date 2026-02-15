@@ -49,6 +49,15 @@ temp/
 *.avi
 *.wmv
 *.mkv
+*.png
+*.jpg
+*.jpeg
+"Website Page/"
+*.mjs
+*.txt
+!backend/data/diseaseRules.json
+!README.md
+!LICENSE
 
 # Subfolder specific (if patterns above don't catch them)
 frontend/node_modules/
@@ -57,5 +66,3 @@ backend/.env
 frontend/.env
 frontend/dist/
 backend/data/temp_eval.js
-*.txt
-!backend/data/diseaseRules.json
