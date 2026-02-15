@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { BiMenu } from "react-icons/bi";
+import { BsActivity, BsRobot } from "react-icons/bs";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/brand-logo/SehaatSaathi Logo.png";
 import userAvatar from "../../assets/images/icons/patient-avatar.png";
@@ -51,17 +52,42 @@ const Header = () => {
   };
   return (
     <header className="header bg-white/90 backdrop-blur-3xl sticky top-0 z-50 border-b border-slate-100/50 shadow-sm transition-all duration-500">
-      {/* Flag Gradient Accent Top */}
-      <div className="absolute top-0 left-0 w-full h-[4px] bg-gradient-to-r from-[#FF9933] via-white to-[#138808] opacity-90"></div>
+      {/* Top Bar: Satellite Chatbot Link - HIGH VISIBILITY */}
+      <div className="bg-slate-900 overflow-hidden relative group/top">
+        <div className="absolute inset-0 bg-gradient-to-r from-orange-600/20 via-transparent to-green-600/20 animate-shimmer opacity-30"></div>
+        <div className="container mx-auto px-4 py-2 relative z-10 flex justify-center sm:justify-between items-center text-[10px] sm:text-[11px] font-black uppercase tracking-[0.2em]">
+          <div className="flex items-center gap-4 text-slate-400">
+            <span className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-ping"></span>
+              Neural Network Active
+            </span>
+            <span className="hidden md:block opacity-30">|</span>
+            <span className="hidden md:block">Bharat Powered AI v6.0</span>
+          </div>
+          <a
+            href="https://sehaat-saathi-your-ai-doctor-chatbot.streamlit.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white px-4 py-1.5 rounded-full hover:shadow-[0_0_20px_rgba(249,115,22,0.4)] transition-all hover:scale-105 active:scale-95 group/btn"
+          >
+            <BsRobot className="animate-bounce" />
+            <span className="tracking-[0.1em]">Launch Satellite Chatbot</span>
+            <span className="text-white/70 group-hover/btn:translate-x-1 transition-transform">→</span>
+          </a>
+        </div>
+      </div>
+
+      {/* Flag Gradient Accent Top (now below top bar) */}
+      <div className="w-full h-[4px] bg-gradient-to-r from-[#FF9933] via-white to-[#138808] opacity-90"></div>
       <div className="container mx-auto flex justify-between items-center py-3">
         {/* ========Logo========= */}
         <div className="flex items-center">
           <NavLink to="/" className="group flex items-center">
-            <div className="relative overflow-hidden rounded-xl bg-white/10 backdrop-blur-sm p-1.5 transition-all duration-500 group-hover:bg-green-50/30 group-hover:shadow-[0_0_25px_rgba(22,163,74,0.15)]">
+            <div className="relative overflow-hidden rounded-2xl bg-white/5 backdrop-blur-md p-1 transition-all duration-500 group-hover:bg-green-50/20 group-hover:shadow-[0_0_30px_rgba(22,163,74,0.2)]">
               <img
                 src={logo}
                 alt="Sehaat Saathi Logo"
-                className="w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 object-contain transform transition-transform duration-500 group-hover:scale-110 active:scale-95"
+                className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 object-contain transform transition-transform duration-500 group-hover:scale-110 active:scale-95"
               />
               <div className="absolute inset-0 border border-transparent group-hover:border-green-100/50 rounded-xl transition-all duration-500"></div>
             </div>
@@ -102,8 +128,7 @@ const Header = () => {
           {token && user ? (
             <div className="flex items-center space-x-3">
               <Link
-                to={`${role == "doctor" ? "/doctors/profile/me" : "/users/profile/me"
-                  }`}
+                to={`${role === "doctor" ? "/doctors/profile/me" : "/users/profile/me"}`}
                 className="flex items-center hover:scale-105 transition-all"
               >
                 <span className="text-slate-800 font-black text-sm mr-2 hidden lg:block">{user.name}</span>

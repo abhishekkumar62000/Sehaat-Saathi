@@ -627,6 +627,27 @@ const Smarthub = () => {
                             }}
                         />
                     </Link>
+
+                    {/* === SATELLITE AI HUB (STREAMLIT) === */}
+                    <a href="https://sehaat-saathi-your-ai-doctor-chatbot.streamlit.app/" target="_blank" rel="noopener noreferrer">
+                        <FeatureRoadmapCard
+                            icon={<BsStars className="animate-spin-slow text-blue-500" />}
+                            title={
+                                <span>
+                                    <span style={{ color: "#FF9933" }}>Satellite</span>{" "}
+                                    <span style={{ color: "#138808" }}>Neural</span> Hub
+                                </span>
+                            }
+                            desc="Access our powerful external Streamlit AI Engine for deep diagnostics and global health news insights. High-speed neural extension."
+                            color="tiranga"
+                            status="External AI"
+                            outstanding={true}
+                            example={{
+                                patient: "Check latest global health news about new virus variants.",
+                                ai: "Accessing Global Hub... Pulling real-time news data from verified medical sources. Analysis complete."
+                            }}
+                        />
+                    </a>
                 </div>
             </div>
 

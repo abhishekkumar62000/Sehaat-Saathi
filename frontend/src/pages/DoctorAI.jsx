@@ -55,6 +55,7 @@ const DoctorAI = () => {
     const [isVitalsOpen, setIsVitalsOpen] = useState(false);
     const [capturedImage, setCapturedImage] = useState(null);
     const [isHandsFree, setIsHandsFree] = useState(false);
+    const [showMobileSidebar, setShowMobileSidebar] = useState(false);
     const fileInputRef = useRef(null);
 
     const messagesEndRef = useRef(null);
@@ -509,7 +510,7 @@ const DoctorAI = () => {
     };
 
     return (
-        <div className={`flex h-screen ${emergencyMode ? 'bg-[#450a0a]' : 'bg-[#020617]'} text-slate-200 overflow-hidden font-sans relative transition-colors duration-1000`}>
+        <div className={`flex h-[100dvh] md:h-screen ${emergencyMode ? 'bg-[#450a0a]' : 'bg-[#020617]'} text-slate-200 overflow-hidden font-sans relative transition-colors duration-1000`}>
             {/* SOS Mode Overlay */}
             {emergencyMode && (
                 <div className="absolute inset-0 z-[100] bg-red-600/10 animate-sos-flash pointer-events-none"></div>
@@ -593,8 +594,11 @@ const DoctorAI = () => {
                 </div>
             )}
 
-            {/* Left Sidebar ... (Dashboard remains similar but with Layer-1 context) ... */}
-            <aside className="hidden lg:flex w-80 flex-col bg-slate-900/40 backdrop-blur-3xl border-r border-white/5 p-8 overflow-y-auto z-40 relative">
+            {/* Left Sidebar / Mobile Drawer */}
+            <aside className={`${showMobileSidebar ? 'flex' : 'hidden'} lg:flex fixed lg:relative inset-y-0 left-0 w-80 flex-col bg-slate-900/90 lg:bg-slate-900/40 backdrop-blur-3xl border-r border-white/5 p-8 overflow-y-auto z-[150] lg:z-40 transition-all duration-500`}>
+                <button onClick={() => setShowMobileSidebar(false)} className="lg:hidden absolute top-6 right-6 p-2 bg-white/5 rounded-full text-slate-400 hover:text-white border border-white/10">
+                    <BsPlusCircle className="rotate-45" />
+                </button>
                 <div className="space-y-10">
                     <div className="flex items-center gap-4 p-4 bg-white/5 rounded-[1.5rem] border border-white/5">
                         <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center border border-blue-500/20 text-blue-400 font-black">{userContext.name ? userContext.name[0] : 'U'}</div>
@@ -700,6 +704,30 @@ const DoctorAI = () => {
                                             <h6 className="text-[9px] font-black text-white uppercase">Meal Vision</h6>
                                         </button>
                                     </div>
+
+                                    {/* Satellite Link: claramente visible e interactivo */}
+                                    <a
+                                        href="https://sehaat-saathi-your-ai-doctor-chatbot.streamlit.app/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="block p-4 bg-gradient-to-r from-orange-500/20 to-green-500/20 hover:from-orange-500/30 hover:to-green-500/30 border border-orange-500/30 rounded-2xl transition-all relative group animate-satellite-pulse"
+                                    >
+                                        <div className="flex items-center gap-4">
+                                            <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center text-orange-400 group-hover:rotate-12 transition-transform">
+                                                <BsStars className="animate-spin-slow" />
+                                            </div>
+                                            <div className="flex-1">
+                                                <h6 className="text-[10px] font-black text-white uppercase tracking-tighter">Neural Global News</h6>
+                                                <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Satellite AI Expansion →</p>
+                                            </div>
+                                        </div>
+                                        <div className="absolute -top-1 -right-1">
+                                            <span className="flex h-3 w-3">
+                                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+                                                <span className="relative inline-flex rounded-full h-3 w-3 bg-orange-500"></span>
+                                            </span>
+                                        </div>
+                                    </a>
                                 </div>
                             </div>
 
@@ -733,36 +761,48 @@ const DoctorAI = () => {
                 </div>
             </aside>
 
+            {/* Backdrop for Mobile Sidebar */}
+            {showMobileSidebar && (
+                <div onClick={() => setShowMobileSidebar(false)} className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-[140] lg:hidden animate-fade-in" />
+            )}
+
             {/* Main Chat Area */}
-            <div className="flex-1 flex flex-col relative">
-                <header className={`bg-slate-900/40 backdrop-blur-2xl border-b border-white/5 p-4 md:px-8 flex justify-between items-center z-50 sticky top-0 ${emergencyMode ? 'border-red-500/30' : ''}`}>
-                    <div className="flex items-center gap-4">
-                        <Link to="/smarthub" className="p-3 bg-white/5 hover:bg-white/10 rounded-2xl transition-all border border-white/5"><BsArrowLeft className="text-xl" /></Link>
-                        <div className="flex items-center gap-4">
-                            <div className="relative">
-                                <div className={`w-12 h-12 ${emergencyMode ? 'bg-red-600' : 'bg-gradient-to-tr from-emerald-500 to-blue-500'} rounded-2xl flex items-center justify-center shadow-2xl`}>
-                                    {emergencyMode ? <BsExclamationTriangle className="text-white text-2xl animate-pulse" /> : <BsRobot className="text-white text-2xl" />}
+            <div className="flex-1 flex flex-col relative w-full overflow-hidden">
+                <header className={`bg-slate-900/40 backdrop-blur-2xl border-b border-white/5 p-3 md:p-4 md:px-8 flex flex-col sm:flex-row gap-3 sm:justify-between sm:items-center z-50 sticky top-0 ${emergencyMode ? 'border-red-500/30' : ''}`}>
+                    <div className="flex items-center justify-between w-full sm:w-auto">
+                        <div className="flex items-center gap-3 md:gap-4">
+                            <Link to="/smarthub" className="p-2 md:p-3 bg-white/5 hover:bg-white/10 rounded-xl md:rounded-2xl transition-all border border-white/5"><BsArrowLeft className="text-lg md:text-xl" /></Link>
+                            <div className="flex items-center gap-3 md:gap-4">
+                                <div className="relative">
+                                    <div className={`w-10 h-10 md:w-12 md:h-12 ${emergencyMode ? 'bg-red-600' : 'bg-gradient-to-tr from-emerald-500 to-blue-500'} rounded-xl md:rounded-2xl flex items-center justify-center shadow-2xl`}>
+                                        {emergencyMode ? <BsExclamationTriangle className="text-white text-xl md:text-2xl animate-pulse" /> : <BsRobot className="text-white text-xl md:text-2xl" />}
+                                    </div>
                                 </div>
-                            </div>
-                            <div>
-                                <h1 className="font-black text-xl tracking-tight uppercase leading-none flex items-center gap-2"><span style={{ color: "#FF9933" }}>Sehaat</span> <span className={emergencyMode ? 'text-red-400' : 'text-emerald-500'}>AI v6.0</span> <span className="bg-emerald-500/10 text-emerald-500 text-[8px] px-2 py-0.5 rounded-full border border-emerald-500/20 animate-pulse">PERCEPTION ACTIVE</span></h1>
-                                <div className="flex items-center gap-2 mt-1">
-                                    <span className={`w-2 h-2 ${emergencyMode ? 'bg-red-500' : 'bg-emerald-500'} rounded-full animate-ping`}></span>
-                                    <span className="text-[9px] font-black text-slate-500 tracking-widest uppercase">{emergencyMode ? 'Emergency Lockdown Engaged' : 'Bio-Metric & Vision Link Active'}</span>
+                                <div>
+                                    <h1 className="font-black text-sm md:text-xl tracking-tight uppercase leading-none flex items-center gap-2"><span style={{ color: "#FF9933" }}>Sehaat</span> <span className={emergencyMode ? 'text-red-400' : 'text-emerald-500'}>AI v6.0</span></h1>
+                                    <div className="flex items-center gap-2 mt-1">
+                                        <span className={`w-1.5 h-1.5 md:w-2 md:h-2 ${emergencyMode ? 'bg-red-500' : 'bg-emerald-500'} rounded-full animate-ping`}></span>
+                                        <span className="text-[8px] md:text-[9px] font-black text-slate-500 tracking-widest uppercase">{emergencyMode ? 'Emergency Lockdown' : 'Bio-Metric Link Active'}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
+                        {/* Mobile Sidebar Toggle */}
+                        <button onClick={() => setShowMobileSidebar(!showMobileSidebar)} className="lg:hidden p-3 bg-white/5 border border-white/10 rounded-xl text-blue-400">
+                            <BsActivity className={showMobileSidebar ? 'animate-spin' : ''} />
+                        </button>
                     </div>
 
                     {!emergencyMode && (
-                        <div className="flex items-center bg-white/5 p-1 rounded-xl border border-white/5 gap-2">
-                            <button onClick={() => setIsHandsFree(!isHandsFree)} className={`px-4 py-2 rounded-lg flex items-center gap-2 transition-all ${isHandsFree ? 'bg-red-500 text-white shadow-[0_0_15px_rgba(239,68,68,0.5)]' : 'text-slate-500 hover:text-slate-300'}`}>
-                                <div className={`w-2 h-2 rounded-full ${isHandsFree ? 'bg-white animate-pulse' : 'bg-slate-600'}`}></div>
-                                <span className="text-[10px] font-black uppercase">Bridge Mode</span>
+                        <div className="flex items-center bg-white/5 p-1 rounded-lg md:rounded-xl border border-white/5 gap-1 md:gap-2 self-end sm:self-auto">
+                            <button onClick={() => setIsHandsFree(!isHandsFree)} className={`px-2 md:px-4 py-1.5 md:py-2 rounded-md md:rounded-lg flex items-center gap-1.5 md:gap-2 transition-all ${isHandsFree ? 'bg-red-500 text-white shadow-[0_0_15px_rgba(239,68,68,0.5)]' : 'text-slate-500 hover:text-slate-300'}`}>
+                                <div className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ${isHandsFree ? 'bg-white animate-pulse' : 'bg-slate-600'}`}></div>
+                                <span className="text-[8px] md:text-[10px] font-black uppercase">Bridge</span>
                             </button>
-                            <div className="w-[1px] h-4 bg-white/10 mx-1"></div>
+                            <div className="w-[1px] h-3 md:h-4 bg-white/10 mx-0.5 md:mx-1"></div>
                             {['EN', 'HI', 'HN'].map(lang => (
-                                <button key={lang} onClick={() => setLanguage(lang)} className={`px-4 py-2 text-[10px] font-black rounded-lg transition-all ${language === lang ? 'bg-emerald-500 text-white shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}>
+                                <button key={lang} onClick={() => setLanguage(lang)} className={`px-2 md:px-4 py-1.5 md:py-2 text-[8px] md:text-[10px] font-black rounded-md md:rounded-lg transition-all ${language === lang ? 'bg-emerald-500 text-white shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}>
                                     {lang}
                                 </button>
                             ))}
@@ -770,17 +810,17 @@ const DoctorAI = () => {
                     )}
                 </header>
 
-                <main className="flex-1 overflow-y-auto p-4 md:px-12 py-10 space-y-12 scrollbar-hide">
-                    <div className="max-w-4xl mx-auto pb-40">
+                <main className="flex-1 overflow-y-auto p-3 md:px-12 py-6 md:py-10 space-y-6 md:space-y-12 scrollbar-hide">
+                    <div className="max-w-4xl mx-auto pb-60">
                         {messages.map((msg, index) => (
-                            <div key={index} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} group animate-slide-up mb-8`}>
-                                <div className={`flex gap-6 max-w-[95%] md:max-w-[85%] ${msg.sender === 'user' ? 'flex-row-reverse' : ''}`}>
-                                    <div className={`w-12 h-12 rounded-2xl flex-shrink-0 flex items-center justify-center border-4 ${msg.sender === 'user' ? 'bg-blue-600 border-blue-400/20 text-white' : msg.isEmergency ? 'bg-red-600 border-red-400/30 text-white' : 'bg-slate-800 border-white/5 text-emerald-400'}`}>
-                                        {msg.sender === 'user' ? <BsPersonFill className="text-xl" /> : msg.isEmergency ? <BsExclamationTriangle /> : <BsRobot className="text-xl" />}
+                            <div key={index} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} group animate-slide-up mb-6 md:mb-8`}>
+                                <div className={`flex gap-3 md:gap-6 max-w-[100%] md:max-w-[85%] ${msg.sender === 'user' ? 'flex-row-reverse' : ''}`}>
+                                    <div className={`w-8 h-8 md:w-12 md:h-12 rounded-lg md:rounded-2xl flex-shrink-0 flex items-center justify-center border-2 md:border-4 ${msg.sender === 'user' ? 'bg-blue-600 border-blue-400/20 text-white' : msg.isEmergency ? 'bg-red-600 border-red-400/30 text-white' : 'bg-slate-800 border-white/5 text-emerald-400'}`}>
+                                        {msg.sender === 'user' ? <BsPersonFill className="text-sm md:text-xl" /> : msg.isEmergency ? <BsExclamationTriangle /> : <BsRobot className="text-sm md:text-xl" />}
                                     </div>
-                                    <div className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}>
-                                        <div className={`p-6 md:p-8 rounded-[2.5rem] text-[15px] shadow-2xl relative overflow-hidden ${msg.sender === 'user' ? 'bg-blue-600 text-white rounded-tr-none' : msg.isEmergency ? 'bg-red-950/80 border-2 border-red-500 text-red-100 rounded-tl-none animate-shake' : 'bg-slate-800/80 backdrop-blur-3xl text-slate-200 border border-white/10 rounded-tl-none'}`}>
-                                            <div className="whitespace-pre-line relative z-10 prose-invert">{msg.text}</div>
+                                    <div className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'} flex-1`}>
+                                        <div className={`p-4 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] text-sm md:text-[15px] shadow-2xl relative overflow-hidden w-full ${msg.sender === 'user' ? 'bg-blue-600 text-white rounded-tr-none' : msg.isEmergency ? 'bg-red-950/80 border-2 border-red-500 text-red-100 rounded-tl-none animate-shake' : 'bg-slate-800/80 backdrop-blur-3xl text-slate-200 border border-white/10 rounded-tl-none'}`}>
+                                            <div className="whitespace-pre-line relative z-10 prose-invert overflow-hidden break-words">{msg.text}</div>
                                             {msg.isL1 && <div className="mt-4 px-3 py-1 bg-emerald-500/10 text-emerald-400 text-[8px] font-black rounded uppercase w-fit border border-emerald-500/20">Deterministic Layer-1 Analysis</div>}
                                             <RiskBadge status={msg.status} citation={msg.citation} />
 
@@ -850,56 +890,45 @@ const DoctorAI = () => {
                     </div>
                 </main>
 
-                <footer className={`absolute bottom-0 left-0 right-0 p-6 md:p-10 bg-slate-950/80 backdrop-blur-3xl border-t ${emergencyMode ? 'border-red-500/30' : 'border-white/10'} z-[60]`}>
+                <footer className={`absolute bottom-0 left-0 right-0 p-3 md:p-10 bg-slate-950/90 backdrop-blur-3xl border-t ${emergencyMode ? 'border-red-500/30' : 'border-white/10'} z-[60]`}>
                     <div className="max-w-4xl mx-auto">
                         {emergencyMode ? (
-                            <div className="flex flex-col items-center gap-6 max-w-xl w-full">
-                                <div className="w-32 h-32 bg-red-600 rounded-full flex items-center justify-center animate-sos-flash shadow-[0_0_100px_rgba(220,38,38,0.5)]">
-                                    <BsExclamationTriangle className="text-6xl text-white animate-shake" />
+                            <div className="flex flex-col items-center gap-4 md:gap-6 max-w-xl w-full">
+                                <div className="w-20 h-20 md:w-32 md:h-32 bg-red-600 rounded-full flex items-center justify-center animate-sos-flash shadow-[0_0_100px_rgba(220,38,38,0.5)]">
+                                    <BsExclamationTriangle className="text-3xl md:text-6xl text-white animate-shake" />
                                 </div>
-                                <div className="text-center space-y-4">
-                                    <h2 className="text-5xl font-black text-white tracking-tight uppercase">Emergency Sync Active</h2>
-                                    <p className="text-xl text-red-200 font-bold opacity-80 leading-relaxed">
-                                        Our AI has detected a high-risk medical situation. All systems are locked to prioritize your safety.
+                                <div className="text-center space-y-2 md:space-y-4">
+                                    <h2 className="text-2xl md:text-5xl font-black text-white tracking-tight uppercase">Emergency Sync</h2>
+                                    <p className="text-sm md:text-xl text-red-200 font-bold opacity-80 leading-relaxed">
+                                        High-risk detected. Systems locked.
                                     </p>
                                 </div>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-                                    <a href="tel:102" className="flex items-center justify-center gap-4 bg-white text-red-600 py-6 rounded-3xl font-black text-2xl hover:bg-red-50 transition-all shadow-2xl">
-                                        <BsVolumeUpFill /> CALL 102 NOW
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 w-full">
+                                    <a href="tel:102" className="flex items-center justify-center gap-3 bg-white text-red-600 py-4 md:py-6 rounded-2xl md:rounded-3xl font-black text-lg md:text-2xl hover:bg-red-50 transition-all shadow-2xl">
+                                        <BsVolumeUpFill /> CALL 102
                                     </a>
-                                    <button onClick={() => window.open(`https://www.google.com/maps/search/hospitals+near+me`, '_blank')} className="flex items-center justify-center gap-4 bg-red-800 text-white py-6 rounded-3xl font-black text-2xl hover:bg-red-900 transition-all border border-white/10 shadow-2xl">
+                                    <button onClick={() => window.open(`https://www.google.com/maps/search/hospitals+near+me`, '_blank')} className="flex items-center justify-center gap-3 bg-red-800 text-white py-4 md:py-6 rounded-2xl md:rounded-3xl font-black text-lg md:text-2xl hover:bg-red-900 transition-all border border-white/10 shadow-2xl">
                                         <BsGeoAltFill /> NEAREST HOSPITAL
                                     </button>
                                 </div>
-                                <button onClick={() => { setEmergencyMode(false); setRiskProfile({ urgency: 'Normal', confidence: 0, symptoms: [], detectedOrgans: [] }); }} className="text-red-300/50 hover:text-white text-xs font-black uppercase tracking-widest mt-8">
-                                    False Alarm? Reset System
-                                </button>
                             </div>
                         ) : (
-                            <form onSubmit={handleSendMessage} className="relative group flex items-center gap-4">
+                            <form onSubmit={handleSendMessage} className="relative group flex items-center gap-2 md:gap-4">
                                 <input type="file" ref={fileInputRef} onChange={handleFileUpload} className="hidden" accept="image/*" />
-                                <button type="button" onClick={() => fileInputRef.current.click()} className="p-4 bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white rounded-2xl transition-all border border-white/5">
-                                    <BsPlusCircle className="text-xl" />
+                                <button type="button" onClick={() => fileInputRef.current.click()} className="p-3 md:p-4 bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white rounded-xl md:rounded-2xl transition-all border border-white/5">
+                                    <BsPlusCircle className="text-lg md:text-xl" />
                                 </button>
                                 <div className="relative flex-1">
-                                    <input type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)} disabled={currentRule} placeholder={currentRule ? "Please answer the AI above..." : "Appko kya takleef hai? (Type symptoms/upload photo...)"} className="w-full bg-slate-900 border-2 border-white/5 text-white rounded-[2.5rem] py-6 px-10 focus:outline-none focus:border-emerald-500/50 focus:ring-8 focus:ring-emerald-500/5 transition-all text-base font-bold placeholder:text-slate-700 shadow-2xl" />
-                                    <div className="absolute right-8 top-1/2 -translate-y-1/2 flex items-center gap-6">
-                                        <button type="button" onClick={startListening} className={`p-2 rounded-full transition-all ${isListening ? 'bg-red-500 text-white animate-pulse' : 'text-slate-600 hover:text-emerald-500'}`} title="Voice Search">
-                                            <BsVolumeUpFill className="text-xl" />
+                                    <input autoFocus type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)} disabled={currentRule} placeholder={currentRule ? "Answer above..." : "Appko kya takleef hai?"} className="w-full bg-slate-900 border-2 border-white/5 text-white rounded-2xl md:rounded-[2.5rem] py-4 md:py-6 px-4 md:px-10 focus:outline-none focus:border-emerald-500/50 transition-all text-sm md:text-base font-bold placeholder:text-slate-700" />
+                                    <div className="absolute right-3 md:right-8 top-1/2 -translate-y-1/2 flex items-center gap-3 md:gap-6">
+                                        <button type="button" onClick={startListening} className={`p-1.5 md:p-2 rounded-full transition-all ${isListening ? 'bg-red-500 text-white animate-pulse' : 'text-slate-600 hover:text-emerald-500'}`} title="Voice Search">
+                                            <BsVolumeUpFill className="text-lg md:text-xl" />
                                         </button>
-                                        <BsSearch className="text-slate-600 transition-colors group-hover:text-emerald-500 text-xl" />
                                     </div>
                                 </div>
-                                <div className="flex flex-col gap-2">
-                                    <button type="submit" disabled={!inputValue.trim() || isTyping || isAnalyzing || currentRule} className="bg-emerald-600 hover:bg-emerald-500 disabled:opacity-20 text-white w-20 h-20 rounded-[2rem] flex items-center justify-center transition-all shadow-2xl active:scale-95">
-                                        <BsSendFill className="text-2xl" />
-                                    </button>
-                                    {!emergencyMode && messages.length > 1 && (
-                                        <button type="button" onClick={downloadHealthReport} className="bg-slate-800 text-white/50 hover:text-white px-3 py-1.5 rounded-xl text-[8px] font-black uppercase tracking-tighter transition-all border border-white/5 hover:border-emerald-500/30 flex items-center gap-1">
-                                            Report <BsJournalMedical className="text-[10px]" />
-                                        </button>
-                                    )}
-                                </div>
+                                <button type="submit" disabled={!inputValue.trim() || isTyping || isAnalyzing || currentRule} className="bg-emerald-600 hover:bg-emerald-500 disabled:opacity-20 text-white w-14 h-14 md:w-20 md:h-20 rounded-2xl md:rounded-[2rem] flex items-center justify-center transition-all shadow-2xl active:scale-95">
+                                    <BsSendFill className="text-xl md:text-2xl" />
+                                </button>
                             </form>
                         )}
                     </div>
