@@ -17,11 +17,13 @@ The **Sehaat Saathi** website is a comprehensive platform designed to enhance pa
 #### General Features
 
 - **Doctor Booking System**: Easily book appointments with specialists.
+- **Sehaat AI v6.0 Chatbot**: Advanced AI assistant with biometric telemetry and vision analysis.
+- **Satellite Neural Hub**: External high-speed AI engine and real-time Global Health News.
 - **Online Payment**: Pay securely via Stripe for all services.
 - **Patient Reviews**: View feedback from other patients on doctor profiles.
 - **Health Packages**: Explore and purchase health packages based on diagnostic needs.
 - **Educational Resources**: Access educational videos and health articles.
-- **Responsive Design**: Fully optimized for various screen sizes and devices.
+- **Responsive Design**: Fully optimized for mobile with a floating dashboard drawer.
 
 ### Frontend Features
 
