@@ -43,7 +43,7 @@ const AboutDC = () => {
         {/* Intro */}
         <section className="bg-gradient-to-br from-teal-50/50 to-white p-8 lg:p-12 rounded-[40px] border border-teal-100">
           <p className="text-gray-700 text-lg lg:text-xl leading-relaxed text-center font-medium">
-            Welcome to <span className="text-[#2eb8a6] font-black">Sehaat Saathi</span>, your premier AI-driven diagnostic hub.
+            Welcome to <span className="text-[#2eb8a6] font-black"><span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span></span>, your premier AI-driven diagnostic hub.
             We are redefining healthcare by merging traditional diagnostic excellence with
             cutting-edge Artificial Intelligence to provide faster, smarter, and more accessible medical solutions.
           </p>
@@ -134,7 +134,7 @@ const AboutDC = () => {
 
         {/* Closing */}
         <div className="text-center pt-8">
-          <p className="text-gray-400 font-black uppercase tracking-widest text-sm">Thank you for choosing Sehaat Saathi</p>
+          <p className="text-gray-400 font-black uppercase tracking-widest text-sm">Thank you for choosing <span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span></p>
         </div>
       </div>
     </div>

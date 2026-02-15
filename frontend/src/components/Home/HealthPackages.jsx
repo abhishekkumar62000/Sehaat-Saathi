@@ -5,12 +5,15 @@ const HealthPackages = () => {
   return (
     <section className="container mx-auto px-4 py-16 mb-10">
       {/* Enhanced Section Header */}
-      <div className="text-center mb-12">
-        <h2 className="text-3xl lg:text-4xl font-extrabold text-[#1a237e] mb-2 relative inline-block group">
-          Our Health Packages
-          <span className="absolute bottom-[-8px] left-0 w-full h-[3px] bg-blue-600 scale-x-75 group-hover:scale-x-100 transition-transform duration-300"></span>
+      <div className="text-center mb-16 relative">
+        <span className="inline-block px-4 py-1 mb-4 text-[10px] sm:text-xs font-black tracking-widest text-[#6a2fed] uppercase bg-violet-50 rounded-full animate-pulse">
+          Elite Wellness
+        </span>
+        <h2 className="text-[clamp(28px,6vw,56px)] font-black text-slate-900 mb-4 tracking-tighter uppercase leading-none">
+          Our Health <span className="text-[#6a2fed]">Packages</span>
         </h2>
-        <p className="text-gray-500 mt-4 max-w-2xl mx-auto">
+        <div className="h-1.5 w-24 bg-gradient-to-r from-[#6a2fed] to-[#1a237e] mx-auto rounded-full mb-6 shadow-lg shadow-violet-200"></div>
+        <p className="text-gray-500 max-w-2xl mx-auto text-lg font-medium">
           Choose from our carefully curated health checkup packages designed to suit your lifestyle and health needs.
         </p>
       </div>
@@ -19,11 +22,15 @@ const HealthPackages = () => {
         {packages.map((pkg, index) => (
           <div
             key={index}
-            className="group bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-500 overflow-hidden relative border border-gray-100 flex flex-col hover:-translate-y-2"
+            className="group relative bg-white/70 backdrop-blur-3xl rounded-[2.5rem] shadow-sm hover:shadow-2xl transition-all duration-700 overflow-hidden border border-white/60 flex flex-col hover:-translate-y-4"
           >
-            {/* Price Tag - Fixed to match image style */}
-            <div className="absolute top-4 right-4 bg-[#23904a] text-white px-4 py-1 rounded text-2xl font-bold shadow-md z-10">
-              {pkg.price}
+            {/* Glowing Border Card Effect */}
+            <div className="absolute inset-0 bg-gradient-to-br from-violet-500/0 to-violet-500/5 group-hover:from-violet-500/5 transition-all duration-700"></div>
+            {/* Price Tag - Premium Glassmorphic Badge */}
+            <div className="absolute top-4 right-4 bg-white/40 backdrop-blur-xl text-slate-900 px-5 py-2 rounded-2xl text-xl sm:text-2xl font-black shadow-[0_10px_30px_rgba(0,0,0,0.1)] z-20 border border-white/50 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 flex items-center gap-1">
+              <span className="text-sm font-bold opacity-60">₹</span>
+              {pkg.price.replace('₹', '')}
+              <span className="absolute -inset-1 bg-violet-500/10 rounded-2xl animate-pulse -z-10"></span>
             </div>
 
             {/* Image Container with Zoom Effect */}
@@ -37,9 +44,9 @@ const HealthPackages = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-white/20 to-transparent"></div>
             </div>
 
-            <div className="px-6 py-6 flex flex-col flex-grow">
+            <div className="px-6 py-6 flex flex-col flex-grow relative z-10">
               {/* Package Title */}
-              <h3 className="text-2xl font-bold text-[#1f267a] mb-2 text-center group-hover:text-blue-600 transition-colors">
+              <h3 className="text-xl sm:text-2xl font-black text-slate-900 mb-2 text-center group-hover:text-[#6a2fed] transition-colors tracking-tight uppercase">
                 {pkg.name}
               </h3>
 

@@ -35,6 +35,12 @@ import MedicineFinder from "../pages/MedicineFinder";
 import AmbulanceDispatch from "../pages/AmbulanceDispatch";
 import WomenCare from "../pages/WomenCare";
 import CaregiverPanic from "../pages/CaregiverPanic";
+import HomeopathyHub from "../pages/HomeopathyHub";
+import AyurvedaHub from "../pages/AyurvedaHub";
+import NaturopathyHub from "../pages/NaturopathyHub";
+import NutritionHub from "../pages/NutritionHub";
+import OfflineConsultationHub from "../pages/OfflineConsultationHub";
+import MedicinePriceCompare from "../pages/MedicinePriceCompare";
 
 const Routers = () => {
   return (
@@ -62,6 +68,12 @@ const Routers = () => {
       <Route path="/ambulance-dispatch" element={<AmbulanceDispatch />} />
       <Route path="/women-care" element={<WomenCare />} />
       <Route path="/caregiver-panic" element={<CaregiverPanic />} />
+      <Route path="/homeopathy-hub" element={<HomeopathyHub />} />
+      <Route path="/ayurveda-hub" element={<AyurvedaHub />} />
+      <Route path="/naturopathy-hub" element={<NaturopathyHub />} />
+      <Route path="/nutrition-hub" element={<NutritionHub />} />
+      <Route path="/offline-consultation" element={<OfflineConsultationHub />} />
+      <Route path="/medicine-price-compare" element={<MedicinePriceCompare />} />
       <Route path="/services" element={<Services />} />
       <Route path="/checkout-success" element={<CheckoutSuccess />} />
       <Route path="/login" element={<Login />} />

@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import Doctor from "../models/DoctorSchema.js";
 import User from "../models/UserSchema.js";
+import mongoose from "mongoose";
 
 const generateToken = (user) => {
   return jwt.sign(
@@ -15,6 +16,15 @@ const generateToken = (user) => {
 
 export const register = async (req, res) => {
   const { email, password, name, role, photo, gender } = req.body;
+
+  // Check if database is connected
+  if (mongoose.connection.readyState !== 1) {
+    return res.status(503).json({
+      status: false,
+      message: "Database not connected ❌. Please check if your IP is whitelisted in MongoDB Atlas."
+    });
+  }
+
   try {
     let user = null;
 
@@ -60,12 +70,25 @@ export const register = async (req, res) => {
       .status(200)
       .json({ status: true, message: "User successfully created" });
   } catch (error) {
-    res.status(500).json({ status: false, message: "User created fail" });
+    console.error("Registration error:", error);
+    if (error.code === 11000) {
+      return res.status(400).json({ status: false, message: "Email already exists" });
+    }
+    res.status(500).json({ status: false, message: "User created fail: " + error.message });
   }
 };
 
 export const login = async (req, res) => {
   const { email } = req.body;
+
+  // Check if database is connected
+  if (mongoose.connection.readyState !== 1) {
+    return res.status(503).json({
+      status: false,
+      message: "Database not connected ❌. Please check if your IP is whitelisted in MongoDB Atlas."
+    });
+  }
+
   try {
     let user = null;
 
@@ -107,6 +130,7 @@ export const login = async (req, res) => {
       role,
     });
   } catch (error) {
-    return res.status(500).json({ status: false, message: "Failed to login" });
+    console.error("Login error:", error);
+    return res.status(500).json({ status: false, message: "Failed to login: " + error.message });
   }
 };

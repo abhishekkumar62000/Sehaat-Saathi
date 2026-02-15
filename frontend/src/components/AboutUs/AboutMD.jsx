@@ -35,7 +35,7 @@ const AboutMD = () => {
               Rahul Yadav & <span className="text-[#2eb8a6]">Supriya Yadav</span>
             </h1>
             <p className="text-teal-600 font-bold uppercase tracking-[0.2em] text-xs">
-              Co-Founder Sehaat Saathi,Building Bihar
+              Co-Founder <span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span>, Building Bihar
             </p>
           </div>
 
@@ -69,14 +69,14 @@ const AboutMD = () => {
                 <p className="text-gray-700 font-medium leading-relaxed">
                   Rahul Yadav is a seasoned **IT Professional** with over **12 years of industry experience**.
                   His deep technical expertise in software architecture and systems design is the backbone
-                  of Sehaat Saathi&apos;s digital infrastructure.
+                  of <span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span>&apos;s digital infrastructure.
                 </p>
               </div>
             </div>
 
             <div className="text-left text-gray-700 text-lg lg:text-xl leading-relaxed space-y-6">
               <p className="text-justify font-medium">
-                Our mission at Sehaat Saathi is to ensure that each patient receives
+                Our mission at <span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span> is to ensure that each patient receives
                 personalized care and accurate diagnostics through the power of
                 modern technology. We are committed to maintaining the highest
                 standards of quality and speed in every service we provide.

@@ -6,6 +6,9 @@ import logo from "../assets/images/brand-logo/SehaatSaathi Logo.png";
 import Loading from "../components/Shared/Loading.jsx";
 import { BASE_URL } from "../config.js";
 import { authContext } from "../context/AuthContext.jsx";
+import { motion } from "framer-motion";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import "../assets/styles/LoginRegister.css";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +17,7 @@ const Login = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { dispatch } = useContext(authContext);
 
@@ -59,68 +63,91 @@ const Login = () => {
   };
 
   return (
-    <section className="px-5 my-8 lg:px-0">
-      <div
-        className="w-full max-w-[420px] mx-auto rounded-lg shadow-md lg:p-10 p-4"
-        style={{
-          backgroundImage: `url(${bgImg})`,
-        }}
+    <section className="px-5 my-12 lg:px-0">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="w-full max-w-[480px] mx-auto rounded-3xl glass-container lg:p-12 p-6"
       >
-        <div className="flex justify-center">
+        <div className="flex justify-center mb-6">
           <div className="relative group inline-block">
-            <div className="absolute -inset-2 bg-teal-100 rounded-2xl blur-xl opacity-0 group-hover:opacity-60 transition-opacity"></div>
+            <div className="absolute -inset-4 bg-violet-200 rounded-full blur-2xl opacity-40 group-hover:opacity-60 transition-opacity"></div>
             <img
               src={logo}
               alt="Sehaat Saathi Logo"
-              className="relative w-[130px] transform transition-transform duration-700 group-hover:scale-110"
+              className="relative w-[140px] floating-icon"
             />
           </div>
         </div>
-        <h3 className="lg:mb-2 lg:text-[40px] text-[30px] font-black tracking-tighter text-center">
-          <span className="text-green-600">Sehaat</span>
-          <span className="text-orange-500">Saathi</span>
-        </h3>
-        <p className="text-center text-gray-500 font-bold -mt-2 mb-6">Your Trusted Healthcare Partner</p>
-        <form className="py-4 md:py-0" onSubmit={submitHandler}>
-          {/* email input */}
-          <div className="mb-5">
-            <input
-              type="email"
-              placeholder="Enter your Email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              className="w-full p-3 border border-[#0066ff61] focus:outline-none focus:border-violet-700 text-[18px] leading-6 text-headingColor placeholder:text-textColor"
-              required
-            />
-          </div>
-          {/* password input */}
-          <div className="mb-5">
-            <input
-              type="password"
-              placeholder="Password"
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-              className="w-full p-3 border border-[#0066ff61] focus:outline-none focus:border-violet-700 text-[18px] leading-6 text-headingColor placeholder:text-textColor"
-              required
-            />
+
+        <div className="text-center mb-8">
+          <h3 className="lg:text-[44px] text-[34px] font-black tracking-tighter leading-tight drop-shadow-sm">
+            <span style={{ color: "#FF9933" }}>Sehaat</span>
+            <span style={{ color: "#138808" }}>Saathi</span>
+          </h3>
+          <p className="text-gray-500 font-bold text-sm tracking-wide uppercase">Your Digital Healthcare Ally</p>
+        </div>
+
+        <form onSubmit={submitHandler}>
+          <div className="mb-6 space-y-4">
+            {/* email input */}
+            <motion.div
+              whileHover={{ scale: 1.01 }}
+              className="relative"
+            >
+              <input
+                type="email"
+                placeholder="Email Address"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                className="w-full px-5 py-4 bg-white/50 border border-gray-200 rounded-2xl focus:outline-none input-glow text-[17px] transition-all placeholder:text-gray-400 font-medium"
+                required
+              />
+            </motion.div>
+
+            {/* password input */}
+            <motion.div
+              whileHover={{ scale: 1.01 }}
+              className="relative"
+            >
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
+                className="w-full px-5 py-4 bg-white/50 border border-gray-200 rounded-2xl focus:outline-none input-glow text-[17px] transition-all placeholder:text-gray-400 font-medium"
+                required
+              />
+              <span
+                className="password-toggle-btn"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <AiOutlineEyeInvisible size={22} /> : <AiOutlineEye size={22} />}
+              </span>
+            </motion.div>
           </div>
 
-          <div className="mt-7">
-            <button type="submit" className="customBtn w-full rounded-none">
-              {loading ? <Loading /> : "Login"}
+          <div className="mt-8">
+            <button
+              disabled={loading}
+              type="submit"
+              className="premium-btn w-full py-4 text-white font-bold rounded-2xl text-[18px] shadow-lg disabled:opacity-70"
+            >
+              {loading ? <Loading /> : "Sign In ✨"}
             </button>
           </div>
 
-          <p className="mt-5 text-textColor text-center lg:text-[15px] text-[13px]">
-            Don&apos;t have an account?{" "}
-            <Link to="/register" className="text-violet-800 font-medium">
-              Please Register
+          <p className="mt-10 text-gray-500 text-center font-medium">
+            New here?{" "}
+            <Link to="/register" className="text-violet-700 font-bold hover:underline transition-all">
+              Create an Account
             </Link>
           </p>
         </form>
-      </div>
+      </motion.div>
     </section>
   );
 };

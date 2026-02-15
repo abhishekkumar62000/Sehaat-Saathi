@@ -1,4 +1,5 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 
 const FaqItem = ({ item }) => {
@@ -9,31 +10,56 @@ const FaqItem = ({ item }) => {
     };
 
     return (
-        <div className="p-3 lg:p-5 rounded-[12px] border border-solid border-[#D9DCE2] mb-5 cursor-pointer bg-white/40 backdrop-blur-md hover:bg-white/60 transition-all duration-300 shadow-sm hover:shadow-md group">
-            <div
-                className="flex items-center justify-between gap-5"
-                onClick={toggleAccordion}
-            >
-                <h4 className="text-[16px] leading-7 lg:text-[22px] lg:leading-8 text-headingColor font-[700] group-hover:text-teal-600 transition-colors duration-300">
+        <motion.div
+            layout
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className={`p-5 lg:p-6 rounded-[2rem] border border-solid transition-all duration-300 mb-4 cursor-pointer overflow-hidden ${isOpen
+                    ? "bg-white border-orange-200 shadow-xl"
+                    : "bg-slate-50/50 border-slate-100 hover:bg-white hover:border-green-200 hover:shadow-md"
+                }`}
+            onClick={toggleAccordion}
+        >
+            <div className="flex items-center justify-between gap-5">
+                <h4 className={`text-lg lg:text-xl font-black uppercase tracking-tighter transition-colors duration-300 ${isOpen ? "text-orange-600" : "text-slate-900 group-hover:text-green-600"
+                    }`}>
                     {item.question}
                 </h4>
-                <div
-                    className={`${isOpen && "bg-teal-600 text-white border-none"
-                        } w-7 h-7 lg:w-8 lg:h-8 border border-solid border-[#181A1E] rounded flex items-center justify-center transition-all duration-300 transform ${isOpen ? 'rotate-180' : 'rotate-0'}`}
+                <motion.div
+                    animate={{ rotate: isOpen ? 180 : 0, scale: isOpen ? 1.1 : 1 }}
+                    className={`w-10 h-10 rounded-2xl flex items-center justify-center transition-colors duration-300 shrink-0 ${isOpen
+                            ? "bg-orange-500 text-white shadow-lg"
+                            : "bg-white text-slate-900 border border-slate-100 shadow-sm"
+                        }`}
                 >
-                    {isOpen ? <AiOutlineMinus /> : <AiOutlinePlus />}
-                </div>
+                    {isOpen ? <AiOutlineMinus className="text-xl" /> : <AiOutlinePlus className="text-xl" />}
+                </motion.div>
             </div>
 
-            <div
-                className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? "max-h-[1000px] mt-4 opacity-100" : "max-h-0 opacity-0"
-                    }`}
-            >
-                <p className="text-[14px] leading-6 lg:text-[16px] lg:leading-7 font-[400] text-textColor">
-                    {item.answer}
-                </p>
-            </div>
-        </div>
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                    >
+                        <div className="pt-6 border-t border-slate-100 mt-6">
+                            <p
+                                className="text-base lg:text-lg font-medium text-slate-600 leading-relaxed"
+                                dangerouslySetInnerHTML={{ __html: item.answer }}
+                            />
+                        </div>
+                        <div className="mt-4 flex items-center gap-2 opacity-30">
+                            <span className="w-1.5 h-1.5 bg-orange-500 rounded-full"></span>
+                            <span className="w-10 h-0.5 bg-slate-400 rounded-full"></span>
+                            <span className="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </motion.div>
     );
 };
 

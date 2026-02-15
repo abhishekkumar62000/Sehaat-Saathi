@@ -1,4 +1,5 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import calculatorImg from "../../../assets/images/home/calculator.png";
 import BMICalculator from "./BMICalculator";
 import CalorieCounter from "./CalorieCounter";
@@ -19,72 +20,140 @@ const HealthCalculators = () => {
     { name: "Body Fat %", icon: "📏" },
   ];
 
+  const renderCalculator = () => {
+    switch (selectedCalculator) {
+      case "BMI": return <BMICalculator />;
+      case "Heart Health": return <HeartHealthCalculator />;
+      case "Daily Calories": return <CalorieCounter />;
+      case "Water Intake": return <WaterIntakeCalculator />;
+      case "Ideal Weight": return <IdealWeightCalculator />;
+      case "Body Fat %": return <BodyFatCalculator />;
+      default: return <BMICalculator />;
+    }
+  };
+
   return (
-    <section className="container mb-32 relative">
-      {/* Premium Header */}
-      <div className="text-center mb-16">
-        <h2 className="text-5xl font-black text-gray-800 tracking-tighter mb-4">
-          Smart <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#2eb8a6] to-[#1d7a6e]">Health Hub</span>
-        </h2>
-        <p className="text-gray-500 font-bold uppercase tracking-[0.2em] text-sm">
-          Precision AI-Powered Health Calculators
-        </p>
-      </div>
+    <section className="w-full py-20 lg:py-32 bg-slate-50 overflow-hidden relative">
+      {/* Patriotic Background Accents */}
+      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-orange-500/5 rounded-full blur-[120px] -z-10 animate-pulse"></div>
+      <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-green-500/5 rounded-full blur-[120px] -z-10"></div>
 
-      <div className="bg-white/40 backdrop-blur-3xl p-8 lg:p-14 rounded-[60px] border border-white shadow-2xl overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-teal-50/50 rounded-full blur-[120px] -z-10 -translate-y-1/2 translate-x-1/2"></div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
-          {/* Menu Sidebar */}
-          <div className="lg:col-span-4 space-y-4">
-            <div className="relative group mb-10">
-              <div className="absolute inset-0 bg-gradient-to-br from-teal-400 to-[#1d7a6e] rounded-[40px] blur-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-700"></div>
-              <img src={calculatorImg} alt="Health" className="relative rounded-[40px] w-full shadow-2xl transform group-hover:scale-105 transition-transform duration-700" />
-            </div>
-
-            <div className="grid grid-cols-2 lg:grid-cols-1 gap-3">
-              {calculatorTools.map((tool) => (
-                <button
-                  key={tool.name}
-                  onClick={() => setSelectedCalculator(tool.name)}
-                  className={`flex items-center gap-4 px-6 py-4 rounded-2xl font-black text-sm uppercase tracking-wider transition-all duration-500 border ${selectedCalculator === tool.name
-                      ? "bg-gradient-to-r from-[#2eb8a6] to-[#1d7a6e] text-white border-transparent shadow-[0_10px_20px_-5px_rgba(46,184,166,0.4)] translate-x-3"
-                      : "bg-white/80 text-gray-400 border-gray-100 hover:border-teal-200 hover:text-teal-600 hover:translate-x-1 shadow-sm"
-                    }`}
-                >
-                  <span className="text-xl">{tool.icon}</span>
-                  {tool.name}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Calculator Content Area */}
-          <div className="lg:col-span-8 bg-white/60 p-8 lg:p-12 rounded-[50px] border border-white shadow-inner relative min-h-[500px] flex flex-col">
-            <div className="mb-10">
-              <h3 className="text-3xl font-black text-gray-800 flex items-center gap-3">
-                <span className="w-12 h-12 rounded-2xl bg-teal-50 flex items-center justify-center text-[#2eb8a6]">
-                  {calculatorTools.find(t => t.name === selectedCalculator)?.icon}
-                </span>
-                {selectedCalculator}
-              </h3>
-              <div className="mt-2 w-20 h-1.5 bg-gradient-to-r from-[#2eb8a6] to-transparent rounded-full"></div>
-            </div>
-
-            <div className="flex-grow">
-              {selectedCalculator === "BMI" && <BMICalculator />}
-              {selectedCalculator === "Heart Health" && <HeartHealthCalculator />}
-              {selectedCalculator === "Daily Calories" && <CalorieCounter />}
-              {selectedCalculator === "Water Intake" && <WaterIntakeCalculator />}
-              {selectedCalculator === "Ideal Weight" && <IdealWeightCalculator />}
-              {selectedCalculator === "Body Fat %" && <BodyFatCalculator />}
-            </div>
-
-            <p className="mt-10 text-[11px] text-gray-400 font-bold uppercase tracking-widest text-center border-t border-gray-100 pt-6">
-              Disclaimer: Results are for informational purposes. Consult a Professional.
-            </p>
-          </div>
+      <div className="container mx-auto px-6 lg:px-12 flex flex-col items-center">
+        {/* Premium Header */}
+        <div className="text-center mb-20">
+          <motion.h2
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-[clamp(36px,5vw,64px)] font-black text-slate-900 tracking-tighter mb-4 uppercase leading-none"
+          >
+            Smart <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-green-600">Health Hub</span>
+          </motion.h2>
+          <motion.div
+            initial={{ width: 0 }}
+            whileInView={{ width: "120px" }}
+            viewport={{ once: true }}
+            className="h-2 bg-gradient-to-r from-orange-500 to-green-600 mx-auto rounded-full mb-8"
+          ></motion.div>
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-slate-500 font-black uppercase tracking-[0.3em] text-xs sm:text-sm"
+          >
+            Precision AI-Powered Health Calculators
+          </motion.p>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="w-full max-w-7xl bg-white border border-slate-100 p-8 lg:p-16 rounded-[4rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)] relative overflow-hidden"
+        >
+          {/* Internal Glow */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-slate-50 rounded-full blur-3xl opacity-50 -z-10"></div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-stretch">
+            {/* Menu Sidebar */}
+            <div className="lg:col-span-4 flex flex-col gap-10">
+              <motion.div
+                whileHover={{ scale: 1.02, rotate: -1 }}
+                className="relative group hidden lg:block"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-orange-100 to-green-100 rounded-[3rem] blur-3xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
+                <img
+                  src={calculatorImg}
+                  alt="Health Hub"
+                  className="relative rounded-[3rem] w-full shadow-2xl transition-transform duration-700"
+                />
+              </motion.div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
+                {calculatorTools.map((tool, idx) => (
+                  <motion.button
+                    key={tool.name}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.1 }}
+                    onClick={() => setSelectedCalculator(tool.name)}
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                    className={`flex items-center gap-4 px-8 py-5 rounded-3xl font-black text-xs uppercase tracking-widest transition-all duration-300 border ${selectedCalculator === tool.name
+                      ? "bg-slate-900 text-white border-transparent shadow-2xl translate-x-3"
+                      : "bg-slate-50 text-slate-400 border-slate-100 hover:bg-white hover:border-orange-500 hover:text-orange-500"
+                      }`}
+                  >
+                    <span className="text-2xl filter drop-shadow-sm">{tool.icon}</span>
+                    <span className="truncate">{tool.name}</span>
+                  </motion.button>
+                ))}
+              </div>
+            </div>
+
+            {/* Calculator Content Area */}
+            <div className="lg:col-span-8 bg-slate-50/50 p-8 lg:p-14 rounded-[3.5rem] border border-slate-100 shadow-inner flex flex-col min-h-[550px]">
+              <div className="mb-12 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+                <div>
+                  <h3 className="text-3xl font-black text-slate-900 flex items-center gap-4 uppercase tracking-tighter">
+                    <span className="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center text-2xl">
+                      {calculatorTools.find(t => t.name === selectedCalculator)?.icon}
+                    </span>
+                    {selectedCalculator}
+                  </h3>
+                  <div className="mt-4 w-40 h-1.5 bg-gradient-to-r from-orange-500 via-white to-green-600 rounded-full"></div>
+                </div>
+                <div className="flex gap-2">
+                  <span className="px-4 py-1.5 bg-green-500/10 text-green-600 rounded-full text-[10px] font-black uppercase tracking-widest border border-green-500/20">
+                    Live Result
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex-grow relative">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={selectedCalculator}
+                    initial={{ opacity: 0, y: 10, filter: "blur(10px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    exit={{ opacity: 0, y: -10, filter: "blur(10px)" }}
+                    transition={{ duration: 0.4 }}
+                  >
+                    {renderCalculator()}
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+              <div className="mt-12 pt-8 border-t border-slate-200/50">
+                <p className="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em] text-center italic">
+                  Disclaimer: AI-generated values are for informational purposes. Consult a medical professional for critical health decisions.
+                </p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

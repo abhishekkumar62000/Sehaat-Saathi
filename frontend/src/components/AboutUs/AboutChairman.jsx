@@ -28,7 +28,7 @@ const AboutChairman = () => {
               Abhishek Kumar
             </h1>
             <p className="text-lg text-teal-600 font-bold uppercase tracking-widest text-sm">
-              Founder Sehaat Saathi, TechSeva
+              Founder <span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span>, TechSeva
             </p>
           </div>
 
@@ -55,7 +55,7 @@ const AboutChairman = () => {
             <div className="absolute -top-10 -left-10 text-9xl text-teal-100/50 font-serif -z-10">“</div>
             <div className="text-left text-gray-700 text-lg lg:text-xl leading-relaxed space-y-6">
               <p className="text-justify font-medium italic text-gray-600 border-l-4 border-teal-100 pl-6 py-2">
-                As the Founder of Sehaat Saathi and TechSeva, I am honored to lead
+                As the Founder of <span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span> and TechSeva, I am honored to lead
                 a mission that impacts the health and well-being of our
                 community through technology and compassion.
               </p>
@@ -63,7 +63,7 @@ const AboutChairman = () => {
                 Our vision is to bridge the gap in healthcare accessibility using AI and
                 smart diagnostic solutions. We believe that top-tier medical assistance
                 shouldn't just be a luxury, but a reality for everyone, everywhere.
-                Every decision we make at Sehaat Saathi is driven by our commitment to
+                Every decision we make at <span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span> is driven by our commitment to
                 excellence, innovation, and digital-first care.
               </p>
               <p className="text-justify font-medium">

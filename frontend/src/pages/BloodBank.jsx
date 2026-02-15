@@ -215,7 +215,7 @@ const BloodBank = () => {
                         <div className="h-4 w-[1px] bg-red-500/20"></div>
                         <div className="flex items-center gap-2">
                             <BsDropletFill className="animate-pulse" />
-                            <span className="font-black uppercase tracking-[0.3em] text-xs">Sehaat Saathi v8.1</span>
+                            <span className="font-black uppercase tracking-[0.3em] text-xs"><span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span> v8.1</span>
                         </div>
                     </div>
                 </div>
@@ -537,7 +537,7 @@ const BloodBank = () => {
                                                 <BsStars className="text-amber-400 mb-6 animate-spin-slow" size={40} />
                                                 <h4 className="text-2xl font-black italic tracking-tighter mb-4">Elite Perks Program</h4>
                                                 <p className="text-xs text-slate-400 font-bold leading-relaxed mb-10">
-                                                    Donation unlocks exclusive Sehaat Saathi badges, priority health checkups, and early access to AI Bio-Sensing features.
+                                                    Donation unlocks exclusive <span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span> badges, priority health checkups, and early access to AI Bio-Sensing features.
                                                 </p>
                                                 <button onClick={handleDonorReg} className="w-full py-6 bg-white text-slate-900 rounded-[2rem] font-black uppercase tracking-widest text-[10px] hover:bg-red-600 hover:text-white transition-all shadow-2xl hover:scale-105 active:scale-95 duration-300">Confirm Sanctuary Entry</button>
                                             </div>
@@ -602,14 +602,14 @@ const BloodBank = () => {
 
                         <div className="relative z-10">
                             <BsPatchCheckFill size={100} className="text-amber-500 mx-auto mb-10 animate-bounce" />
-                            <h2 className="text-[12px] font-black tracking-[0.6em] text-slate-400 uppercase mb-4">Official Sehaat Saathi Recognition</h2>
+                            <h2 className="text-[12px] font-black tracking-[0.6em] text-slate-400 uppercase mb-4">Official <span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span> Recognition</h2>
                             <h1 className="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter mb-8 italic italic">Life-Saver Certificate.</h1>
 
                             <div className="py-12 border-y-2 border-slate-100 mb-10">
                                 <p className="text-lg font-bold text-slate-500 mb-2">This is to certify that</p>
                                 <div className="text-5xl md:text-7xl font-black text-red-600 tracking-tighter mb-6 underline decoration-red-200 decoration-8 underline-offset-8 decoration-dotted decoration-8">{donorReg.name || 'Satyajit'}</div>
                                 <p className="text-slate-400 font-bold max-w-lg mx-auto leading-relaxed">
-                                    Has successfully synchronized with the Sehaat Saathi Neural Hub as a verified Lifesaver. Your contribution is architected to save lives.
+                                    Has successfully synchronized with the <span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span> Neural Hub as a verified Lifesaver. Your contribution is architected to save lives.
                                 </p>
                             </div>
 

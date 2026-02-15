@@ -44,10 +44,10 @@ const AboutUs = () => {
           <div className="space-y-8 animate-in fade-in slide-in-from-left duration-700">
             <div>
               <h1 className="text-5xl lg:text-6xl font-black text-gray-900 mb-8 tracking-tighter">
-                Discover <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#2eb8a6] to-[#1d7a6e]">Sehaat Saathi</span>
+                Discover <span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span>
               </h1>
               <p className="text-gray-600 text-xl leading-relaxed">
-                Sehaatsaathi is an AI-powered virtual health assistant designed for remote consultations, emergency healthcare, and personalized treatment.
+                <span style={{ color: "#FF9933", fontWeight: "bold" }}>Sehaat</span><span style={{ color: "#138808", fontWeight: "bold" }}>saathi</span> is an AI-powered virtual health assistant designed for remote consultations, emergency healthcare, and personalized treatment.
               </p>
             </div>
 

@@ -23,7 +23,7 @@ const CallToActionBanner = () => {
           <p className="text-lg text-slate-400 mb-12 max-w-2xl font-medium">
             Join the <span className="text-white font-bold italic">2026 Health Revolution</span> with
             <span className="mx-2 px-3 py-1 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 rounded-lg text-cyan-300 font-bold tracking-wide">
-              Sehaat Saathi
+              <span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span>
             </span>
             Diagnostics.
           </p>

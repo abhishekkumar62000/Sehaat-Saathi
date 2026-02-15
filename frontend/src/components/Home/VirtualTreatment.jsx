@@ -10,7 +10,7 @@ const VirtualTreatment = () => {
         {/* Text Section */}
         <div className="flex-1">
           <p className="text-[14px] lg:text-[18px] font-semibold text-gray-700 my-6 mt-0">
-            At Sehaat Saathi, you can consult with our doctors online
+            At <span style={{ color: "#FF9933", fontWeight: "bold" }}>Sehaat</span> <span style={{ color: "#138808", fontWeight: "bold" }}>Saathi</span>, you can consult with our doctors online
             from the comfort of your home. Follow these easy steps:
           </p>
           <ol className="list-decimal list-inside text-gray-700 space-y-2">

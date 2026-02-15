@@ -276,7 +276,7 @@ const AmbulanceDispatch = () => {
                                     </h1>
 
                                     <p className="text-slate-400 text-xl md:text-2xl mb-24 font-bold max-w-3xl mx-auto leading-relaxed">
-                                        Select the emergency type. Sehaat Saathi AI will auto-assign the closest available ambulance for instant dispatch.
+                                        Select the emergency type. <span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span> AI will auto-assign the closest available ambulance for instant dispatch.
                                     </p>
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -413,7 +413,7 @@ const AmbulanceDispatch = () => {
                                             <div className="text-3xl font-black uppercase italic tracking-tighter mb-2">{emergencyType}</div>
                                             <div className="px-4 py-1.5 bg-white/20 rounded-xl inline-block text-[10px] font-black uppercase tracking-widest">{priority} PRIORITY</div>
                                             <div className="mt-8 pt-8 border-t border-white/10 text-[10px] font-bold text-rose-100 leading-relaxed uppercase">
-                                                "Sehaat Saathi acts as a dispatch platform. Ambulance service is responsible for on-board medical care."
+                                                "<span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span> acts as a dispatch platform. Ambulance service is responsible for on-board medical care."
                                             </div>
                                         </div>
                                         <MapSimulation />

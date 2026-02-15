@@ -12,7 +12,7 @@ const ExpressTrack = () => {
     const [progress, setProgress] = useState(0);
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [messages, setMessages] = useState([
-        { text: "Namaste! I'm Amit, your Sehaat Saathi technician. I'm on my way.", sender: 'bot', time: '10:36 AM' }
+        { text: <><span style={{ color: "#FFF" }}>Namaste! I'm Amit, your <span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span> technician. I'm on my way.</span></>, sender: 'bot', time: '10:36 AM' }
     ]);
     const [inputValue, setInputValue] = useState('');
     const [showRating, setShowRating] = useState(false);
@@ -79,7 +79,7 @@ const ExpressTrack = () => {
                             <BsArrowLeft className="text-xl" />
                         </Link>
                         <h1 className="text-xl font-bold text-slate-800 flex items-center gap-2">
-                            <BsTruck className="text-green-600 text-2xl" /> Sehaat Saathi Express
+                            <BsTruck className="text-green-600 text-2xl" /> <span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span> Express
                         </h1>
                     </div>
                     <div className="bg-green-100 text-green-700 px-4 py-1.5 rounded-full text-xs font-black tracking-widest uppercase animate-pulse">

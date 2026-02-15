@@ -1,0 +1,1024 @@
+{
+    "fever": {
+        "name": "Fever / Bukhaar",
+        "id": "fever",
+        "keywords": [
+            "fever",
+            "bukhaar",
+            "temperature",
+            "body heat",
+            "chills",
+            "thand",
+            "shirhan",
+            "tap",
+            "kannkapi"
+        ],
+        "questions": [
+            {
+                "id": "duration",
+                "text": "How many days have you had the fever?",
+                "options": [
+                    "Just started",
+                    "1-2 days",
+                    "3+ days"
+                ]
+            },
+            {
+                "id": "temp",
+                "text": "Is it very high (above 102F)?",
+                "options": [
+                    "Yes",
+                    "No"
+                ]
+            },
+            {
+                "id": "rash",
+                "text": "Any rashes or severe body pain?",
+                "options": [
+                    "Yes",
+                    "No"
+                ]
+            }
+        ],
+        "results": [
+            {
+                "condition": "rash === 'Yes'",
+                "status": "CONSULT",
+                "title": "Potential Viral or Infection",
+                "cause": "Symptoms suggestive of Dengue/Malaria.",
+                "steps": [
+                    "Drink plenty of ORS",
+                    "Complete rest"
+                ],
+                "avoid": [
+                    "Self-medicating heavy drugs"
+                ],
+                "doctor": "Blood test recommended.",
+                "emergency": "Bleeding or severe vomiting"
+            },
+            {
+                "condition": "temp === 'Yes'",
+                "status": "EMERGENCY",
+                "title": "High Grade Fever",
+                "cause": "Potentially serious infection.",
+                "steps": [
+                    "Cold sponging",
+                    "Stay hydrated"
+                ],
+                "avoid": [
+                    "Thick blankets"
+                ],
+                "doctor": "See a doctor IMMEDIATELY.",
+                "emergency": "Seizures or confusion"
+            },
+            {
+                "condition": "default",
+                "status": "MILD",
+                "title": "Mild Viral Fever",
+                "cause": "Common cold or mild viral infection.",
+                "steps": [
+                    "Hydrate",
+                    "Tepid wash",
+                    "Rest"
+                ],
+                "avoid": [
+                    "Heavy exercise"
+                ],
+                "doctor": "If lasts more than 3 days.",
+                "emergency": "Temp > 104F"
+            }
+        ]
+    },
+    "headache": {
+        "name": "Headache / Sir Dard",
+        "id": "headache",
+        "keywords": [
+            "headache",
+            "sir dard",
+            "sar dard",
+            "migraine",
+            "head pain",
+            "tension",
+            "matha dard"
+        ],
+        "questions": [
+            {
+                "id": "type",
+                "text": "What does the pain feel like?",
+                "options": [
+                    "Throbbing/Migraine",
+                    "Dull/Tightness",
+                    "Sudden/Sharp"
+                ]
+            }
+        ],
+        "results": [
+            {
+                "condition": "type === 'Sudden/Sharp'",
+                "status": "EMERGENCY",
+                "title": "Thunderclap Headache Risk",
+                "cause": "Sudden severe pain can be serious.",
+                "steps": [
+                    "Sit still",
+                    "Avoid movement"
+                ],
+                "avoid": [
+                    "Driving",
+                    "Exercise"
+                ],
+                "doctor": "ER Hospital IMMEDIATELY.",
+                "emergency": "Vision change or numbness"
+            },
+            {
+                "condition": "type === 'Throbbing/Migraine'",
+                "status": "CONSULT",
+                "title": "Migraine Episode",
+                "cause": "Neurological triggers.",
+                "steps": [
+                    "Dark quiet room",
+                    "Hydrate"
+                ],
+                "avoid": [
+                    "Bright lights",
+                    "Screens"
+                ],
+                "doctor": "Consult for prevention.",
+                "emergency": "Severe nausea"
+            },
+            {
+                "condition": "default",
+                "status": "MILD",
+                "title": "Tension Headache",
+                "cause": "Stress or eye strain.",
+                "steps": [
+                    "Hydrate",
+                    "Neck stretch",
+                    "Sleep"
+                ],
+                "avoid": [
+                    "Caffeine"
+                ],
+                "doctor": "If it lasts over 24h.",
+                "emergency": "Passing out"
+            }
+        ]
+    },
+    "acidity": {
+        "name": "Acidity & Heartburn",
+        "id": "acidity",
+        "keywords": [
+            "acidity",
+            "gas",
+            "jalan",
+            "pet me jalan",
+            "bhari pan",
+            "sine me jalan",
+            "sour burps",
+            "heartburn"
+        ],
+        "questions": [
+            {
+                "id": "chest_pain",
+                "text": "Is the burning also causing chest pressure?",
+                "options": [
+                    "Yes (Pressure)",
+                    "No (Just burning)"
+                ]
+            }
+        ],
+        "results": [
+            {
+                "condition": "chest_pain === 'Yes (Pressure)'",
+                "status": "EMERGENCY",
+                "title": "Cardiac Event Risk",
+                "cause": "Chest pressure may be a heart issue.",
+                "steps": [
+                    "Sit upright",
+                    "Do not exert"
+                ],
+                "avoid": [
+                    "Walking",
+                    "Home remedies"
+                ],
+                "doctor": "Go to ER NOW.",
+                "emergency": "Pain in left arm/jaw"
+            },
+            {
+                "condition": "default",
+                "status": "MILD",
+                "title": "Acid Reflux",
+                "cause": "Spicy food or empty stomach.",
+                "steps": [
+                    "Cold milk",
+                    "Avoid lying down",
+                    "Gentle walk"
+                ],
+                "avoid": [
+                    "Spicy food",
+                    "Caffeine"
+                ],
+                "doctor": "If persistent (>3 days).",
+                "emergency": "Vomiting blood"
+            }
+        ]
+    },
+    "diarrhea": {
+        "name": "Diarrhea / Loose Motion",
+        "id": "diarrhea",
+        "keywords": [
+            "diarrhea",
+            "loose motion",
+            "dust",
+            "pet kharab",
+            "khali pet",
+            "patla peshab"
+        ],
+        "questions": [
+            {
+                "id": "frequency",
+                "text": "How many times have you gone today?",
+                "options": [
+                    "1-4 times",
+                    "5+ times"
+                ]
+            },
+            {
+                "id": "weakness",
+                "text": "Are you feeling very dizzy or thirsty?",
+                "options": [
+                    "Yes",
+                    "No"
+                ]
+            }
+        ],
+        "results": [
+            {
+                "condition": "weakness === 'Yes'",
+                "status": "CONSULT",
+                "title": "Dehydration Alert",
+                "cause": "Rapid fluid loss.",
+                "steps": [
+                    "ORS continuously",
+                    "Sips of water"
+                ],
+                "avoid": [
+                    "Solid dairy",
+                    "Fats"
+                ],
+                "doctor": "Check for IV fluids.",
+                "emergency": "No urine for 8 hours"
+            },
+            {
+                "condition": "default",
+                "status": "MILD",
+                "title": "General Diarrhea",
+                "cause": "Mild infection or diet.",
+                "steps": [
+                    "ORS",
+                    "Coconut water",
+                    "Khichdi"
+                ],
+                "avoid": [
+                    "Fruit juice",
+                    "Soda"
+                ],
+                "doctor": "If blood in stool.",
+                "emergency": "Severe cramps"
+            }
+        ]
+    },
+    "constipation": {
+        "name": "Constipation / Kabaz",
+        "id": "constipation",
+        "keywords": [
+            "constipation",
+            "kabaz",
+            "pet saaf",
+            "hard stool",
+            "stool problem"
+        ],
+        "questions": [
+            {
+                "id": "pain",
+                "text": "Are you having sharp stomach pain?",
+                "options": [
+                    "Yes",
+                    "No"
+                ]
+            }
+        ],
+        "results": [
+            {
+                "condition": "pain === 'Yes'",
+                "status": "CONSULT",
+                "title": "Impacted Bowel Risk",
+                "cause": "Chronic or severe blockage.",
+                "steps": [
+                    "Drink warm water",
+                    "Avoid solids"
+                ],
+                "avoid": [
+                    "Laxative overuse"
+                ],
+                "doctor": "Physician visit.",
+                "emergency": "Vomiting/Nausea"
+            },
+            {
+                "condition": "default",
+                "status": "MILD",
+                "title": "Common Constipation",
+                "cause": "Low fiber or dehydration.",
+                "steps": [
+                    "Psyllium Husk",
+                    "Pears/Papaya",
+                    "Water"
+                ],
+                "avoid": [
+                    "Maida",
+                    "Processed meat"
+                ],
+                "doctor": "If > 5 days.",
+                "emergency": "Fever with pain"
+            }
+        ]
+    },
+    "cough": {
+        "name": "Cough / Khansi",
+        "id": "cough",
+        "keywords": [
+            "cough",
+            "khansi",
+            "balgam",
+            "sukhi khansi",
+            "throat pain",
+            "gala dard"
+        ],
+        "questions": [
+            {
+                "id": "phlegm",
+                "text": "Is there phlegm (balgam)?",
+                "options": [
+                    "Dry Cough",
+                    "Wet Cough"
+                ]
+            },
+            {
+                "id": "breath",
+                "text": "Is there difficulty breathing?",
+                "options": [
+                    "Yes",
+                    "No"
+                ]
+            }
+        ],
+        "results": [
+            {
+                "condition": "breath === 'Yes'",
+                "status": "EMERGENCY",
+                "title": "Respiratory Distress",
+                "cause": "Potential Pneumonia/Asthma.",
+                "steps": [
+                    "Sit leaning forward",
+                    "Use inhaler if you have"
+                ],
+                "avoid": [
+                    "Lying flat"
+                ],
+                "doctor": "ER IMMEDIATELY.",
+                "emergency": "Blue lips"
+            },
+            {
+                "condition": "phlegm === 'Wet Cough'",
+                "status": "CONSULT",
+                "title": "Bronchial Irritation",
+                "cause": "Chest infection likely.",
+                "steps": [
+                    "Steam inhalation",
+                    "Warm fluids"
+                ],
+                "avoid": [
+                    "Cold air/water"
+                ],
+                "doctor": "Chest Specialist.",
+                "emergency": "Coughing blood"
+            },
+            {
+                "condition": "default",
+                "status": "MILD",
+                "title": "General Cough",
+                "cause": "Throat irritation or smoke.",
+                "steps": [
+                    "Honey-Ginger",
+                    "Salt water gargles"
+                ],
+                "avoid": [
+                    "Spicy chili"
+                ],
+                "doctor": "If lasts > 10 days.",
+                "emergency": "Persistent fever"
+            }
+        ]
+    },
+    "skin_rash": {
+        "name": "Skin Rash / Khujli",
+        "id": "skin_rash",
+        "keywords": [
+            "rash",
+            "khujli",
+            "itching",
+            "daane",
+            "chakte",
+            "allergy skin",
+            "redness"
+        ],
+        "questions": [
+            {
+                "id": "fever",
+                "text": "Do you also have a fever?",
+                "options": [
+                    "Yes",
+                    "No"
+                ]
+            },
+            {
+                "id": "spread",
+                "text": "Is it spreading quickly?",
+                "options": [
+                    "Yes",
+                    "No"
+                ]
+            }
+        ],
+        "results": [
+            {
+                "condition": "fever === 'Yes'",
+                "status": "CONSULT",
+                "title": "Systemic Rash",
+                "cause": "Potentially a viral infection.",
+                "steps": [
+                    "Calamine lotion",
+                    "Isolate if contagious"
+                ],
+                "avoid": [
+                    "Scratching"
+                ],
+                "doctor": "Dermatologist.",
+                "emergency": "Difficulty breathing"
+            },
+            {
+                "condition": "spread === 'Yes'",
+                "status": "CONSULT",
+                "title": "Acute Allergic Reaction",
+                "cause": "Reaction to allergen.",
+                "steps": [
+                    "Wash area",
+                    "Antihistamine advice"
+                ],
+                "avoid": [
+                    "Harsh soaps"
+                ],
+                "doctor": "Consult clinic.",
+                "emergency": "Swelling in throat"
+            },
+            {
+                "condition": "default",
+                "status": "MILD",
+                "title": "Local Irritation",
+                "cause": "Heat or dry skin.",
+                "steps": [
+                    "Coconut oil",
+                    "Cool wash"
+                ],
+                "avoid": [
+                    "Hot baths"
+                ],
+                "doctor": "If not better in 4 days.",
+                "emergency": "Painful blisters"
+            }
+        ]
+    },
+    "anxiety": {
+        "name": "Anxiety & Panic",
+        "id": "anxiety",
+        "keywords": [
+            "anxiety",
+            "ghabrahat",
+            "bechaini",
+            "panic",
+            "stress",
+            "nervous"
+        ],
+        "questions": [
+            {
+                "id": "heart_racing",
+                "text": "Is your heart racing very fast?",
+                "options": [
+                    "Yes",
+                    "No"
+                ]
+            }
+        ],
+        "results": [
+            {
+                "condition": "heart_racing === 'Yes'",
+                "status": "CONSULT",
+                "title": "Panic Attack Context",
+                "cause": "Acute anxiety response.",
+                "steps": [
+                    "4-7-8 Breathing",
+                    "Fresh air",
+                    "Splash face with water"
+                ],
+                "avoid": [
+                    "Caffeine",
+                    "Sugar"
+                ],
+                "doctor": "Counseling recommended.",
+                "emergency": "Chest pain radiating"
+            },
+            {
+                "condition": "default",
+                "status": "MILD",
+                "title": "General Stress",
+                "cause": "High pressure or burnout.",
+                "steps": [
+                    "Deep breathing",
+                    "Nature walk"
+                ],
+                "avoid": [
+                    "Overworking"
+                ],
+                "doctor": "If affects sleep daily.",
+                "emergency": "Self-harm thoughts"
+            }
+        ]
+    },
+    "back_pain": {
+        "name": "Back Pain / Kamar Dard",
+        "id": "back_pain",
+        "keywords": [
+            "back pain",
+            "kamar dard",
+            "pith dard",
+            "muscle pull",
+            "neck pain"
+        ],
+        "questions": [
+            {
+                "id": "numbness",
+                "text": "Any numbness in your legs?",
+                "options": [
+                    "Yes",
+                    "No"
+                ]
+            }
+        ],
+        "results": [
+            {
+                "condition": "numbness === 'Yes'",
+                "status": "CONSULT",
+                "title": "Nerve Compression Risk",
+                "cause": "Potentially Sciatica/Disc issues.",
+                "steps": [
+                    "Lie on firm surface",
+                    "Avoid bending"
+                ],
+                "avoid": [
+                    "Heavy lifting"
+                ],
+                "doctor": "Orthopedic/Physio.",
+                "emergency": "Loss of bladder control"
+            },
+            {
+                "condition": "default",
+                "status": "MILD",
+                "title": "Muscle Strain",
+                "cause": "Poor posture or heavy lifting.",
+                "steps": [
+                    "Heat/Cold pack",
+                    "Gentle stretching"
+                ],
+                "avoid": [
+                    "Soft mattresses"
+                ],
+                "doctor": "If > 7 days.",
+                "emergency": "Fever with back pain"
+            }
+        ]
+    },
+    "urinary_pain": {
+        "name": "Urinary Issue / UTI",
+        "id": "urinary_pain",
+        "keywords": [
+            "urinary pain",
+            "peshab jalan",
+            "uti",
+            "urine blood",
+            "bladder"
+        ],
+        "questions": [
+            {
+                "id": "back_pain",
+                "text": "Do you also have side/back pain?",
+                "options": [
+                    "Yes",
+                    "No"
+                ]
+            }
+        ],
+        "results": [
+            {
+                "condition": "back_pain === 'Yes'",
+                "status": "CONSULT",
+                "title": "Kidney Infection Risk",
+                "cause": "UTI spreading upward.",
+                "steps": [
+                    "Drink massive water",
+                    "Empty bladder"
+                ],
+                "avoid": [
+                    "Delaying urination"
+                ],
+                "doctor": "Doctor TODAY.",
+                "emergency": "High fever/Vomiting"
+            },
+            {
+                "condition": "default",
+                "status": "MILD",
+                "title": "Mild UTI Suspected",
+                "cause": "Bacterial irritation.",
+                "steps": [
+                    "4L water daily",
+                    "Cranberry juice"
+                ],
+                "avoid": [
+                    "Caffeine/Alcohol"
+                ],
+                "doctor": "Urine culture test.",
+                "emergency": "Blood in urine"
+            }
+        ]
+    },
+    "eye_irritation": {
+        "name": "Eye Irritation / Redness",
+        "id": "eye_irritation",
+        "keywords": [
+            "eye pain",
+            "aankh lal",
+            "redness eyes",
+            "itchy eyes",
+            "dry eyes"
+        ],
+        "questions": [
+            {
+                "id": "vision",
+                "text": "Is your vision blurred or reduced?",
+                "options": [
+                    "Yes",
+                    "No"
+                ]
+            }
+        ],
+        "results": [
+            {
+                "condition": "vision === 'Yes'",
+                "status": "EMERGENCY",
+                "title": "Acute Ocular Risk",
+                "cause": "Potential infection/Glaucoma flare.",
+                "steps": [
+                    "Do not rub eyes",
+                    "Keep eyes closed"
+                ],
+                "avoid": [
+                    "Eye drops blindly"
+                ],
+                "doctor": "Ophthalmologist NOW.",
+                "emergency": "Sudden blindness"
+            },
+            {
+                "condition": "default",
+                "status": "MILD",
+                "title": "Dry Eyes/Strain",
+                "cause": "Screen time or dust.",
+                "steps": [
+                    "Cold water splash",
+                    "20-20-20 Rule"
+                ],
+                "avoid": [
+                    "Rubbing"
+                ],
+                "doctor": "If redness increases.",
+                "emergency": "Severe pain"
+            }
+        ]
+    },
+    "fatigue": {
+        "name": "Fatigue / Weakness",
+        "id": "fatigue",
+        "keywords": [
+            "fatigue",
+            "kamzori",
+            "weakness",
+            "tired",
+            "thakan",
+            "low energy"
+        ],
+        "questions": [
+            {
+                "id": "pale",
+                "text": "Notice pale nails or inner eyelids?",
+                "options": [
+                    "Yes",
+                    "No"
+                ]
+            }
+        ],
+        "results": [
+            {
+                "condition": "pale === 'Yes'",
+                "status": "CONSULT",
+                "title": "Anaemia Risk",
+                "cause": "Iron deficiency context.",
+                "steps": [
+                    "Iron rich foods",
+                    "Rest"
+                ],
+                "avoid": [
+                    "Tea/Coffee with food"
+                ],
+                "doctor": "CBC Test recommended.",
+                "emergency": "Fainting"
+            },
+            {
+                "condition": "default",
+                "status": "MILD",
+                "title": "Tiredness/Burnout",
+                "cause": "Lack of sleep or overwork.",
+                "steps": [
+                    "8 hours sleep",
+                    "Protein intake"
+                ],
+                "avoid": [
+                    "Skipping meals"
+                ],
+                "doctor": "If persistent for 2 weeks.",
+                "emergency": "Heart palpitations"
+            }
+        ]
+    },
+    "food_poisoning": {
+        "name": "Food Poisoning",
+        "id": "food_poisoning",
+        "keywords": [
+            "vomiting",
+            "food poison",
+            "uulti",
+            "nausea",
+            "spoiled food"
+        ],
+        "questions": [
+            {
+                "id": "severe",
+                "text": "Are you unable to keep water down?",
+                "options": [
+                    "Yes",
+                    "No"
+                ]
+            }
+        ],
+        "results": [
+            {
+                "condition": "severe === 'Yes'",
+                "status": "CONSULT",
+                "title": "Critical Dehydration Risk",
+                "cause": "Intense stomach infection.",
+                "steps": [
+                    "Small sips of ORS",
+                    "Anti-nausea advice"
+                ],
+                "avoid": [
+                    "Spicy solids"
+                ],
+                "doctor": "Clinic for drip.",
+                "emergency": "Sunken eyes/Fainting"
+            },
+            {
+                "condition": "default",
+                "status": "MILD",
+                "title": "Mild Food Poisoning",
+                "cause": "Contaminated food.",
+                "steps": [
+                    "Clear fluids",
+                    "Brat diet",
+                    "Ginger tea"
+                ],
+                "avoid": [
+                    "Milk",
+                    "Spicy food"
+                ],
+                "doctor": "If fever starts.",
+                "emergency": "Blood in vomit"
+            }
+        ]
+    },
+    "period_pain": {
+        "name": "Period Pain / Cramps",
+        "id": "period_pain",
+        "keywords": [
+            "period pain",
+            "cramps",
+            "haiz",
+            "monthly pain",
+            "mc dard"
+        ],
+        "questions": [
+            {
+                "id": "manage",
+                "text": "Is the pain unmanageable with rest?",
+                "options": [
+                    "Yes",
+                    "No"
+                ]
+            }
+        ],
+        "results": [
+            {
+                "condition": "manage === 'Yes'",
+                "status": "CONSULT",
+                "title": "Severe Dysmenorrhea",
+                "cause": "Hormonal or pelvic issues.",
+                "steps": [
+                    "Hot water bottle",
+                    "Stretching"
+                ],
+                "avoid": [
+                    "Caffeine",
+                    "Salt"
+                ],
+                "doctor": "Gynecologist.",
+                "emergency": "Severe fainting"
+            },
+            {
+                "condition": "default",
+                "status": "MILD",
+                "title": "Menstrual Cramps",
+                "cause": "Standard uterine cycle.",
+                "steps": [
+                    "Dark chocolate",
+                    "Warm bath",
+                    "Magnesium"
+                ],
+                "avoid": [
+                    "Cold drinks"
+                ],
+                "doctor": "If cycle lasts > 7 days.",
+                "emergency": "Sudden heavy bleeding"
+            }
+        ]
+    },
+    "insect_bite": {
+        "name": "Insect Bite",
+        "id": "insect_bite",
+        "keywords": [
+            "bite",
+            "cut",
+            "sting",
+            "keeda",
+            "macchar"
+        ],
+        "questions": [
+            {
+                "id": "swelling",
+                "text": "Notice swelling in mouth or throat?",
+                "options": [
+                    "Yes",
+                    "No"
+                ]
+            }
+        ],
+        "results": [
+            {
+                "condition": "swelling === 'Yes'",
+                "status": "EMERGENCY",
+                "title": "Anaphylaxis Alert",
+                "cause": "Severe allergic reaction.",
+                "steps": [
+                    "Call 102",
+                    "Lie flat"
+                ],
+                "avoid": [
+                    "Ignoring it"
+                ],
+                "doctor": "ER Hospital IMMEDIATELY.",
+                "emergency": "Difficulty breathing"
+            },
+            {
+                "condition": "default",
+                "status": "MILD",
+                "title": "Local Insect Sting",
+                "cause": "Minor bite.",
+                "steps": [
+                    "Wash area",
+                    "Antiseptic cream",
+                    "Ice"
+                ],
+                "avoid": [
+                    "Scratching"
+                ],
+                "doctor": "If area turns black.",
+                "emergency": "Developing a fever"
+            }
+        ]
+    },
+    "medicine_safety": {
+        "name": "Medicine Safety Guide",
+        "id": "medicine_safety",
+        "keywords": [
+            "medicine",
+            "dawa",
+            "pill",
+            "tablet",
+            "dosage",
+            "paracetamol",
+            "antibiotic",
+            "goli"
+        ],
+        "questions": [
+            {
+                "id": "type",
+                "text": "What type of medicine is it?",
+                "options": [
+                    "Painkiller",
+                    "Antibiotic",
+                    "Cough Syrup",
+                    "Heart/BP Meds"
+                ]
+            }
+        ],
+        "results": [
+            {
+                "condition": "type === 'Painkiller'",
+                "status": "MILD",
+                "title": "Pain Management Safety",
+                "cause": "Standard OTC usage.",
+                "steps": [
+                    "Max 4g Paracetamol per day",
+                    "Keep 4-6h gap",
+                    "Take after food"
+                ],
+                "avoid": [
+                    "Taking multiple brands",
+                    "Alcohol"
+                ],
+                "doctor": "Consult your local pharmacist.",
+                "emergency": "Yellowing of eyes"
+            },
+            {
+                "condition": "type === 'Antibiotic'",
+                "status": "CONSULT",
+                "title": "Antibiotic Resistance Alert",
+                "cause": "Clinical drugs.",
+                "steps": [
+                    "Complete the whole course",
+                    "Don't skip doses"
+                ],
+                "avoid": [
+                    "Self-medicating"
+                ],
+                "doctor": "MD Prescription ONLY.",
+                "emergency": "Hives or itching"
+            },
+            {
+                "condition": "type === 'Heart/BP Meds'",
+                "status": "EMERGENCY",
+                "title": "Critical Medication",
+                "cause": "Life-saving drugs.",
+                "steps": [
+                    "NEVER miss a dose",
+                    "Don't stop suddenly"
+                ],
+                "avoid": [
+                    "Changing brands alone"
+                ],
+                "doctor": "Cardiologist's guidance.",
+                "emergency": "Fainting/Chest pain"
+            },
+            {
+                "condition": "default",
+                "status": "MILD",
+                "title": "General Safety",
+                "cause": "Medicine storage.",
+                "steps": [
+                    "Check expiry date",
+                    "Keep away from children",
+                    "Store in cool place"
+                ],
+                "avoid": [
+                    "Sharing prescriptions"
+                ],
+                "doctor": "Consult Doctor for dosage.",
+                "emergency": "Any breathing issue"
+            }
+        ]
+    }
+}

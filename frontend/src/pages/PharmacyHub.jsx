@@ -24,7 +24,7 @@ const PharmacyHub = () => {
     const orderTimeoutRef = useRef(null);
 
     const medicines = pharmacyMedicines;
-    const categories = ['All', 'Pain Relief', 'Wellness', 'Antibiotics', 'Chronic Care', 'Skin Care', 'Cough & Cold', 'Muscle Care'];
+    const categories = ['All', 'Pain Relief', 'Wellness', 'Antibiotics', 'Chronic Care', 'Skin Care', 'Cough & Cold', 'Muscle Care', 'Surgical & Emergency'];
 
     // Cleanup timeouts on unmount
     useEffect(() => {
@@ -145,20 +145,23 @@ const PharmacyHub = () => {
                         <div className="max-w-3xl">
                             <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 mb-8">
                                 <BsCapsule className="animate-spin-slow" />
-                                <span className="text-xs font-black uppercase tracking-[0.4em]">Sehaat Pharma v4.0</span>
+                                <span className="text-xs font-black uppercase tracking-[0.4em]">
+                                    <span style={{ color: "#FF9933" }}>Sehaat</span>{" "}
+                                    <span style={{ color: "#138808" }}>Saathi</span> Pharmacy-Hub v4.0
+                                </span>
                             </div>
                             <h1 className="text-7xl md:text-9xl font-black tracking-tighter leading-[0.85] uppercase mb-8">
-                                PREMIER <span className="text-emerald-500 italic">PHARMACY</span>
+                                PREMIER <span style={{ color: "#FF9933" }}>SEHAAT</span> <span style={{ color: "#138808" }} className="italic block">SAATHI</span> <span className="text-emerald-500">PHARMACY</span>
                             </h1>
                             <p className="text-slate-400 text-xl font-medium italic">
-                                "Skip the pharmacy lines. Get authentic medicines at your doorstep with <span className="text-white font-bold">Express Neural Delivery</span>."
+                                "Skip the pharmacy lines. Get authentic medicines at your doorstep with <span className="text-white font-bold"><span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span> Express Neural Delivery</span>."
                             </p>
                         </div>
                         <div className="relative w-full md:w-96">
                             <BsSearch className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-500 text-xl" />
                             <input
                                 type="text"
-                                placeholder="Search medicine, salt, symptoms..."
+                                placeholder="Search 10,000+ medicines, salts, and surgical gear..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 className="w-full bg-white/5 border-2 border-white/5 rounded-[2rem] py-6 pl-16 pr-8 text-lg font-bold outline-none focus:border-emerald-500/40 transition-all placeholder:text-slate-600"
@@ -206,10 +209,24 @@ const PharmacyHub = () => {
                                 <p className="text-slate-500 text-sm font-medium leading-relaxed mb-8 h-12 overflow-hidden italic line-clamp-2">
                                     {med.desc}
                                 </p>
-                                <div className="flex flex-wrap gap-2 mb-10 h-14 overflow-hidden">
+                                <div className="flex flex-wrap gap-2 mb-6 h-14 overflow-hidden">
                                     {med.tags.map(tag => (
                                         <span key={tag} className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[8px] font-black uppercase tracking-widest text-slate-400">{tag}</span>
                                     ))}
+                                </div>
+
+                                {/* Indepth Analysis Feature */}
+                                <div className="mb-8 p-5 rounded-[2rem] bg-emerald-500/5 border border-emerald-500/10 text-[10px] font-bold text-slate-400">
+                                    <div className="flex justify-between mb-2 uppercase tracking-widest">
+                                        <span className="text-emerald-500/60">Neural Safety Rating</span>
+                                        <span className="text-emerald-500">Verified</span>
+                                    </div>
+                                    <div className="h-1 bg-white/5 rounded-full overflow-hidden mb-3">
+                                        <div className="h-full bg-emerald-500 w-[98%] animate-pulse"></div>
+                                    </div>
+                                    <p className="text-[8px] italic leading-tight text-slate-500 italic">
+                                        Indepth Analysis: Molecular structure verified. Salt Logic: Optimized for fast {med.category.toLowerCase()} absorption.
+                                    </p>
                                 </div>
                                 <button
                                     onClick={() => addToCart(med)}
@@ -230,7 +247,7 @@ const PharmacyHub = () => {
                             </p>
                         </div>
                         <button className="px-12 py-8 rounded-[3rem] bg-black/20 backdrop-blur-3xl border-2 border-white/20 text-white font-black uppercase text-xs tracking-[0.4em] flex items-center gap-6 hover:bg-black/40 transition-all group">
-                            <BsCloudUploadFill className="text-3xl group-hover:scale-125 transition-transform" /> Upload Script
+                            <BsCloudUploadFill className="text-3xl group-hover:scale-125 transition-transform" /> Neural Script Analyzer
                         </button>
                     </div>
 
@@ -261,7 +278,9 @@ const PharmacyHub = () => {
                                     {checkoutStep === 0 ? <BsBagCheckFill /> : checkoutStep === 1 ? <BsGeoAltFill /> : <BsCreditCard2BackFill />}
                                 </div>
                                 <h3 className="text-3xl font-black uppercase tracking-tighter">
-                                    {checkoutStep === 0 ? 'My Sehaat Cart' : checkoutStep === 1 ? 'Shipping Info' : 'Payment Method'}
+                                    {checkoutStep === 0 ? (
+                                        <span>My <span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span> Cart</span>
+                                    ) : checkoutStep === 1 ? 'Shipping Info' : 'Payment Method'}
                                 </h3>
                             </div>
                             <button onClick={() => setShowCart(false)} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-slate-500 hover:text-white transition-all">

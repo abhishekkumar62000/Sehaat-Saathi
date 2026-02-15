@@ -9,7 +9,7 @@ export const faqs = [
     id: 2,
     question: "Do you offer telemedicine or online consultations?",
     answer:
-      "Yes, Sehaat Saathi offers telemedicine services where you can consult doctors online through video calls. You can book a telemedicine appointment the same way as an in-person visit.",
+      "Yes, <span style='color: #FF9933'>Sehaat</span> <span style='color: #138808'>Saathi</span> offers telemedicine services where you can consult doctors online through video calls. You can book a telemedicine appointment the same way as an in-person visit.",
   },
   {
     id: 3,

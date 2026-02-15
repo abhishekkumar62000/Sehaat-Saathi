@@ -50,7 +50,7 @@ const HealthTwin = () => {
 
                     <div className="mt-20 p-20 bg-gradient-to-br from-cyan-500/5 to-transparent rounded-[4rem] border border-white/5 text-center relative overflow-hidden">
                         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent"></div>
-                        <h2 className="text-3xl font-black mb-8 italic uppercase tracking-widest">Coming Soon to Sehaat Saathi</h2>
+                        <h2 className="text-3xl font-black mb-8 italic uppercase tracking-widest">Coming Soon to <span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span></h2>
                         <div className="flex flex-wrap justify-center gap-6">
                             <div className="px-8 py-4 bg-white/5 rounded-2xl border border-white/10 text-xs font-black uppercase tracking-widest text-slate-400">Risk Mapping</div>
                             <div className="px-8 py-4 bg-white/5 rounded-2xl border border-white/10 text-xs font-black uppercase tracking-widest text-slate-400">Longevity Path</div>

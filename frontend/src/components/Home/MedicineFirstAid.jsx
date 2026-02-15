@@ -100,36 +100,37 @@ const MedicineFirstAid = () => {
 
             <div className="container mx-auto px-4 lg:px-16 relative">
                 {/* Header with Search */}
-                <div className="flex flex-col xl:flex-row justify-between items-center gap-10 mb-20">
+                <div className="flex flex-col xl:flex-row justify-between items-center gap-10 mb-20 relative z-10">
                     <div className="max-w-3xl text-center xl:text-left">
-                        <div className="inline-flex items-center gap-3 bg-teal-50 text-teal-700 px-6 py-2 rounded-full text-xs font-black uppercase tracking-[0.2em] mb-8 border border-teal-100 shadow-sm">
-                            <BsLightningFill className="animate-pulse" /> Sehaat Quick-Aid V2.0
+                        <div className="inline-flex items-center gap-3 bg-[#FF9933]/10 text-[#FF9933] px-6 py-2 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] mb-8 border border-[#FF9933]/20 shadow-sm animate-pulse">
+                            <BsLightningFill /> Sehaat Smart-Hub V2.0
                         </div>
-                        <h2 className="text-5xl md:text-6xl font-black text-slate-900 mb-8 tracking-tight">
-                            Medicine & <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-emerald-500">First-Aid</span> Hub
+                        <h2 className="text-[clamp(32px,8vw,72px)] font-black text-slate-900 mb-8 tracking-tighter uppercase leading-[0.9]">
+                            Smart <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF9933] to-[#138808]">Medicine</span> Hub
                         </h2>
-                        <p className="text-xl text-slate-500 leading-relaxed font-medium italic">
-                            Precision is everything in health. Discover OTC medicines or get instant first-aid guidance with our interactive 2.0 system. Simple, fast, and secure.
+                        <p className="text-lg sm:text-2xl text-slate-500 leading-[1.2] font-black uppercase tracking-tight opacity-90">
+                            Precision diagnostics meets patriotic dedication. Access world-class pharmacy & SOS guidance in 2026.
                         </p>
                     </div>
 
                     <div className="w-full max-w-md flex flex-col gap-6">
-                        {/* Tab Switcher */}
-                        <div className="flex bg-slate-100 p-2 rounded-[2rem] border border-slate-200">
+                        {/* Tab Switcher - Floating Glassmorph Design */}
+                        <div className="flex bg-white/40 backdrop-blur-3xl p-2 rounded-[2.5rem] border border-white/60 shadow-2xl relative overflow-hidden group">
+                            <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 via-white/5 to-green-500/5 opacity-50"></div>
                             <button
                                 onClick={() => setActiveTab('medicine')}
-                                className={`flex-1 py-4 rounded-[1.8rem] text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'medicine' ? 'bg-white text-teal-600 shadow-xl' : 'text-slate-500 hover:text-slate-800'}`}
+                                className={`flex-1 py-5 rounded-[2rem] text-[10px] font-black uppercase tracking-widest transition-all relative z-10 ${activeTab === 'medicine' ? 'bg-slate-900 text-white shadow-2xl scale-[1.02]' : 'text-slate-500 hover:text-slate-800'}`}
                             >
                                 <div className="flex items-center justify-center gap-2">
-                                    <BsCapsule /> Medicine Finder
+                                    <BsCapsule className={activeTab === 'medicine' ? 'animate-bounce' : ''} /> Medicine Finder
                                 </div>
                             </button>
                             <button
                                 onClick={() => setActiveTab('firstaid')}
-                                className={`flex-1 py-4 rounded-[1.8rem] text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'firstaid' ? 'bg-slate-900 text-white shadow-xl' : 'text-slate-500 hover:text-slate-800'}`}
+                                className={`flex-1 py-5 rounded-[2rem] text-[10px] font-black uppercase tracking-widest transition-all relative z-10 ${activeTab === 'firstaid' ? 'bg-slate-900 text-white shadow-2xl scale-[1.02]' : 'text-slate-500 hover:text-slate-800'}`}
                             >
                                 <div className="flex items-center justify-center gap-2">
-                                    <BsHeartPulse /> First-Aid SOS
+                                    <BsHeartPulse className={activeTab === 'firstaid' ? 'animate-pulse text-red-500' : ''} /> First-Aid SOS
                                 </div>
                             </button>
                         </div>
@@ -155,13 +156,13 @@ const MedicineFirstAid = () => {
                     {activeTab === 'medicine' ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 animate-slide-up">
                             {filteredMeds.map((cat) => (
-                                <div key={cat.id} className="group bg-white rounded-[2.5rem] p-10 shadow-lg hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] transition-all border border-slate-100 relative overflow-hidden flex flex-col items-center text-center">
-                                    <div className={`absolute top-0 left-0 w-full h-2 bg-gradient-to-r ${cat.gradient}`}></div>
-                                    <div className={`w-20 h-20 bg-gradient-to-tr ${cat.gradient} rounded-[2rem] flex items-center justify-center text-white mb-8 shadow-xl transform group-hover:rotate-6 transition-transform`}>
+                                <div key={cat.id} className="group bg-white/40 backdrop-blur-3xl rounded-[3rem] p-10 shadow-sm hover:shadow-2xl transition-all duration-700 border border-white/60 relative overflow-hidden flex flex-col items-center text-center transform hover:-translate-y-4">
+                                    <div className={`absolute top-0 left-0 w-full h-2 bg-gradient-to-r ${cat.gradient} opacity-50`}></div>
+                                    <div className={`w-20 h-20 bg-gradient-to-tr ${cat.gradient} rounded-[2rem] flex items-center justify-center text-white mb-8 shadow-xl transform group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500`}>
                                         {cat.icon}
                                     </div>
-                                    <h3 className="text-2xl font-black text-slate-900 mb-4 tracking-tight">{cat.title}</h3>
-                                    <p className="text-slate-500 text-xs mb-8 leading-relaxed font-bold uppercase tracking-tight">{cat.desc}</p>
+                                    <h3 className="text-2xl font-black text-slate-900 mb-4 tracking-tighter uppercase">{cat.title}</h3>
+                                    <p className="text-slate-500 text-[10px] mb-8 leading-relaxed font-black uppercase tracking-widest opacity-70">{cat.desc}</p>
 
                                     <div className="w-full space-y-3 mb-10 pt-6 border-t border-slate-50">
                                         {cat.meds.map((med, i) => (
@@ -187,29 +188,29 @@ const MedicineFirstAid = () => {
                     ) : (
                         <div className="flex flex-col xl:flex-row gap-12 animate-slide-up">
                             {/* Body Map Interaction */}
-                            <div className="xl:w-80 bg-slate-900 rounded-[3rem] p-10 flex flex-col items-center justify-center shadow-2xl relative overflow-hidden group">
-                                <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-                                    <div className="w-full h-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_0%,transparent_70%)]"></div>
-                                </div>
+                            <div className="xl:w-96 bg-slate-900 rounded-[3.5rem] p-12 flex flex-col items-center justify-center shadow-2xl relative overflow-hidden group border border-white/10">
+                                <div className="absolute inset-0 bg-gradient-to-b from-orange-500/10 via-transparent to-green-500/10 opacity-30"></div>
 
-                                <h4 className="text-white font-black uppercase tracking-widest text-[10px] mb-10 border-b border-white/10 pb-4 w-full text-center">Interactive SOS Map</h4>
+                                <h4 className="text-white font-black uppercase tracking-[0.3em] text-[10px] mb-12 border-b border-white/10 pb-6 w-full text-center relative z-10">
+                                    Interactive <span className="text-orange-500">SOS</span> Map
+                                </h4>
 
-                                <div className="relative space-y-4 w-full">
+                                <div className="relative space-y-5 w-full z-10">
                                     {['Head', 'Chest', 'Stomach', 'General'].map(part => (
                                         <button
                                             key={part}
                                             onClick={() => setSelectedBodyPart(part)}
-                                            className={`w-full py-5 rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] transition-all border-2 ${selectedBodyPart === part ? 'bg-orange-600 border-orange-400 text-white shadow-xl shadow-orange-600/30' : 'bg-white/5 border-white/5 text-slate-400 hover:bg-white/10'}`}
+                                            className={`w-full py-6 rounded-2xl font-black uppercase text-[11px] tracking-[0.25em] transition-all duration-500 border-2 ${selectedBodyPart === part ? 'bg-gradient-to-r from-orange-600 to-orange-400 border-orange-300 text-white shadow-2xl shadow-orange-600/50 scale-105' : 'bg-white/5 border-white/5 text-slate-500 hover:bg-white/10 hover:text-white'}`}
                                         >
-                                            {part} SOS
+                                            {part} SOS Portal
                                         </button>
                                     ))}
                                 </div>
-                                <div className="mt-12 text-center">
-                                    <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center text-orange-500 border border-white/10 mb-4 mx-auto animate-pulse">
-                                        <BsFire />
+                                <div className="mt-12 text-center relative z-10">
+                                    <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center text-orange-500 border border-white/10 mb-4 mx-auto animate-pulse shadow-[0_0_30px_rgba(255,153,51,0.2)]">
+                                        <BsFire className="text-2xl" />
                                     </div>
-                                    <p className="text-[9px] font-black text-slate-500 uppercase tracking-tighter">Click to get priority advice</p>
+                                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Select Target Zone</p>
                                 </div>
                             </div>
 

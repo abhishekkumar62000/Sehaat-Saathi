@@ -13,6 +13,16 @@ export default {
       boxShadow: {
         panelShadow: "rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;",
       },
+      keyframes: {
+        "spin-slow": {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
+      },
+      animation: {
+        "spin-slow": "spin-slow 3s linear infinite",
+        "spin-slow-subtle": "spin-slow 60s linear infinite",
+      },
     },
   },
   plugins: [],

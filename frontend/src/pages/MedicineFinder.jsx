@@ -78,7 +78,7 @@ const MedicineFinder = () => {
                     ],
                     pharmacies: [
                         { name: "Apollo Pharmacy", distance: "0.8 km", stock: "Low", location: "Sector 14" },
-                        { name: "Sehaat Priority Hub", distance: "1.2 km", stock: "In Stock", location: "Grand Mall" },
+                        { name: <><span style={{ color: "#FF9933" }}>Sehaat</span> Priority Hub</>, distance: "1.2 km", stock: "In Stock", location: "Grand Mall" },
                         { name: "Local Chemist", distance: "3.5 km", stock: "High", location: "City Center" }
                     ],
                     treeNodes: [
@@ -188,7 +188,7 @@ const MedicineFinder = () => {
                                         MEDICINE <br />NEURAL HUB
                                     </h1>
                                     <p className="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto font-medium leading-relaxed mb-12">
-                                        Medicine shortage is a supply chain problem. Let Sehaat Saathi find safe alternatives or track them down for you.
+                                        Medicine shortage is a supply chain problem. Let <span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span> find safe alternatives or track them down for you.
                                     </p>
                                 </>
                             ) : (

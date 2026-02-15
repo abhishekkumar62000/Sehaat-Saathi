@@ -15,7 +15,7 @@ export const testimonials = [
     patient: "Aarav Sharma",
     image: p1Img,
     description:
-      "I had a great experience booking my doctor's appointment through Sehaat Saathi. The process was quick and easy, and the staff was very professional.",
+      "I had a great experience booking my doctor's appointment through <span style='color: #FF9933'>Sehaat</span> <span style='color: #138808'>Saathi</span>. The process was quick and easy, and the staff was very professional.",
     rating: 5,
   },
   {
@@ -23,7 +23,7 @@ export const testimonials = [
     patient: "Ananya Iyer",
     image: p2Img,
     description:
-      "Sehaat Saathi made it so convenient to find a specialist. The booking system is simple, and the service at the center is excellent.",
+      "<span style='color: #FF9933'>Sehaat</span> <span style='color: #138808'>Saathi</span> made it so convenient to find a specialist. The booking system is simple, and the service at the center is excellent.",
     rating: 4,
   },
   {
@@ -39,7 +39,7 @@ export const testimonials = [
     patient: "Ishani Verma",
     image: p4Img,
     description:
-      "The online booking system at Sehaat Saathi saved me so much time. The staff was accommodating, and the facilities were top-notch.",
+      "The online booking system at <span style='color: #FF9933'>Sehaat</span> <span style='color: #138808'>Saathi</span> saved me so much time. The staff was accommodating, and the facilities were top-notch.",
     rating: 4,
   },
   {
@@ -47,7 +47,7 @@ export const testimonials = [
     patient: "Advait Joshi",
     image: p5Img,
     description:
-      "Sehaat Saathi provides excellent service. I was able to find a doctor for my specific condition easily and got an appointment the next day.",
+      "<span style='color: #FF9933'>Sehaat</span> <span style='color: #138808'>Saathi</span> provides excellent service. I was able to find a doctor for my specific condition easily and got an appointment the next day.",
     rating: 5,
   },
   {
@@ -55,7 +55,7 @@ export const testimonials = [
     patient: "Diya Malhotra",
     image: p6Img,
     description:
-      "Very impressed with the efficiency of Sehaat Saathi. The booking system works seamlessly, and the doctors are very professional.",
+      "Very impressed with the efficiency of <span style='color: #FF9933'>Sehaat</span> <span style='color: #138808'>Saathi</span>. The booking system works seamlessly, and the doctors are very professional.",
     rating: 4,
   },
   {
@@ -63,7 +63,7 @@ export const testimonials = [
     patient: "Reyansh Singh",
     image: p7Img,
     description:
-      "The entire experience was smooth and hassle-free. From booking the appointment to the consultation, Sehaat Saathi did a fantastic job.",
+      "The entire experience was smooth and hassle-free. From booking the appointment to the consultation, <span style='color: #FF9933'>Sehaat</span> <span style='color: #138808'>Saathi</span> did a fantastic job.",
     rating: 5,
   },
   {
@@ -71,7 +71,7 @@ export const testimonials = [
     patient: "Myra Kulkarni",
     image: p8Img,
     description:
-      "Sehaat Saathi’s platform made it easy to schedule an appointment, and the quality of care I received was excellent.",
+      "<span style='color: #FF9933'>Sehaat</span> <span style='color: #138808'>Saathi</span>’s platform made it easy to schedule an appointment, and the quality of care I received was excellent.",
     rating: 5,
   },
   {
@@ -79,7 +79,7 @@ export const testimonials = [
     patient: "Kabir Das",
     image: p9Img,
     description:
-      "I’m really happy with the service at Sehaat Saathi. The booking process was simple, and the staff ensured I was comfortable during my visit.",
+      "I’m really happy with the service at <span style='color: #FF9933'>Sehaat</span> <span style='color: #138808'>Saathi</span>. The booking process was simple, and the staff ensured I was comfortable during my visit.",
     rating: 4,
   },
   {
@@ -87,7 +87,7 @@ export const testimonials = [
     patient: "Saanvi Rao",
     image: p10Img,
     description:
-      "Booking through Sehaat Saathi was stress-free, and the doctors were very professional. I will definitely be returning for future check-ups.",
+      "Booking through <span style='color: #FF9933'>Sehaat</span> <span style='color: #138808'>Saathi</span> was stress-free, and the doctors were very professional. I will definitely be returning for future check-ups.",
     rating: 5,
   },
 ];

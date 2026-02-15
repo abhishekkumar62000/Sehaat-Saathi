@@ -1,0 +1,68 @@
+.glass-container {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+}
+
+.login-gradient {
+    background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
+}
+
+.register-gradient {
+    background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+}
+
+.input-glow:focus {
+    box-shadow: 0 0 15px rgba(124, 58, 237, 0.3);
+    border-color: #7c3aed;
+}
+
+.premium-btn {
+    background: linear-gradient(135deg, #FF9933 0%, #138808 100%);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.premium-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
+}
+
+.premium-btn:active {
+    transform: scale(0.98);
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.floating-icon {
+    animation: float 4s ease-in-out infinite;
+}
+
+.password-toggle-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.password-toggle-btn:hover {
+    color: #7c3aed;
+}

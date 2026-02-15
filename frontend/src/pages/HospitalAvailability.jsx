@@ -244,7 +244,7 @@ const HospitalAvailability = () => {
             } else if (input.includes('hindi')) {
                 aiResponse = "नमस्ते! मैं आपकी कैसे मदद कर सकता हूँ? आप अपनी बीमारी या अस्पताल की ज़रूरत के बारे में बता सकते हैं।";
             } else {
-                aiResponse = "Hello! I am your Sehaat Saathi AI.\n\nType your symptom like:\n• 'Chest pain' (हृदय की समस्या)\n• 'Breathing issues' (सांस की समस्या)\n• 'Need ICU bed' (ICU बेड चाहिए)\n\nI will find the best hospital for you instantly.";
+                aiResponse = "Hello! I am your <span style='color: #FF9933'>Sehaat</span> <span style='color: #138808'>Saathi</span> AI.\n\nType your symptom like:\n• 'Chest pain' (हृदय की समस्या)\n• 'Breathing issues' (सांस की समस्या)\n• 'Need ICU bed' (ICU बेड चाहिए)\n\nI will find the best hospital for you instantly.";
             }
 
             setChatMessages(prev => [...prev, { type: 'ai', text: aiResponse }]);

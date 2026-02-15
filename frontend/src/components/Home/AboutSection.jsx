@@ -15,53 +15,59 @@ const AboutSection = () => {
     ];
 
     return (
-        <section className="container mx-auto px-4 lg:px-16 py-16 mb-20 relative overflow-hidden">
-            {/* Decorative Background Blob */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-teal-50 rounded-full blur-[100px] -z-10 opacity-60"></div>
+        <section className="container mx-auto px-4 lg:px-16 py-16 mb-20 relative overflow-hidden tri-color-mesh rounded-[2.5rem] sm:rounded-[60px] shadow-2xl border border-white/40 backdrop-blur-3xl">
+            {/* Decorative Background Ashoka Aura */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[600px] sm:h-[600px] bg-blue-500/5 rounded-full blur-[80px] sm:blur-[120px] -z-10 animate-pulse"></div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
                 {/* Left Content */}
                 <div className="space-y-8">
                     <div>
-                        <h2 className="text-4xl lg:text-5xl font-black text-gray-900 mb-6 leading-tight">
-                            About <span className="text-[#2eb8a6]">Us</span>
+                        <h2 className="text-[clamp(28px,8vw,80px)] font-black text-slate-900 mb-8 leading-[0.9] tracking-tighter uppercase">
+                            Our <span style={{ color: "#FF9933" }}>Legacy</span> & <span style={{ color: "#138808" }}>Vision</span>
                         </h2>
                         <p className="text-gray-600 leading-relaxed text-lg">
-                            <span className="font-bold text-[#009E60]">Sehaat Saathi is India's 1st AI Powered Virtual HealthCare Platform</span> designed for
+                            <span className="font-bold">
+                                <span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span> is India's 1st AI Powered Virtual HealthCare Platform
+                            </span> designed for
                             remote consultations, emergency healthcare, and personalized
                             treatment. It provides AI-based symptom checking, instant diagnosis,
                             and medicine suggestions.
                         </p>
                     </div>
 
-                    <p className="text-gray-800 font-bold text-xl border-l-4 border-[#2eb8a6] pl-4 py-2 bg-teal-50/50 rounded-r-xl">
-                        Our mission is to provide quality healthcare services to all individuals.
-                    </p>
+                    <div className="tri-glass p-6 rounded-[30px] border-l-8 border-l-[#FF9933]">
+                        <p className="text-slate-800 font-black text-xl leading-relaxed italic">
+                            "Democratizing elite healthcare for every corner of Bharat, powered by Sentient AI and Patriotic Dedication."
+                        </p>
+                    </div>
 
                     {/* Features List */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
                         {features.map((feature, index) => (
-                            <div key={index} className="flex items-center gap-3 group">
-                                <FaCheckCircle className="text-[#2eb8a6] text-xl flex-shrink-0 group-hover:scale-110 transition-transform" />
-                                <p className="text-gray-700 font-medium">{feature}</p>
+                            <div key={index} className="flex items-center gap-4 group">
+                                <div className="w-8 h-8 rounded-xl bg-white shadow-md flex items-center justify-center group-hover:bg-green-600 transition-all duration-300">
+                                    <FaCheckCircle className="text-[#138808] text-lg group-hover:text-white transition-colors" />
+                                </div>
+                                <p className="text-gray-800 font-black text-sm uppercase tracking-tighter">{feature}</p>
                             </div>
                         ))}
                     </div>
 
-                    <div className="pt-4">
+                    <div className="pt-8">
                         <Link
                             to="/about"
-                            className="inline-flex items-center justify-center px-10 py-4 bg-gradient-to-r from-[#2eb8a6] to-[#1d7a6e] text-white font-black text-lg rounded-2xl shadow-xl hover:shadow-teal-200 hover:-translate-y-1 transition-all"
+                            className="tri-btn inline-block"
                         >
-                            Learn More About Us
+                            Explore Our Mission
                         </Link>
                     </div>
                 </div>
 
                 {/* Right Image */}
-                <div className="relative group">
-                    <div className="absolute -inset-4 bg-gradient-to-tr from-teal-100 to-transparent rounded-[40px] blur-2xl opacity-40 group-hover:opacity-60 transition-opacity"></div>
-                    <div className="relative rounded-[40px] overflow-hidden shadow-2xl border-8 border-white">
+                <div className="relative group w-full max-w-lg mx-auto lg:max-w-none">
+                    <div className="absolute -inset-4 sm:-inset-6 bg-gradient-to-tr from-[#FF9933] via-white to-[#138808] rounded-[2rem] sm:rounded-[50px] blur-2xl sm:blur-3xl opacity-20 group-hover:opacity-40 transition-opacity animate-pulse"></div>
+                    <div className="relative rounded-[2rem] sm:rounded-[50px] overflow-hidden shadow-2xl border-[6px] sm:border-[12px] border-white/80 backdrop-blur-md">
                         <img
                             src={aboutImage}
                             alt="Sehaat Saathi Medical Team"

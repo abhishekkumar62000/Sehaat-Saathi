@@ -6,7 +6,7 @@ export const articlesData = [
   {
     id: 1,
     title: "AI-Powered Diagnostics: The Future of Health in 2026",
-    desc: "Explore how Sehaat Saathi is revolutionizing diagnosis with advanced AI algorithms, ensuring 99.9% accuracy in preliminary screenings.",
+    desc: "Explore how <span style='color: #FF9933'>Sehaat</span> <span style='color: #138808'>Saathi</span> is revolutionizing diagnosis with advanced AI algorithms, ensuring 99.9% accuracy in preliminary screenings.",
     post_date: "2026-01-15",
     writer: "Dr. Sarah Ahmed",
     img: newsImg1,
@@ -14,7 +14,7 @@ export const articlesData = [
   {
     id: 2,
     title: "Remote Monitoring: Staying Connected with Your Doctor",
-    desc: "With Sehaat Saathi's 2026 wearable integration, your health data is monitored real-time by specialists, preventing critical emergencies.",
+    desc: "With <span style='color: #FF9933'>Sehaat</span> <span style='color: #138808'>Saathi</span>'s 2026 wearable integration, your health data is monitored real-time by specialists, preventing critical emergencies.",
     post_date: "2026-01-12",
     writer: "Dr. John Smith",
     img: newsImg2,
@@ -38,7 +38,7 @@ export const articlesData = [
   {
     id: 5,
     title: "Telemedicine 2.0: Holographic Consultations",
-    desc: "Experience the next level of remote care. Sehaat Saathi introduces realistic 3D consultations for a truly immersive medical experience.",
+    desc: "Experience the next level of remote care. <span style='color: #FF9933'>Sehaat</span> <span style='color: #138808'>Saathi</span> introduces realistic 3D consultations for a truly immersive medical experience.",
     post_date: "2026-01-05",
     writer: "Dr. Emily Zhao",
     img: newsImg2,

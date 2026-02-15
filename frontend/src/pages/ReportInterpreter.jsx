@@ -264,7 +264,7 @@ const ReportInterpreter = () => {
 
                                 {/* Ecosystem Action Hub */}
                                 <div className="space-y-4">
-                                    <div className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-600 pl-4">Sehaat Ecosystem Hub</div>
+                                    <div className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-600 pl-4"><span style={{ color: "#FF9933" }}>Sehaat</span> Ecosystem Hub</div>
                                     <Link to="/tele-consult" className="group flex items-center justify-between p-8 rounded-[2.5rem] bg-rose-500/10 border border-rose-500/20 hover:bg-rose-500 transition-all">
                                         <div>
                                             <h4 className="font-black text-rose-500 group-hover:text-white transition-colors">Tele-Consult Now</h4>
@@ -274,7 +274,7 @@ const ReportInterpreter = () => {
                                     </Link>
                                     <Link to="/pharmacy-hub" className="group flex items-center justify-between p-8 rounded-[2.5rem] bg-emerald-500/10 border border-emerald-500/20 hover:bg-emerald-500 transition-all">
                                         <div>
-                                            <h4 className="font-black text-emerald-500 group-hover:text-white transition-colors">Sehaat Pharmacy</h4>
+                                            <h4 className="font-black text-emerald-500 group-hover:text-white transition-colors"><span style={{ color: "#FF9933" }}>Sehaat</span> Pharmacy</h4>
                                             <p className="text-[10px] text-slate-400 group-hover:text-emerald-100 transition-colors">Order suggested medicines & supplements instantly.</p>
                                         </div>
                                         <BsCartCheck className="text-emerald-500 group-hover:text-white text-3xl" />
@@ -339,7 +339,7 @@ const ReportInterpreter = () => {
                                     <div className="space-y-8 animate-fade-in">
                                         <div className="bg-cyan-500/5 border border-cyan-500/20 p-10 rounded-[4rem]">
                                             <h3 className="text-2xl font-black mb-8 flex items-center gap-4 text-cyan-400">
-                                                <BsFileEarmarkText /> SEHAAT SMART PROTOCOL
+                                                <BsFileEarmarkText /> <span style={{ color: "#FF9933" }}>SEHAAT</span> SMART PROTOCOL
                                             </h3>
                                             <div className="space-y-6">
                                                 {currentData.prescription.map((med, i) => (
@@ -352,7 +352,7 @@ const ReportInterpreter = () => {
                                                                     <div className="text-[10px] font-black text-cyan-500 uppercase tracking-widest">{med.dosage} • {med.schedule}</div>
                                                                 </div>
                                                             </div>
-                                                            <Link to={med.pharmacyLink} className="py-4 px-8 rounded-2xl bg-cyan-600 hover:bg-cyan-500 font-black text-[10px] uppercase tracking-widest transition-all shadow-xl shadow-cyan-500/20 text-center">Buy via Sehaat</Link>
+                                                            <Link to={med.pharmacyLink} className="py-4 px-8 rounded-2xl bg-cyan-600 hover:bg-cyan-500 font-black text-[10px] uppercase tracking-widest transition-all shadow-xl shadow-cyan-500/20 text-center">Buy via <span style={{ color: "#FF9933" }}>Sehaat</span></Link>
                                                         </div>
                                                         <div className="bg-cyan-500/5 p-4 rounded-xl border border-dashed border-cyan-500/20 flex gap-3 text-xs italic text-slate-400">
                                                             <span className="text-cyan-400 font-black">Saathi Guide:</span>

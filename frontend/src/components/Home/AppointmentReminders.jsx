@@ -7,7 +7,7 @@ const AppointmentReminders = () => {
         Appointment Reminders & Follow-ups
       </h2>
       <p className="text-center text-gray-600 lg:text-[16px] text-[14px] mb-3 lg:max-w-[70%] max-w-[90%] mx-auto">
-        Sehaat Saathi is dedicated to helping you manage your health
+        <span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span> is dedicated to helping you manage your health
         with ease and consistency. Explore our automated reminders, personalized
         follow-ups, and health tracking tools.
       </p>

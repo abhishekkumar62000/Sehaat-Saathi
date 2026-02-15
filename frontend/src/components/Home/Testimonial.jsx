@@ -20,10 +20,10 @@ const Testimonial = () => {
         <span className="inline-block px-4 py-1 mb-4 text-xs font-bold tracking-widest text-violet-600 uppercase bg-violet-50 rounded-full">
           Patient Stories
         </span>
-        <h2 className="text-4xl lg:text-5xl font-extrabold text-slate-900 mb-4 tracking-tight">
+        <h2 className="text-[clamp(28px,6vw,56px)] font-black text-slate-900 mb-4 tracking-tighter uppercase leading-none">
           What Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-indigo-600">Patients Say</span>
         </h2>
-        <div className="h-1.5 w-24 bg-gradient-to-r from-violet-400 to-indigo-500 mx-auto rounded-full mb-6"></div>
+        <div className="h-1.5 w-24 bg-gradient-to-r from-violet-400 to-indigo-500 mx-auto rounded-full mb-6 shadow-lg shadow-violet-200"></div>
         <p className="max-w-2xl mx-auto text-gray-500 text-lg font-medium">
           Trusted by thousands of families for our accuracy, compassion, and
           digital-first healthcare approach in 2026.
@@ -49,7 +49,7 @@ const Testimonial = () => {
       >
         {testimonials.map((testimonial) => (
           <SwiperSlide key={testimonial.id} className="py-10">
-            <div className="group relative bg-white/70 backdrop-blur-xl border border-white rounded-[40px] p-8 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col h-full transform hover:-translate-y-4">
+            <div className="group relative bg-white/70 backdrop-blur-3xl border border-white/60 rounded-[2.5rem] p-8 shadow-sm hover:shadow-2xl transition-all duration-700 flex flex-col h-full transform hover:-translate-y-4">
 
               {/* Floating Avatar */}
               <div className="absolute -top-10 left-10 transition-transform duration-500 group-hover:scale-110">
@@ -79,9 +79,7 @@ const Testimonial = () => {
                   ))}
                 </div>
 
-                <p className="text-gray-600 leading-relaxed italic text-lg mb-8 line-clamp-4">
-                  "{testimonial.description}"
-                </p>
+                <p className="text-gray-600 leading-relaxed italic text-lg mb-8 line-clamp-4" dangerouslySetInnerHTML={{ __html: `"${testimonial.description}"` }} />
               </div>
 
               {/* Patient Info */}
@@ -101,8 +99,9 @@ const Testimonial = () => {
       <style>{`
         .testimonial-swiper .swiper-pagination-bullet-active {
           background: #7c3aed !important;
-          width: 24px !important;
-          border-radius: 4px !important;
+          width: 32px !important;
+          border-radius: 8px !important;
+          box-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
         }
         .testimonial-swiper .swiper-pagination {
           bottom: 0px !important;

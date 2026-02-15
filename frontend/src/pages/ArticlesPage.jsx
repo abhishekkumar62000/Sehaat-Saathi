@@ -9,7 +9,7 @@ const ArticlesPage = () => {
             <section className="bg-gradient-to-r from-teal-500 to-blue-600 py-20 text-white">
                 <div className="container mx-auto px-4 text-center">
                     <span className="inline-block px-4 py-1 mb-4 text-xs font-semibold tracking-widest uppercase bg-white/20 rounded-full backdrop-blur-md">
-                        Sehaat Saathi Newsroom
+                        <span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span> Newsroom
                     </span>
                     <h1 className="text-4xl lg:text-6xl font-extrabold mb-6 tracking-tight">
                         Latest <span className="text-teal-200">Health Articles</span> 2026
@@ -57,9 +57,7 @@ const ArticlesPage = () => {
                                     {article.title}
                                 </h2>
 
-                                <p className="text-gray-500 leading-relaxed mb-8 line-clamp-3">
-                                    {article.desc}
-                                </p>
+                                <p className="text-gray-500 leading-relaxed mb-8 line-clamp-3" dangerouslySetInnerHTML={{ __html: article.desc }} />
 
                                 <Link
                                     to={`/articles/${article.id}`}
