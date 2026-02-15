@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import bgImg from "../assets/images/bgImg.png";
-import logo from "../assets/images/brand-logo/SehaatSaathi Logo.png";
+import logo from "../assets/images/brand-logo/SehaatSaathiLogo.png";
 import Loading from "../components/Shared/Loading.jsx";
 import { BASE_URL } from "../config.js";
 import { authContext } from "../context/AuthContext.jsx";

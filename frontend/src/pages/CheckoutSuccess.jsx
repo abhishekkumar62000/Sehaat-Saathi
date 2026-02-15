@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import brandLogo from "../assets/images/brand-logo/SehaatSaathi Logo.png";
+import brandLogo from "../assets/images/brand-logo/SehaatSaathiLogo.png";
 
 const CheckoutSuccess = () => {
   return (

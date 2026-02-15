@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { doctors } from "../../assets/data/doctors";
 import DoctorCard from "../../pages/Doctors/DoctorCard";
 
-import logo from "../../assets/images/brand-logo/SehaatSaathi Logo.png";
+import logo from "../../assets/images/brand-logo/SehaatSaathiLogo.png";
 
 const GreatDoctors = () => {
   return (

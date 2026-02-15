@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { FaAppStoreIos } from "react-icons/fa";
 import { IoLogoGooglePlaystore } from "react-icons/io5";
 import appLogo from "../../assets/images/home/SehaatSaathiAppLogo.png";
-import logo from "../../assets/images/brand-logo/SehaatSaathi Logo.png";
+import logo from "../../assets/images/brand-logo/SehaatSaathiLogo.png";
 
 const DownloadApp = () => {
   return (
