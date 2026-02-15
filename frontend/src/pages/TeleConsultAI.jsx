@@ -5123,7 +5123,7 @@ const TeleConsultAI = () => {
                     100% { transform: translateY(-100%); opacity: 0; }
                 }
                 .animate-ticker { animation: ticker-slide 4s ease-in-out infinite; }
-                .animate-heart { animation: heart-beat var(--heart-duration) ease-in-out infinite; }
+                .animate-heart { animation: heart-beat var(--heart-duration, 0.8s) ease-in-out infinite; }
                 @keyframes neural-pulse {
                     0% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.4); }
                     70% { box-shadow: 0 0 0 10px rgba(244, 63, 94, 0); }
