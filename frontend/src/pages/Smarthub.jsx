@@ -181,7 +181,7 @@ const Smarthub = () => {
 
             <div className="container mx-auto px-4 md:px-0">
                 {/* Section Header */}
-                <div className="flex flex-wrap gap-4 mb-16 tri-glass p-8 rounded-[40px] sticky top-24 z-40 items-center justify-between">
+                <div className="flex flex-wrap gap-4 mb-16 tri-glass p-4 sm:p-6 md:p-8 rounded-[40px] static md:sticky top-24 z-40 items-center justify-between">
                     <div className="flex items-center gap-4">
                         <div className="p-4 bg-gradient-to-tr from-[#FF9933] to-[#138808] rounded-2xl shadow-2xl">
                             <BsStars className="text-white text-2xl" />
@@ -196,7 +196,7 @@ const Smarthub = () => {
                 </div>
 
                 {/* Feature Sections - Grid layout directly displayed */}
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 animate-slide-up">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 animate-slide-up">
                     <Link to="/express-track">
                         <FeatureRoadmapCard
                             icon={<BsTruck />}
@@ -676,18 +676,18 @@ const FeatureRoadmapCard = ({ icon, title, desc, color, status, example, outstan
     const safeColorClass = colorClasses[color] || colorClasses.emerald;
 
     return (
-        <div className={`tri-glass rounded-[40px] p-10 transition-all hover:-translate-y-3 group h-full flex flex-col relative overflow-hidden ${outstanding ? 'ring-4 ring-[#FF9933]/20 shadow-2xl' : ''} ${color === 'tiranga' ? 'bg-gradient-to-br from-[#FF9933]/10 via-white to-[#138808]/10 border border-[#FF9933]/20' : ''}`}>
+        <div className={`tri-glass rounded-[40px] p-4 sm:p-6 md:p-8 lg:p-10 transition-all hover:-translate-y-3 group h-full flex flex-col relative overflow-hidden ${outstanding ? 'ring-4 ring-[#FF9933]/20 shadow-2xl' : ''} ${color === 'tiranga' ? 'bg-gradient-to-br from-[#FF9933]/10 via-white to-[#138808]/10 border border-[#FF9933]/20' : ''}`}>
             {outstanding && (
                 <div className={`absolute top-0 right-0 text-white text-[9px] font-black px-4 py-1 rounded-bl-2xl z-20 animate-pulse tracking-widest shadow-lg ${color === 'tiranga' ? 'bg-gradient-to-r from-[#FF9933] via-white to-[#138808] text-[#000080]' : 'bg-lime-500'}`}>
                     OUTSTANDING ELITE
                 </div>
             )}
-            <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-8 transition-all group-hover:scale-110 group-hover:rotate-12 shadow-inner ${safeColorClass.split(' ').slice(2).join(' ')} ${color === 'tiranga' ? 'border-2 border-[#FF9933]/20 shadow-lg' : ''}`}>
-                <span className="text-3xl">{icon}</span>
+            <div className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-2xl flex items-center justify-center mb-4 sm:mb-6 md:mb-8 transition-all group-hover:scale-110 group-hover:rotate-12 shadow-inner ${safeColorClass.split(' ').slice(2).join(' ')} ${color === 'tiranga' ? 'border-2 border-[#FF9933]/20 shadow-lg' : ''}`}>
+                <span className="text-2xl sm:text-2xl md:text-3xl">{icon}</span>
             </div>
 
-            <div className="flex items-center gap-2 mb-4">
-                <div className="inline-block px-3 py-1 rounded-full bg-gray-100 text-[10px] font-bold uppercase tracking-widest">
+            <div className="flex items-center gap-2 mb-3 sm:mb-4">
+                <div className="inline-block px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-gray-100 text-[8px] sm:text-[10px] font-bold uppercase tracking-widest">
                     {status}
                 </div>
                 {status === 'In Beta' && (
@@ -695,14 +695,14 @@ const FeatureRoadmapCard = ({ icon, title, desc, color, status, example, outstan
                 )}
             </div>
 
-            <h3 className="text-2xl font-black mb-4 text-gray-900 tracking-tighter leading-tight">{title}</h3>
-            <p className="text-slate-600 font-medium leading-relaxed mb-8">
+            <h3 className="text-lg sm:text-xl md:text-2xl font-black mb-3 sm:mb-4 text-gray-900 tracking-tighter leading-tight">{title}</h3>
+            <p className="text-sm sm:text-base text-slate-600 font-medium leading-relaxed mb-4 sm:mb-6 md:mb-8">
                 {desc}
             </p>
 
             {/* Example Preview on Hover */}
             {example && (
-                <div className="hidden group-hover:block animate-fade-in mb-6 p-4 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
+                <div className="hidden group-hover:block animate-fade-in mb-4 sm:mb-6 p-3 sm:p-4 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
                     <p className="text-[10px] font-black uppercase text-slate-400 mb-2 tracking-tighter">Live Example:</p>
                     <div className="space-y-3">
                         <div className="flex gap-2">
@@ -717,7 +717,7 @@ const FeatureRoadmapCard = ({ icon, title, desc, color, status, example, outstan
                 </div>
             )}
 
-            <div className="mt-auto pt-6 border-t border-gray-50 flex justify-between items-center bg-transparent">
+            <div className="mt-auto pt-4 sm:pt-6 border-t border-gray-50 flex justify-between items-center bg-transparent">
                 <span className="text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity">Launch App</span>
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white bg-gradient-to-r ${safeColorClass.split(' ').slice(0, 2).join(' ')} shadow-lg`}>
                     <BsArrowRight />
