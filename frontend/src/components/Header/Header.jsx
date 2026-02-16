@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { BiMenu } from "react-icons/bi";
 import { BsActivity, BsRobot } from "react-icons/bs";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import logo from "../../assets/images/brand-logo/SehaatSaathiLogo.png";
+import logo from "../../assets/images/SehaatSaathi.png";
 import userAvatar from "../../assets/images/icons/patient-avatar.png";
 import { authContext } from "../../context/AuthContext";
 
