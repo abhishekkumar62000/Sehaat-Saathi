@@ -37,6 +37,7 @@ const OfflineConsultationHub = () => {
     const [crowdDelay, setCrowdDelay] = useState(false); // Simulated predictive delay toggle
     const [climateAlert, setClimateAlert] = useState(true); // Simulated heat-wave alert
     const [offlineMode, setOfflineMode] = useState(false);
+    const [showMobileFilters, setShowMobileFilters] = useState(false); // Mobile filters drawer state
 
     const translations = {
         en: {
@@ -196,10 +197,10 @@ const OfflineConsultationHub = () => {
                 <div className="flex flex-col lg:flex-row gap-8 relative z-10">
                     {/* Mobile Filter Toggle */}
                     <button
-                        className="lg:hidden w-full py-4 bg-white border border-gray-200 rounded-2xl flex items-center justify-center gap-2 font-black uppercase tracking-widest text-xs text-slate-700 shadow-lg"
-                        onClick={() => document.getElementById('filter-sidebar').classList.toggle('hidden')}
+                        className="lg:hidden w-full py-4 bg-white border border-gray-200 rounded-2xl flex items-center justify-center gap-2 font-black uppercase tracking-widest text-xs text-slate-700 shadow-lg hover:bg-gray-50 transition-all active:scale-95"
+                        onClick={() => setShowMobileFilters(true)}
                     >
-                        <BsFilterCircleFill className="text-[#FF9933]" /> Toggle Smart Filters
+                        <BsFilterCircleFill className="text-[#FF9933]" /> {t.smartFilters}
                     </button>
 
                     {/* Filters Sidebar */}
@@ -275,6 +276,111 @@ const OfflineConsultationHub = () => {
                             </div>
                         </div>
                     </aside>
+
+                    {/* Mobile Filters Drawer Modal */}
+                    {showMobileFilters && (
+                        <div className="fixed inset-0 z-[120] lg:hidden">
+                            {/* Backdrop */}
+                            <div
+                                onClick={() => setShowMobileFilters(false)}
+                                className="absolute inset-0 bg-slate-900/60 backdrop-blur-md animate-in fade-in duration-300"
+                            />
+
+                            {/* Drawer Panel */}
+                            <div className="absolute inset-x-0 bottom-0 bg-white rounded-t-[3rem] p-6 max-h-[85vh] overflow-y-auto animate-in slide-in-from-bottom duration-300 shadow-2xl">
+                                {/* Header with Close Button */}
+                                <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-100">
+                                    <div className="flex items-center gap-3">
+                                        <BsFilterCircleFill className="text-[#000080]" />
+                                        <h2 className="text-sm font-black uppercase tracking-widest text-gray-800">
+                                            {t.smartFilters}
+                                        </h2>
+                                    </div>
+                                    <button
+                                        onClick={() => setShowMobileFilters(false)}
+                                        className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors active:scale-95"
+                                    >
+                                        <BsPlusSquareFill className="rotate-45 text-gray-600" />
+                                    </button>
+                                </div>
+
+                                {/* Filter Content */}
+                                <div className="space-y-8">
+                                    {/* District Selection */}
+                                    <div className="space-y-4">
+                                        <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest">{t.district}</label>
+                                        <select
+                                            value={selectedDistrict}
+                                            onChange={(e) => setSelectedDistrict(e.target.value)}
+                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 text-sm font-bold focus:outline-none focus:border-[#FF9933] transition-all text-gray-700 shadow-inner"
+                                        >
+                                            {districts.map(d => <option key={d} value={d} className="bg-white text-gray-900">{d}</option>)}
+                                        </select>
+                                    </div>
+
+                                    {/* Provider Type */}
+                                    <div className="space-y-4">
+                                        <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest">{t.provider}</label>
+                                        <div className="flex flex-wrap gap-2">
+                                            {['All', 'Government', 'Private', 'Personal Clinic'].map(type => (
+                                                <button
+                                                    key={type}
+                                                    onClick={() => setHospitalType(type)}
+                                                    className={`px-4 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-widest border transition-all ${hospitalType === type ? 'bg-gradient-to-r from-[#FF9933] to-[#138808] border-transparent text-white shadow-lg shadow-orange-500/20' : 'bg-slate-50 border-slate-200 text-slate-500 hover:bg-white hover:border-[#FF9933]/30'}`}
+                                                >
+                                                    {type}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    {/* Specialty Multi-select */}
+                                    <div className="space-y-4">
+                                        <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest">{t.specialty}</label>
+                                        <div className="flex flex-wrap gap-2 max-h-[180px] overflow-y-auto custom-scrollbar p-1">
+                                            {specialties.map(s => (
+                                                <button
+                                                    key={s}
+                                                    onClick={() => toggleSpecialty(s)}
+                                                    className={`px-3 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest border transition-all ${selectedSpecialty.includes(s) ? 'bg-[#000080] border-[#000080] text-white shadow-md' : 'bg-white border-slate-100 text-slate-400 hover:border-[#000080]/30 hover:text-[#000080]'}`}
+                                                >
+                                                    {s}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    {/* Fee Slider */}
+                                    <div className="space-y-4">
+                                        <div className="flex justify-between items-center">
+                                            <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest">{t.fee}</label>
+                                            <span className="text-xs font-black text-[#000080] bg-blue-50 px-2 py-1 rounded-lg">₹0 - ₹{feeRange}</span>
+                                        </div>
+                                        <input
+                                            type="range" min="0" max="3000" step="100"
+                                            value={feeRange}
+                                            onChange={(e) => setFeeRange(e.target.value)}
+                                            className="w-full accent-[#FF9933] h-2 bg-slate-200 rounded-full appearance-none cursor-pointer"
+                                        />
+                                        <div className="flex justify-between text-[8px] font-black text-gray-300 uppercase tracking-widest">
+                                            <span>Free</span>
+                                            <span>Max</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Apply Filters Button */}
+                                <div className="mt-8 pt-6 border-t border-gray-100 sticky bottom-0 bg-white">
+                                    <button
+                                        onClick={() => setShowMobileFilters(false)}
+                                        className="w-full py-5 bg-gradient-to-r from-[#FF9933] to-[#138808] text-white rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl shadow-[#FF9933]/20 active:scale-95 transition-all flex items-center justify-center gap-2"
+                                    >
+                                        Apply Filters <BsFilterCircleFill />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
 
                     {/* Main Content Area */}
                     <div className="lg:w-3/4 space-y-12">
