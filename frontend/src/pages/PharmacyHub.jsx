@@ -112,70 +112,70 @@ const PharmacyHub = () => {
             </div>
 
             {/* Header */}
-            <header className="fixed top-0 left-0 w-full z-50 bg-black/40 backdrop-blur-3xl border-b border-white/5 py-5 px-8">
+            <header className="fixed top-0 left-0 w-full z-50 bg-black/40 backdrop-blur-3xl border-b border-white/5 py-3 sm:py-4 md:py-5 px-4 sm:px-6 md:px-8">
                 <div className="container mx-auto flex justify-between items-center">
-                    <Link to="/smarthub" className="flex items-center gap-3 text-slate-500 hover:text-white transition-all group font-black uppercase text-[10px] tracking-[0.3em]">
-                        <BsArrowLeft className="group-hover:-translate-x-1 transition-all" /> Smart Hub
+                    <Link to="/smarthub" className="flex items-center gap-2 sm:gap-3 text-slate-500 hover:text-white transition-all group font-black uppercase text-[9px] sm:text-[10px] tracking-[0.2em] sm:tracking-[0.3em]">
+                        <BsArrowLeft className="group-hover:-translate-x-1 transition-all text-sm sm:text-base" /> <span className="hidden xs:inline">Smart </span>Hub
                     </Link>
-                    <div className="flex items-center gap-8">
+                    <div className="flex items-center gap-3 sm:gap-4 md:gap-8">
                         <button
                             onClick={() => { setShowCart(!showCart); setCheckoutStep(0); }}
-                            className="relative p-2 text-2xl text-slate-300 hover:text-emerald-400 transition-all"
+                            className="relative p-1.5 sm:p-2 text-xl sm:text-2xl text-slate-300 hover:text-emerald-400 transition-all"
                         >
                             <BsCartCheck />
                             {cart.length > 0 && (
-                                <span className="absolute -top-1 -right-1 w-5 h-5 bg-emerald-500 text-white text-[10px] font-black rounded-full flex items-center justify-center animate-bounce">
+                                <span className="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 bg-emerald-500 text-white text-[8px] sm:text-[10px] font-black rounded-full flex items-center justify-center animate-bounce">
                                     {cart.length}
                                 </span>
                             )}
                         </button>
-                        <div className="px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center gap-2">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                            <span className="text-[10px] font-black uppercase tracking-widest text-emerald-400">Inventory Live</span>
+                        <div className="hidden sm:flex px-3 md:px-4 py-1 md:py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 items-center gap-1.5 md:gap-2">
+                            <span className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <span className="text-[8px] md:text-[10px] font-black uppercase tracking-wider md:tracking-widest text-emerald-400">Inventory</span>
                         </div>
                     </div>
                 </div>
             </header>
 
-            <main className="pt-32 pb-20 px-8 relative z-10 h-screen overflow-y-auto custom-scrollbar">
+            <main className="pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6 md:px-8 relative z-10 h-screen overflow-y-auto custom-scrollbar">
                 <div className="container mx-auto max-w-7xl">
 
                     {/* Hero Area */}
-                    <div className="flex flex-col md:flex-row justify-between items-end gap-10 mb-20 animate-slide-up">
+                    <div className="flex flex-col md:flex-row justify-between items-end gap-6 sm:gap-8 md:gap-10 mb-12 sm:mb-16 md:mb-20 animate-slide-up">
                         <div className="max-w-3xl">
-                            <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 mb-8">
-                                <BsCapsule className="animate-spin-slow" />
-                                <span className="text-xs font-black uppercase tracking-[0.4em]">
+                            <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 md:px-6 py-1.5 sm:py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 mb-4 sm:mb-6 md:mb-8">
+                                <BsCapsule className="animate-spin-slow text-sm sm:text-base" />
+                                <span className="text-[9px] sm:text-[10px] md:text-xs font-black uppercase tracking-[0.2em] sm:tracking-[0.3em] md:tracking-[0.4em]">
                                     <span style={{ color: "#FF9933" }}>Sehaat</span>{" "}
-                                    <span style={{ color: "#138808" }}>Saathi</span> Pharmacy-Hub v4.0
+                                    <span style={{ color: "#138808" }}>Saathi</span> <span className="hidden sm:inline">Pharmacy-Hub v4.0</span><span className="sm:hidden">PH</span>
                                 </span>
                             </div>
-                            <h1 className="text-7xl md:text-9xl font-black tracking-tighter leading-[0.85] uppercase mb-8">
-                                PREMIER <span style={{ color: "#FF9933" }}>SEHAAT</span> <span style={{ color: "#138808" }} className="italic block">SAATHI</span> <span className="text-emerald-500">PHARMACY</span>
+                            <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-black tracking-tighter leading-[0.9] sm:leading-[0.85] uppercase mb-4 sm:mb-6 md:mb-8">
+                                <span className="block sm:inline">PREMIER </span><span style={{ color: "#FF9933" }}>SEHAAT</span> <span style={{ color: "#138808" }} className="italic block">SAATHI</span> <span className="text-emerald-500 block sm:inline">PHARMACY</span>
                             </h1>
-                            <p className="text-slate-400 text-xl font-medium italic">
-                                "Skip the pharmacy lines. Get authentic medicines at your doorstep with <span className="text-white font-bold"><span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span> Express Neural Delivery</span>."
+                            <p className="text-slate-400 text-sm sm:text-base md:text-lg lg:text-xl font-medium italic leading-relaxed">
+                                "Skip pharmacy lines. <span className="hidden sm:inline">Get authentic medicines at your doorstep with </span><span className="text-white font-bold"><span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span> <span className="hidden sm:inline">Express </span>Neural Delivery</span>."
                             </p>
                         </div>
                         <div className="relative w-full md:w-96">
-                            <BsSearch className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-500 text-xl" />
+                            <BsSearch className="absolute left-4 sm:left-5 md:left-6 top-1/2 -translate-y-1/2 text-slate-500 text-base sm:text-lg md:text-xl" />
                             <input
                                 type="text"
-                                placeholder="Search 10,000+ medicines, salts, and surgical gear..."
+                                placeholder="Search medicines..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="w-full bg-white/5 border-2 border-white/5 rounded-[2rem] py-6 pl-16 pr-8 text-lg font-bold outline-none focus:border-emerald-500/40 transition-all placeholder:text-slate-600"
+                                className="w-full bg-white/5 border-2 border-white/5 rounded-2xl sm:rounded-3xl md:rounded-[2rem] py-4 sm:py-5 md:py-6 pl-12 sm:pl-14 md:pl-16 pr-4 sm:pr-6 md:pr-8 text-sm sm:text-base md:text-lg font-bold outline-none focus:border-emerald-500/40 transition-all placeholder:text-slate-600"
                             />
                         </div>
                     </div>
 
                     {/* Category Filter */}
-                    <div className="flex flex-wrap gap-4 mb-16 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+                    <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4 mb-8 sm:mb-12 md:mb-16 animate-fade-in" style={{ animationDelay: '0.2s' }}>
                         {categories.map(cat => (
                             <button
                                 key={cat}
                                 onClick={() => setActiveCategory(cat)}
-                                className={`px-10 py-4 rounded-full border-2 font-black uppercase text-[10px] tracking-widest transition-all ${activeCategory === cat ? 'bg-emerald-600 border-emerald-500 text-white shadow-xl shadow-emerald-900/40' : 'bg-white/5 border-white/5 text-slate-500 hover:border-white/20 hover:text-white'}`}
+                                className={`px-4 sm:px-6 md:px-8 lg:px-10 py-2 sm:py-3 md:py-4 rounded-full border sm:border-2 font-black uppercase text-[8px] sm:text-[9px] md:text-[10px] tracking-wider sm:tracking-widest transition-all ${activeCategory === cat ? 'bg-emerald-600 border-emerald-500 text-white shadow-lg sm:shadow-xl shadow-emerald-900/40' : 'bg-white/5 border-white/5 text-slate-500 hover:border-white/20 hover:text-white'}`}
                             >
                                 {cat}
                             </button>
@@ -183,7 +183,7 @@ const PharmacyHub = () => {
                     </div>
 
                     {/* Medicine Grid */}
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-20 text-blue-50">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 mb-12 sm:mb-16 md:mb-20 text-blue-50">
                         {filteredMedicines.map((med, i) => (
                             <div
                                 key={med.id}
@@ -258,7 +258,7 @@ const PharmacyHub = () => {
             {showCart && (
                 <div className="fixed inset-0 z-[100] flex justify-end">
                     <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowCart(false)}></div>
-                    <div className="relative w-full max-w-xl bg-[#0a0f0d] border-l border-white/10 h-full p-12 flex flex-col shadow-[0_0_100px_rgba(0,0,0,1)] animate-slide-left">
+                    <div className="relative w-full max-w-full sm:max-w-md md:max-w-lg lg:max-w-xl bg-[#0a0f0d] border-l border-white/10 h-full p-6 sm:p-8 md:p-10 lg:p-12 flex flex-col shadow-[0_0_100px_rgba(0,0,0,1)] animate-slide-left overflow-y-auto">
 
                         {/* Progress Stepper */}
                         <div className="flex justify-between items-center mb-12 gap-2">
