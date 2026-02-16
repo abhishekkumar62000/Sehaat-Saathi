@@ -44,14 +44,7 @@ lerna-debug.log*
 .vercel
 .netlify
 temp/
-*.mp4
-*.MOV
-*.avi
-*.wmv
-*.mkv
-*.png
-*.jpg
-*.jpeg
+
 "Website Page/"
 *.mjs
 *.txt
