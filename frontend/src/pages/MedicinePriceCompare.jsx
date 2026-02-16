@@ -160,73 +160,73 @@ const MedicinePriceCompare = () => {
             </div>
 
             {/* SENTINEL HUD: COINS & VITALS */}
-            <div className="fixed top-6 right-6 z-[100] flex flex-col gap-4">
+            <div className="fixed top-20 sm:top-24 md:top-6 right-2 sm:right-4 md:right-6 z-[100] flex flex-col gap-2 sm:gap-3 md:gap-4">
                 {/* Coins */}
-                <div className="px-5 py-3 rounded-2xl bg-black/60 backdrop-blur-3xl border border-white/5 flex items-center gap-4 shadow-2xl animate-fade-in">
-                    <div className="w-10 h-10 rounded-xl bg-amber-500/20 flex items-center justify-center text-amber-400">
-                        <BsCoin className="text-xl animate-spin-slow" />
+                <div className="px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 md:py-3 rounded-xl sm:rounded-2xl bg-black/60 backdrop-blur-3xl border border-white/5 flex items-center gap-2 sm:gap-3 md:gap-4 shadow-2xl animate-fade-in">
+                    <div className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-lg sm:rounded-xl bg-amber-500/20 flex items-center justify-center text-amber-400">
+                        <BsCoin className="text-base sm:text-lg md:text-xl animate-spin-slow" />
                     </div>
-                    <div>
-                        <p className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-500"><span style={{ color: "#FF9933" }}>Sehaat</span> Credits</p>
-                        <p className="text-lg font-black text-white">{userCoins}</p>
+                    <div className="hidden xs:block">
+                        <p className="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] text-slate-500"><span style={{ color: "#FF9933" }}>S</span> Credits</p>
+                        <p className="text-sm sm:text-base md:text-lg font-black text-white">{userCoins}</p>
                     </div>
                 </div>
 
                 {/* Live Vitals Sidebar */}
-                <div className="px-5 py-5 rounded-3xl bg-black/60 backdrop-blur-3xl border border-white/5 flex flex-col gap-6 shadow-2xl animate-slide-left">
-                    <div className="flex items-center gap-4 group cursor-help">
-                        <div className="w-10 h-10 rounded-xl bg-rose-500/20 flex items-center justify-center text-rose-500 group-hover:bg-rose-500 transition-all group-hover:text-white">
-                            <BsActivity className="text-xl animate-pulse" />
+                <div className="px-3 sm:px-4 md:px-5 py-3 sm:py-4 md:py-5 rounded-2xl sm:rounded-3xl bg-black/60 backdrop-blur-3xl border border-white/5 flex flex-col gap-3 sm:gap-4 md:gap-6 shadow-2xl animate-slide-left">
+                    <div className="flex items-center gap-2 sm:gap-3 md:gap-4 group cursor-help">
+                        <div className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-lg sm:rounded-xl bg-rose-500/20 flex items-center justify-center text-rose-500 group-hover:bg-rose-500 transition-all group-hover:text-white">
+                            <BsActivity className="text-base sm:text-lg md:text-xl animate-pulse" />
                         </div>
-                        <div>
-                            <p className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-500">Live Pulse</p>
-                            <p className="text-lg font-black text-rose-200">{vitals.bpm} <span className="text-[10px] text-rose-500">BPM</span></p>
+                        <div className="hidden xs:block">
+                            <p className="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] text-slate-500">Pulse</p>
+                            <p className="text-sm sm:text-base md:text-lg font-black text-rose-200">{vitals.bpm} <span className="text-[9px] sm:text-[10px] text-rose-500">BPM</span></p>
                         </div>
                     </div>
-                    <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-xl bg-cyan-500/20 flex items-center justify-center text-cyan-500">
-                            <BsDropletFill className="text-xl" />
+                    <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
+                        <div className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-lg sm:rounded-xl bg-cyan-500/20 flex items-center justify-center text-cyan-500">
+                            <BsDropletFill className="text-base sm:text-lg md:text-xl" />
                         </div>
-                        <div>
-                            <p className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-500">SpO2 Hub</p>
-                            <p className="text-lg font-black text-cyan-200">{vitals.spo2}%</p>
+                        <div className="hidden xs:block">
+                            <p className="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] text-slate-500">SpO2</p>
+                            <p className="text-sm sm:text-base md:text-lg font-black text-cyan-200">{vitals.spo2}%</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div className="container mx-auto px-4 relative z-10 max-w-7xl">
+            <div className="container mx-auto px-4 sm:px-6 md:px-8 relative z-10 max-w-7xl">
 
                 {/* HEADER v11.0 */}
-                <div className="text-center mb-12 space-y-4">
-                    <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-cyan-950/40 border border-cyan-500/20 text-cyan-400">
-                        <span className="relative flex h-2 w-2">
+                <div className="text-center mb-8 sm:mb-10 md:mb-12 space-y-3 sm:space-y-4">
+                    <div className="inline-flex items-center gap-2 sm:gap-2.5 md:gap-3 px-4 sm:px-4.5 md:px-5 py-1.5 sm:py-1.75 md:py-2 rounded-full bg-cyan-950/40 border border-cyan-500/20 text-cyan-400">
+                        <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+                            <span className="relative inline-flex rounded-full h-1.5 w-1.5 sm:h-2 sm:w-2 bg-cyan-500"></span>
                         </span>
-                        <span className="text-[10px] font-black tracking-[0.4em] uppercase">Sentinel Pulse v11.0</span>
+                        <span className="text-[8px] sm:text-[9px] md:text-[10px] font-black tracking-[0.3em] sm:tracking-[0.35em] md:tracking-[0.4em] uppercase">Sentinel v11.0</span>
                     </div>
-                    <h1 className="text-7xl md:text-9xl font-black uppercase tracking-tighter leading-none italic">
+                    <h1 className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black uppercase tracking-tighter leading-none italic">
                         Bio<span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-white to-indigo-500">Matrix</span>
                     </h1>
                 </div>
 
                 {/* QUANTUM SEARCH CORE */}
-                <div className="max-w-3xl mx-auto relative mb-20 z-50">
-                    <div className={`relative bg-slate-900/30 backdrop-blur-3xl rounded-[2.5rem] border ${interactionWarning ? 'border-rose-500/50 shadow-[0_0_50px_rgba(244,63,94,0.2)]' : 'border-white/10'} p-3 flex items-center group transition-all duration-700`}>
-                        <div className={`w-16 h-16 rounded-[2rem] flex items-center justify-center text-2xl transition-all ${isListening ? 'bg-rose-500 text-white' : 'bg-slate-800 text-cyan-400 group-hover:bg-cyan-500 group-hover:text-black'}`}>
+                <div className="max-w-3xl mx-auto relative mb-12 sm:mb-16 md:mb-20 z-50">
+                    <div className={`relative bg-slate-900/30 backdrop-blur-3xl rounded-2xl sm:rounded-3xl md:rounded-[2.5rem] border ${interactionWarning ? 'border-rose-500/50 shadow-[0_0_50px_rgba(244,63,94,0.2)]' : 'border-white/10'} p-2 sm:p-2.5 md:p-3 flex items-center group transition-all duration-700`}>
+                        <div className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl sm:rounded-[1.5rem] md:rounded-[2rem] flex items-center justify-center text-xl sm:text-xl md:text-2xl transition-all ${isListening ? 'bg-rose-500 text-white' : 'bg-slate-800 text-cyan-400 group-hover:bg-cyan-500 group-hover:text-black'}`}>
                             {isListening ? <BsMicFill className="animate-pulse" /> : (isScanning ? <BsCpu className="animate-spin" /> : <BsSearch />)}
                         </div>
                         <input
                             type="text"
-                            placeholder={isListening ? "Listening for molecules..." : "Scan molecule or upload prescription..."}
-                            className="flex-1 bg-transparent border-none outline-none px-8 text-2xl font-black placeholder:text-slate-700"
+                            placeholder={isListening ? "Listening..." : "Scan molecule..."}
+                            className="flex-1 bg-transparent border-none outline-none px-4 sm:px-6 md:px-8 text-base sm:text-lg md:text-xl lg:text-2xl font-black placeholder:text-slate-700"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
-                        <div className="flex items-center gap-2 pr-4">
-                            <button onClick={toggleVoiceSearch} className="p-4 rounded-full hover:bg-white/5 text-slate-500 hover:text-cyan-400 transition-all"><BsMicFill /></button>
-                            <button onClick={() => fileInputRef.current.click()} className="p-4 rounded-full hover:bg-white/5 text-slate-500 hover:text-indigo-400 transition-all"><BsCameraFill /></button>
+                        <div className="flex items-center gap-1 sm:gap-1.5 md:gap-2 pr-2 sm:pr-3 md:pr-4">
+                            <button onClick={toggleVoiceSearch} className="p-2 sm:p-3 md:p-4 rounded-full hover:bg-white/5 text-slate-500 hover:text-cyan-400 transition-all"><BsMicFill className="text-sm sm:text-base" /></button>
+                            <button onClick={() => fileInputRef.current.click()} className="p-2 sm:p-3 md:p-4 rounded-full hover:bg-white/5 text-slate-500 hover:text-indigo-400 transition-all"><BsCameraFill className="text-sm sm:text-base" /></button>
                             <input type="file" ref={fileInputRef} className="hidden" accept="image/*" onChange={handleFileUpload} />
                         </div>
                     </div>
@@ -278,7 +278,7 @@ const MedicinePriceCompare = () => {
 
                 {/* MAIN SENTINEL INTERFACE */}
                 {showResults && selectedMed && (
-                    <div className="grid lg:grid-cols-4 gap-8 animate-slide-up">
+                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 animate-slide-up">
 
                         {/* LEFT: INTERACTIVE ANATOMY */}
                         <div className="lg:col-span-1 space-y-6">
@@ -347,14 +347,14 @@ const MedicinePriceCompare = () => {
 
                             {/* Comparison Hub */}
                             <div className="space-y-4">
-                                <div className="flex bg-slate-900 p-2 rounded-[2rem] border border-white/5 w-fit">
+                                <div className="flex overflow-x-auto bg-slate-900 p-1.5 sm:p-2 rounded-2xl sm:rounded-[2rem] border border-white/5 w-full sm:w-fit scrollbar-hide">
                                     {['price', 'substitutes'].map(t => (
-                                        <button key={t} onClick={() => setActiveTab(t)} className={`px-12 py-3 rounded-[1.5rem] font-black text-xs uppercase tracking-widest transition-all ${activeTab === t ? 'bg-cyan-600 text-white shadow-2xl' : 'text-slate-500 hover:text-white'}`}>{t === 'price' ? 'Price Shield' : 'Neural Substitutes'}</button>
+                                        <button key={t} onClick={() => setActiveTab(t)} className={`px-6 sm:px-8 md:px-10 lg:px-12 py-2.5 sm:py-3 rounded-xl sm:rounded-[1.5rem] font-black text-[10px] sm:text-xs uppercase tracking-wider sm:tracking-widest transition-all whitespace-nowrap ${activeTab === t ? 'bg-cyan-600 text-white shadow-2xl' : 'text-slate-500 hover:text-white'}`}>{t === 'price' ? 'Price Shield' : 'Substitutes'}</button>
                                     ))}
                                 </div>
 
                                 {activeTab === 'price' ? (
-                                    <div className="grid md:grid-cols-2 gap-4">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                                         {compareList.competitors.map((c, i) => (
                                             <div key={i} className="p-6 bg-slate-900/30 border border-white/5 rounded-[2rem] hover:border-cyan-500/30 transition-all flex justify-between items-center group">
                                                 <div><p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">{c.name}</p><p className="text-2xl font-black">₹{c.price}</p></div>
