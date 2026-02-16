@@ -390,10 +390,10 @@ const NutritionHub = () => {
                             <BsLightningFill className="text-yellow-300" />
                             <span className="text-sm font-black tracking-widest uppercase">Elite Virtual Health Kitchen 🏛️</span>
                         </div>
-                        <h1 className="text-4xl md:text-6xl font-black mb-6 leading-tight flex items-center gap-3 flex-wrap">
-                            <span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span> Nutrition Hub 🥗
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-6 leading-tight flex items-center gap-2 sm:gap-3 flex-wrap">
+                            <span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span> <span className="w-full sm:w-auto">Nutrition Hub 🥗</span>
                         </h1>
-                        <p className="text-lime-50 text-xl md:text-2xl max-w-2xl leading-relaxed opacity-90 drop-shadow-md">
+                        <p className="text-lime-50 text-base sm:text-lg md:text-xl lg:text-2xl max-w-2xl leading-relaxed opacity-90 drop-shadow-md">
                             India's first Medical-Grade AI Kitchen. Advanced condition merging, seasonal adjustments, and ICMR-compliant guidance.
                         </p>
                     </div>
@@ -433,7 +433,7 @@ const NutritionHub = () => {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                         {/* Primary Disease */}
                         <div className="space-y-3">
                             <label className="text-[10px] font-black text-lime-600 uppercase tracking-[0.2em] ml-2">Primary Condition</label>
@@ -727,20 +727,21 @@ const NutritionHub = () => {
                 )}
             </div>
 
-            {/* Float Menu */}
-            <div className="fixed bottom-10 left-1/2 -translate-x-1/2 bg-black/95 backdrop-blur-2xl px-10 py-5 rounded-[2.5rem] flex items-center gap-8 shadow-[0_30px_100px_rgba(0,0,0,0.5)] z-[100] border border-white/10 group animate-in slide-in-from-bottom-10">
-                <div className="flex flex-col border-l-4 border-lime-500 pl-4">
-                    <span className="text-[9px] font-black uppercase tracking-[0.4em] mb-1"><span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span></span>
-                    <span className="text-white font-black text-[10px] whitespace-nowrap">GOVT-GRADE NUTRITION HUB v3.0 Elite</span>
+            {/* Float Menu - Mobile Optimized */}
+            <div className="fixed bottom-4 sm:bottom-10 left-1/2 -translate-x-1/2 bg-black/95 backdrop-blur-2xl px-4 sm:px-6 md:px-10 py-3 sm:py-4 md:py-5 rounded-full sm:rounded-[2.5rem] flex items-center gap-3 sm:gap-4 md:gap-8 shadow-[0_30px_100px_rgba(0,0,0,0.5)] z-[100] border border-white/10 group animate-in slide-in-from-bottom-10 max-w-[95vw]">
+                <div className="hidden sm:flex flex-col border-l-4 border-lime-500 pl-3 md:pl-4">
+                    <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.2em] sm:tracking-[0.4em] mb-1"><span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span></span>
+                    <span className="text-white font-black text-[9px] sm:text-[10px] whitespace-nowrap hidden md:block">GOVT-GRADE NUTRITION HUB v3.0 Elite</span>
+                    <span className="text-white font-black text-[9px] sm:text-[10px] md:hidden">NUTRITION HUB v3.0</span>
                 </div>
-                <div className="flex gap-6 items-center">
-                    <div className="bg-white/10 px-3 py-1.5 rounded-xl border border-white/5 flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                        <span className="text-[10px] font-black text-gray-400">ICMR COMPLIANT</span>
+                <div className="flex gap-2 sm:gap-4 md:gap-6 items-center">
+                    <div className="bg-white/10 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl border border-white/5 flex items-center gap-1 sm:gap-2">
+                        <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-500 animate-pulse"></div>
+                        <span className="text-[8px] sm:text-[10px] font-black text-gray-400">ICMR</span>
                     </div>
                     <button
                         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                        className="w-10 h-10 bg-lime-500 rounded-full flex items-center justify-center text-white hover:scale-110 transition-all font-black shadow-lg shadow-lime-500/40"
+                        className="w-8 h-8 sm:w-10 sm:h-10 bg-lime-500 rounded-full flex items-center justify-center text-white hover:scale-110 transition-all font-black shadow-lg shadow-lime-500/40 text-sm sm:text-base"
                     >↑</button>
                 </div>
             </div>
@@ -760,8 +761,8 @@ const DynamicBioPlate = ({ type, isMerged }) => {
     }, [safeType]);
 
     return (
-        <div className="relative group max-w-full">
-            <div className="relative w-80 h-80 rounded-full border-[15px] border-white shadow-3xl overflow-hidden flex items-center justify-center bg-white">
+        <div className="relative group w-full flex justify-center">
+            <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-full border-8 sm:border-[12px] md:border-[15px] border-white shadow-3xl overflow-hidden flex items-center justify-center bg-white">
                 <div className="absolute inset-0 flex flex-wrap transition-opacity duration-1000">
                     <div className="bg-green-500/20 border-r border-b border-dashed border-green-500/40 flex flex-col items-center justify-center"
                         style={{ width: `${sizes.veggies + sizes.carbs}%`, height: '50%' }}>
