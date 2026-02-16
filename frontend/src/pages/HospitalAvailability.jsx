@@ -288,90 +288,90 @@ const HospitalAvailability = () => {
             {/* Hero Section */}
             < div className="relative overflow-hidden" >
                 <div className="absolute inset-0 bg-gradient-to-r from-red-600/20 via-pink-600/20 to-red-600/20 animate-pulse"></div>
-                <div className="container mx-auto px-4 py-16 relative z-10">
-                    <div className="text-center mb-8">
-                        <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-red-500/20 border-2 border-red-500/50 mb-6 backdrop-blur-sm">
-                            <BsHospital className="text-3xl text-red-400 animate-pulse" />
-                            <span className="text-sm font-black uppercase tracking-widest text-red-300">Life-Saving System</span>
+                <div className="container mx-auto px-4 sm:px-6 md:px-8 py-8 sm:py-12 md:py-16 relative z-10">
+                    <div className="text-center mb-6 sm:mb-8">
+                        <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-full bg-red-500/20 border border-red-500/50 sm:border-2 mb-4 sm:mb-5 md:mb-6 backdrop-blur-sm">
+                            <BsHospital className="text-xl sm:text-2xl md:text-3xl text-red-400 animate-pulse" />
+                            <span className="text-[10px] sm:text-xs md:text-sm font-black uppercase tracking-wider sm:tracking-widest text-red-300">Life-Saving System</span>
                         </div>
 
-                        <h1 className="text-4xl md:text-6xl font-black mb-6 bg-gradient-to-r from-red-400 via-pink-400 to-orange-400 bg-clip-text text-transparent leading-tight">
+                        <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-5 md:mb-6 bg-gradient-to-r from-red-400 via-pink-400 to-orange-400 bg-clip-text text-transparent leading-tight">
                             Live Hospital & Bed Availability
                         </h1>
 
-                        <p className="text-xl text-slate-400 max-w-3xl mx-auto mb-8 leading-relaxed">
-                            Real-time discovery of <span className="text-red-400 font-black">ICU beds</span>, <span className="text-cyan-400 font-black">oxygen</span>, <span className="text-emerald-400 font-black">ventilators</span>, and emergency facilities. AI-powered for critical situations.
+                        <p className="text-sm sm:text-base md:text-lg lg:text-xl text-slate-400 max-w-3xl mx-auto mb-6 sm:mb-7 md:mb-8 leading-relaxed px-2">
+                            Real-time discovery of <span className="text-red-400 font-black">ICU beds</span>, <span className="text-cyan-400 font-black">oxygen</span>, <span className="text-emerald-400 font-black">ventilators</span>, and emergency facilities. AI-powered<span className="hidden sm:inline"> for critical situations</span>.
                         </p>
 
                         {/* Emergency Mode Toggle */}
-                        <div className="flex items-center justify-center gap-4 mb-8">
-                            <span className={`text-sm font-bold ${emergencyMode ? 'text-slate-500' : 'text-emerald-400'}`}>Normal</span>
+                        <div className="flex items-center justify-center gap-2 sm:gap-3 md:gap-4 mb-6 sm:mb-7 md:mb-8">
+                            <span className={`text-xs sm:text-sm font-bold ${emergencyMode ? 'text-slate-500' : 'text-emerald-400'}`}>Normal</span>
                             <button
                                 onClick={handleEmergencyToggle}
-                                className={`relative w-20 h-10 rounded-full transition-all ${emergencyMode ? 'bg-red-500 shadow-[0_0_30px_rgba(239,68,68,0.6)]' : 'bg-slate-700'}`}
+                                className={`relative w-16 sm:w-18 md:w-20 h-8 sm:h-9 md:h-10 rounded-full transition-all ${emergencyMode ? 'bg-red-500 shadow-[0_0_30px_rgba(239,68,68,0.6)]' : 'bg-slate-700'}`}
                             >
-                                <div className={`absolute top-1 w-8 h-8 bg-white rounded-full transition-all ${emergencyMode ? 'right-1' : 'left-1'}`}>
-                                    {emergencyMode && <BsExclamationTriangleFill className="text-red-500 m-auto mt-2" />}
+                                <div className={`absolute top-0.5 sm:top-1 w-7 sm:w-7.5 md:w-8 h-7 sm:h-7.5 md:h-8 bg-white rounded-full transition-all ${emergencyMode ? 'right-0.5 sm:right-1' : 'left-0.5 sm:left-1'}`}>
+                                    {emergencyMode && <BsExclamationTriangleFill className="text-red-500 m-auto mt-1.5 sm:mt-2 text-sm sm:text-base" />}
                                 </div>
                             </button>
-                            <span className={`text-sm font-bold ${emergencyMode ? 'text-red-400 animate-pulse' : 'text-slate-500'}`}>🚨 EMERGENCY</span>
+                            <span className={`text-xs sm:text-sm font-bold ${emergencyMode ? 'text-red-400 animate-pulse' : 'text-slate-500'}`}>🚨 <span className="hidden xs:inline">EMERGENCY</span><span className="xs:hidden">EMRG</span></span>
                         </div>
 
                         {/* Quick Stats */}
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-                            <div className="p-4 bg-slate-900/50 border border-emerald-500/30 rounded-2xl backdrop-blur-sm">
-                                <div className="text-3xl font-black text-emerald-400 mb-1">{filteredHospitals.length}</div>
-                                <div className="text-xs text-slate-400 font-bold">Hospitals Found</div>
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto">
+                            <div className="p-3 sm:p-4 bg-slate-900/50 border border-emerald-500/30 rounded-xl sm:rounded-2xl backdrop-blur-sm">
+                                <div className="text-2xl sm:text-3xl font-black text-emerald-400 mb-0.5 sm:mb-1">{filteredHospitals.length}</div>
+                                <div className="text-[10px] sm:text-xs text-slate-400 font-bold">Hospitals Found</div>
                             </div>
-                            <div className="p-4 bg-slate-900/50 border border-cyan-500/30 rounded-2xl backdrop-blur-sm">
-                                <div className="text-3xl font-black text-cyan-400 mb-1">
+                            <div className="p-3 sm:p-4 bg-slate-900/50 border border-cyan-500/30 rounded-xl sm:rounded-2xl backdrop-blur-sm">
+                                <div className="text-2xl sm:text-3xl font-black text-cyan-400 mb-0.5 sm:mb-1">
                                     {filteredHospitals.reduce((sum, h) => sum + h.icuBeds.available, 0)}
                                 </div>
-                                <div className="text-xs text-slate-400 font-bold">ICU Beds Available</div>
+                                <div className="text-[10px] sm:text-xs text-slate-400 font-bold">ICU Beds<span className="hidden sm:inline"> Available</span></div>
                             </div>
-                            <div className="p-4 bg-slate-900/50 border border-pink-500/30 rounded-2xl backdrop-blur-sm">
-                                <div className="text-3xl font-black text-pink-400 mb-1">
+                            <div className="p-3 sm:p-4 bg-slate-900/50 border border-pink-500/30 rounded-xl sm:rounded-2xl backdrop-blur-sm">
+                                <div className="text-2xl sm:text-3xl font-black text-pink-400 mb-0.5 sm:mb-1">
                                     {filteredHospitals.reduce((sum, h) => sum + h.generalBeds.available, 0)}
                                 </div>
-                                <div className="text-xs text-slate-400 font-bold">General Beds</div>
+                                <div className="text-[10px] sm:text-xs text-slate-400 font-bold">General Beds</div>
                             </div>
-                            <div className="p-4 bg-slate-900/50 border border-orange-500/30 rounded-2xl backdrop-blur-sm">
-                                <div className="text-3xl font-black text-orange-400 mb-1">
+                            <div className="p-3 sm:p-4 bg-slate-900/50 border border-orange-500/30 rounded-xl sm:rounded-2xl backdrop-blur-sm">
+                                <div className="text-2xl sm:text-3xl font-black text-orange-400 mb-0.5 sm:mb-1">
                                     {filteredHospitals.reduce((sum, h) => sum + h.ventilators, 0)}
                                 </div>
-                                <div className="text-xs text-slate-400 font-bold">Ventilators</div>
+                                <div className="text-[10px] sm:text-xs text-slate-400 font-bold">Ventilators</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div >
 
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto px-4 sm:px-6 md:px-8">
                 {/* Tab Navigation */}
-                <div className="flex flex-wrap gap-4 mb-8 bg-slate-900/50 p-2 rounded-2xl border border-slate-700 backdrop-blur-sm sticky top-24 z-40">
+                <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4 mb-6 sm:mb-7 md:mb-8 bg-slate-900/50 p-1.5 sm:p-2 rounded-xl sm:rounded-2xl border border-slate-700 backdrop-blur-sm sticky top-20 sm:top-24 z-40">
                     <button
                         onClick={() => setActiveTab('find')}
-                        className={`flex items-center gap-2 px-6 py-3 rounded-xl font-black transition-all ${activeTab === 'find' ? 'bg-gradient-to-r from-red-600 to-pink-600 text-white shadow-lg' : 'text-slate-400 hover:text-white hover:bg-slate-800'}`}
+                        className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-lg sm:rounded-xl text-xs sm:text-sm font-black transition-all ${activeTab === 'find' ? 'bg-gradient-to-r from-red-600 to-pink-600 text-white shadow-lg' : 'text-slate-400 hover:text-white hover:bg-slate-800'}`}
                     >
-                        <BsSearch /> Find Hospitals
+                        <BsSearch className="text-sm sm:text-base" /> <span className="hidden xs:inline">Find </span>Hospitals
                     </button>
                     <button
                         onClick={() => setActiveTab('register')}
-                        className={`flex items-center gap-2 px-6 py-3 rounded-xl font-black transition-all ${activeTab === 'register' ? 'bg-gradient-to-r from-emerald-600 to-cyan-600 text-white shadow-lg' : 'text-slate-400 hover:text-white hover:bg-slate-800'}`}
+                        className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-lg sm:rounded-xl text-xs sm:text-sm font-black transition-all ${activeTab === 'register' ? 'bg-gradient-to-r from-emerald-600 to-cyan-600 text-white shadow-lg' : 'text-slate-400 hover:text-white hover:bg-slate-800'}`}
                     >
-                        <BsPlusCircle /> Register Hospital
+                        <BsPlusCircle className="text-sm sm:text-base" /> Register<span className="hidden sm:inline"> Hospital</span>
                     </button>
                     <button
                         onClick={() => setActiveTab('status')}
-                        className={`flex items-center gap-2 px-6 py-3 rounded-xl font-black transition-all ${activeTab === 'status' ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg' : 'text-slate-400 hover:text-white hover:bg-slate-800'}`}
+                        className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-lg sm:rounded-xl text-xs sm:text-sm font-black transition-all ${activeTab === 'status' ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg' : 'text-slate-400 hover:text-white hover:bg-slate-800'}`}
                     >
-                        <BsActivity /> Live Status Board
+                        <BsActivity className="text-sm sm:text-base" /> <span className="hidden xs:inline">Live </span>Status<span className="hidden sm:inline"> Board</span>
                     </button>
                     <button
                         onClick={() => setActiveTab('map')}
-                        className={`flex items-center gap-2 px-6 py-3 rounded-xl font-black transition-all ${activeTab === 'map' ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg' : 'text-slate-400 hover:text-white hover:bg-slate-800'}`}
+                        className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-lg sm:rounded-xl text-xs sm:text-sm font-black transition-all ${activeTab === 'map' ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg' : 'text-slate-400 hover:text-white hover:bg-slate-800'}`}
                     >
-                        <BsMap /> Interactive 3D Map
+                        <BsMap className="text-sm sm:text-base" /> <span className="hidden sm:inline">Interactive </span>3D Map
                     </button>
                 </div>
 
@@ -445,7 +445,7 @@ const HospitalAvailability = () => {
                         </div>
 
                         {/* Hospital Results */}
-                        <div className={`${viewMode === 'grid' ? 'grid md:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-4'}`}>
+                        <div className={`${viewMode === 'grid' ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6' : 'space-y-4'}`}>
                             {filteredHospitals.length === 0 ? (
                                 <div className="col-span-3 text-center py-20">
                                     <BsHospital className="text-6xl text-slate-700 mx-auto mb-4" />
