@@ -1,7 +1,7 @@
 ## [Sehaat Saathi](https://mna-diagnostics-center.onrender.com)
 
 #### (Digital Diagnostics Lab)    
-  
+   
 ---
 
 **Website**: [Sehaat Saathi](https://mna-diagnostics-center.onrender.com)
