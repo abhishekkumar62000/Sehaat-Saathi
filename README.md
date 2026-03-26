@@ -8,7 +8,7 @@
 
 ---
 
-### Overview     
+### Overview      
  
 The **Sehaat Saathi** website is a comprehensive platform designed to enhance patient experiences through easy appointment scheduling, access to diagnostic services, and detailed health information. Patients can browse services, view doctors’ profiles, and book appointments, all in a responsive and interactive web interface. This repository contains both the frontend and backend codebase.
 
