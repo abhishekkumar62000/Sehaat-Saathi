@@ -1,5 +1,5 @@
 services:
-  - type: web 
+  - type: web
     name: sehaat-saathi-backend
     env: node
     plan: free
