@@ -1,5 +1,5 @@
 # Sehaat Saathi
-  
+
 This is Sehaat Saathi (Digital Diagnostics Lab) website repository.
 
 ### Live link (v1):
