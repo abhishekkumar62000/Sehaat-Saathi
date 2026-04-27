@@ -1,4 +1,6 @@
 ## [Sehaat Saathi](https://mna-diagnostics-center.onrender.com)
+<img width="1024" height="1024" alt="Gemini_Generated_Image_ixbqy9ixbqy9ixbq" src="https://github.com/user-attachments/assets/2ef060d5-2013-43b2-845c-4b8060fb1b5c" />
+
                 
 #### (Digital Diagnostics Lab)      Sehaat Saathii
 ---  
