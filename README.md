@@ -1,15 +1,17 @@
 ## [Sehaat Saathi](https://mna-diagnostics-center.onrender.com)
+<img width="1024" height="1024" alt="Gemini_Generated_Image_ixbqy9ixbqy9ixbq" src="https://github.com/user-attachments/assets/2ef060d5-2013-43b2-845c-4b8060fb1b5c" />
 
-#### (Digital Diagnostics Lab)
-
----
-
+                 
+#### (Digital Diagnostics Lab)      Sehaat Saathi
+  
+---   
+ 
 **Website**: [Sehaat Saathi](https://mna-diagnostics-center.onrender.com)
 
 ---
-
-### Overview
-
+ 
+### Overview 
+ 
 The **Sehaat Saathi** website is a comprehensive platform designed to enhance patient experiences through easy appointment scheduling, access to diagnostic services, and detailed health information. Patients can browse services, view doctors’ profiles, and book appointments, all in a responsive and interactive web interface. This repository contains both the frontend and backend codebase.
 
 ## Features
