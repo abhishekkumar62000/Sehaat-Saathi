@@ -1,6 +1,7 @@
 import Booking from "../models/BookingSchema.js";
 import Doctor from "../models/DoctorSchema.js";
 import User from "../models/UserSchema.js";
+import Activity from "../models/ActivitySchema.js";
 
 // update_single_User controller
 export const updateUser = async (req, res) => {
@@ -97,18 +98,72 @@ export const getUserProfile = async (req, res) => {
 // get_My_Appointment controller
 export const getMyAppointment = async (req, res) => {
   try {
-    const bookings = await Booking.find({ user: req.userId });
-    const doctorIds = bookings.map((el) => el.doctor.id);
-    const doctors = await Doctor.find({ _id: { $in: doctorIds } }).select(
-      "-password"
-    );
+    // 1. Fetch bookings for the current user
+    const bookings = await Booking.find({ user: req.userId }).populate('doctor').populate('user');
 
     res.status(200).json({
       success: true,
-      message: "Appointment are getting",
-      data: doctors,
+      message: "Appointments retrieved successfully",
+      data: bookings,
     });
   } catch (error) {
     res.status(500).json({ success: false, message: "Something went wrong" });
+  }
+};
+
+// record_activity controller
+export const recordActivity = async (req, res) => {
+  const { featureName, action, path } = req.body;
+  const userId = req.userId;
+
+  try {
+    const newActivity = new Activity({
+      userId,
+      userModel: "User",
+      featureName,
+      action,
+      path,
+    });
+
+    await newActivity.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Activity recorded successfully",
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Failed to record activity" });
+  }
+};
+
+// get_activity_history controller
+export const getActivityHistory = async (req, res) => {
+  const userId = req.userId;
+
+  try {
+    const activities = await Activity.find({ 
+      userId, 
+      userModel: "User" 
+    }).sort({ timestamp: -1 });
+
+    res.status(200).json({
+      success: true,
+      message: "Activity history retrieved",
+      data: activities,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Failed to fetch activity history" });
+  }
+};
+
+// clear_activity_history controller
+export const clearActivityHistory = async (req, res) => {
+  const userId = req.userId;
+
+  try {
+    await Activity.deleteMany({ userId });
+    res.status(200).json({ success: true, message: "Activity history cleared successfully" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Failed to clear activity history" });
   }
 };

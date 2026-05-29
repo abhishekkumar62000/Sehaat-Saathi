@@ -6,6 +6,7 @@ import { BASE_URL } from "../../config";
 import useGetProfile from "../../hooks/useFetchData";
 import MyBookings from "./MyBookings";
 import Profile from "./Profile";
+import UserActivity from "./UserActivity";
 
 const MyAccount = () => {
   const [tab, setTab] = useState("bookings");
@@ -80,6 +81,14 @@ const MyAccount = () => {
                 My Bookings
               </button>
               <button
+                onClick={() => setTab("activity")}
+                className={`${
+                  tab == "activity" && "bg-green-600 text-white"
+                } mr-5 customBtn`}
+              >
+                Activity History
+              </button>
+              <button
                 onClick={() => setTab("settings")}
                 className={`${
                   tab == "settings" && "bg-green-600 text-white"
@@ -91,6 +100,7 @@ const MyAccount = () => {
 
             {/* ===active tab show_details=== */}
             {tab == "bookings" && <MyBookings />}
+            {tab == "activity" && <UserActivity />}
             {tab == "settings" && <Profile user={userData} />}
           </div>
         </div>

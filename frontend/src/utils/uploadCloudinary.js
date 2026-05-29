@@ -16,8 +16,12 @@ const uploadImageToCloudinary = async (file) => {
     }
   );
 
-  const data = await res.json();
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.error?.message || "Failed to upload image");
+  }
 
+  const data = await res.json();
   return data;
 };
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import {
     BsArrowLeft, BsSearch, BsHospital, BsPeopleFill, BsGeoAltFill, BsFilterCircleFill,
@@ -8,6 +8,15 @@ import {
 } from 'react-icons/bs';
 import { MdVerifiedUser, MdOutlineCleanHands, MdOutlineTimer, MdOutlineReduceCapacity } from 'react-icons/md';
 import { biharHealthcareDb, districts, specialties } from '../utils/biharHealthcareData';
+import { BASE_URL } from "../config";
+import useFetchData from "../hooks/useFetchData";
+
+import { authContext } from '../context/AuthContext.jsx';
+import { toast } from 'react-toastify';
+import OfflineDoctorCard from './Doctors/OfflineDoctorCard';
+import DoctorDetailsModal from './Doctors/DoctorDetailsModal';
+import BookingWizard from '../components/Booking/BookingWizard';
+import BookingPass from '../components/Booking/BookingPass';
 
 const OfflineConsultationHub = () => {
     const [selectedDistrict, setSelectedDistrict] = useState('Madhubani');
@@ -21,6 +30,8 @@ const OfflineConsultationHub = () => {
     const [showDistrictMap, setShowDistrictMap] = useState(false);
     const [showRoadmap, setShowRoadmap] = useState(false);
     const [activeTab, setActiveTab] = useState('all');
+
+    const { token } = useContext(authContext);
 
     // Quantum States
     const [compareList, setCompareList] = useState([]);
@@ -38,6 +49,11 @@ const OfflineConsultationHub = () => {
     const [climateAlert, setClimateAlert] = useState(true); // Simulated heat-wave alert
     const [offlineMode, setOfflineMode] = useState(false);
     const [showMobileFilters, setShowMobileFilters] = useState(false); // Mobile filters drawer state
+
+    // Advanced booking states
+    const [showBookingWizard, setShowBookingWizard] = useState(false);
+    const [showDoctorDetails, setShowDoctorDetails] = useState(false);
+    const [bookingPassDetails, setBookingPassDetails] = useState(null);
 
     const translations = {
         en: {
@@ -105,8 +121,34 @@ const OfflineConsultationHub = () => {
         });
     };
 
-    const filteredDocs = biharHealthcareDb.filter(doc => (
-        doc.district === selectedDistrict &&
+    const { data: liveDoctors } = useFetchData(`${BASE_URL}/doctors`);
+
+    const combinedDb = React.useMemo(() => {
+        const mappedLiveDoctors = (liveDoctors || []).map(doc => ({
+            id: doc._id,
+            name: doc.name,
+            degree: doc.qualifications?.map(q => q.degree).join(", ") || "MBBS",
+            experience: `${doc.experience || 0}+ Years`,
+            specialty: doc.specialization || "General Physician",
+            hospital: doc.hospitalName || "Private Clinic",
+            hospitalType: doc.hospitalType || "Private",
+            district: doc.location?.city || "Patna",
+            area: doc.location?.district || "Urban",
+            fee: doc.ticketPrice || 0,
+            rating: doc.averageRating || 5.0,
+            distance: "Live",
+            availability: "Today",
+            rushStatus: "Low",
+            transparencyScore: 95,
+            trustScore: 99,
+            registration: doc.licenseNumber || "Verified",
+            photo: doc.photo || "https://api.uifaces.co/our-content/donated/xoneh_u5.jpg"
+        }));
+        return [...mappedLiveDoctors, ...biharHealthcareDb];
+    }, [liveDoctors]);
+
+    const filteredDocs = combinedDb.filter(doc => (
+        (doc.district === selectedDistrict || doc.area === selectedDistrict) &&
         (selectedSpecialty.length === 0 || selectedSpecialty.includes(doc.specialty)) &&
         (hospitalType === 'All' || doc.hospitalType === hospitalType) &&
         doc.fee <= feeRange &&
@@ -399,106 +441,23 @@ const OfflineConsultationHub = () => {
                             </div>
                         </div>
 
-                        {/* Results Grid - Responsive 1 col on mobile, 2 on desktop */}
+                        {/* Results Grid */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            {filteredDocs.length > 0 ? filteredDocs.map((doc, idx) => (
-                                <div key={doc.id} className="group bg-white/70 backdrop-blur-2xl hover:bg-white border border-white/60 hover:border-[#FF9933]/30 rounded-[3rem] p-8 transition-all duration-500 relative overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-[#FF9933]/10 flex flex-col h-full hover:scale-[1.02]">
-                                    {/* Animated Scan Effect - Tricolor */}
-                                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#FF9933] via-white to-[#138808] -translate-y-full group-hover:animate-scan z-20"></div>
-
-                                    {/* Holographic Badge */}
-                                    {doc.trustScore >= 95 && (
-                                        <div className="absolute top-0 right-0 z-20">
-                                            <div className="px-6 py-2 rounded-bl-[2rem] bg-gradient-to-l from-[#FF9933] via-white to-[#138808] text-[8px] font-black uppercase tracking-[0.2em] shadow-md text-[#000080]">
-                                                Elite Provider
-                                            </div>
-                                        </div>
-                                    )}
-
-                                    {/* Top Info Row */}
-                                    <div className="flex items-start gap-6 mb-8 mt-4 relative z-10">
-                                        <div className="relative flex-shrink-0">
-                                            <div className="absolute inset-0 bg-[#FF9933] rounded-[2rem] blur-xl opacity-0 group-hover:opacity-20 transition-opacity duration-700"></div>
-                                            <img src={doc.photo} alt={doc.name} className="w-24 h-24 rounded-[2rem] object-cover grayscale transition-all duration-700 group-hover:grayscale-0 border-2 border-white shadow-lg" />
-                                            <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-slate-900 text-white rounded-full px-3 py-1 text-[9px] font-black flex items-center gap-1 shadow-lg z-20">
-                                                <BsStarFill className="text-yellow-400 text-[10px]" /> {doc.rating}
-                                            </div>
-                                        </div>
-                                        <div className="flex-1 min-w-0">
-                                            <h3 className="text-2xl font-black tracking-tighter text-slate-900 group-hover:text-[#FF9933] transition-colors truncate">
-                                                {doc.name}
-                                                <MdVerifiedUser className="inline-block ml-2 text-blue-500 text-lg align-top" />
-                                            </h3>
-                                            <p className="text-slate-500 font-bold text-xs uppercase tracking-wider mb-3 truncate">{doc.degree}</p>
-
-                                            <div className="flex flex-wrap gap-2">
-                                                <span className="px-3 py-1 bg-slate-100 rounded-lg text-[8px] font-black uppercase text-slate-600 border border-slate-200">{doc.specialty}</span>
-                                                <span className="px-3 py-1 bg-[#000080]/5 rounded-lg text-[8px] font-black uppercase text-[#000080] border border-[#000080]/10">{doc.experience} EXP</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {/* Live Status Indicators */}
-                                    <div className="grid grid-cols-2 gap-3 mb-8 bg-slate-50/50 p-4 rounded-[2rem] border border-slate-100">
-                                        <div className="flex items-center gap-2">
-                                            <div className="w-2 h-2 rounded-full bg-[#138808] animate-pulse"></div>
-                                            <div className="text-[9px] font-black uppercase text-slate-500 tracking-wider">Queue: <span className="text-slate-900 text-xs">{liveQueueData[doc.id] || 'Scanning'}</span></div>
-                                        </div>
-                                        <div className="flex items-center gap-2 justify-end">
-                                            <BsClockFill className="text-blue-500 text-xs" />
-                                            <div className="text-[9px] font-black uppercase text-slate-500 tracking-wider">Wait: <span className="text-slate-900 text-xs">{((liveQueueData[doc.id] || 1) * 12) + (crowdDelay ? 15 : 0)}m</span></div>
-                                        </div>
-                                        <div className="col-span-2 h-1 bg-slate-200 rounded-full overflow-hidden">
-                                            <div className={`h-full transition-all duration-1000 ${doc.rushStatus === 'Low' ? 'w-[20%] bg-[#138808]' : doc.rushStatus === 'Medium' ? 'w-[60%] bg-[#FF9933]' : 'w-[90%] bg-red-500'}`}></div>
-                                        </div>
-                                    </div>
-
-                                    {/* Hospital Detail */}
-                                    <div className="flex items-center gap-4 mb-8">
-                                        <div className="w-10 h-10 rounded-xl bg-white border border-slate-100 flex items-center justify-center text-[#FF9933] shadow-sm">
-                                            <BsHospital />
-                                        </div>
-                                        <div className="flex-1">
-                                            <div className="text-sm font-black text-slate-800 truncate">{doc.hospital}</div>
-                                            <div className="text-[9px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
-                                                <BsGeoAltFill className="text-[#138808]" /> {doc.area} • {doc.distance}
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {/* Action Row */}
-                                    <div className="mt-auto flex items-center gap-3">
-                                        <div className="flex flex-col pr-4 border-r border-slate-200">
-                                            <span className="text-2xl font-black text-slate-900">₹{doc.fee === 0 ? "FREE" : doc.fee}</span>
-                                            <span className="text-[7px] font-black uppercase text-slate-400 tracking-widest">Fee</span>
-                                        </div>
-                                        <div className="flex gap-2 flex-grow">
-                                            <button
-                                                onClick={() => { setShowTriage(true); setTriageStep(0); }}
-                                                className="w-12 h-12 rounded-2xl border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition-colors"
-                                                title="AI Pre-Check"
-                                            >
-                                                <BsActivity className="text-blue-500 text-lg" />
-                                            </button>
-                                            <button
-                                                onClick={() => {
-                                                    setBookingDetails({
-                                                        doc,
-                                                        time: "11:30 AM",
-                                                        token: `SS-${Math.floor(1000 + Math.random() * 9000)}`,
-                                                        date: "05 Feb 2026",
-                                                        room: "Room 4-B",
-                                                        floor: doc.hospitalType === 'Government' ? 'Ground' : '2nd'
-                                                    });
-                                                    setSelectedDoc(doc);
-                                                }}
-                                                className="flex-grow py-4 bg-slate-900 text-white rounded-2xl font-black uppercase tracking-widest text-[9px] hover:bg-slate-800 transition-all flex items-center justify-center gap-2 shadow-xl shadow-slate-900/20 active:scale-95"
-                                            >
-                                                Book Now <BsCalendarCheck />
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                            {filteredDocs.length > 0 ? filteredDocs.map((doc) => (
+                                <OfflineDoctorCard 
+                                    key={doc.id}
+                                    doc={doc}
+                                    liveQueueData={liveQueueData}
+                                    crowdDelay={crowdDelay}
+                                    onViewDetails={(d) => {
+                                        setSelectedDoc(d);
+                                        setShowDoctorDetails(true);
+                                    }}
+                                    onBookNow={(d) => {
+                                        setSelectedDoc(d);
+                                        setShowBookingWizard(true);
+                                    }}
+                                />
                             )) : (
                                 <div className="col-span-1 md:col-span-2 py-32 text-center bg-white/[0.02] border border-dashed border-white/10 rounded-[4rem]">
                                     <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-8">
@@ -525,7 +484,84 @@ const OfflineConsultationHub = () => {
                 </div>
             </main>
 
-            {/* AI Pre-Visit Triage Modal */}
+            {/* Doctor Details Modal */}
+            {showDoctorDetails && selectedDoc && (
+                <DoctorDetailsModal 
+                    doc={selectedDoc} 
+                    onClose={() => {
+                        setShowDoctorDetails(false);
+                        setSelectedDoc(null);
+                    }} 
+                />
+            )}
+
+            {/* Booking Wizard Modal */}
+            {showBookingWizard && selectedDoc && (
+                <BookingWizard 
+                    doc={selectedDoc} 
+                    onClose={() => {
+                        setShowBookingWizard(false);
+                        setSelectedDoc(null);
+                    }}
+                    onSuccess={async (payload) => {
+                        try {
+                            const response = await fetch(`${BASE_URL}/appointments/book`, {
+                                method: 'post',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${token}`
+                                },
+                                body: JSON.stringify({
+                                    doctorId: selectedDoc.id || selectedDoc._id,
+                                    date: payload.date,
+                                    timeSlot: payload.timeSlot,
+                                    paymentMethod: payload.paymentMethod === 'Online Payment' ? 'online' : 'cod',
+                                    patientName: payload.patientName,
+                                    ticketPrice: selectedDoc.ticketPrice,
+                                    symptoms: payload.symptoms || "First Visit offline record entry.",
+                                    hospitalId: selectedDoc.hospital?._id || selectedDoc.hospital
+                                })
+                            });
+                            
+                            const result = await response.json();
+                            
+                            if (!response.ok) {
+                                throw new Error(result.message || "Failed to create appointment.");
+                            }
+
+                            toast.success("Appointment securely recorded in the Unified Matrix!");
+
+                            const newPassDetails = {
+                                doctorId: selectedDoc.id || selectedDoc._id,
+                                doctorName: selectedDoc.name,
+                                hospital: selectedDoc.hospital,
+                                date: result.data.date,
+                                timeSlot: result.data.timeSlot,
+                                paymentMethod: result.data.paymentMethod === 'online' ? 'Online Payment' : 'Pay at Hospital',
+                                isPaid: result.data.paymentStatus === 'paid',
+                                tokenNumber: result.data.bookingToken,
+                                patientName: result.data.patientName || payload.patientName
+                            };
+                            
+                            setShowBookingWizard(false);
+                            setSelectedDoc(null);
+                            setBookingPassDetails(newPassDetails);
+                            
+                        } catch (error) {
+                            toast.error(error.message);
+                        }
+                    }}
+                />
+            )}
+
+            {/* Booking Pass Modal */}
+            {bookingPassDetails && (
+                <BookingPass 
+                    passDetails={bookingPassDetails} 
+                    onClose={() => setBookingPassDetails(null)} 
+                />
+            )}
+
             {/* AI Pre-Visit Triage Modal */}
             {
                 showTriage && (

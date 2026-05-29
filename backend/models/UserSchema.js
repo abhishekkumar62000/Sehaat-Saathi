@@ -8,11 +8,18 @@ const UserSchema = new mongoose.Schema({
   photo: { type: String },
   role: {
     type: String,
-    enum: ["patient", "admin"],
+    enum: ["patient", "admin", "hospital"],
     default: "patient",
   },
   gender: { type: String, enum: ["Male", "Female", "Other"] },
   bloodGroup: { type: String },
+  dob: { type: Date },
+  allergies: { type: String },
+  chronicConditions: { type: String },
+  emergencyContactName: { type: String },
+  emergencyContactPhone: { type: Number },
+  city: { type: String },
+  pincode: { type: Number },
   appointments: [{ type: mongoose.Types.ObjectId, ref: "Appointment" }],
 });
 

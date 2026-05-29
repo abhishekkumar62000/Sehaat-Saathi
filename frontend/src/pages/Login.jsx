@@ -14,6 +14,7 @@ const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    role: "patient"
   });
 
   const [loading, setLoading] = useState(false);
@@ -127,6 +128,26 @@ const Login = () => {
               >
                 {showPassword ? <AiOutlineEyeInvisible size={22} /> : <AiOutlineEye size={22} />}
               </span>
+            </motion.div>
+
+            {/* role selector */}
+            <motion.div
+              whileHover={{ scale: 1.01 }}
+              className="flex items-center justify-between bg-violet-50/50 p-4 rounded-2xl border border-violet-100"
+            >
+              <label className="font-bold text-violet-900 text-sm uppercase tracking-wide flex w-full">
+                <span className="shrink-0 flex items-center">SIGN IN AS:</span>
+                <select
+                  name="role"
+                  value={formData.role}
+                  onChange={handleInputChange}
+                  className="ml-auto w-full max-w-[200px] text-right font-black text-violet-700 bg-transparent focus:outline-none text-[15px] cursor-pointer"
+                >
+                  <option value="patient">Patient Node</option>
+                  <option value="doctor">Medical Pro</option>
+                  <option value="hospital">Hospital Node</option>
+                </select>
+              </label>
             </motion.div>
           </div>
 

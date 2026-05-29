@@ -6,8 +6,10 @@ import {
     BsFileEarmarkText, BsHeartPulseFill, BsClockHistory, BsGraphUpArrow,
     BsGenderMale, BsGenderFemale, BsThermometerHalf, BsInfoCircleFill
 } from 'react-icons/bs';
+import useRecordActivity from '../hooks/useRecordActivity';
 
 const SymptomChecker = () => {
+    const { recordActivity } = useRecordActivity();
     const [step, setStep] = useState(1); // 1: Selection, 2: Analysis, 3: Results
     const [selectedSymptoms, setSelectedSymptoms] = useState([]);
     const [bodyPart, setBodyPart] = useState('General');
@@ -62,6 +64,7 @@ const SymptomChecker = () => {
     };
 
     const runAnalysis = () => {
+        recordActivity("Symptom Checker", "Analysis Started", "/symptom-checker");
         setStep(2);
         setAnalyzing(true);
         const logs = [

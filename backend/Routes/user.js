@@ -6,6 +6,9 @@ import {
   getSingleUser,
   getUserProfile,
   updateUser,
+  recordActivity,
+  getActivityHistory,
+  clearActivityHistory,
 } from "../Controllers/userController.js";
 
 import { authenticate, restrict } from "../auth/verifyToken.js";
@@ -23,5 +26,10 @@ router.get(
   restrict(["patient"]),
   getMyAppointment
 );
+
+// Activity Tracking Routes
+router.post("/activity/record", authenticate, restrict(["patient"]), recordActivity);
+router.get("/activity/history", authenticate, restrict(["patient"]), getActivityHistory);
+router.delete("/activity/clear", authenticate, restrict(["patient"]), clearActivityHistory);
 
 export default router;

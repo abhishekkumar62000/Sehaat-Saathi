@@ -1311,7 +1311,8 @@ const QuantumVaultAccess = ({ onUnlock }) => {
     );
 };
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
     BsCameraVideoFill, BsMicFill, BsMicMuteFill, BsCameraVideoOffFill,
     BsTelephoneFill, BsCalendarCheck, BsSearch, BsFilter,
@@ -1319,8 +1320,13 @@ import {
     BsActivity, BsFillChatDotsFill, BsFileEarmarkMedicalFill, BsArrowRight,
     BsTranslate, BsHeartPulseFill, BsBodyText, BsLightningChargeFill, BsCartCheckFill,
     BsFileEarmarkArrowUpFill, BsShieldCheck, BsAwardFill, BsExclamationTriangleFill, BsGeoAltFill,
-    BsClockFill, BsBroadcast
+    BsClockFill, BsBroadcast, BsExclamationCircleFill, BsCheckCircleFill
 } from 'react-icons/bs';
+import { BASE_URL, token } from '../config';
+import useFetchData from '../hooks/useFetchData';
+import { authContext } from '../context/AuthContext';
+import { useSocket } from '../context/SocketContext';
+import { toast } from 'react-toastify';
 
 const TELE_DOCTORS = [
     {
@@ -1845,9 +1851,51 @@ const healthTips = [
 
 
 const TeleConsultAI = () => {
+    const navigate = useNavigate();
+    const { user, role, token } = useContext(authContext);
+    const { socket } = useSocket();
+
+    const { data: dbDoctors, loading, error } = useFetchData(`${BASE_URL}/doctors`);
+
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('all');
     const [selectedDoc, setSelectedDoc] = useState(null);
+
+    // Merge DB Doctors with Static Metadata for "Neural" aesthetics
+    const [doctors, setDoctors] = useState(TELE_DOCTORS);
+
+    useEffect(() => {
+        if (dbDoctors && dbDoctors.length > 0) {
+            const mergedFromDb = dbDoctors.map(dbDoc => {
+                // Find matching static doc for metadata (radar, vibeTags, etc)
+                const staticMatch = TELE_DOCTORS.find(s => s.specialty === dbDoc.specialty) || TELE_DOCTORS[0];
+                
+                return {
+                    ...staticMatch,
+                    id: dbDoc._id,
+                    name: dbDoc.name,
+                    specialty: dbDoc.specialization || dbDoc.specialty || staticMatch.specialty,
+                    experience: `${dbDoc.experiences?.[0]?.startingDate ? (new Date().getFullYear() - new Date(dbDoc.experiences[0].startingDate).getFullYear()) : 10} Years`,
+                    rating: dbDoc.averageRating || 4.8,
+                    image: dbDoc.photo || staticMatch.image,
+                    fee: dbDoc.teleConsultPrice || dbDoc.ticketPrice || staticMatch.fee,
+                    bio: dbDoc.bio || staticMatch.bio,
+                    patients: `${dbDoc.totalPatients || '10'}k+`,
+                    education: dbDoc.qualifications?.[0]?.degree || staticMatch.education,
+                    status: dbDoc.isTeleConsultActive ? "Available" : "Offline",
+                    reviews: dbDoc.reviews || staticMatch.reviews,
+                    totalReviews: dbDoc.totalRating || staticMatch.totalReviews,
+                    isReal: true // Flag to distinguish live from static if needed
+                };
+            });
+            // Merge: Live doctors FIRST, then all existing static ones
+            setDoctors([...mergedFromDb, ...TELE_DOCTORS]);
+        } else {
+            // Fallback: Just show the rich static ones if DB is empty
+            setDoctors(TELE_DOCTORS);
+        }
+    }, [dbDoctors]);
+
     const [isPaying, setIsPaying] = useState(false);
     const [paymentStep, setPaymentStep] = useState(1); // 1: Info, 2: Processing, 3: Success
     const [emergencyStage, setEmergencyStage] = useState('idle'); // idle, triage, locating, connected
@@ -2290,21 +2338,85 @@ const TeleConsultAI = () => {
         setSymptoms(prev => [...new Set([...prev, part])]);
     };
 
-    const handleConsultClick = (doc) => {
-        setSelectedDoc(doc);
-        setShowVitalsSync(true);
-        setSyncProgress(0);
+    const handleConsultClick = async (doc) => {
+        if (!token || !user) {
+            toast.error("Please login as a Patient to book a Neural Consultation!");
+            return;
+        }
 
-        // Simulate Sync Process
-        const interval = setInterval(() => {
-            setSyncProgress(prev => {
-                if (prev >= 100) {
-                    clearInterval(interval);
-                    return 100;
-                }
-                return prev + 5;
+        if (role !== 'patient') {
+            toast.error("Only Patients can initiate Tele-Consultations.");
+            return;
+        }
+
+        setSelectedDoc(doc);
+        setIsPaying(true); // Open the Neural-Pay bridge
+        setPaymentStep(1);
+    };
+
+    const confirmNeuralBooking = async () => {
+        try {
+            setPaymentStep(2); // Processing...
+            
+            // Check if this is a "Legacy" doctor (no real DB record)
+            if (!selectedDoc.isReal) {
+                console.log("Simulating Neural Bridge for Legacy Record:", selectedDoc.id);
+                // Simulate a successful link for non-DB doctors
+                setTimeout(() => {
+                    setPaymentStep(3); // Success
+                    toast.success("Neural Link Established! (Simulated)");
+                    
+                    setTimeout(() => {
+                        startWaitingRoom(selectedDoc);
+                    }, 1500);
+                }, 2000);
+                return;
+            }
+
+            // Real Backend Persistence for Live Doctors
+            const res = await fetch(`${BASE_URL}/appointments/book`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    doctorId: selectedDoc.id,
+                    appointmentType: 'teleconsult',
+                    paymentMethod: 'online', // Default for Instant Video
+                    date: new Date().toISOString(),
+                    timeSlot: `${new Date().getHours()}:${new Date().getMinutes()} (Instant)`,
+                    ticketPrice: selectedDoc.fee,
+                    patientName: user.name
+                })
             });
-        }, 50);
+
+            const result = await res.json();
+
+            if (!res.ok) {
+                throw new Error(result.message);
+            }
+
+            setPaymentStep(3); // Success
+            toast.success("Neural Link Established!");
+            
+            // Log event for real-time tracking
+            if (socket) {
+                socket.emit('new-booking', {
+                    patientId: user._id,
+                    doctorId: selectedDoc.id,
+                    type: 'teleconsult'
+                });
+            }
+
+            setTimeout(() => {
+                startWaitingRoom(selectedDoc);
+            }, 2000);
+
+        } catch (err) {
+            toast.error(err.message);
+            setPaymentStep(1);
+        }
     };
 
     const startWaitingRoom = (doctor) => {
@@ -2367,8 +2479,8 @@ const TeleConsultAI = () => {
                 }
             }
 
-            // Get top 3 doctors for this specialty
-            const recommendedDoctors = TELE_DOCTORS
+            // Get top 3 doctors for this specialty from Dynamic Data
+            const recommendedDoctors = doctors
                 .filter(doc => doc.specialty === matchedSpecialty)
                 .sort((a, b) => {
                     // Prioritize: Available > Rating > Experience
@@ -2449,18 +2561,18 @@ const TeleConsultAI = () => {
     useEffect(() => {
         const flashInterval = setInterval(() => {
             if (!showFlashBooking && Math.random() > 0.95) { // 5% chance every 10 seconds
-                const availableDocs = TELE_DOCTORS.filter(d => d.status === 'Available');
-                if (availableDocs.length > 0) {
-                    const randomDoc = availableDocs[Math.floor(Math.random() * availableDocs.length)];
-                    setFlashSlot({
-                        ...randomDoc,
-                        originalFee: randomDoc.fee,
-                        flashFee: Math.floor(randomDoc.fee * 0.85), // 15% discount
-                        slot: 'Today ' + (new Date().getHours() + 1) + ':00 PM'
-                    });
-                    setShowFlashBooking(true);
-                    setFlashTimer(60);
-                }
+                    const availableDocs = doctors.filter(d => d.status === 'Available');
+                    if (availableDocs.length > 0) {
+                        const randomDoc = availableDocs[Math.floor(Math.random() * availableDocs.length)];
+                        setFlashSlot({
+                            ...randomDoc,
+                            originalFee: randomDoc.fee,
+                            flashFee: Math.floor(randomDoc.fee * 0.85), // 15% discount
+                            slot: 'Today ' + (new Date().getHours() + 1) + ':00 PM'
+                        });
+                        setShowFlashBooking(true);
+                        setFlashTimer(60);
+                    }
             }
         }, 10000); // Check every 10 seconds
         return () => clearInterval(flashInterval);
@@ -2490,7 +2602,7 @@ const TeleConsultAI = () => {
     }, [callActive]);
 
 
-    const filteredDocs = TELE_DOCTORS.filter(doc => {
+    const filteredDocs = doctors.filter(doc => {
         // Basic search and category
         const matchesSearch = doc.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             doc.specialty.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -3202,7 +3314,7 @@ const TeleConsultAI = () => {
                                                 <div className="h-full bg-rose-600 w-[33%] transition-all duration-500" />
                                             </div>
                                         </div>
-                                        <button onClick={handleProcessPayment} className="w-full py-4 bg-rose-600 hover:bg-rose-500 text-white font-black rounded-2xl transition-all shadow-lg shadow-rose-600/20 active:scale-95">
+                                        <button onClick={confirmNeuralBooking} className="w-full py-4 bg-rose-600 hover:bg-rose-500 text-white font-black rounded-2xl transition-all shadow-lg shadow-rose-600/20 active:scale-95">
                                             PROCEED TO PAYMENT
                                         </button>
                                     </div>

@@ -7,31 +7,31 @@ const OurSpecialService = () => {
         {
             id: 1,
             icon: <FaRobot className="text-5xl text-orange-600" />,
-            title: "Sentient AI Diagnostics",
+            title: "Instant AI Health Check",
             description:
-                "Pulse-speed symptom analysis and hyper-accurate treatment path suggestions.",
+                "Quickly check your symptoms and get clear advice on what to do next.",
             link: "/services",
         },
         {
             id: 2,
             icon: <FaUserMd className="text-5xl text-blue-800" />,
-            title: "Elite Doctor Network",
+            title: "Top Specialist Doctors",
             description:
-                "Sovereign encrypted video calls and offline slot booking with India's finest.",
+                "Talk to India's best doctors via private video calls or book a visit in person.",
             link: "/doctors",
         },
         {
             id: 3,
             icon: <FaAmbulance className="text-5xl text-green-700" />,
-            title: "Patriotic SOS Dispatch",
-            description: "Instant access to a unified emergency ambulance tracking network.",
+            title: "Emergency Help Anytime",
+            description: "Quickly find and track an ambulance near you during emergencies.",
             link: "/contact",
         },
         {
             id: 4,
             icon: <BsCapsule className="text-5xl text-orange-500" />,
-            title: "Smart Pharmacy Hub",
-            description: "Interactive AI-guided OTC suggestions and SOS first-aid protocols.",
+            title: "Smart Medicine Finder",
+            description: "Find the right medicines and learn simple first-aid steps to stay safe.",
             link: "#medicine-hub",
         },
     ];
@@ -172,17 +172,17 @@ const OurSpecialService = () => {
             <div className="flex flex-col items-center justify-center mb-20 gap-8 relative z-10 text-center max-w-5xl mx-auto">
                 <div className="w-full">
                     <h2 className="text-[clamp(32px,8vw,80px)] font-black text-slate-900 mb-6 tracking-tighter uppercase leading-[0.85]">
-                        The <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-green-600">Smart Hub</span> Portal
+                        The <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-green-600 drop-shadow-[0_0_15px_rgba(255,153,51,0.3)] animate-pulse">Smart Hub</span> Portal
                     </h2>
                     <p className="text-slate-500 font-black uppercase tracking-[0.3em] text-[10px] sm:text-xs opacity-80">
-                        Democratizing Elite Medical Care Through Sentient AI Integration
+                        World-Class Healthcare for Everyone, Made Simple with AI
                     </p>
                 </div>
                 <Link
                     to="/services"
                     className="tri-btn group relative overflow-hidden"
                 >
-                    <span className="relative z-10">Request Elite Service</span>
+                    <span className="relative z-10">Explore All Services</span>
                     <div className="absolute inset-0 bg-slate-900 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
                 </Link>
             </div>
@@ -201,13 +201,18 @@ const OurSpecialService = () => {
                                 {service.icon}
                             </div>
 
-                            {/* Title */}
-                            <h3 className="text-2xl font-black text-slate-800 mb-4 tracking-tighter leading-tight uppercase h-[60px] flex items-center">
-                                {service.title}
-                            </h3>
+                            {/* Title with Badge */}
+                            <div className="flex flex-col items-center mb-4">
+                                <span className={`text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full mb-3 ${service.id % 2 === 0 ? 'bg-blue-100 text-blue-600' : 'bg-orange-100 text-orange-600'} animate-pulse`}>
+                                    {service.id === 1 ? 'AI Powered' : service.id === 2 ? 'Live Doctors' : service.id === 3 ? '24/7 Support' : 'Ready to use'}
+                                </span>
+                                <h3 className="text-2xl font-black text-slate-800 tracking-tighter leading-tight uppercase h-[40px] flex items-center">
+                                    {service.title}
+                                </h3>
+                            </div>
 
                             {/* Description */}
-                            <p className="text-slate-500 font-medium mb-8 leading-relaxed">
+                            <p className="text-slate-500 font-medium mb-8 leading-relaxed h-[60px] overflow-hidden">
                                 {service.description}
                             </p>
 
@@ -217,7 +222,7 @@ const OurSpecialService = () => {
                                     href={service.link}
                                     className="text-orange-600 font-black uppercase tracking-widest text-xs hover:text-green-700 inline-flex items-center gap-2 transition-all duration-300"
                                 >
-                                    Explore Hub →
+                                    Learn More →
                                 </a>
                             ) : (
                                 <Link

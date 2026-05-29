@@ -51,6 +51,13 @@ const authReducer = (state, action) => {
                 token: null,
             };
 
+        case "UPDATE_USER":
+            return {
+                user: action.payload.user,
+                role: action.payload.role || state.role, // Fallback to current role if not provided
+                token: action.payload.token || state.token, // Fallback to current token if not provided
+            };
+
         default:
             return state;
     }

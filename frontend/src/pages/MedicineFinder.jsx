@@ -12,8 +12,10 @@ import {
 } from 'react-icons/bs';
 import { medicineSubstitutes } from '../utils/medicineSubstitutes';
 import { medicinedb } from '../utils/medicineData';
+import useRecordActivity from '../hooks/useRecordActivity';
 
 const MedicineFinder = () => {
+    const { recordActivity } = useRecordActivity();
     const [searchQuery, setSearchQuery] = useState('');
     const [searching, setSearching] = useState(false);
     const [results, setResults] = useState(null);
@@ -27,6 +29,7 @@ const MedicineFinder = () => {
 
     const handleSearch = () => {
         if (!searchQuery) return;
+        recordActivity("Medicine Finder", "Search", "/medicine-finder");
         setSearching(true);
         setResults(null);
 

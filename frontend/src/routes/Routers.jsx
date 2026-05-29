@@ -1,6 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "../Dashboard/doctor-account/Dashboard";
 import MyAccount from "../Dashboard/user-account/MyAccount";
+import HospitalDashboard from "../Dashboard/hospital-account/HospitalDashboard";
+import AdminDashboard from "../Dashboard/admin-account/AdminDashboard";
 import AboutUs from "../pages/AboutUs";
 import CheckoutSuccess from "../pages/CheckoutSuccess";
 import Contact from "../pages/Contact";
@@ -40,7 +42,10 @@ import AyurvedaHub from "../pages/AyurvedaHub";
 import NaturopathyHub from "../pages/NaturopathyHub";
 import NutritionHub from "../pages/NutritionHub";
 import OfflineConsultationHub from "../pages/OfflineConsultationHub";
+import OnlineVideoBooking from "../pages/OnlineVideoBooking";
 import MedicinePriceCompare from "../pages/MedicinePriceCompare";
+import PainNavigator3D from "../pages/PainNavigator3D";
+import HealthCopilot from "../pages/HealthCopilot";
 
 const Routers = () => {
   return (
@@ -73,7 +78,10 @@ const Routers = () => {
       <Route path="/naturopathy-hub" element={<NaturopathyHub />} />
       <Route path="/nutrition-hub" element={<NutritionHub />} />
       <Route path="/offline-consultation" element={<OfflineConsultationHub />} />
+      <Route path="/online-video-booking" element={<OnlineVideoBooking />} />
       <Route path="/medicine-price-compare" element={<MedicinePriceCompare />} />
+      <Route path="/pain-navigator" element={<PainNavigator3D />} />
+      <Route path="/health-copilot" element={<HealthCopilot />} />
       <Route path="/services" element={<Services />} />
       <Route path="/checkout-success" element={<CheckoutSuccess />} />
       <Route path="/login" element={<Login />} />
@@ -99,7 +107,22 @@ const Routers = () => {
           </ProtectedRoutes>
         }
       />
-
+      <Route
+        path="/hospitals/profile/me"
+        element={
+          <ProtectedRoutes allowedRoles={["hospital"]}>
+            <HospitalDashboard />
+          </ProtectedRoutes>
+        }
+      />
+      <Route
+        path="/admin/profile/me"
+        element={
+          <ProtectedRoutes allowedRoles={["admin"]}>
+            <AdminDashboard />
+          </ProtectedRoutes>
+        }
+      />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

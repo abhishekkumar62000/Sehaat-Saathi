@@ -26,14 +26,14 @@ const ServiceSectionList = () => {
       <div className="text-center">
         <Link to="/services" className="inline-block group">
           <button className="tri-btn flex items-center gap-4">
-            <span className="relative z-10">Expand Global Network</span>
+            <span className="relative z-10">View All Health Services</span>
             <BsArrowRight className="relative z-10 w-6 h-6 group-hover:translate-x-2 transition-transform duration-300" />
           </button>
         </Link>
 
         {/* Additional Info */}
-        <p className="text-gray-500 text-sm mt-4">
-          Explore our complete range of medical specialties
+        <p className="text-gray-500 text-sm mt-4 font-bold uppercase tracking-widest opacity-60">
+          Find the right care for every health need
         </p>
       </div>
 

@@ -1,12 +1,19 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
     BsStars, BsActivity, BsShieldCheck, BsTruck,
-    BsArrowRight, BsInfoCircle, BsChatDots, BsPhone, BsCapsule, BsShieldFillPlus, BsBellFill, BsCpuFill, BsCameraFill, BsCartCheck, BsPeopleFill, BsDropletFill, BsHeartPulse, BsFileEarmarkMedical, BsInboxesFill, BsGenderFemale, BsFlower1, BsTreeFill, BsCart4, BsHospital
+    BsArrowRight, BsInfoCircle, BsChatDots, BsPhone, BsCapsule, BsShieldFillPlus, BsBellFill, BsCpuFill, BsCameraFill, BsCartCheck, BsPeopleFill, BsDropletFill, BsHeartPulse, BsFileEarmarkMedical, BsInboxesFill, BsGenderFemale, BsFlower1, BsTreeFill, BsCart4, BsHospital, BsShieldLockFill, BsGeoAltFill
 } from "react-icons/bs";
 import { MdFitnessCenter } from "react-icons/md";
+import useRecordActivity from '../hooks/useRecordActivity';
 
 const Smarthub = () => {
+    const { recordActivity } = useRecordActivity();
+
+    useEffect(() => {
+        recordActivity("Smart Hub", "Visit", "/smarthub");
+    }, []);
+
     // Analytics removed as per user request. Optimized for a single-view experience.
 
     return (
@@ -167,8 +174,8 @@ const Smarthub = () => {
                             <BsStars className="text-orange-600" />
                             <span className="text-sm font-bold tracking-wide uppercase text-orange-800">Innovation Hub</span>
                         </div>
-                        <h1 className="text-5xl md:text-7xl font-black mb-8 leading-tight tracking-tighter">
-                            <span style={{ color: "#FF9933" }}>Sentient</span>{" "}
+                        <h1 className="text-5xl md:text-7xl font-black mb-8 leading-tight tracking-tighter text-slate-800">
+                            Your <span style={{ color: "#FF9933" }}>Smart</span>{" "}
                             <span style={{ color: "#138808" }}>Health</span> Hub
                         </h1>
                         <p className="text-lg md:text-xl text-gray-700 font-medium leading-relaxed mb-8">
@@ -188,9 +195,9 @@ const Smarthub = () => {
                         </div>
                         <div>
                             <h2 className="text-2xl font-black text-gray-900 uppercase tracking-tighter">
-                                <span style={{ color: "#FF9933" }}>Sovereign</span> <span style={{ color: "#138808" }}>Ecosystem</span>
+                                <span style={{ color: "#FF9933" }}>Complete</span> <span style={{ color: "#138808" }}>Health Support</span>
                             </h2>
-                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em]">The Future of Bharat's Health</p>
+                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em]">Everything you need to stay healthy</p>
                         </div>
                     </div>
                 </div>
@@ -234,7 +241,7 @@ const Smarthub = () => {
                                     <span style={{ color: "#138808" }}>Saathi</span> Instant Video Consultations Hub
                                 </span>
                             }
-                            desc="Connect with top specialists in seconds via pulse-encrypted video calls. Features integrated AI vitals tracking & instant script generation."
+                            desc="Talk to top specialist doctors in seconds via private video calls. Includes instant prescriptions and health monitoring."
                             color="green"
                             status="Live & Premium"
                             outstanding={true}
@@ -253,13 +260,32 @@ const Smarthub = () => {
                                     <span style={{ color: "#138808" }}>Saathi</span> <span className="text-[#000080]">Offline Doctor Booking</span>
                                 </span>
                             }
-                            desc="Book physical visits to top doctors & hospitals across Bihar. Features Smart Crowd Predictor & AI Pre-Visit Triage."
+                            desc="Book a visit to the best doctors and hospitals. See wait times and get ready before you arrive."
                             color="tiranga"
                             status="New & Premier"
                             outstanding={true}
                             example={{
                                 patient: "Need a Cardiologist in Madhubani for an offline visit.",
                                 ai: "Found 3 verified Doctors. Dr. Jha (8.2km) has 'Low Rush' right now. Booking slot for 4:00 PM."
+                            }}
+                        />
+                    </Link>
+                    <Link to="/online-video-booking">
+                        <FeatureRoadmapCard
+                            icon={<BsCameraFill className="animate-pulse text-violet-600" />}
+                            title={
+                                <span>
+                                    <span style={{ color: "#FF9933" }}>Sehaat</span>{" "}
+                                    <span style={{ color: "#138808" }}>Saathi</span> <span className="text-violet-700">Online Video Call Doctor Booking</span>
+                                </span>
+                            }
+                            desc="Book a scheduled video call with verified doctors. Choose your time slot, share symptoms, and consult via Google Meet or Zoom — pay online and get your meeting link instantly."
+                            color="purple"
+                            status="New Launch 🎥"
+                            outstanding={true}
+                            example={{
+                                patient: "I need a Dermatologist for a skin issue. I am free at 5 PM tomorrow.",
+                                ai: "Booking confirmed with Dr. Sharma for 5:00 PM. Google Meet link sent to your email. Fee: ₹499."
                             }}
                         />
                     </Link>
@@ -648,6 +674,45 @@ const Smarthub = () => {
                             }}
                         />
                     </a>
+
+                    <Link to="/pain-navigator">
+                        <FeatureRoadmapCard
+                            icon={<BsGeoAltFill className="animate-bounce text-blue-500" />}
+                            title={
+                                <span>
+                                    <span style={{ color: "#FF9933" }}>Chakra</span>{" "}
+                                    <span style={{ color: "#138808" }}>Pain</span> Navigator
+                                </span>
+                            }
+                            desc="Interactive 3D Anatomical Mapping. Touch where it hurts and get an AI neural triangulation of possible causes."
+                            color="tiranga"
+                            status="Neural Mapping"
+                            outstanding={true}
+                            example={{
+                                patient: "I have sharp pain in the lower left abdomen.",
+                                ai: "Triangulating... Possible Appendicitis or Hernia. Clinical Triage: Visit General Surgery Department."
+                            }}
+                        />
+                    </Link>
+                    <Link to="/health-copilot">
+                        <FeatureRoadmapCard
+                            icon={<BsShieldCheck className="animate-pulse text-blue-600" />}
+                            title={
+                                <span>
+                                    <span style={{ color: "#FF9933" }}>AI Health</span>{" "}
+                                    <span style={{ color: "#138808" }}>Copilot</span>
+                                </span>
+                            }
+                            desc="India's first Neural Health Command Center. Track trends, calculate risk scores, and get daily AI health guidance."
+                            color="tiranga"
+                            status="National Sovereign Elite"
+                            outstanding={true}
+                            example={{
+                                patient: "Log my BP: 140/90. How is my health today?",
+                                ai: "Warning: Rising BP trend detected. Health Score: 68. Tip: Reduce salt intake and walk 20 mins."
+                            }}
+                        />
+                    </Link>
                 </div>
             </div>
 
@@ -679,7 +744,7 @@ const FeatureRoadmapCard = ({ icon, title, desc, color, status, example, outstan
         <div className={`tri-glass rounded-[40px] p-4 sm:p-6 md:p-8 lg:p-10 transition-all hover:-translate-y-3 group h-full flex flex-col relative overflow-hidden ${outstanding ? 'ring-4 ring-[#FF9933]/20 shadow-2xl' : ''} ${color === 'tiranga' ? 'bg-gradient-to-br from-[#FF9933]/10 via-white to-[#138808]/10 border border-[#FF9933]/20' : ''}`}>
             {outstanding && (
                 <div className={`absolute top-0 right-0 text-white text-[9px] font-black px-4 py-1 rounded-bl-2xl z-20 animate-pulse tracking-widest shadow-lg ${color === 'tiranga' ? 'bg-gradient-to-r from-[#FF9933] via-white to-[#138808] text-[#000080]' : 'bg-lime-500'}`}>
-                    OUTSTANDING ELITE
+                    BEST CHOICE
                 </div>
             )}
             <div className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-2xl flex items-center justify-center mb-4 sm:mb-6 md:mb-8 transition-all group-hover:scale-110 group-hover:rotate-12 shadow-inner ${safeColorClass.split(' ').slice(2).join(' ')} ${color === 'tiranga' ? 'border-2 border-[#FF9933]/20 shadow-lg' : ''}`}>

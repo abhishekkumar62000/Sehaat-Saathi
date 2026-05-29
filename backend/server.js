@@ -11,14 +11,28 @@ import doctorRoute from "./Routes/doctor.js";
 import reviewRoute from "./Routes/review.js";
 import userRoute from "./Routes/user.js";
 import aiDoctorRoute from "./Routes/aiDoctor.js";
+import healthCopilotRoute from "./Routes/healthCopilot.js";
+import notificationRoute from "./Routes/notification.js";
+import adminRoute from "./Routes/admin.js";
+import appointmentRoute from "./Routes/appointment.js";
+import videoConsultRoute from "./Routes/videoConsultation.js";
+
+import hospitalRoute from "./Routes/hospital.js";
+import http from "http";
+import initSocket from "./socket/socketHandler.js";
+import initExpiryJob from "./jobs/expiryJob.js";
 
 console.log("Starting server implementation...");
-console.log("Environment variables loaded.");
-console.log("PORT:", process.env.PORT);
-console.log("MONGODB_URL defined:", !!process.env.MONGODB_URL);
-
 const app = express();
+const server = http.createServer(app);
 const port = process.env.PORT || 8000;
+
+// Initialize Neural Socket Flux
+const io = initSocket(server);
+app.set("io", io); // Make io available in controllers
+
+// Initialize 10-Minute Expiry Guardian
+initExpiryJob(io);
 
 const corsOptions = {
   origin: true,
@@ -30,7 +44,6 @@ app.get("/", (req, res) => {
 
 // database connection
 mongoose.set("strictQuery", false);
-mongoose.set("bufferCommands", false); // Disable buffering to get immediate errors when not connected
 
 const connectDB = async () => {
   console.log("Attempting to connect to MongoDB...");
@@ -38,16 +51,10 @@ const connectDB = async () => {
     if (!process.env.MONGODB_URL) {
       throw new Error("MONGODB_URL is not defined in environment variables");
     }
-    // await mongoose.connect(process.env.LOCAL_DATABASE);
-    await mongoose.connect(process.env.MONGODB_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(process.env.MONGODB_URL);
     console.log("MongoDB is connected successfully ✅");
   } catch (err) {
     console.error("MongoDB connection fail ❌:", err.message);
-    console.error("Tip: Check if your IP address is whitelisted in MongoDB Atlas.");
-    // On Render, we might want to exit if DB fails to ensure we see the error in logs clearly
   }
 };
 
@@ -60,25 +67,17 @@ app.use("/api/v1/users", userRoute);
 app.use("/api/v1/doctors", doctorRoute);
 app.use("/api/v1/reviews", reviewRoute);
 app.use("/api/v1/bookings", bookingRoute);
+app.use("/api/v1/notifications", notificationRoute);
+app.use("/api/v1/hospitals", hospitalRoute);
 app.use("/api/v1/ai-doctor", aiDoctorRoute);
+app.use("/api/v1/health-copilot", healthCopilotRoute);
+app.use("/api/v1/admin", adminRoute);
+app.use("/api/v1/appointments", appointmentRoute);
+app.use("/api/v1/video-consult", videoConsultRoute);
 
-app.listen(port, async () => {
+server.listen(port, () => {
   console.log("\n==========================================");
-  console.log("🚀 Server listening on port: " + port);
+  console.log("🚀 Neural Server Pulse Sync on port: " + port);
   console.log("==========================================");
-
-  // Try to find public IP to help user with whitelisting
-  try {
-    const response = await fetch('https://api.ipify.org?format=json');
-    const data = await response.json();
-    console.log("\n🔍 REQUIRED ACTION:");
-    console.log("Ensure this IP is whitelisted in MongoDB Atlas Access List:");
-    console.log(`👉 IP: ${data.ip}`);
-    console.log("To fix permanently, whitelist '0.0.0.0/0' in Atlas.");
-    console.log("------------------------------------------\n");
-  } catch (ipErr) {
-    // Silently fail if we can't get the IP
-  }
-
   connectDB();
 });

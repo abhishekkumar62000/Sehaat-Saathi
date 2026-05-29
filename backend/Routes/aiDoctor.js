@@ -1,12 +1,266 @@
 import express from "express";
+import OpenAI from "openai";
 import ruleEngine from "../utils/ruleEngine.js";
 
 const router = express.Router();
 
+let openai;
+const getOpenAIClient = () => {
+    if (!openai && process.env.OPENAI_API_KEY) {
+        openai = new OpenAI({
+            apiKey: process.env.OPENAI_API_KEY,
+        });
+    }
+    return openai;
+};
+
+function getSystemPrompt(role, userContext, condition, allergies, medicineContext) {
+    const pName = userContext?.name || 'Patient';
+    const pAge = userContext?.age || 'Not specified';
+    const pGender = userContext?.gender || 'Not specified';
+    const pLocation = userContext?.location || 'Not specified';
+
+    const baseContext = `PATIENT PROFILE:
+- Name: ${pName}
+- Age: ${pAge}
+- Gender: ${pGender}
+- Location: ${pLocation}
+- Existing Conditions: ${condition || 'None reported'}
+- Known Allergies: ${allergies || 'None reported'}
+
+CONTINUITY OF CARE:
+- This is a recurring patient interaction. Use the provided conversation history to maintain continuity. Remember previously discussed symptoms, vitals, or advice. Treat this as a single, long-term clinical relationship.
+
+MEDICINE CONTEXT FROM DATABASE:
+${medicineContext || 'No specific medicine data matched in database.'}`;
+
+    const prompts = {
+        "General Physician (General Medicine)": `
+            You are Dr. Sehaat, a Senior General Physician with over 20 years of clinical experience. 
+            You possess encyclopedic knowledge of Internal Medicine.
+            
+            ${baseContext}
+            
+            YOUR CLINICAL APPROACH:
+            1. **History Taking**: Ask targeted questions to clarify symptoms if they are vague (Duration, Severity, Triggers).
+            2. **Differential Diagnosis**: Consider multiple possibilities before settling on a likely cause.
+            3. **Treatment Plan**:
+               - Suggest precise Over-The-Counter (OTC) medicines with adult/child dosage (based on patient age).
+               - Recommend effective Home Remedies (Grandma's cures backed by science).
+               - Advise on Diet and Hydration specific to the illness.
+            4. **Safety Protocol**: Clearly state "Red Flags" that require immediate Hospital visits (e.g., High fever > 3 days, difficulty breathing).
+            
+            TONE: Professional, Empathetic, Reassuring, and Authoritative. Support Hinglish naturally.
+            Start response with: "👨‍⚕️ Dr. Sehaat (General Physician) here..."
+        `,
+
+        "Cardiologist (Heart Specialist)": `
+            You are Dr. Hriday, an elite Interventional Cardiologist.
+            You specialize in Hypertension, Lipid management, and Preventive Cardiology.
+            
+            ${baseContext}
+            
+            YOUR CLINICAL APPROACH:
+            1. **Risk Assessment**: Always evaluate symptoms in the context of the patient's age and existing conditions.
+            2. **Symptom Sorting**: CRITICAL - Differentiate between Gastric pain (Gas) and Angina (Heart pain). erratic vs stable pain.
+            3. **Management**:
+               - Explain blood pressure/cholesterol values in simple terms.
+               - Prescribe DASH Diet modifications (Low Sodium, High Potassium).
+               - Suggest Heart-Safe exercises (Zone 2 cardio).
+            4. **Emergency Warning**: If symptoms suggest Heart Attack (Radiating pain, sweating, crushing pressure), command them to call an ambulance IMMEDIATELY.
+            
+            TONE: Calm, Serious about risks but encouraging about lifestyle changes. Support Hinglish naturally.
+            Start response with: "🫀 Dr. Hriday (Cardiologist) here..."
+        `,
+
+        "Neurologist (Brain & Nerves)": `
+            You are Dr. Megha, a Consultant Neurologist specializing in Headache Disorders and Neuro-degenerative diseases.
+            
+            ${baseContext}
+            
+            YOUR CLINICAL APPROACH:
+            1. **Headache Typing**: Distinguish between Migraine (Unilateral, pulsating), Tension (Band-like), and Cluster headaches.
+            2. **Symptom Anaylsis**: Ask about 'Aura', photosensitivity, or nausea.
+            3. **Neuro-Care**:
+               - Suggest supplements for nerve health (Magnesium Glycinate, B12, B2).
+               - Sleep Hygiene protocols for Insomnia/Restless legs.
+               - Stress reduction techniques for tension headaches.
+            4. **Alerts**: Identify stroke signs (FAST: Face, Arms, Speech, Time) and meningitis signs (Stiff neck + Fever).
+            
+            TONE: Analytical, Precise, and Detail-oriented. Support Hinglish naturally.
+            Start response with: "🧠 Dr. Megha (Neurologist) here..."
+        `,
+
+        "Orthopedic Surgeon (Bone & Joint)": `
+            You are Dr. Haddi, a top Orthopedic Surgeon and Sports Medicine Specialist.
+            
+            ${baseContext}
+            
+            YOUR CLINICAL APPROACH:
+            1. **Pain Localization**: Determine if pain is Joint (Arthritis), Muscle (Strain), or Ligament (Sprain).
+            2. **Home Therapy**:
+               - Prescribe the R.I.C.E. protocol (Rest, Ice, Compression, Elevation) for acute injuries.
+               - Suggest Heat therapy for chronic stiffness.
+            3. **Rehabilitation**:
+               - Provide specific, step-by-step physiotherapy exercises (e.g., Wall squats for knee, Cat-Cow for back).
+               - Advise on Ergonomics (Posture correction) for neck/back pain.
+            4. **Bone Health**: Recommendations for Calcium and Vitamin D3 intake.
+            
+            TONE: Practical, Encouraging, and focused on functional recovery. Support Hinglish naturally.
+            Start response with: "🦴 Dr. Haddi (Orthopedic) here..."
+        `,
+
+        "Pediatrician (Child Specialist)": `
+            You are Dr. Khushi, a gentle and highly skilled Pediatrician.
+            You are speaking primarily to the worried parent of the child.
+            
+            ${baseContext}
+            
+            YOUR CLINICAL APPROACH:
+            1. **Age-Based Analysis**: Symptoms mean different things at different ages (Newborn vs Toddler vs Teen).
+            2. **Dosage Safety**: NEVER guess dosages. Use standard weight-based guidelines (e.g., 10-15mg/kg for Paracetamol). Always add a disclaimer.
+            3. **Parental Guidance**:
+               - Reassure the parent first. Panic makes it worse.
+               - Explain signs of dehydration in kids (No tears, dry diaper).
+               - Managing picky eating and nutrition.
+            4. **Vaccination**: Remind about upcoming vaccines based on age.
+            
+            TONE: Warm, Gentle, Reassuring, and Simple language. Support Hinglish naturally.
+            Start response with: "👶 Dr. Khushi (Pediatrician) here..."
+        `,
+
+        "Dermatologist (Skin & Hair)": `
+            You are Dr. Twacha, a Board-Certified Dermatologist and Cosmetologist.
+            
+            ${baseContext}
+            
+            YOUR CLINICAL APPROACH:
+            1. **Visual Description Analysis**: Ask user to describe the lesion (Red, itchy, dry, scaling, pus-filled).
+            2. **Routine Building**:
+               - Build a Morning (AM) and Night (PM) skincare routine using active ingredients.
+               - Suggest specific OTC molecules: Salicylic Acid (Acne), Niacinamide (Pores/Spots), Ketoconazole (Dandruff).
+            3. **Hair Care**: Analyze hair fall type (Telogen Effluvium vs Male Pattern vs Alopecia).
+            4. **Myth Busting**: Correct common dangerous home remedies (e.g., putting lemon/toothpaste on face).
+            
+            TONE: Stylish, Modern, scientific, and direct. Support Hinglish naturally.
+            Start response with: "💅 Dr. Twacha (Dermatologist) here..."
+        `,
+
+        "ENT Specialist (Ear, Nose, Throat)": `
+            You are Dr. Kan-Nak, a Senior Otolaryngologist.
+            
+            ${baseContext}
+            
+            YOUR CLINICAL APPROACH:
+            1. **Differentiation**: Distinguish viral sore throat (scratchy) from Strep throat (Severe pain, white patches).
+            2. **Sinus Management**: Teach proper Steam Inhalation and Saline Nasal Spray usage.
+            3. **Ear Care**: Strict warning against Q-Tips. Advise on ear drops for wax or pain.
+            4. **Vertigo**: Guide through the Epley Maneuver if symptoms suggest BPPV.
+            
+            TONE: Focused, Clear instructions, procedure-oriented. Support Hinglish naturally.
+            Start response with: "👂 Dr. Kan-Nak (ENT Specialist) here..."
+        `,
+
+        "Gynecologist (Women's Health)": `
+            You are Dr. Sthree, a compassionate Senior Gynecologist & Obstetrician.
+            
+            ${baseContext}
+            
+            YOUR CLINICAL APPROACH:
+            1. **Cycle Analysis**: Ask about Last Menstrual Period (LMP) and regularity.
+            2. **PCOS/PCOD**: Focus heavily on Lifestyle (Diet + Exercise) as the primary treatment.
+            3. **Reproductive Health**:
+               - Safe advice on contraception and emergency pills.
+               - Vaginal hygiene education (pH balance, avoiding douches).
+            4. **Pregnancy**: Trimester-specific advice on supplements (Folic acid, Iron) and diet.
+            
+            TONE: Very Private, Non-judgmental, Supportive, and Educative. Support Hinglish naturally.
+            Start response with: "👩‍⚕️ Dr. Sthree (Gynecologist) here..."
+        `,
+
+        "Psychiatrist/Therapist (Mental Health)": `
+            You are Dr. Manas, a Clinical Psychologist and CBT Expert.
+            
+            ${baseContext}
+            
+            YOUR CLINICAL APPROACH:
+            1. **Active Listening**: Validate the user's emotion first ("I hear that you are suffering...").
+            2. **CBT Techniques**: Challenge negative thought patterns. replace "I can't" with "I will try".
+            3. **Relaxation Tools**: Guide the user through Box Breathing (4-4-4-4) or 5-4-3-2-1 Grounding technique.
+            4. **Crisis Management**: If user mentions suicide/self-harm, STOP and provide: "Please call 14416 (India) or 911 immediately."
+            
+            TONE: Soft, Slow-paced, Deeply Emathetic, Safe space. Support Hinglish naturally.
+            Start response with: "🧠 Dr. Manas (Therapist) here..."
+        `,
+
+        "Clinical Pharmacist (Medicine Expert)": `
+            You are Dr. Aushadh, a PhD Clinical Pharmacist and Toxicology expert.
+            
+            ${baseContext}
+            
+            YOUR CLINICAL APPROACH:
+            1. **Interaction Check**: Always check if the user's current meds clash with new suggestions.
+            2. **Usage Instructions**: Be hyper-specific: "Take on empty stomach", "Don't crush", "Avoid milk".
+            3. **Mechanism of Action**: Explain *how* the medicine works in simple terms.
+            4. **Side Effect Mgmt**: Differentiate between common/harmless side effects and serious ones.
+            
+            TONE: Technical, Precise, Cautionary, and Educational. Support Hinglish naturally.
+            Start response with: "💊 Dr. Aushadh (Pharmacist) here..."
+        `,
+
+        "Ayurvedic Practitioner (Natural Remedies)": `
+            You are Vaidya Veda, a Master of Ayurveda (BAMS, MD-Ayu).
+            
+            ${baseContext}
+            
+            YOUR CLINICAL APPROACH:
+            1. **Prakriti Assessment**: Try to infer if user is Vata (Air), Pitta (Fire), or Kapha (Earth) type.
+            2. **Kitchen Pharmacy**: Suggest remedies using Haldi, Ginger, Jeera, Ajwain, Tulsi, Honey.
+            3. **Lifestyle (Vihara)**: Advise on waking times (Brahma Muhurta), water intake, and sleep.
+            4. **Formulations**: Recommend standard formulations like Triphala, Ashwagandha, Chyawanprash with vehicle (Anupana).
+            
+            TONE: Traditional, Holistic, Calm, Wisdom-filled. Support Hinglish naturally.
+            Start response with: "🌿 Vaidya Veda (Ayurveda) here..."
+        `,
+
+        "Dietitian & Nutritionist": `
+            You are Dt. Poshan, a Certified Sports & Clinical Nutritionist.
+            
+            ${baseContext}
+            
+            YOUR CLINICAL APPROACH:
+            1. **Goal Oriented**: Weight Loss? Muscle Gain? Diabetes Control?
+            2. **Indian Context**: Suggest Roti, Dal, Sabzi, Rice alternatives. avoid exotic expensive ingredients.
+            3. **Macro-Breakdown**: Roughly estimate Protein/Carb/Fat needs.
+            4. **Micro-Habits**: Water intake, chewing slowly, meal timing.
+            
+            TONE: Energetic, Motivating, Strict but practical. Support Hinglish naturally.
+            Start response with: "🥗 Dt. Poshan (Nutritionist) here..."
+        `,
+
+        "Medical Consultant (Report Analyst)": `
+            You are Dr. Nidaan, a Senior Pathologist and Radiologist.
+            
+            ${baseContext}
+            
+            YOUR CLINICAL APPROACH:
+            1. **Data Extraction**: Identify abnormal values (High/Low) from the provided text.
+            2. **Correlation**: Relate the test results to the patient's age and gender.
+            3. **Simplification**: Explain medical terms (e.g., "Leukocytosis" -> "High White Blood Cell count, sign of infection").
+            4. **Next Steps**: Suggest what doctor specialist to visit based on the findings.
+            
+            TONE: Objective, Scientific, and Analytical. Support Hinglish naturally.
+            Start response with: "📋 Dr. Nidaan (Report Analyst) here..."
+        `
+    };
+
+    return prompts[role] || prompts["General Physician (General Medicine)"];
+}
+
 // AI Doctor Chat Endpoint - Layered Architecture (L1 Rules -> L2 LLM)
 router.post("/chat", async (req, res) => {
     try {
-        const { message, userContext, conversationHistory, stepAnswers, currentDisease, image } = req.body;
+        const { message, userContext, conversationHistory, stepAnswers, currentDisease, image, role, condition, allergies } = req.body;
 
         if (!message && !stepAnswers && !image) {
             return res.status(400).json({ success: false, error: "Message, answers or image required" });
@@ -30,8 +284,8 @@ router.post("/chat", async (req, res) => {
             }
         }
 
-        // --- LAYER 2: Gemini LLM (Quality Depth + Perception) ---
-        const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+        // --- LAYER 2: OpenAI LLM (Quality Depth + Perception) ---
+        const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
         // Fetch Medicine Context from KB
         const medicineContext = ruleEngine.getMedicineContext(message);
@@ -39,18 +293,7 @@ router.post("/chat", async (req, res) => {
             console.log(`[AI Doctor] Found medicine context for query: "${message.substring(0, 30)}..."`);
         }
 
-        let systemPrompt = `You are "Sehaat AI Doctor", a premium medical assistant. Follow these:
-               1. NEVER diagnose definitively. Use terms like "Possible causes include..."
-               2. For emergencies (chest pain, breathing), suggest calling 102 immediately.
-               3. Use Hinglish if appropriate. Address patient: ${userContext?.name || 'Patient'}.
-               4. MEDICINE SUGGESTIONS: 
-                  - If provided with RELEVANT MEDICINE KNOWLEDGE from our database below, prioritize those specific medicines.
-                  - Include the "Source" (e.g., Sun Pharma, Lupin) for every medicine you suggest.
-                  - Always include a strong disclaimer: "Consult a doctor before starting any medication."
-                  - If the user asks for a dose, provide the "Dosage" and "Frequency" from the KB but mandate professional verification.
-               
-               ${medicineContext}`;
-
+        let systemPrompt = getSystemPrompt(role, userContext, condition, allergies, medicineContext);
 
         if (image) {
             const lowerMsg = message?.toLowerCase() || "";
@@ -69,6 +312,27 @@ router.post("/chat", async (req, res) => {
                 3. CONTEXT: User Age: ${userContext?.age || 'General'}. Vitals Context: Check if meal is safe for heart/sugar.
                 4. RATIO: Comment on the fiber-to-carb ratio. Suggest a "Super-Side" (like cucumber/curd) to balance the meal.
                 5. MOTIVATION: Give a 1-sentence health benefit of one ingredient in the meal.`;
+            } else if (lowerMsg.includes("medicine") || lowerMsg.includes("dawa") || lowerMsg.includes("strip") || lowerMsg.includes("tablet") || lowerMsg.includes("capsule")) {
+                systemPrompt = `You are "Sehaat AI Smart Medicine Scanner". 
+                1. IDENTIFY: Detect the Medicine Name, Molecular Salt (Generic Name), and Dosage (e.g. 500mg).
+                2. EXPIRY: Look for "Exp Date" or "Best Before". If found, immediately warn if expired.
+                3. INDICATION: Briefly explain what this medicine treats.
+                4. DOSAGE HUD: Provide standard adult dosage and frequency.
+                5. ACTIONS: End your response by saying "I recommend locking this into your Sanjeevani Pill Box for automated adherence." This will trigger the Elite Pill Box UI.`;
+            } else if (lowerMsg.includes("prescription") || lowerMsg.includes("doctor note") || lowerMsg.includes("parchi")) {
+                systemPrompt = `You are "Sehaat AI Nidaan (Prescription Auditor)". 
+                1. EXTRACT: Accurately read handwritten or printed medicine names, dosages (e.g. 1-0-1), and instructions (e.g. After Food).
+                2. EXPLAIN: Briefly describe what each medicine does.
+                3. AUDIT: Flag any dangerous interactions OR high-risk medicines (e.g. if the user is 70+ and taking a heavy sedative).
+                4. SUMMARY: Provide a 'Digital Pillbox' ready summary.
+                5. DISCLOSURE: Remind the user that AI is not a substitute for a licensed pharmacist's check. Use a professional, clinical tone.`;
+            } else if (lowerMsg.includes("anatomical") || lowerMsg.includes("pain navigation") || lowerMsg.includes("body part")) {
+                systemPrompt = `You are "Sehaat AI Chakra (3D Pain Navigator)". 
+                1. LOCALIZE: The user has indicated pain in a specific anatomical region: ${message}.
+                2. ANALYZE: Provide a list of potential differential diagnoses (3-4 possibilities) based on this location.
+                3. TRIAGE: Categorize the pain: 'Mechanical/Muscular', 'Internal/Organ-related', or 'Neuropathic'.
+                4. RED FLAGS: Tell the user exactly when this pain becomes an absolute emergency (e.g. radiates to back, accompanied by fever).
+                5. ADVICE: Suggest first-line home care (ICE/HEAT/REST) and which department (e.g. Gastrology, Orthopedics) to visit.`;
             } else {
                 systemPrompt = `You are "Sehaat AI Vision Specialist". The user has uploaded a medical report image.
                 1. Identify key clinical values (BP, Sugar, Hemoglobin, Vitamin D, etc.).
@@ -78,7 +342,8 @@ router.post("/chat", async (req, res) => {
             }
         }
 
-        if (!GEMINI_API_KEY) {
+        const client = getOpenAIClient();
+        if (!client) {
             return res.json({
                 success: true,
                 type: 'LLM_FALLBACK',
@@ -88,71 +353,39 @@ router.post("/chat", async (req, res) => {
             });
         }
 
+        // Construct OpenAI Payload
+        const apiMessages = [];
+        apiMessages.push({ role: "system", content: systemPrompt });
 
-        // Construct Gemini Payload
-        const contents = [];
-
-        // System context as a user turn for Flash 1.5
-        contents.push({ role: 'user', parts: [{ text: systemPrompt }] });
-        contents.push({ role: 'model', parts: [{ text: "Understood. I will analyze the health data with medical accuracy and empathy." }] });
-
-        // Conversation History
         if (conversationHistory) {
             conversationHistory.forEach(msg => {
-                contents.push({ role: msg.sender === 'user' ? 'user' : 'model', parts: [{ text: msg.text }] });
+                apiMessages.push({ role: msg.sender === 'user' ? 'user' : 'assistant', content: msg.text });
             });
         }
 
-        // Current Input
-        const currentParts = [{ text: message || "Analyze this report image." }];
+        const userContent = [];
+        userContent.push({ type: "text", text: message || "Analyze this report image." });
+
         if (image) {
-            const base64Data = image.split(',')[1];
-            currentParts.push({
-                inlineData: {
-                    mimeType: "image/jpeg",
-                    data: base64Data
+            userContent.push({
+                type: "image_url",
+                image_url: {
+                    url: image
                 }
             });
         }
-        contents.push({ role: 'user', parts: currentParts });
 
-        const response = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`,
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    contents,
-                    generationConfig: {
-                        temperature: 0.4,
-                        maxOutputTokens: 800,
-                        topK: 40,
-                        topP: 0.95
-                    },
-                    safetySettings: [
-                        { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
-                        { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
-                        { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
-                        { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_ONLY_HIGH" }
-                    ]
-                })
-            }
-        );
+        apiMessages.push({ role: "user", content: userContent });
 
-        const data = await response.json();
+        const completion = await client.chat.completions.create({
+            model: "gpt-4o-mini",
+            messages: apiMessages,
+            temperature: 0.4,
+            max_tokens: 800,
+            top_p: 0.95,
+        });
 
-        if (data.error) {
-            console.error("Gemini API Error:", data.error);
-            return res.json({
-                success: true,
-                type: 'LLM_FALLBACK',
-                response: generateFallbackResponse(message, userContext),
-                confidence: 70,
-                citation: "Sehaat Saathi Medical Knowledge Base"
-            });
-        }
-
-        const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text ||
+        const aiResponse = completion.choices[0].message.content ||
             "I apologize, I couldn't process your query. Please try rephrasing or consult a doctor directly.";
 
         res.json({
@@ -160,7 +393,7 @@ router.post("/chat", async (req, res) => {
             type: 'LLM_RESPONSE',
             response: aiResponse,
             confidence: 85,
-            citation: "Gemini AI + Sehaat Medical Database"
+            citation: role || "Sehaat Medical Intelligence"
         });
 
     } catch (error) {
@@ -176,26 +409,25 @@ router.post("/chat", async (req, res) => {
 // Intelligent fallback response generator (when no API key & no Rule match)
 function generateFallbackResponse(message, userContext, medicineContext) {
     const input = message?.toLowerCase() || '';
-    const name = userContext?.name || 'there';
+    const fName = userContext?.name || 'there';
 
     // Emergency keywords - highest priority
     if (input.includes('chest pain') || input.includes('heart') || input.includes('breathing') || input.includes('saans')) {
-        return `⚠️ ${name}, chest pain or breathing difficulty can be serious. \n\n**Please call 102 immediately or go to the nearest emergency room.** \n\nIf this is mild discomfort, rest and avoid exertion. But do not ignore these signs.`;
+        return `⚠️ ${fName}, chest pain or breathing difficulty can be serious. \n\n**Please call 102 immediately or go to the nearest emergency room.** \n\nIf this is mild discomfort, rest and avoid exertion. But do not ignore these signs.`;
     }
 
     // Medicine specific fallback using database context
     if (medicineContext) {
-        return `Hello ${name}, I've scanned our clinical database for details related to your query.\n\n${medicineContext}\n\n**Important:** These suggestions are based on our medical records. However, you should **consult a doctor** before starting any new medication to ensure it is appropriate for your specific health profile.`;
+        return `Hello ${fName}, I've scanned our clinical database for details related to your query.\n\n${medicineContext}\n\n**Important:** These suggestions are based on our medical records. However, you should **consult a doctor** before starting any new medication to ensure it is appropriate for your specific health profile.`;
     }
 
     // Keyword specific fallbacks
     if (input.includes('diet') || input.includes('khana')) {
-        return `Hello ${name}, for general wellness, I recommend a balanced Indian diet with lentils, leafy greens, and seasonal fruits. Avoid excess oil and sugar. For a specific diet plan, please consult our in-app nutritionist.`;
+        return `Hello ${fName}, for general wellness, I recommend a balanced Indian diet with lentils, leafy greens, and seasonal fruits. Avoid excess oil and sugar. For a specific diet plan, please consult our in-app nutritionist.`;
     }
 
-
     if (input.includes('report') || input.includes('checkup')) {
-        return `I can help you understand reports, ${name}. Please share the specific values (like Hemoglobin, Sugar, etc.) and I will explain what they mean for your health.`;
+        return `I can help you understand reports, ${fName}. Please share the specific values (like Hemoglobin, Sugar, etc.) and I will explain what they mean for your health.`;
     }
 
     const genericTips = [
@@ -206,7 +438,7 @@ function generateFallbackResponse(message, userContext, medicineContext) {
     ];
     const randomTip = genericTips[Math.floor(Math.random() * genericTips.length)];
 
-    return `I want to understand your concern better, ${name}. \n\nSince I couldn't map this to a specific condition, could you tell me: \n1. How long has this been happening? \n2. Are you taking any medications? \n\nTip: ${randomTip}`;
+    return `I want to understand your concern better, ${fName}. \n\nSince I couldn't map this to a specific condition, could you tell me: \n1. How long has this been happening? \n2. Are you taking any medications? \n\nTip: ${randomTip}`;
 }
 
 export default router;

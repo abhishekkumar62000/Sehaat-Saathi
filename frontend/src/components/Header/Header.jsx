@@ -1,47 +1,63 @@
-import { useContext, useState } from "react";
-import { BiMenu } from "react-icons/bi";
+import React, { useState, useEffect, useContext } from "react";
+import { BiMenu, BiBell } from "react-icons/bi";
 import { BsActivity, BsRobot } from "react-icons/bs";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/brand-logo/SehaatSaathiLogo.png";
 import userAvatar from "../../assets/images/icons/patient-avatar.png";
 import { authContext } from "../../context/AuthContext";
+import { useSocket } from "../../context/SocketContext";
+import { BASE_URL } from "../../config";
 
 const navLinks = [
-  {
-    path: "/",
-    display: "HOME",
-  },
-  {
-    path: "/doctors",
-    display: "DOCTORS",
-  },
-  {
-    path: "/services",
-    display: "SERVICES",
-  },
-  {
-    path: "/smarthub",
-    display: "SMART HUB",
-  },
-  {
-    path: "/about",
-    display: "ABOUT US",
-  },
-  {
-    path: "/contact",
-    display: "CONTACT",
-  },
+  { path: "/home", display: "Home" },
+  { path: "/doctors", display: "Doctors" },
+  { path: "/services", display: "Services" },
+  { path: "/smarthub", display: "SMART HUB", isNew: true },
+  { path: "/about", display: "About Us" },
+  { path: "/contact", display: "Contact" },
 ];
-const Header = () => {
-  const activeClass = "nav-link-underline active text-orange-600 text-[15px] font-black tracking-widest transition-all";
-  const inactiveClass = "nav-link-underline text-slate-700 text-[15px] font-black tracking-widest hover:text-[#000080] transition-all";
+
+const Header = ({ isCompact = false }) => {
+  const activeClass = "nav-link-underline active text-orange-600 text-[13px] lg:text-[15px] font-black tracking-widest transition-all";
+  const inactiveClass = "nav-link-underline text-slate-700 text-[13px] lg:text-[15px] font-black tracking-widest hover:text-[#000080] transition-all";
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
   const { user, role, token, dispatch } = useContext(authContext);
+  const { socket } = useSocket();
 
   const navigate = useNavigate();
 
-  // Toggle menu visibility
+  // Fetch initial unread count
+  useEffect(() => {
+    if (token) {
+      fetch(`${BASE_URL}/notifications`, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      .then(res => res.json())
+      .then(result => {
+        if (result.success) {
+          const unread = result.data.filter(n => !n.isRead).length;
+          setUnreadCount(unread);
+        }
+      });
+    }
+  }, [token]);
+
+  // Listen for real-time alerts
+  useEffect(() => {
+    if (socket) {
+      socket.on("NEW_BOOKING_ALERT", () => setUnreadCount(prev => prev + 1));
+      socket.on("STATUS_SYNC", () => setUnreadCount(prev => prev + 1));
+    }
+    return () => {
+      if (socket) {
+        socket.off("NEW_BOOKING_ALERT");
+        socket.off("STATUS_SYNC");
+      }
+    };
+  }, [socket]);
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -50,62 +66,51 @@ const Header = () => {
     dispatch({ type: "LOGOUT" });
     navigate("/");
   };
-  return (
-    <header className="header bg-white/90 backdrop-blur-3xl sticky top-0 z-50 border-b border-slate-100/50 shadow-sm transition-all duration-500">
-      {/* Top Bar: Satellite Chatbot Link - HIGH VISIBILITY */}
-      <div className="bg-slate-900 overflow-hidden relative group/top">
-        <div className="absolute inset-0 bg-gradient-to-r from-orange-600/20 via-transparent to-green-600/20 animate-shimmer opacity-30"></div>
-        <div className="container mx-auto px-4 py-2 relative z-10 flex justify-center sm:justify-between items-center text-[10px] sm:text-[11px] font-black uppercase tracking-[0.2em]">
-          <div className="flex items-center gap-4 text-slate-400">
-            <span className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-ping"></span>
-              Neural Network Active
-            </span>
-            <span className="hidden md:block opacity-30">|</span>
-            <span className="hidden md:block">Bharat Powered AI v6.0</span>
-          </div>
-          <a
-            href="https://sehaat-saathi-your-ai-doctor-chatbot.streamlit.app/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white px-4 py-1.5 rounded-full hover:shadow-[0_0_20px_rgba(249,115,22,0.4)] transition-all hover:scale-105 active:scale-95 group/btn"
-          >
-            <BsRobot className="animate-bounce" />
-            <span className="tracking-[0.1em]">Launch Satellite Chatbot</span>
-            <span className="text-white/70 group-hover/btn:translate-x-1 transition-transform">→</span>
-          </a>
-        </div>
-      </div>
 
-      {/* Flag Gradient Accent Top (now below top bar) */}
-      <div className="w-full h-[4px] bg-gradient-to-r from-[#FF9933] via-white to-[#138808] opacity-90"></div>
-      <div className="container mx-auto flex justify-between items-center py-3">
+  return (
+    <header className={`header bg-white/95 backdrop-blur-3xl sticky top-0 z-[200] border-b border-slate-100 shadow-md transition-all duration-500 ${isCompact ? 'h-[50px] md:h-[60px]' : ''}`}>
+      {/* Patriotic Top Bar - Hidden in Compact Mode */}
+      {!isCompact && (
+        <div className="bg-slate-900 overflow-hidden relative group/top">
+          <div className="animate-marquee whitespace-nowrap py-1.5 flex items-center">
+            {[1,2,3].map((i) => (
+              <span key={i} className="text-[12px] font-black uppercase tracking-[0.2em] text-white/90 flex items-center mx-8">
+                <BsActivity className="text-[#FF9933] mr-2 animate-pulse" />
+                India's 1st AI-Powered Virtual Healthcare Platform
+                <span className="mx-4 text-white/20">|</span>
+                <span className="text-[#138808]">Designed for Remote Consultations, Emergency Healthcare & Diagnostic Solutions!</span>
+                <span className="mx-4 text-white/20">|</span>
+                <span className="text-[#FF9933] mr-1">Sehaat</span> <span className="text-[#138808]">Saathi</span> <span className="ml-2">In Bharat</span>
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {!isCompact && <div className="w-full h-[4px] bg-gradient-to-r from-[#FF9933] via-white to-[#138808] opacity-90"></div>}
+      
+      <div className={`container mx-auto flex justify-between items-center transition-all ${isCompact ? 'py-0 md:py-1' : 'py-3'}`}>
         {/* ========Logo========= */}
         <div className="flex items-center">
-          <NavLink to="/" className="group flex items-center">
-            <div className="relative overflow-hidden rounded-2xl bg-white/5 backdrop-blur-md p-1 transition-all duration-500 group-hover:bg-green-50/20 group-hover:shadow-[0_0_30px_rgba(22,163,74,0.2)]">
-              <img
-                src={logo}
-                alt="Sehaat Saathi Logo"
-                className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 object-contain transform transition-transform duration-500 group-hover:scale-110 active:scale-95"
-              />
-              <div className="absolute inset-0 border border-transparent group-hover:border-green-100/50 rounded-xl transition-all duration-500"></div>
+          <NavLink to="/home" className={`flex items-center gap-2 group/logo relative transition-all ${isCompact ? 'scale-[0.8] origin-left' : ''}`}>
+            <div className="relative">
+              <img src={logo} alt="Sehaat Saathi Logo" className={`${isCompact ? 'w-[30px] lg:w-[35px]' : 'w-[45px] lg:w-[55px]'} drop-shadow-md transition-transform duration-500 group-hover/logo:rotate-[360deg]`} />
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white animate-pulse"></div>
             </div>
-            <div className="ml-4 flex flex-row items-center whitespace-nowrap leading-none scale-105">
-              <span className="text-xl sm:text-2xl font-black tracking-tighter drop-shadow-sm" style={{ color: "#FF9933" }}>
-                Sehaat
-              </span>
-              <span className="ml-1 text-xl sm:text-2xl font-black tracking-tighter drop-shadow-sm" style={{ color: "#138808" }}>
-                Saathi
-              </span>
+            <div className="flex flex-col justify-center">
+              <h1 className={`${isCompact ? 'text-[1.1rem] lg:text-[1.3rem]' : 'text-[1.8rem] lg:text-[2.2rem]'} font-black tracking-tighter leading-none flex items-center`}>
+                <span className="text-[#FF9933]">Sehaat</span>
+                <span className="text-[#138808] ml-1">Saathi</span>
+              </h1>
+              {!isCompact && <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-slate-400 mt-0.5">India's Smart AI Health</span>}
             </div>
           </NavLink>
         </div>
 
-        {/* Middle: Nav Links */}
+        {/* Middle: Nav Links (Standard for Desktop) */}
         <nav className="hidden md:flex space-x-8 list-none">
           {navLinks.map((link, index) => (
-            <li key={index} className="relative">
+            <li key={index} className="relative group/nav">
               <NavLink
                 to={link.path}
                 className={(navClass) =>
@@ -113,9 +118,9 @@ const Header = () => {
                 }
               >
                 {link.display}
-                {link.display === "SMART HUB" && (
-                  <span className="absolute -top-3 -right-5 bg-orange-600 text-white text-[9px] font-black px-2 py-0.5 rounded-full animate-bounce shadow-md border border-white/40">
-                    NEW
+                {link.isNew && (
+                  <span className="absolute -top-4 -right-6 px-2 py-0.5 bg-orange-600 text-[9px] text-white font-black rounded-full uppercase tracking-tighter shadow-sm animate-bounce">
+                    New
                   </span>
                 )}
               </NavLink>
@@ -126,7 +131,17 @@ const Header = () => {
         {/* Right: User Info or Login/Logout */}
         <div className="flex items-center lg:space-x-6 space-x-3">
           {token && user ? (
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-4">
+              {/* Neural Notification Bell */}
+              <div className="relative cursor-pointer group/bell" onClick={() => navigate(`${role === "doctor" ? "/doctors/profile/me" : "/users/profile/me"}`)}>
+                <BiBell className="w-6 h-6 text-slate-700 group-hover/bell:text-orange-600 transition-colors" />
+                {unreadCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center animate-pulse border border-white shadow-sm">
+                    {unreadCount}
+                  </span>
+                )}
+              </div>
+
               <Link
                 to={`${role === "doctor" ? "/doctors/profile/me" : "/users/profile/me"}`}
                 className="flex items-center hover:scale-105 transition-all"

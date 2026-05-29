@@ -32,6 +32,8 @@ export const register = async (req, res) => {
       user = await User.findOne({ email });
     } else if (role == "doctor") {
       user = await Doctor.findOne({ email });
+    } else if (role == "hospital") {
+      user = await User.findOne({ email });
     }
 
     //check if user exist
@@ -43,7 +45,7 @@ export const register = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
 
-    if (role == "patient") {
+    if (role == "patient" || role == "hospital") {
       user = new User({
         name,
         email,
@@ -79,7 +81,7 @@ export const register = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-  const { email } = req.body;
+  const { email, password, role } = req.body;
 
   // Check if database is connected
   if (mongoose.connection.readyState !== 1) {
@@ -92,14 +94,20 @@ export const login = async (req, res) => {
   try {
     let user = null;
 
-    const patient = await User.findOne({ email });
-    const doctor = await Doctor.findOne({ email });
+    if (role === "doctor") {
+      user = await Doctor.findOne({ email });
+    } else if (role === "patient" || role === "hospital") {
+      user = await User.findOne({ email, role });
+    } else {
+      // Fallback for older or undefined role requests
+      const patient = await User.findOne({ email });
+      const doctor = await Doctor.findOne({ email });
 
-    if (patient) {
-      user = patient;
-    }
-    if (doctor) {
-      user = doctor;
+      if (patient) {
+        user = patient;
+      } else if (doctor) {
+        user = doctor;
+      }
     }
 
     //check if user exist or not
@@ -121,13 +129,13 @@ export const login = async (req, res) => {
     // get token
     const token = generateToken(user);
 
-    const { password, role, appointments, ...rest } = user._doc;
+    const { password: userPassword, role: userRole, appointments, ...rest } = user._doc;
     return res.status(200).json({
       status: true,
       message: "Successfully login",
       token,
       data: { ...rest },
-      role,
+      role: userRole,
     });
   } catch (error) {
     console.error("Login error:", error);

@@ -10,6 +10,8 @@ import {
 } from 'react-icons/bs';
 import { toast } from 'react-toastify';
 import confetti from 'canvas-confetti';
+import useFetchData from '../hooks/useFetchData';
+import { BASE_URL } from '../config';
 
 const HospitalAvailability = () => {
     const navigate = useNavigate();
@@ -130,6 +132,8 @@ const HospitalAvailability = () => {
         { id: 100, name: "Kaimur District Hosp", addr: "Bhabua", city: "Kaimur", dist: "185 km", beds: 35 }
     ];
 
+    const { data: dbHospitals } = useFetchData(`${BASE_URL}/hospitals`);
+
     const mockHospitals = hospitalList.map(h => ({
         id: h.id,
         name: h.name,
@@ -163,24 +167,36 @@ const HospitalAvailability = () => {
         ]
     }));
 
-    // Filter hospitals based on selected facility and emergency mode
-    const filteredHospitals = mockHospitals.filter(hospital => {
+    const hospitals = dbHospitals?.length > 0 
+        ? dbHospitals.map(h => ({
+            id: h._id,
+            name: h.hospitalName,
+            location: { address: h.location || h.district },
+            distance: "1.2 km",
+            icuBeds: { total: h.totalBeds, available: h.availableBeds },
+            generalBeds: { total: h.totalBeds * 2, available: h.availableBeds * 2 },
+            oxygen: true,
+            ventilators: 5,
+            emergency24x7: true,
+            verified: true,
+            lastUpdated: "Synced Now"
+        }))
+        : mockHospitals;
+
+    const filteredHospitals = hospitals.filter(hospital => {
         if (selectedFacility === 'all') return true;
-        if (selectedFacility === 'ICU') return hospital.icuBeds.available > 0;
+        if (selectedFacility === 'ICU') return hospital.icuBeds?.available > 0;
         if (selectedFacility === 'Oxygen') return hospital.oxygen;
-        if (selectedFacility === 'Ventilator') return hospital.ventilators > 0;
+        if (selectedFacility === 'Ventilator') return (hospital.ventilators || 0) > 0;
         if (selectedFacility === 'Emergency') return hospital.emergency24x7;
-        if (selectedFacility === 'OPD') return parseInt(hospital.opdWaitTime) < 60;
         return true;
     }).sort((a, b) => {
-        // AI Priority: Emergency mode sorts by availability then distance
         if (emergencyMode) {
-            const aScore = (a.icuBeds.available / a.icuBeds.total) + (a.generalBeds.available / a.generalBeds.total);
-            const bScore = (b.icuBeds.available / b.icuBeds.total) + (b.generalBeds.available / b.generalBeds.total);
-            if (bScore !== aScore) return bScore - aScore;
+            const aAvail = (a.icuBeds?.available || 0) + (a.generalBeds?.available || 0);
+            const bAvail = (b.icuBeds?.available || 0) + (b.generalBeds?.available || 0);
+            return bAvail - aAvail;
         }
-        // Default: sort by distance
-        return parseFloat(a.distance) - parseFloat(b.distance);
+        return parseFloat(a.distance || 0) - parseFloat(b.distance || 0);
     });
 
     const handleEmergencyToggle = () => {
@@ -198,6 +214,11 @@ const HospitalAvailability = () => {
 
     const handleNavigate = (hospitalName) => {
         toast.info(`🗺️ Opening directions to ${hospitalName}...`);
+    };
+
+    const handleRegistrationRedirect = () => {
+        navigate('/register');
+        toast.info("Select 'Hospital Node' to synchronize your facility with the Neural Flux.");
     };
 
     const handleRegistration = (e) => {
@@ -474,212 +495,23 @@ const HospitalAvailability = () => {
 
                 {/* Register Hospital Tab */}
                 {activeTab === 'register' && (
-                    <div className="max-w-4xl mx-auto animate-fade-in">
-                        <div className="bg-slate-900/70 border border-slate-700 rounded-3xl p-8 backdrop-blur-sm">
-                            <div className="text-center mb-8">
-                                <BsHospital className="text-5xl text-emerald-400 mx-auto mb-4" />
-                                <h2 className="text-3xl font-black mb-2 bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">Register Your Hospital</h2>
-                                <p className="text-slate-400">Join the life-saving network and help patients find you instantly</p>
+                    <div className="max-w-4xl mx-auto shadow-2xl rounded-3xl overflow-hidden border border-slate-700 bg-slate-900/80 backdrop-blur-xl animate-fade-in">
+                        <div className="p-12 text-center">
+                            <div className="w-24 h-24 bg-emerald-500/10 border border-emerald-500/30 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-inner">
+                                <BsHospital className="text-5xl text-emerald-400" />
                             </div>
-
-                            <form onSubmit={handleRegistration} className="space-y-6">
-                                {/* Basic Information */}
-                                <div className="grid md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="block text-sm font-bold text-slate-400 mb-2">Hospital Name *</label>
-                                        <input
-                                            type="text"
-                                            required
-                                            value={hospitalForm.name}
-                                            onChange={(e) => setHospitalForm({ ...hospitalForm, name: e.target.value })}
-                                            className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white focus:border-emerald-500 focus:outline-none"
-                                            placeholder="Enter hospital name"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-bold text-slate-400 mb-2">License Number *</label>
-                                        <input
-                                            type="text"
-                                            required
-                                            value={hospitalForm.license}
-                                            onChange={(e) => setHospitalForm({ ...hospitalForm, license: e.target.value })}
-                                            className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white focus:border-emerald-500 focus:outline-none"
-                                            placeholder="Medical license number"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-400 mb-2">Full Address *</label>
-                                    <input
-                                        type="text"
-                                        required
-                                        value={hospitalForm.address}
-                                        onChange={(e) => setHospitalForm({ ...hospitalForm, address: e.target.value })}
-                                        className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white focus:border-emerald-500 focus:outline-none"
-                                        placeholder="Street, City, State, PIN"
-                                    />
-                                </div>
-
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-400 mb-2">Contact Number *</label>
-                                    <input
-                                        type="tel"
-                                        required
-                                        value={hospitalForm.contact}
-                                        onChange={(e) => setHospitalForm({ ...hospitalForm, contact: e.target.value })}
-                                        className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white focus:border-emerald-500 focus:outline-none"
-                                        placeholder="+91 XXXXXXXXXX"
-                                    />
-                                </div>
-
-                                {/* Bed Capacity */}
-                                <div className="grid md:grid-cols-2 gap-6">
-                                    <div className="p-6 bg-slate-800/50 border border-cyan-500/30 rounded-2xl">
-                                        <h3 className="font-black text-cyan-400 mb-4 flex items-center gap-2">
-                                            <BsActivity /> ICU Beds
-                                        </h3>
-                                        <div className="space-y-3">
-                                            <div>
-                                                <label className="block text-xs text-slate-400 mb-1">Total ICU Beds</label>
-                                                <input
-                                                    type="number"
-                                                    min="0"
-                                                    value={hospitalForm.icuTotal}
-                                                    onChange={(e) => setHospitalForm({ ...hospitalForm, icuTotal: Number(e.target.value) })}
-                                                    className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:border-cyan-500 focus:outline-none"
-                                                />
-                                            </div>
-                                            <div>
-                                                <label className="block text-xs text-slate-400 mb-1">Currently Available</label>
-                                                <input
-                                                    type="number"
-                                                    min="0"
-                                                    max={hospitalForm.icuTotal}
-                                                    value={hospitalForm.icuAvailable}
-                                                    onChange={(e) => setHospitalForm({ ...hospitalForm, icuAvailable: Number(e.target.value) })}
-                                                    className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:border-cyan-500 focus:outline-none"
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="p-6 bg-slate-800/50 border border-emerald-500/30 rounded-2xl">
-                                        <h3 className="font-black text-emerald-400 mb-4 flex items-center gap-2">
-                                            <BsActivity /> General Beds
-                                        </h3>
-                                        <div className="space-y-3">
-                                            <div>
-                                                <label className="block text-xs text-slate-400 mb-1">Total General Beds</label>
-                                                <input
-                                                    type="number"
-                                                    min="0"
-                                                    value={hospitalForm.generalTotal}
-                                                    onChange={(e) => setHospitalForm({ ...hospitalForm, generalTotal: Number(e.target.value) })}
-                                                    className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:border-emerald-500 focus:outline-none"
-                                                />
-                                            </div>
-                                            <div>
-                                                <label className="block text-xs text-slate-400 mb-1">Currently Available</label>
-                                                <input
-                                                    type="number"
-                                                    min="0"
-                                                    max={hospitalForm.generalTotal}
-                                                    value={hospitalForm.generalAvailable}
-                                                    onChange={(e) => setHospitalForm({ ...hospitalForm, generalAvailable: Number(e.target.value) })}
-                                                    className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:border-emerald-500 focus:outline-none"
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Facilities Toggles */}
-                                <div className="grid md:grid-cols-2 gap-4">
-                                    <label className="flex items-center justify-between p-4 bg-slate-800/50 border border-slate-600 rounded-xl cursor-pointer hover:border-cyan-500 transition-all">
-                                        <span className="font-bold text-white flex items-center gap-2">
-                                            <BsDropletFill className="text-cyan-400" /> Oxygen Available
-                                        </span>
-                                        <input
-                                            type="checkbox"
-                                            checked={hospitalForm.oxygenAvailable}
-                                            onChange={(e) => setHospitalForm({ ...hospitalForm, oxygenAvailable: e.target.checked })}
-                                            className="w-5 h-5"
-                                        />
-                                    </label>
-
-                                    <label className="flex items-center justify-between p-4 bg-slate-800/50 border border-slate-600 rounded-xl cursor-pointer hover:border-red-500 transition-all">
-                                        <span className="font-bold text-white flex items-center gap-2">
-                                            <BsExclamationTriangleFill className="text-red-400" /> 24×7 Emergency
-                                        </span>
-                                        <input
-                                            type="checkbox"
-                                            checked={hospitalForm.emergency24x7}
-                                            onChange={(e) => setHospitalForm({ ...hospitalForm, emergency24x7: e.target.checked })}
-                                            className="w-5 h-5"
-                                        />
-                                    </label>
-
-                                    <label className="flex items-center justify-between p-4 bg-slate-800/50 border border-slate-600 rounded-xl cursor-pointer hover:border-emerald-500 transition-all">
-                                        <span className="font-bold text-white flex items-center gap-2">
-                                            <BsClock className="text-emerald-400" /> Morning OPD
-                                        </span>
-                                        <input
-                                            type="checkbox"
-                                            checked={hospitalForm.opdMorning}
-                                            onChange={(e) => setHospitalForm({ ...hospitalForm, opdMorning: e.target.checked })}
-                                            className="w-5 h-5"
-                                        />
-                                    </label>
-
-                                    <label className="flex items-center justify-between p-4 bg-slate-800/50 border border-slate-600 rounded-xl cursor-pointer hover:border-orange-500 transition-all">
-                                        <span className="font-bold text-white flex items-center gap-2">
-                                            <BsClock className="text-orange-400" /> Evening OPD
-                                        </span>
-                                        <input
-                                            type="checkbox"
-                                            checked={hospitalForm.opdEvening}
-                                            onChange={(e) => setHospitalForm({ ...hospitalForm, opdEvening: e.target.checked })}
-                                            className="w-5 h-5"
-                                        />
-                                    </label>
-                                </div>
-
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-400 mb-2">Ventilators Available</label>
-                                    <input
-                                        type="number"
-                                        min="0"
-                                        value={hospitalForm.ventilatorsAvailable}
-                                        onChange={(e) => setHospitalForm({ ...hospitalForm, ventilatorsAvailable: Number(e.target.value) })}
-                                        className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white focus:border-purple-500 focus:outline-none"
-                                        placeholder="Number of ventilators"
-                                    />
-                                </div>
-
-                                {/* Disclaimer */}
-                                <div className="p-4 bg-yellow-500/10 border border-yellow-500/50 rounded-2xl">
-                                    <div className="flex items-start gap-3">
-                                        <BsInfoCircle className="text-yellow-400 text-xl flex-shrink-0 mt-0.5" />
-                                        <div className="text-sm text-yellow-200">
-                                            <div className="font-black mb-1">⚠️ Important Legal Notice</div>
-                                            <ul className="text-xs space-y-1 text-yellow-300/80">
-                                                <li>• You are responsible for maintaining accurate real-time data</li>
-                                                <li>• Verification required before going live</li>
-                                                <li>• Incorrect information may lead to account suspension</li>
-                                                <li>• Regular updates mandatory for emergency facilities</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <button
-                                    type="submit"
-                                    className="w-full px-8 py-4 bg-gradient-to-r from-emerald-600 to-cyan-600 text-white rounded-2xl font-black uppercase tracking-widest hover:scale-105 transition-all shadow-lg shadow-emerald-500/30"
-                                >
-                                    🏥 Register Hospital
-                                </button>
-                            </form>
+                            <h2 className="text-4xl font-black mb-4 bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent tracking-tight">
+                                Synchronize Your Facility
+                            </h2>
+                            <p className="text-slate-400 text-lg max-w-xl mx-auto mb-10 leading-relaxed">
+                                Join the high-performance Neural Network. Manage your capacity, linked medical professionals, and real-time synchronization alerts in one specialized dashboard.
+                            </p>
+                            <button
+                                onClick={handleRegistrationRedirect}
+                                className="px-12 py-5 bg-gradient-to-r from-emerald-600 to-cyan-600 text-white rounded-2xl font-black uppercase tracking-widest hover:scale-105 transition-all shadow-xl shadow-emerald-500/30 flex items-center gap-3 mx-auto"
+                            >
+                                <BsPlusCircle size={24} /> Register Hospital Node
+                            </button>
                         </div>
                     </div>
                 )}

@@ -110,29 +110,33 @@ const MedicineSuggestion = () => {
 
     return (
         <div className="min-h-screen bg-[#0a0d14] text-white selection:bg-rose-500/30 font-inter">
-            {/* Header */}
-            <header className="fixed top-0 left-0 w-full z-50 bg-[#0a0d14]/80 backdrop-blur-2xl border-b border-white/5 px-6 py-4">
-                <div className="container mx-auto flex justify-between items-center">
-                    <Link to="/smarthub" className="flex items-center gap-2 text-slate-400 hover:text-white transition-all group font-bold tracking-tight">
-                        <BsArrowLeft className="group-hover:-translate-x-1 transition-transform" /> Smart Hub
+            {/* Header - Offset to sit below Compact Global Header */}
+            <header className="fixed top-[60px] md:top-[70px] left-0 w-full z-[100] bg-[#0a0d14]/95 backdrop-blur-3xl border-b border-white/5 md:px-10 py-4 transition-all">
+                <div className="container mx-auto flex justify-between items-center px-4">
+                    <Link to="/smarthub" className="flex items-center gap-2 text-slate-400 hover:text-rose-400 transition-all group font-black tracking-tighter text-[10px] md:text-sm">
+                        <BsArrowLeft className="group-hover:-translate-x-2 transition-transform" /> <span className="hidden sm:inline">BACK TO </span>SMART HUB
                     </Link>
-                    <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-lg bg-rose-500/20 flex items-center justify-center border border-rose-500/30 shadow-[0_0_15px_rgba(244,63,94,0.3)]">
-                            <BsCapsule className="text-rose-400 animate-bounce-slow" />
+                    
+                    <div className="flex items-center gap-2 md:gap-3">
+                        <div className="hidden xs:flex w-7 h-7 md:w-8 md:h-8 rounded-lg bg-rose-500/20 items-center justify-center border border-rose-500/30 shadow-[0_0_15px_rgba(244,63,94,0.2)]">
+                            <BsCapsule className="text-rose-400 animate-spin-slow text-xs md:text-sm" />
                         </div>
-                        <span className="font-black uppercase tracking-[0.2em] text-[10px] text-slate-300"><span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Encyclopedia</span> v6.1</span>
+                        <span className="font-black uppercase tracking-[0.1em] md:tracking-[0.2em] text-[8px] md:text-[10px] text-slate-300">
+                            <span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Encyclopedia</span> 
+                            <span className="hidden lg:inline text-slate-500 ml-1">v6.1 [PREMIUM]</span>
+                        </span>
                     </div>
 
-                    <div className="flex items-center gap-2 bg-white/5 p-1 rounded-xl border border-white/10">
+                    <div className="flex items-center gap-1 md:gap-2 bg-white/5 p-1 rounded-xl border border-white/10">
                         <button
                             onClick={() => setLang('en')}
-                            className={`px-4 py-1.5 rounded-lg text-[10px] font-black uppercase transition-all ${lang === 'en' ? 'bg-rose-500 text-white shadow-lg' : 'text-slate-500 hover:text-white'}`}
+                            className={`px-3 md:px-5 py-1.5 rounded-lg text-[8px] md:text-[10px] font-black uppercase transition-all duration-300 ${lang === 'en' ? 'bg-rose-500 text-white shadow-[0_0_20px_rgba(244,63,94,0.4)]' : 'text-slate-500 hover:text-white'}`}
                         >
                             EN
                         </button>
                         <button
                             onClick={() => setLang('hi')}
-                            className={`px-4 py-1.5 rounded-lg text-[10px] font-black uppercase transition-all ${lang === 'hi' ? 'bg-rose-500 text-white shadow-lg' : 'text-slate-500 hover:text-white'}`}
+                            className={`px-3 md:px-5 py-1.5 rounded-lg text-[8px] md:text-[10px] font-black uppercase transition-all duration-300 ${lang === 'hi' ? 'bg-rose-500 text-white shadow-[0_0_20px_rgba(244,63,94,0.4)]' : 'text-slate-500 hover:text-white'}`}
                         >
                             हिंदी
                         </button>
@@ -140,24 +144,27 @@ const MedicineSuggestion = () => {
                 </div>
             </header>
 
-            {/* Side Fixed Filter Hub */}
-            <aside className={`fixed right-6 top-32 z-40 transition-all duration-700 ${isFilterOpen ? 'translate-x-0' : 'translate-x-[calc(100%-60px)]'}`}>
-                <div className="bg-[#0d1117] border border-white/10 rounded-[2.5rem] shadow-2xl overflow-hidden flex">
+            {/* Side Fixed Filter Hub - Offset top to avoid overlap with stacked headers */}
+            <aside className={`fixed right-0 md:right-6 top-[130px] md:top-[160px] z-[110] transition-all duration-700 ${isFilterOpen ? 'translate-x-0' : 'translate-x-[calc(100%-45px)] md:translate-x-[calc(100%-60px)]'}`}>
+                <div className="bg-[#0d1117]/95 backdrop-blur-3xl border border-white/10 rounded-l-[2rem] md:rounded-[2.5rem] shadow-2xl overflow-hidden flex">
                     {/* Toggle Button */}
                     <button
                         onClick={() => setIsFilterOpen(!isFilterOpen)}
-                        className="w-[60px] bg-rose-500 flex flex-col items-center justify-center gap-4 py-8 group"
+                        className="w-[45px] md:w-[60px] bg-rose-600 flex flex-col items-center justify-center gap-4 py-10 group"
                     >
-                        <BsJournalMedical className={`text-xl transition-transform duration-500 ${isFilterOpen ? 'rotate-180' : ''}`} />
-                        <span className="[writing-mode:vertical-lr] font-black uppercase tracking-[0.3em] text-[10px] items-center">
+                        <BsJournalMedical className={`text-sm md:text-xl transition-transform duration-500 ${isFilterOpen ? 'rotate-180' : ''}`} />
+                        <span className="[writing-mode:vertical-lr] font-black uppercase tracking-[0.3em] text-[8px] md:text-[10px] items-center">
                             Disease Filter
                         </span>
                     </button>
 
                     {/* Filter List */}
-                    <div className="p-8 w-[280px] max-h-[70vh] overflow-y-auto">
-                        <h4 className="text-[10px] font-black uppercase text-slate-500 tracking-[0.3em] mb-6">Select Ailment</h4>
-                        <div className="space-y-2">
+                    <div className="p-4 md:p-8 w-[240px] md:w-[300px] max-h-[80vh] overflow-y-auto custom-scrollbar">
+                        <div className="flex justify-between items-center mb-6">
+                            <h4 className="text-[9px] md:text-[10px] font-black uppercase text-slate-500 tracking-[0.2em] md:tracking-[0.3em]">Select Ailment</h4>
+                            <button onClick={() => setIsFilterOpen(false)} className="md:hidden text-slate-500">×</button>
+                        </div>
+                        <div className="space-y-1.5 md:space-y-2">
                             {diseaseFilters.map(disease => (
                                 <button
                                     key={disease}
@@ -165,14 +172,14 @@ const MedicineSuggestion = () => {
                                         setActiveDisease(disease);
                                         if (window.innerWidth < 768) setIsFilterOpen(false);
                                     }}
-                                    className={`w-full text-left px-5 py-3 rounded-xl text-xs font-bold transition-all ${activeDisease === disease ? 'bg-rose-500 text-white shadow-lg' : 'text-slate-400 hover:bg-white/5 hover:text-white'}`}
+                                    className={`w-full text-left px-4 md:px-5 py-2.5 md:py-3 rounded-xl text-[10px] md:text-xs font-bold transition-all ${activeDisease === disease ? 'bg-rose-500 text-white shadow-lg' : 'text-slate-400 hover:bg-white/5 hover:text-white'}`}
                                 >
                                     {disease}
                                 </button>
                             ))}
                         </div>
 
-                        <h4 className="text-[10px] font-black uppercase text-slate-500 tracking-[0.3em] mt-10 mb-6">Pill ID Vision</h4>
+                        <h4 className="text-[9px] md:text-[10px] font-black uppercase text-slate-500 tracking-[0.2em] md:tracking-[0.3em] mt-8 md:mt-10 mb-6">Pill ID Vision</h4>
                         <div className="space-y-4">
                             <div>
                                 <div className="text-[8px] font-black text-slate-600 uppercase mb-2">Shape</div>
@@ -181,7 +188,7 @@ const MedicineSuggestion = () => {
                                         <button
                                             key={shape}
                                             onClick={() => setPillShape(shape)}
-                                            className={`py-2 rounded-lg text-[9px] font-black uppercase transition-all ${pillShape === shape ? 'bg-blue-500 text-white' : 'bg-white/5 text-slate-500 hover:text-white'}`}
+                                            className={`py-2 rounded-lg text-[8px] md:text-[9px] font-black uppercase transition-all ${pillShape === shape ? 'bg-blue-500 text-white' : 'bg-white/5 text-slate-500 hover:text-white'}`}
                                         >
                                             {shape}
                                         </button>
@@ -195,7 +202,7 @@ const MedicineSuggestion = () => {
                                         <button
                                             key={color}
                                             onClick={() => setPillColor(color)}
-                                            className={`py-2 rounded-lg text-[9px] font-black uppercase transition-all ${pillColor === color ? 'bg-blue-500 text-white' : 'bg-white/5 text-slate-500 hover:text-white'}`}
+                                            className={`py-2 rounded-lg text-[8px] md:text-[9px] font-black uppercase transition-all ${pillColor === color ? 'bg-blue-500 text-white' : 'bg-white/5 text-slate-500 hover:text-white'}`}
                                         >
                                             {color}
                                         </button>
@@ -207,53 +214,56 @@ const MedicineSuggestion = () => {
                 </div>
             </aside>
 
-            <main className="pt-32 pb-20 px-6">
+            <main className="pt-40 md:pt-52 pb-20 px-4 md:px-6">
                 <div className="container mx-auto max-w-7xl">
-                    <div className="text-center mb-16 animate-fade-in px-4">
-                        <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight tracking-tighter uppercase whitespace-pre-line">
-                            <span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span> {"\n"}
-                            <span className="text-white italic">Allopathic medicine Hub</span>
+                    <div className="text-center mb-10 md:mb-16 animate-fade-in px-2">
+                        <h1 className="text-3xl md:text-7xl lg:text-8xl font-black mb-4 md:mb-6 leading-tight tracking-tighter uppercase whitespace-pre-line sm:whitespace-normal">
+                            <span style={{ color: "#FF9933" }} className="block sm:inline">Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span> 
+                            <span className="text-white italic block sm:inline sm:ml-4">Allopathic medicine Hub</span>
                         </h1>
-                        <p className="text-slate-400 text-lg md:text-xl max-w-4xl mx-auto font-medium leading-relaxed">
-                            Search through <span style={{ color: "#FF9933" }}>Sehaat</span>'s massive repository of <span className="text-rose-400 font-extrabold px-2 py-0.5 bg-rose-500/10 rounded-lg">2000+ unique medicines</span>.
-                            Discover full usage instructions, health benefits, and clinical safety profiles.
-                            <br />
-                            <span className="text-rose-500/80 font-bold uppercase text-[10px] tracking-[0.3em] bg-rose-500/10 px-5 py-2 rounded-full mt-8 inline-block border border-rose-500/20 shadow-[0_0_20px_rgba(244,63,94,0.1)]">
-                                📑 Clinical Intelligence • Filtered by Disease & Category
+                        <p className="text-slate-400 text-sm md:text-xl max-w-4xl mx-auto font-medium leading-relaxed">
+                            Search through <span style={{ color: "#FF9933" }}>Sehaat</span>'s repository of <span className="text-rose-400 font-extrabold px-2 py-0.5 bg-rose-500/10 rounded-lg">2000+ unique medicines</span>.
+                            <span className="hidden sm:inline"> Discover full usage instructions, health benefits, and clinical safety profiles.</span>
+                            <br className="hidden sm:block" />
+                            <span className="text-rose-500/80 font-bold uppercase text-[8px] md:text-[10px] tracking-[0.2em] md:tracking-[0.3em] bg-rose-500/10 px-4 md:px-5 py-2 rounded-full mt-6 scale-90 md:scale-100 inline-block border border-rose-500/20 shadow-[0_0_20px_rgba(244,63,94,0.1)]">
+                                📑 Clinical Intelligence • Filtered by Disease
                             </span>
                         </p>
                     </div>
 
                     {/* Search & Category Section */}
-                    <div className="max-w-5xl mx-auto mb-16">
-                        <div className="relative mb-12 group">
-                            <div className="absolute -inset-1 bg-gradient-to-r from-rose-500 to-blue-500 rounded-[3.5rem] blur opacity-10 group-focus-within:opacity-30 transition-opacity"></div>
+                    <div className="max-w-5xl mx-auto mb-10 md:mb-16">
+                        <div className="relative mb-8 md:mb-12 group">
+                            {/* Neural Pulse Background */}
+                            <div className="absolute -inset-1 bg-gradient-to-r from-rose-600 via-blue-600 to-rose-600 rounded-[2rem] md:rounded-[3.5rem] blur-xl opacity-0 group-hover:opacity-20 group-focus-within:opacity-40 transition-all duration-700 animate-pulse-slow"></div>
+                            <div className="absolute -inset-0.5 bg-gradient-to-r from-rose-500 to-blue-500 rounded-[2rem] md:rounded-[3.5rem] opacity-10 group-focus-within:opacity-20 transition-opacity"></div>
+                            
                             <div className="relative">
-                                <BsSearch className="absolute left-10 top-1/2 -translate-y-1/2 text-slate-500 text-2xl group-focus-within:text-rose-400 transition-colors" />
+                                <BsSearch className="absolute left-6 md:left-10 top-1/2 -translate-y-1/2 text-slate-500 text-lg md:text-2xl group-focus-within:text-rose-400 group-focus-within:scale-110 transition-all duration-300" />
                                 <input
                                     type="text"
-                                    placeholder="Search 2000+ medicines or symptoms (e.g. Bone Pain, Teeth Pain, Fever)..."
+                                    placeholder="Search 2000+ medicines..."
                                     value={searchQuery}
                                     onChange={handleSearch}
-                                    className="w-full bg-[#0d1117] border border-white/10 rounded-[3rem] py-10 pl-24 pr-10 text-xl md:text-2xl focus:outline-none focus:border-rose-500/50 transition-all font-semibold placeholder:text-slate-700 shadow-3xl focus:shadow-rose-500/10"
+                                    className="w-full bg-[#0d1117] border border-white/10 rounded-[2rem] md:rounded-[3rem] py-6 md:py-10 pl-16 md:pl-28 pr-6 md:pr-10 text-sm md:text-2xl focus:outline-none focus:border-rose-500/50 transition-all font-black placeholder:text-slate-700 shadow-3xl text-white"
                                 />
                                 {isAnalyzing && (
-                                    <div className="absolute right-10 top-1/2 -translate-y-1/2 flex items-center gap-3 bg-[#1a1f2e] px-4 py-2 rounded-full border border-white/5">
-                                        <div className="w-3 h-3 bg-rose-500 rounded-full animate-ping"></div>
-                                        <span className="text-[10px] font-black uppercase text-rose-500 tracking-widest">Neural Syncing...</span>
+                                    <div className="absolute right-4 md:right-10 top-1/2 -translate-y-1/2 flex items-center gap-2 md:gap-3 bg-[#1a1f2e] px-3 md:px-5 py-2 md:py-2.5 rounded-full border border-white/5 shadow-2xl">
+                                        <div className="w-2 h-2 md:w-3 md:h-3 bg-rose-500 rounded-full animate-ping"></div>
+                                        <span className="text-[8px] md:text-[10px] font-black uppercase text-rose-500 tracking-widest hidden sm:inline">Neural Processing</span>
                                     </div>
                                 )}
                             </div>
                         </div>
 
-                        {/* Disease Selection Quick Bar (Requested Features) */}
-                        <div className="flex flex-wrap justify-center gap-2 mb-8 bg-white/5 p-6 rounded-[2.5rem] border border-white/5">
-                            <div className="w-full text-center text-[8px] font-black uppercase text-slate-600 tracking-[0.5em] mb-4">Quick Disease Access</div>
+                        {/* Disease Selection Quick Bar */}
+                        <div className="flex flex-wrap justify-center gap-1.5 md:gap-2 mb-6 md:mb-8 bg-white/5 p-4 md:p-6 rounded-[2rem] md:rounded-[2.5rem] border border-white/5">
+                            <div className="w-full text-center text-[7px] md:text-[8px] font-black uppercase text-slate-600 tracking-[0.3em] md:tracking-[0.5em] mb-3 md:mb-4">Quick Disease Access</div>
                             {diseaseFilters.slice(1, 11).map(disease => (
                                 <button
                                     key={disease}
                                     onClick={() => setActiveDisease(disease)}
-                                    className={`px-6 py-3 rounded-xl font-bold text-[10px] uppercase tracking-widest border transition-all ${activeDisease === disease ? 'bg-rose-500 border-rose-500 text-white shadow-lg' : 'bg-transparent border-white/10 text-slate-500 hover:border-white/20'}`}
+                                    className={`px-3 md:px-6 py-2 md:py-3 rounded-lg md:rounded-xl font-bold text-[8px] md:text-[10px] uppercase tracking-widest border transition-all ${activeDisease === disease ? 'bg-rose-500 border-rose-500 text-white shadow-lg' : 'bg-transparent border-white/10 text-slate-500 hover:border-white/20'}`}
                                 >
                                     {disease}
                                 </button>
@@ -309,43 +319,44 @@ const MedicineSuggestion = () => {
                     </div>
 
                     {/* Enhanced Results Grid */}
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
                         {filteredMeds.map((med, idx) => (
                             <div
                                 key={idx}
                                 onClick={() => setSelectedMed(med)}
-                                className="group bg-[#0d1117] border border-white/5 rounded-[3rem] p-8 hover:bg-white/[0.03] transition-all cursor-pointer relative overflow-hidden flex flex-col h-full hover:border-white/20 hover:-translate-y-3 shadow-2xl"
+                                className="group bg-[#0d1117]/80 backdrop-blur-3xl border border-white/5 rounded-[2.5rem] md:rounded-[3.5rem] p-6 md:p-10 hover:bg-white/[0.04] transition-all duration-500 cursor-pointer relative overflow-hidden flex flex-col h-full hover:border-rose-500/40 hover:-translate-y-4 hover:shadow-[0_20px_50px_rgba(244,63,94,0.15)] group animate-slide-up"
+                                style={{ animationDelay: `${idx * 0.05}s` }}
                             >
-                                <div className={`absolute -top-10 -right-10 w-40 h-40 bg-${med.color}-500/10 rounded-full blur-3xl group-hover:bg-${med.color}-500/20 transition-colors`}></div>
-
-                                <div className="flex justify-between items-start mb-8 relative z-10">
-                                    <div className={`w-14 h-14 rounded-2xl bg-${med.color}-500/20 flex items-center justify-center border border-${med.color}-500/30 group-hover:rotate-[360deg] duration-700 transition-transform`}>
-                                        <BsCapsule className={`text-2xl text-${med.color}-400`} />
+                                {/* Neural Pulse effect on card hover */}
+                                <div className="absolute inset-0 bg-gradient-to-br from-rose-500/0 via-rose-500/0 to-rose-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                                
+                                <div className="flex justify-between items-start mb-6 md:mb-10 relative z-10">
+                                    <div className={`w-12 h-12 md:w-16 md:h-16 rounded-2xl md:rounded-[1.5rem] bg-${med.color}-500/20 flex items-center justify-center border border-${med.color}-500/30 group-hover:rotate-[360deg] duration-1000 transition-transform shadow-lg`}>
+                                        <BsCapsule className={`text-2xl md:text-3xl text-${med.color}-400 group-hover:scale-110 transition-transform`} />
                                     </div>
-                                    <div className="flex flex-col items-end gap-2">
-                                        <div className="bg-slate-900 px-4 py-1.5 rounded-full border border-white/10 text-[9px] font-black uppercase text-slate-400 tracking-widest shadow-lg">
+                                    <div className="flex flex-col items-end gap-2 md:gap-3">
+                                        <div className="bg-slate-900/60 backdrop-blur-md px-4 md:px-5 py-1.5 md:py-2 rounded-full border border-white/10 text-[8px] md:text-[10px] font-black uppercase text-slate-400 tracking-[0.2em] shadow-xl group-hover:border-rose-500/30 group-hover:text-rose-400 transition-all">
                                             {med.category}
                                         </div>
-                                        <div className="flex gap-1">
+                                        <div className="flex gap-1.5">
                                             {med.schedule?.map((s, i) => (
-                                                <div key={i} className="w-1.5 h-1.5 rounded-full bg-rose-500/40"></div>
+                                                <div key={i} className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-rose-500/40 animate-pulse" style={{ animationDelay: `${i * 0.2}s` }}></div>
                                             ))}
                                         </div>
                                     </div>
                                 </div>
 
-                                <h3 className="text-2xl font-black mb-4 pr-6 group-hover:text-rose-400 transition-colors leading-tight">{med.name}</h3>
+                                <h3 className="text-xl md:text-3xl font-black mb-4 md:mb-6 pr-6 group-hover:text-rose-400 transition-colors leading-tight tracking-tight uppercase">{med.name}</h3>
 
-                                <div className="flex flex-wrap gap-2 mb-8">
+                                <div className="flex flex-wrap gap-2 md:gap-3 mb-6 md:mb-10">
                                     {med.symptoms?.slice(0, 3).map(s => (
-                                        <span key={s} className="px-3 py-1.5 rounded-xl bg-white/5 border border-white/5 text-[10px] font-bold text-slate-500 hover:bg-white/10 transition-colors">#{s}</span>
+                                        <span key={s} className="px-3 md:px-4 py-1.5 md:py-2 rounded-lg md:rounded-xl bg-white/5 border border-white/10 text-[9px] md:text-xs font-bold text-slate-500 group-hover:text-slate-300 transition-colors">#{s}</span>
                                     ))}
                                     {med.symptoms?.length > 3 && <span className="text-[10px] text-slate-600 font-black">+{med.symptoms.length - 3}</span>}
                                 </div>
 
-                                <div className="space-y-4 mt-auto">
+                                <div className="space-y-4 mt-auto relative z-10">
                                     <div className="flex gap-2">
-                                        {/* Interaction Checker Add Button */}
                                         <button
                                             onClick={(e) => {
                                                 e.stopPropagation();
@@ -359,7 +370,6 @@ const MedicineSuggestion = () => {
                                             <BsShieldFillCheck className="text-xs" /> Safety Check
                                         </button>
 
-                                        {/* Versus Duel Button */}
                                         <button
                                             onClick={(e) => {
                                                 e.stopPropagation();
@@ -372,12 +382,12 @@ const MedicineSuggestion = () => {
                                             {versusQueue.find(m => m.name === med.name) ? 'Selected' : 'Duel'}
                                         </button>
                                     </div>
-                                </div>
 
-                                <div className="mt-8 flex justify-between items-center opacity-40 group-hover:opacity-100 transition-opacity">
-                                    <span className="text-[10px] font-black uppercase text-slate-400 tracking-[0.2em]">Open Encyclopedia</span>
-                                    <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-rose-500 transition-colors">
-                                        <BsArrowLeft className="rotate-180 text-white" />
+                                    <div className="pt-6 border-t border-white/5 flex justify-between items-center opacity-40 group-hover:opacity-100 transition-opacity">
+                                        <span className="text-[10px] font-black uppercase text-slate-400 tracking-[0.2em] group-hover:text-rose-400 transition-colors">Open Encyclopedia</span>
+                                        <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-rose-500 transition-colors">
+                                            <BsArrowLeft className="rotate-180 text-white group-hover:scale-110 transition-transform" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -606,57 +616,57 @@ const MedicineSuggestion = () => {
                             <BsPlusSquareFill className="rotate-45 text-white text-xl group-hover:scale-110 transition-transform" />
                         </button>
 
-                        <div className="p-8 md:p-20 overflow-y-auto max-h-[90vh]">
-                            <div className="grid lg:grid-cols-12 gap-16">
+                        <div className="p-4 md:p-20 overflow-y-auto max-h-[90vh] custom-scrollbar">
+                            <div className="grid lg:grid-cols-12 gap-10 md:gap-16">
 
                                 {/* Left Section: Core Details */}
                                 <div className="lg:col-span-8">
-                                    <div className="flex items-center gap-4 mb-10">
-                                        <div className="px-6 py-2 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20 text-[10px] font-black uppercase tracking-[0.3em] shadow-lg">
+                                    <div className="flex items-center gap-2 md:gap-4 mb-6 md:mb-10">
+                                        <div className="px-4 md:px-6 py-1.5 md:py-2 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] shadow-lg">
                                             Medical Encyclopedia v3.5
                                         </div>
-                                        <div className="px-6 py-2 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 text-[10px] font-black uppercase tracking-[0.3em]">
+                                        <div className="px-4 md:px-6 py-1.5 md:py-2 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em]">
                                             {selectedMed.category}
                                         </div>
                                     </div>
 
-                                    <h2 className="text-5xl md:text-7xl font-black mb-8 leading-tight tracking-tighter uppercase">{selectedMed.name}</h2>
+                                    <h2 className="text-3xl md:text-7xl font-black mb-6 md:mb-8 leading-tight tracking-tighter uppercase">{selectedMed.name}</h2>
 
-                                    <div className="flex flex-wrap gap-3 mb-12">
+                                    <div className="flex flex-wrap gap-2 md:gap-3 mb-8 md:mb-12">
                                         {selectedMed.symptoms?.map(s => (
-                                            <span key={s} className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-xs font-bold text-slate-400">Target: {s}</span>
+                                            <span key={s} className="px-3 md:px-4 py-1.5 md:py-2 rounded-xl bg-white/5 border border-white/10 text-[10px] md:text-xs font-bold text-slate-400">Target: {s}</span>
                                         ))}
                                     </div>
 
-                                    <div className="grid md:grid-cols-2 gap-8 mb-16">
-                                        <div className="group bg-white/5 p-8 rounded-[3rem] border border-white/5 hover:border-rose-500/30 transition-all shadow-xl">
-                                            <div className="flex items-center gap-4 mb-6">
-                                                <div className="w-12 h-12 rounded-2xl bg-rose-500/20 flex items-center justify-center border border-rose-500/20 group-hover:scale-110 transition-transform">
-                                                    <BsInfoCircleFill className="text-rose-400 text-xl" />
+                                    <div className="grid md:grid-cols-2 gap-6 md:gap-8 mb-10 md:mb-16">
+                                        <div className="group bg-white/5 p-6 md:p-8 rounded-[2rem] md:rounded-[3rem] border border-white/5 hover:border-rose-500/30 transition-all shadow-xl">
+                                            <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
+                                                <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-rose-500/20 flex items-center justify-center border border-rose-500/20 group-hover:scale-110 transition-transform">
+                                                    <BsInfoCircleFill className="text-rose-400 text-lg md:text-xl" />
                                                 </div>
-                                                <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                                                <h4 className="text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-widest">
                                                     {lang === 'hi' ? "सही उपयोग के निर्देश" : "Proper Use Instructions"}
                                                 </h4>
                                             </div>
-                                            <p className="text-sm md:text-base text-slate-300 leading-relaxed font-bold">
+                                            <p className="text-xs md:text-base text-slate-300 leading-relaxed font-bold">
                                                 {lang === 'hi' ? "यहाँ निर्देश हैं: " : "Here it is: "}
                                                 <span className="text-white italic">"{lang === 'hi' ? (selectedMed.usage_hi || selectedMed.usage) : selectedMed.usage}"</span>
                                             </p>
                                         </div>
 
-                                        <div className="group bg-white/5 p-8 rounded-[3rem] border border-white/5 hover:border-blue-500/30 transition-all shadow-xl">
-                                            <div className="flex items-center gap-4 mb-6">
-                                                <div className="w-12 h-12 rounded-2xl bg-blue-500/20 flex items-center justify-center border border-blue-500/20 group-hover:scale-110 transition-transform">
-                                                    <BsCheckCircleFill className="text-blue-400 text-xl" />
+                                        <div className="group bg-white/5 p-6 md:p-8 rounded-[2rem] md:rounded-[3rem] border border-white/5 hover:border-blue-500/30 transition-all shadow-xl">
+                                            <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
+                                                <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-blue-500/20 flex items-center justify-center border border-blue-500/20 group-hover:scale-110 transition-transform">
+                                                    <BsCheckCircleFill className="text-blue-400 text-lg md:text-xl" />
                                                 </div>
-                                                <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                                                <h4 className="text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-widest">
                                                     {lang === 'hi' ? "चिकित्सा लाभ" : "Medical Benefits"}
                                                 </h4>
                                             </div>
-                                            <ul className="space-y-3">
+                                            <ul className="space-y-2 md:space-y-3">
                                                 {(lang === 'hi' ? (selectedMed.benefits_hi || selectedMed.benefits) : selectedMed.benefits)?.map((benefit, i) => (
-                                                    <li key={i} className="flex items-start gap-2 text-xs md:text-sm font-bold text-slate-400 group-hover:text-white transition-colors">
-                                                        <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-1.5 flex-shrink-0"></div>
+                                                    <li key={i} className="flex items-start gap-2 text-[10px] md:text-sm font-bold text-slate-400 group-hover:text-white transition-colors">
+                                                        <div className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-blue-400 mt-1.5 flex-shrink-0"></div>
                                                         {benefit}
                                                     </li>
                                                 ))}
@@ -664,21 +674,21 @@ const MedicineSuggestion = () => {
                                         </div>
                                     </div>
 
-                                    <div className="grid md:grid-cols-2 gap-8 mb-16">
+                                    <div className="grid md:grid-cols-2 gap-6 md:gap-8 mb-10 md:mb-16">
                                         <BioTimeline med={selectedMed} />
                                         <VitalsImpact med={selectedMed} />
                                     </div>
 
-                                    <div className="p-12 bg-gradient-to-br from-rose-500/10 to-transparent rounded-[4rem] border border-rose-500/20 shadow-2xl relative overflow-hidden group backdrop-blur-md">
+                                    <div className="p-8 md:p-12 bg-gradient-to-br from-rose-500/10 to-transparent rounded-[2.5rem] md:rounded-[4rem] border border-rose-500/20 shadow-2xl relative overflow-hidden group backdrop-blur-md">
                                         <div className="absolute -top-10 -right-10 w-40 h-40 bg-rose-500/10 rounded-full blur-[60px] group-hover:bg-rose-500/20 transition-all duration-700"></div>
-                                        <h4 className="flex items-center gap-4 text-rose-500 font-extrabold uppercase text-[11px] tracking-[0.4em] mb-8">
+                                        <h4 className="flex items-center gap-3 md:gap-4 text-rose-500 font-extrabold uppercase text-[9px] md:text-[11px] tracking-[0.3em] md:tracking-[0.4em] mb-6 md:mb-8">
                                             <div className="p-2 bg-rose-500/20 rounded-xl border border-rose-500/20">
-                                                <BsShieldExclamation className="text-2xl" />
+                                                <BsShieldExclamation className="text-xl md:text-2xl" />
                                             </div>
                                             {lang === 'hi' ? "महत्वपूर्ण सुरक्षा नीति" : "Critical Safety Policy"}
                                         </h4>
                                         <div className="relative z-10">
-                                            <p className="text-lg md:text-xl text-slate-100 leading-relaxed font-black italic opacity-90 group-hover:opacity-100 transition-opacity border-l-4 border-rose-500/50 pl-8 py-2">
+                                            <p className="text-sm md:text-xl text-slate-100 leading-relaxed font-black italic opacity-90 group-hover:opacity-100 transition-opacity border-l-4 border-rose-500/50 pl-4 md:pl-8 py-2">
                                                 "{lang === 'hi' ? (selectedMed.safety_hi || selectedMed.safety) : selectedMed.safety}"
                                             </p>
                                         </div>
@@ -686,64 +696,64 @@ const MedicineSuggestion = () => {
 
                                     {/* NEW: Red Flag Warning Section */}
                                     {selectedMed.urgentWarning && (
-                                        <div className="mt-10 p-12 bg-gradient-to-r from-rose-900/40 to-rose-600/10 rounded-[4rem] border-2 border-rose-500/60 shadow-[0_0_50px_rgba(225,29,72,0.3)] relative overflow-hidden group animate-pulse-slow">
+                                        <div className="mt-8 md:mt-10 p-8 md:p-12 bg-gradient-to-r from-rose-900/40 to-rose-600/10 rounded-[2.5rem] md:rounded-[4rem] border-2 border-rose-500/60 shadow-[0_0_50px_rgba(225,29,72,0.3)] relative overflow-hidden group animate-pulse-slow">
                                             <div className="absolute top-0 right-0 w-64 h-64 bg-rose-600/20 rounded-full blur-[100px]"></div>
-                                            <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 relative z-10">
+                                            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 md:gap-8 relative z-10">
                                                 <div className="flex-1">
-                                                    <h4 className="flex items-center gap-5 text-rose-500 font-black uppercase text-sm tracking-[0.5em] mb-6">
-                                                        <div className="p-3 bg-rose-600/30 rounded-2xl animate-bounce shadow-lg shadow-rose-600/20">
-                                                            <BsExclamationTriangleFill className="text-3xl" />
+                                                    <h4 className="flex items-center gap-4 md:gap-5 text-rose-500 font-black uppercase text-xs md:text-sm tracking-[0.3em] md:tracking-[0.5em] mb-4 md:mb-6">
+                                                        <div className="p-2 md:p-3 bg-rose-600/30 rounded-2xl shadow-lg">
+                                                            <BsExclamationTriangleFill className="text-2xl md:text-3xl" />
                                                         </div>
-                                                        {lang === 'hi' ? "खतरे की चेतावनी (Red Flag)" : "Red Flag Warning"}
+                                                        {lang === 'hi' ? "खतरे की चेतावनी" : "Red Flag Warning"}
                                                     </h4>
-                                                    <p className="text-xl md:text-2xl text-white leading-tight font-black italic drop-shadow-md">
+                                                    <p className="text-sm md:text-2xl text-white leading-tight font-black italic drop-shadow-md">
                                                         "{lang === 'hi' ? (selectedMed.urgentWarning_hi || selectedMed.urgentWarning) : selectedMed.urgentWarning}"
                                                     </p>
                                                 </div>
                                                 <button
                                                     onClick={() => setShowEmergency(true)}
-                                                    className="px-10 py-5 bg-rose-600 hover:bg-rose-500 text-white font-black uppercase text-xs tracking-[0.2em] rounded-[2rem] shadow-2xl shadow-rose-600/40 transition-all active:scale-90 flex items-center gap-4 flex-shrink-0 border-t border-white/20"
+                                                    className="px-6 md:px-10 py-4 md:py-5 bg-rose-600 hover:bg-rose-500 text-white font-black uppercase text-[10px] md:text-xs tracking-[0.2em] rounded-[1.5rem] md:rounded-[2rem] shadow-2xl transition-all active:scale-90 flex items-center justify-center gap-3 md:gap-4 flex-shrink-0"
                                                 >
-                                                    <BsLightningFill className="text-xl" /> {lang === 'hi' ? "इमरजेंसी प्रोटोकॉल" : "Emergency Protocol"}
+                                                    <BsLightningFill className="text-lg md:text-xl" /> {lang === 'hi' ? "इमरजेंसी" : "Emergency"}
                                                 </button>
                                             </div>
                                         </div>
                                     )}
 
-                                    {/* NEW: Side Effects Section */}
+                                    {/* Side Effects Section */}
                                     {selectedMed.sideEffects && (
-                                        <div className="mt-8 group bg-white/5 p-10 rounded-[3rem] border border-white/5 hover:border-amber-500/30 transition-all shadow-xl">
-                                            <div className="flex items-center gap-4 mb-8">
-                                                <div className="w-12 h-12 rounded-2xl bg-amber-500/20 flex items-center justify-center border border-amber-500/20 group-hover:scale-110 transition-transform">
-                                                    <BsActivity className="text-amber-400 text-xl" />
+                                        <div className="mt-8 group bg-white/5 p-6 md:p-10 rounded-[2rem] md:rounded-[3rem] border border-white/5 hover:border-amber-500/30 transition-all shadow-xl">
+                                            <div className="flex items-center gap-3 md:gap-4 mb-6 md:mb-8">
+                                                <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-amber-500/20 flex items-center justify-center border border-amber-500/20 group-hover:scale-110 transition-transform">
+                                                    <BsActivity className="text-amber-400 text-lg md:text-xl" />
                                                 </div>
-                                                <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                                                <h4 className="text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-widest">
                                                     {lang === 'hi' ? "संभावित दुष्प्रभाव" : "Potential Side Effects"}
                                                 </h4>
                                             </div>
-                                            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
                                                 {(lang === 'hi' ? (selectedMed.sideEffects_hi || selectedMed.sideEffects) : selectedMed.sideEffects)?.map((effect, i) => (
-                                                    <div key={i} className="flex items-center gap-3 p-4 bg-white/5 rounded-2xl border border-white/5 hover:bg-white/10 transition-colors">
-                                                        <BsPatchCheckFill className="text-amber-500 text-sm flex-shrink-0" />
-                                                        <span className="text-xs font-bold text-slate-300">{effect}</span>
+                                                    <div key={i} className="flex items-center gap-3 p-3 md:p-4 bg-white/5 rounded-xl md:rounded-2xl border border-white/5 hover:bg-white/10 transition-colors">
+                                                        <BsPatchCheckFill className="text-amber-500 text-xs md:text-sm flex-shrink-0" />
+                                                        <span className="text-[10px] md:text-xs font-bold text-slate-300">{effect}</span>
                                                     </div>
                                                 ))}
                                             </div>
                                         </div>
                                     )}
 
-                                    {/* NEW: Maternal Safety Shield */}
+                                    {/* Maternal Safety Shield */}
                                     {selectedMed.pregnancySafety && (
-                                        <div className="mt-10 p-10 bg-gradient-to-br from-[#0d1526] to-[#0a0d14] rounded-[3.5rem] border border-blue-500/30 shadow-2xl group overflow-hidden relative backdrop-blur-xl">
+                                        <div className="mt-8 md:mt-10 p-6 md:p-10 bg-gradient-to-br from-[#0d1526] to-[#0a0d14] rounded-[2.5rem] md:rounded-[3.5rem] border border-blue-500/30 shadow-2xl group overflow-hidden relative backdrop-blur-xl">
                                             <div className="absolute -top-10 -right-10 w-48 h-48 bg-blue-500/10 rounded-full blur-[80px] group-hover:bg-blue-500/20 transition-all duration-1000"></div>
-                                            <div className="flex items-center justify-between mb-8 relative z-10">
-                                                <h4 className="flex items-center gap-4 text-blue-400 font-extrabold uppercase text-[11px] tracking-[0.4em]">
-                                                    <div className="p-3 bg-blue-500/20 rounded-2xl border border-blue-500/20 shadow-inner">
-                                                        <BsShieldFillCheck className="text-2xl animate-pulse-slow" />
+                                            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 relative z-10">
+                                                <h4 className="flex items-center gap-3 md:gap-4 text-blue-400 font-extrabold uppercase text-[9px] md:text-[11px] tracking-[0.3em] md:tracking-[0.4em]">
+                                                    <div className="p-2 md:p-3 bg-blue-500/20 rounded-xl border border-blue-500/20 shadow-inner">
+                                                        <BsShieldFillCheck className="text-xl md:text-2xl animate-pulse-slow" />
                                                     </div>
                                                     {lang === 'hi' ? "मातृ सुरक्षा कवच" : "Maternal Safety Shield"}
                                                 </h4>
-                                                <div className={`px-6 py-2 rounded-full font-black text-[10px] tracking-widest uppercase border ${selectedMed.pregnancySafety === "Safe" ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.2)]" :
+                                                <div className={`self-start md:self-auto px-4 md:px-6 py-1.5 md:py-2 rounded-full font-black text-[8px] md:text-[10px] tracking-widest uppercase border ${selectedMed.pregnancySafety === "Safe" ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.2)]" :
                                                     selectedMed.pregnancySafety === "Caution" ? "bg-amber-500/20 text-amber-400 border-amber-500/30 shadow-[0_0_15px_rgba(245,158,11,0.2)]" :
                                                         "bg-rose-500/20 text-rose-400 border-rose-500/30 shadow-[0_0_15px_rgba(244,63,94,0.2)]"
                                                     }`}>

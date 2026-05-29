@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { BiSolidUserDetail } from "react-icons/bi";
+import { useState, useEffect } from "react";
+import { BiSolidUserDetail, BiHistory } from "react-icons/bi";
+import { BsActivity } from "react-icons/bs";
 import { CgDanger } from "react-icons/cg";
 import { FaUserEdit } from "react-icons/fa";
 import { RiPlayListAddFill } from "react-icons/ri";
@@ -13,6 +14,9 @@ import { BASE_URL } from "../../config";
 import useGetProfile from "../../hooks/useFetchData";
 import Appointments from "./Appointments";
 import Profile from "./Profile";
+import DoctorActivity from "./DoctorActivity";
+import WorkflowPanel from "./WorkflowPanel";
+import useRecordActivity from "../../hooks/useRecordActivity";
 
 const Dashboard = () => {
   const [tab, setTab] = useState("overview");
@@ -23,6 +27,14 @@ const Dashboard = () => {
   const { data, loading, error } = useGetProfile(
     `${BASE_URL}/doctors/profile/me`
   );
+
+  const { recordActivity } = useRecordActivity();
+
+  useEffect(() => {
+    if (data) {
+      recordActivity("Dashboard", "Professional Overview");
+    }
+  }, [data]);
 
   return (
     <section className="max-w-[1220px] px-5 mx-auto my-6">
@@ -55,6 +67,15 @@ const Dashboard = () => {
               <p className="ml-3 hidden lg:block">Appointments</p>
             </button>
             <button
+              onClick={() => setTab("workflow")}
+              className={`${
+                tab == "workflow" ? activeTabClass : inactiveTabClass
+              } w-full mt-2 rounded-md flex items-center lg:justify-start justify-center lg:px-5 lg:py-2 px-1`}
+            >
+              <BsActivity className="w-6 h-6" />
+              <p className="ml-3 hidden lg:block">Workflow Panel</p>
+            </button>
+            <button
               onClick={() => setTab("settings")}
               className={`${
                 tab == "settings" ? activeTabClass : inactiveTabClass
@@ -62,6 +83,15 @@ const Dashboard = () => {
             >
               <FaUserEdit className="w-7 h-7" />
               <p className="ml-3 hidden lg:block">Profile</p>
+            </button>
+            <button
+              onClick={() => setTab("activity")}
+              className={`${
+                tab == "activity" ? activeTabClass : inactiveTabClass
+              } w-full mt-2 rounded-md flex items-center lg:justify-start justify-center lg:px-5 lg:py-2 px-1`}
+            >
+              <BiHistory className="w-7 h-7" />
+              <p className="ml-3 hidden lg:block">Activity Hub</p>
             </button>
 
             <div className="lg:block hidden mt-[100px] w-full">
@@ -157,7 +187,11 @@ const Dashboard = () => {
               {tab == "appointments" && (
                 <Appointments appointments={data.appointments} />
               )}
+              {tab == "workflow" && (
+                <WorkflowPanel appointments={data.appointments} doctorId={data._id} />
+              )}
               {tab == "settings" && <Profile doctorData={data} />}
+              {tab == "activity" && <DoctorActivity />}
             </div>
           </div>
         </div>

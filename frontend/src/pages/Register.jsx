@@ -165,8 +165,9 @@ const Register = () => {
                     onChange={handleInputChange}
                     className="ml-2 font-black text-violet-700 bg-transparent focus:outline-none text-[15px]"
                   >
-                    <option value="patient">Patient</option>
-                    <option value="doctor">Doctor</option>
+                    <option value="patient">Patient Node</option>
+                    <option value="doctor">Medical Pro</option>
+                    <option value="hospital">Hospital Node</option>
                   </select>
                 </label>
 

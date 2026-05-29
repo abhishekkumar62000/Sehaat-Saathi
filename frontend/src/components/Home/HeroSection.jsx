@@ -133,7 +133,7 @@ const HeroSection = () => {
             <div className="flex flex-col gap-2">
               {/* Fluid Typography Heading */}
               <h1 className="text-slate-800 animate-fade-in-up opacity-90 uppercase tracking-tighter text-[clamp(24px,5vw,48px)] font-black leading-[1.1] mb-2 hover:scale-[1.02] transition-transform duration-500 origin-center lg:origin-left cursor-default">
-                Revolutionizing <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-500 via-orange-400 to-green-600 inline-block hover:scale-105 transition-transform duration-300 cursor-pointer">Health</span>
+                Your Health, Our <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-500 via-orange-400 to-green-600 inline-block hover:scale-105 transition-transform duration-300 cursor-pointer">Care</span>
               </h1>
               <h1 className="drop-shadow-[0_10px_30px_rgba(0,0,0,0.15)] text-[clamp(42px,11vw,96px)] font-black leading-[0.9] tracking-tighter transform hover:scale-105 transition-transform duration-500 cursor-default">
                 <span style={{ color: "#FF9933" }} className="animate-pulse shadow-orange-500/20 inline-block hover:-translate-y-2 transition-transform duration-300">Sehaat</span>{" "}
@@ -141,28 +141,33 @@ const HeroSection = () => {
               </h1>
             </div>
 
-            {/* AI Health Assistant Badge */}
-            <div className="my-8 animate-slide-in-left flex justify-center lg:justify-start">
+            {/* AI Health Assistant Badge - Clickable Link */}
+            <a
+              href="https://sehaat-saathi-your-ai-doctor-chatbot.streamlit.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="my-8 animate-slide-in-left flex justify-center lg:justify-start cursor-pointer block"
+            >
               <div className="bg-gradient-to-r from-[#FF9933] via-white to-[#138808] p-[1.5px] rounded-2xl shadow-[0_15px_35px_rgba(255,153,51,0.25)] group hover:shadow-[0_20px_50px_rgba(19,136,8,0.3)] transition-all duration-500 hover:scale-[1.03]">
                 <div className="bg-white/60 backdrop-blur-2xl text-slate-900 px-6 py-4 rounded-2xl flex items-center gap-5 border border-white/50 group-hover:bg-white/80 transition-colors">
                   <div className="w-12 h-12 bg-white rounded-xl shadow-lg flex items-center justify-center text-2xl animate-bounce group-hover:rotate-12 transition-transform duration-500">
                     🇮🇳
                   </div>
                   <div className="text-left">
-                    <p className="text-lg font-black tracking-tight uppercase text-slate-800 group-hover:text-orange-600 transition-colors">India's Smartest AI Hub</p>
-                    <p className="text-xs font-bold text-slate-500 uppercase tracking-widest group-hover:text-green-700 transition-colors">Sentient Care, Patriotic Pride</p>
+                    <p className="text-lg font-black tracking-tight uppercase text-slate-800 group-hover:text-orange-600 transition-colors">India's #1 Health App</p>
+                    <p className="text-xs font-bold text-slate-500 uppercase tracking-widest group-hover:text-green-700 transition-colors">Made in India, Built for You</p>
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
 
             {/* Enhanced Description */}
             <div className="text_para lg:pr-4 space-y-6">
-              <p className="font-black text-gray-900 text-xl sm:text-2xl leading-snug">
-                Bridging the gap between <span style={{ color: "#FF9933" }} className="inline-block hover:scale-110 transition-transform">Legacy</span> and <span style={{ color: "#138808" }} className="inline-block hover:scale-110 transition-transform">Modernity</span>.
+              <p className="font-black text-gray-900 text-[clamp(13px,1.4vw,20px)] leading-tight whitespace-nowrap">
+                The right doctor, at the right time —{" "}<span style={{ color: "#FF9933" }} className="inline-block hover:scale-110 transition-transform">always</span>{" "}by your{" "}<span style={{ color: "#138808" }} className="inline-block hover:scale-110 transition-transform">side</span>.
               </p>
               <p className="text-slate-600 font-medium text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">
-                Experience the next generation of healthcare with Sehaat Saathi. Our AI-driven ecosystem provides hyper-personalized diagnostics, emergency triaging, and verified clinical guidance—built specifically for the diverse needs of Bharat.
+                Sehaat Saathi makes it easy to find a good doctor, book an appointment, check your health, order medicines, and get emergency help — all from your phone, any time of the day. We are here for every family in Bharat. 🌿
               </p>
             </div>
 
@@ -170,10 +175,10 @@ const HeroSection = () => {
             {/* Feature Highlights - Ultra Responsive Grid */}
             <div className="my-10 grid grid-cols-2 gap-4 max-w-lg mx-auto lg:mx-0">
               {[
-                { t: "AI Diagnostics", c: "text-orange-600", bg: "bg-orange-50", i: "🤖" },
-                { t: "24/7 Support", c: "text-green-600", bg: "bg-green-50", i: "📞" },
-                { t: "Verified Docs", c: "text-blue-600", bg: "bg-blue-50", i: "👨‍⚕️" },
-                { t: "SOS Network", c: "text-rose-600", bg: "bg-rose-50", i: "🚑" }
+                { t: "Smart Health Check", c: "text-orange-600", bg: "bg-orange-50", i: "🤖" },
+                { t: "Help 24/7", c: "text-green-600", bg: "bg-green-50", i: "📞" },
+                { t: "Certified Doctors", c: "text-blue-600", bg: "bg-blue-50", i: "👨‍⚕️" },
+                { t: "Emergency Help", c: "text-rose-600", bg: "bg-rose-50", i: "🚑" }
               ].map((f, i) => (
                 <div key={i} className={`tri-glass p-4 rounded-2xl flex items-center gap-3 group hover:scale-105 hover:shadow-xl transition-all duration-300 cursor-pointer border-transparent hover:border-${f.c.split('-')[1]}-200`}>
                   <div className={`w-8 h-8 rounded-full ${f.bg} flex items-center justify-center text-sm shadow-inner group-hover:rotate-12 transition-transform`}>
@@ -194,14 +199,14 @@ const HeroSection = () => {
                 rel="noopener noreferrer"
                 className="tri-btn w-full sm:w-auto px-10 py-5 text-sm sm:text-base group hover:shadow-[0_10px_40px_rgba(255,153,51,0.4)] hover:-translate-y-1 transition-all duration-300"
               >
-                Book Your Care <BsArrowRight className="ml-2 inline group-hover:translate-x-2 transition-transform text-lg" />
+                Book a Doctor Now <BsArrowRight className="ml-2 inline group-hover:translate-x-2 transition-transform text-lg" />
               </a>
 
               <Link
                 to="/about"
                 className="font-black uppercase tracking-widest text-sm text-slate-400 hover:text-orange-500 transition-all flex items-center gap-3 group px-6 py-4 rounded-xl hover:bg-orange-50/50"
               >
-                Our Legacy <span className="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center group-hover:border-orange-500 group-hover:bg-orange-500 group-hover:text-white transition-all"><BsArrowRight className="group-hover:-rotate-45 transition-transform duration-300" /></span>
+                Learn More <span className="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center group-hover:border-orange-500 group-hover:bg-orange-500 group-hover:text-white transition-all"><BsArrowRight className="group-hover:-rotate-45 transition-transform duration-300" /></span>
               </Link>
             </div>
           </div>
@@ -243,7 +248,7 @@ const HeroSection = () => {
                   <div className="w-10 h-10 lg:w-16 lg:h-16 rounded-full bg-gradient-to-br from-emerald-400 to-teal-600 border-2 border-white flex items-center justify-center text-[10px] lg:text-sm text-white font-black shadow-lg group-hover/stat:scale-110 transition-transform">99%</div>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[8px] lg:text-xs font-black uppercase tracking-[0.2em] text-slate-400 leading-none mb-2">AI Accuracy</span>
+                  <span className="text-[8px] lg:text-xs font-black uppercase tracking-[0.2em] text-slate-400 leading-none mb-2">Doctor Match</span>
                   <div className="h-1.5 lg:h-2 w-24 lg:w-32 bg-slate-100 rounded-full overflow-hidden shadow-inner">
                     <div className="h-full bg-emerald-500 w-[99%] animate-shimmer"></div>
                   </div>

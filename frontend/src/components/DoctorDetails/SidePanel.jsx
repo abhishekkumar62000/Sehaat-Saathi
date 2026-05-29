@@ -6,8 +6,27 @@ import convertTime from "../../utils/convertTime";
 const SidePanel = ({ doctorId, ticketPrice, timeSlots }) => {
   console.log(ticketPrice, timeSlots);
 
-  const bookingHandler = () => {
-    window.open("https://calendly.com/codewithabhi5/sehaat-saathi-app-booking", "_blank");
+  const bookingHandler = async () => {
+    try {
+      const res = await fetch(`${BASE_URL}/bookings/checkout-session/${doctorId}`, {
+        method: "post",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message + " Please login first.");
+      }
+
+      if (data.session.url) {
+        window.location.href = data.session.url;
+      }
+    } catch (err) {
+      toast.error(err.message);
+    }
   };
 
   return (

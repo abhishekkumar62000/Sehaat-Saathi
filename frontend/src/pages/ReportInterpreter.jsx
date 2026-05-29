@@ -9,8 +9,10 @@ import {
     BsCapsule, BsCartCheck, BsFileEarmarkText, BsQuestionCircleFill,
     BsXCircleFill, BsArrowRight
 } from 'react-icons/bs';
+import useRecordActivity from '../hooks/useRecordActivity';
 
 const ReportInterpreter = () => {
+    const { recordActivity } = useRecordActivity();
     const [step, setStep] = useState(1); // 1: Upload, 2: Scanning, 3: Results
     const [file, setFile] = useState(null);
     const [isDragging, setIsDragging] = useState(false);
@@ -55,6 +57,7 @@ const ReportInterpreter = () => {
     };
 
     const startScanning = () => {
+        recordActivity("Report Interpreter", "Analysis Started", "/report-interpreter");
         setStep(2);
         let progress = 0;
         const interval = setInterval(() => {
