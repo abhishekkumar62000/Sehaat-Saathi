@@ -75,6 +75,3 @@ The **Sehaat Saathi** website is a comprehensive platform designed to enhance pa
 
 This project is licensed under the MIT License.
 
-## Author
-
-- **Mohammad Nurul Azam** - [GitHub Profile](https://github.com/nurulazam-dev)
