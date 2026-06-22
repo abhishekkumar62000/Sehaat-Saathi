@@ -85,7 +85,7 @@ const AdminDashboard = () => {
                       
                       {/* Doctor Info */}
                       <div className="flex gap-4 items-center">
-                        <img src={doctor.photo || 'default-avatar-url'} alt="Profile" className="w-16 h-16 rounded-2xl shadow-sm object-cover bg-white" />
+                        <img src={doctor.photo || 'default-avatar-url'} alt="Profile" className="w-16 h-16 rounded-2xl shadow-sm object-cover bg-white"  loading="lazy" />
                         <div>
                           <h3 className="text-lg font-black text-headingColor leading-none">{doctor.name}</h3>
                           <p className="text-sm font-bold text-indigo-600 mt-1">{doctor.specialization}</p>

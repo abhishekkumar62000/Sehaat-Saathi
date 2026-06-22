@@ -12,7 +12,7 @@ const GreatDoctors = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-serif font-bold text-slate-800 leading-tight inline-flex items-center justify-center gap-3">
             Our <span className="text-[#009E60]">Experts</span> <span className="text-[#FF8C00]">Doctors</span>
-            <img src={logo} alt="Logo" className="w-8 h-8 lg:w-10 lg:h-10 animate-bounce" />
+            <img src={logo} alt="Logo" className="w-8 h-8 lg:w-10 lg:h-10 animate-bounce"  loading="lazy" />
           </h2>
           <p className="text-slate-500 mt-4 max-w-2xl mx-auto text-lg">
             Meet our world-class medical specialists dedicated to providing top-notch healthcare services.

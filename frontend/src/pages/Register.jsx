@@ -208,7 +208,7 @@ const Register = () => {
                 {selectFile && (
                   <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}>
                     <figure className="w-14 h-14 rounded-full ring-4 ring-violet-500/20 overflow-hidden shadow-lg">
-                      <img src={previewURL} alt="" className="w-full h-full object-cover" />
+                      <img src={previewURL} alt="" className="w-full h-full object-cover"  loading="lazy" />
                     </figure>
                   </motion.div>
                 )}

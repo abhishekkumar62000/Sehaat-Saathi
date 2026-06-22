@@ -49,11 +49,10 @@ const WhyChooseUs = () => {
               <div className="absolute inset-[-8px] rounded-full bg-gradient-to-r from-[#FF9933] via-white to-[#138808] animate-spin-linear blur-sm group-hover:blur-md transition-all duration-700 shadow-2xl"></div>
 
               <div className="relative p-1 bg-white rounded-full overflow-hidden">
-                <img
-                  src={SehaatSaathiImg}
+                <img src={SehaatSaathiImg}
                   alt="Sehaat Saathi"
                   className="w-64 h-64 object-cover rounded-full transition-all duration-700 group-hover:scale-110 group-hover:rotate-6 z-10"
-                />
+                 loading="lazy" />
                 {/* Gloss & Sparkle Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-tr from-white/20 via-transparent to-white/40 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
               </div>

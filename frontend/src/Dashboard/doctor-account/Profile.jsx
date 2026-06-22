@@ -396,11 +396,10 @@ const Profile = ({ doctorData }) => {
 
                 <div className="w-full lg:w-48 flex flex-col items-center gap-4 bg-indigo-50/30 p-6 rounded-3xl border border-indigo-100 text-center">
                   <div className="relative w-32 h-32 rounded-full border-4 border-white shadow-2xl overflow-hidden group">
-                    <img
-                      src={formData.photo ? formData.photo : avatarImg}
+                    <img src={formData.photo ? formData.photo : avatarImg}
                       alt="Profile"
                       className="w-full h-full object-cover transition-transform group-hover:scale-110"
-                    />
+                     loading="lazy" />
                     {photoLoading && (
                       <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
                         <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />

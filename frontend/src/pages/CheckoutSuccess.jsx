@@ -5,7 +5,7 @@ const CheckoutSuccess = () => {
   return (
     <section className="bg-white p-6 md:mx-auto">
       <div className="flex justify-center items-center">
-        <img src={brandLogo} alt="" className="w-[100px] lg:w-[230px]" />
+        <img src={brandLogo} alt="" className="w-[100px] lg:w-[230px]"  loading="lazy" />
       </div>
       <div className="text-center">
         <h3 className="md:text-2xl text-base text-gray-900 font-semibold text-center">

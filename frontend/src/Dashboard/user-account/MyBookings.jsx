@@ -52,7 +52,7 @@ const MyBookings = () => {
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-4">
                           <figure className="w-12 h-12 rounded-full border-2 border-white shadow-md overflow-hidden group-hover:scale-110 transition-transform">
-                            <img src={item.doctor?.photo} alt="" className="w-full h-full object-cover" />
+                            <img src={item.doctor?.photo} alt="" className="w-full h-full object-cover"  loading="lazy" />
                           </figure>
                           <div>
                             <div className="text-[16px] font-black text-headingColor">{item.doctor?.name}</div>

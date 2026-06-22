@@ -29,7 +29,7 @@ const HospitalAppointments = ({ bookings }) => {
                                 <td className="px-6 py-4">
                                     <div className="flex items-center gap-3">
                                         <figure className="w-10 h-10 rounded-full border-2 border-white shadow-sm overflow-hidden group-hover:scale-110 transition-transform">
-                                            <img src={item.user?.photo} alt="" className="w-full h-full object-cover" />
+                                            <img src={item.user?.photo} alt="" className="w-full h-full object-cover"  loading="lazy" />
                                         </figure>
                                         <div>
                                             <div className="text-[15px] font-black text-headingColor tracking-tight">

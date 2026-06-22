@@ -70,11 +70,10 @@ const SanjeevaniMascot = ({ isTyping, isAnalyzing, urgency }) => {
                     className="relative w-16 h-16 lg:w-24 lg:h-24 rounded-full overflow-hidden z-10"
                     style={{ border: `2px solid ${color}60`, boxShadow: `0 0 30px ${color}20` }}
                 >
-                    <img
-                        src={AIDoctorLogo}
+                    <img src={AIDoctorLogo}
                         alt="AI Doctor"
                         className="w-full h-full object-cover select-none"
-                    />
+                     loading="lazy" />
 
                     {/* Glass Shimmer Effect */}
                     <motion.div

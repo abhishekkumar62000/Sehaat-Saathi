@@ -43,11 +43,10 @@ const VirtualTreatment = () => {
 
         {/* Image Section */}
         <div className="flex-1">
-          <img
-            src={VTImg}
+          <img src={VTImg}
             alt="Virtual Treatment"
             className="max-h-screen max-w-[400px] lg:px-0 px-7 animate-pulse"
-          />
+           loading="lazy" />
         </div>
       </div>
     </section>

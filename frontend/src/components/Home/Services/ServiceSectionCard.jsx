@@ -57,11 +57,10 @@ const ServiceSectionCard = ({ service, index }) => {
 
       {/* Image Container */}
       <div className="relative overflow-hidden h-40 sm:h-52 bg-white/50 backdrop-blur-sm m-2 rounded-[1.5rem] sm:rounded-[28px]">
-        <img
-          src={serviceImg}
+        <img src={serviceImg}
           alt={name}
           className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-        />
+         loading="lazy" />
         {/* Overlay Icon */}
         <div className={`absolute top-4 right-4 bg-white/90 p-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0`}>
           <FaArrowRight className={`${theme.text} text-lg`} />

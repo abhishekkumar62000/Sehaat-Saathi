@@ -7,6 +7,7 @@ import {
     BsGenderMale, BsGenderFemale, BsThermometerHalf, BsInfoCircleFill
 } from 'react-icons/bs';
 import useRecordActivity from '../hooks/useRecordActivity';
+import { BASE_URL } from '../config';
 
 const SymptomChecker = () => {
     const { recordActivity } = useRecordActivity();
@@ -20,6 +21,9 @@ const SymptomChecker = () => {
     const [analyzing, setAnalyzing] = useState(false);
     const [reasoningLogs, setReasoningLogs] = useState([]);
     const [intensityMap, setIntensityMap] = useState({});
+    const [results, setResults] = useState([]);
+    const [summary, setSummary] = useState("");
+    const [customSymptomInput, setCustomSymptomInput] = useState("");
 
     const commonSymptoms = {
         Head: ["Headache", "Dizziness", "Sore Throat", "Blurred Vision", "Earache"],
@@ -27,6 +31,13 @@ const SymptomChecker = () => {
         Abdomen: ["Stomach Ache", "Nausea", "Bloating", "Acid Reflux", "Cramps"],
         Limbs: ["Joint Pain", "Muscle Cramp", "Numbness", "Swelling", "Stiffness"],
         General: ["Fever", "Fatigue", "Chills", "Body Ache", "Loss of Appetite"]
+    };
+
+    const handleAddCustomSymptom = () => {
+        if (customSymptomInput.trim()) {
+            handleAddSymptom(customSymptomInput.trim());
+            setCustomSymptomInput("");
+        }
     };
 
     const handleAddSymptom = (s) => {
@@ -63,19 +74,18 @@ const SymptomChecker = () => {
         setHotspots(prev => prev.filter(h => h.id !== s));
     };
 
-    const runAnalysis = () => {
+    const runAnalysis = async () => {
         recordActivity("Symptom Checker", "Analysis Started", "/symptom-checker");
         setStep(2);
         setAnalyzing(true);
         const logs = [
             "INITIALIZING NEURAL MESH V3.0...",
             "LOADING PATIENT GENETIC BASELINE...",
+            "CONNECTING TO GROQ DYNAMIC LLM COMPLIANCE CORE...",
             "SCANNING " + bodyPart.toUpperCase() + " REGION...",
             "DETECTING SYMPTOM CLUSTERS: " + selectedSymptoms.join(", "),
             "CALIBRATING INTENSITY WEIGHTS...",
-            "CROSS-REFERENCING WHO & WEBMD DATABASE...",
-            "ANALYZING TEMPORAL PATTERNS...",
-            "GENERATING PROBABILITY CLOUD...",
+            "GENERATING DYNAMIC PROBABILITY CLOUD...",
             "FINALIZING CLINICAL HYPOTHESIS..."
         ];
 
@@ -84,21 +94,46 @@ const SymptomChecker = () => {
             if (i < logs.length) {
                 setReasoningLogs(prev => [...prev.slice(-4), logs[i]]);
                 i++;
-            } else {
-                clearInterval(interval);
-                setTimeout(() => {
-                    setAnalyzing(false);
-                    setStep(3);
-                }, 1000);
             }
-        }, 800);
-    };
+        }, 500);
 
-    const results = [
-        { name: "Common Viral Flu", prob: 85, color: "bg-blue-500", advice: "Rest and hydration are key. Monitor temperature every 4 hours." },
-        { name: "Seasonal Allergies", prob: 12, color: "bg-amber-500", advice: "Consider antihistamines. Avoid environmental triggers like pollen." },
-        { name: "Bacterial Infection", prob: 3, color: "bg-emerald-500", advice: "Probability is low, but consult a specialist if symptoms persist." }
-    ];
+        try {
+            const response = await fetch(`${BASE_URL}/ai-doctor/symptom-check`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    bodyPart,
+                    symptoms: selectedSymptoms,
+                    intensityMap,
+                    gender
+                })
+            });
+            const data = await response.json();
+            clearInterval(interval);
+            
+            if (data.success) {
+                setResults(data.results);
+                setSummary(data.summary);
+            } else {
+                setResults([
+                    { name: `Common ${bodyPart} Concern`, prob: 70, color: "bg-blue-500", advice: "Rest, monitor symptoms, and stay hydrated." }
+                ]);
+                setSummary("Unable to reach the live Groq LLM diagnostician. Displaying default local diagnostic baseline.");
+            }
+        } catch (err) {
+            clearInterval(interval);
+            console.error("Analysis API Error:", err);
+            setResults([
+                { name: `Common ${bodyPart} Concern`, prob: 70, color: "bg-blue-500", advice: "Rest, monitor symptoms, and stay hydrated." }
+            ]);
+            setSummary("Database connection failed. Please ensure the backend is connected to MongoDB Atlas.");
+        }
+
+        setAnalyzing(false);
+        setStep(3);
+    };
 
     return (
         <div className="min-h-screen bg-[#020617] text-white selection:bg-teal-500/30 overflow-x-hidden">
@@ -250,8 +285,33 @@ const SymptomChecker = () => {
                                 <div className="bg-white/[0.02] rounded-[3rem] p-10 border border-white/10 relative">
                                     <h2 className="text-2xl font-black mb-8 flex items-center gap-3">
                                         <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">2</div>
-                                        Symptom Selection
+                                        Symptom Selection ({bodyPart})
                                     </h2>
+
+                                    {/* Custom Symptom Search/Add */}
+                                    <div className="flex gap-3 mb-6">
+                                        <div className="relative flex-1">
+                                            <input 
+                                                type="text" 
+                                                placeholder="Search or type custom symptom..." 
+                                                value={customSymptomInput}
+                                                onChange={(e) => setCustomSymptomInput(e.target.value)}
+                                                onKeyDown={(e) => {
+                                                    if (e.key === 'Enter') {
+                                                        handleAddCustomSymptom();
+                                                    }
+                                                }}
+                                                className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-sm font-semibold placeholder:text-slate-500 focus:outline-none focus:border-teal-500 transition-colors"
+                                            />
+                                            <BsSearch className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-500" />
+                                        </div>
+                                        <button 
+                                            onClick={handleAddCustomSymptom}
+                                            className="px-6 bg-teal-600 hover:bg-teal-500 rounded-2xl font-black text-xs uppercase tracking-wider transition-all"
+                                        >
+                                            Add
+                                        </button>
+                                    </div>
 
                                     <div className="flex flex-wrap gap-3 mb-10">
                                         {commonSymptoms[bodyPart].map(s => (
@@ -362,6 +422,11 @@ const SymptomChecker = () => {
                                         </div>
                                         <h2 className="text-6xl font-black mb-6 leading-tight">DIAGNOSTIC <span className="text-teal-500">CLOUD</span></h2>
                                         <p className="text-slate-400 leading-relaxed font-bold italic text-lg">Our AI checked your <span className="text-teal-400 uppercase font-black">{selectedSymptoms.length} markers</span>. The most probable hypothesis for {gender.toUpperCase()} baseline is detailed below.</p>
+                                        {summary && (
+                                            <div className="mt-8 p-6 bg-white/[0.02] border border-white/10 rounded-[2rem] text-sm text-slate-300 leading-relaxed font-semibold italic border-l-4 border-teal-500">
+                                                "{summary}"
+                                            </div>
+                                        )}
                                     </div>
 
                                     <div className="flex gap-4">

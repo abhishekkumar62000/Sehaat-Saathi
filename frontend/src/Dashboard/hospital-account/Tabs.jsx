@@ -29,7 +29,7 @@ const Tabs = ({ tab, setTab, hospitalData }) => {
             <div className="hidden lg:flex flex-col p-[30px] bg-white shadow-sm border border-slate-100 rounded-3xl h-max">
                 <div className="flex flex-col items-center mb-8">
                     <figure className="w-24 h-24 rounded-3xl bg-indigo-50 flex items-center justify-center p-4 border-2 border-indigo-100 shadow-sm overflow-hidden mb-4">
-                        <img src={hospitalData?.photo} alt="" className="w-full h-full object-contain" />
+                        <img src={hospitalData?.photo} alt="" className="w-full h-full object-contain"  loading="lazy" />
                     </figure>
                     <h3 className="text-[20px] font-black text-headingColor tracking-tight">
                         {hospitalData?.name}

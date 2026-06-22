@@ -661,7 +661,7 @@ const OfflineConsultationHub = () => {
                             <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-left">
                                 <div className="relative">
                                     <div className="absolute inset-0 bg-[#FF9933]/20 rounded-3xl blur-xl animate-pulse"></div>
-                                    <img src={selectedDoc.photo} className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-3xl object-cover border-4 border-white shadow-xl" alt={selectedDoc.name} />
+                                    <img src={selectedDoc.photo} className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-3xl object-cover border-4 border-white shadow-xl" alt={selectedDoc.name}  loading="lazy" />
                                 </div>
                                 <div className="space-y-2">
                                     <h3 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tighter uppercase">{selectedDoc.name}</h3>
@@ -966,7 +966,7 @@ const OfflineConsultationHub = () => {
                                         <div className="absolute top-0 right-0 p-8 text-[60px] font-black text-black/[0.03] select-none italic">{idx + 1}</div>
 
                                         <div className="flex items-center gap-6">
-                                            <img src={doc.photo} className="w-24 h-24 rounded-[2rem] object-cover border-2 border-gray-200" alt="" />
+                                            <img src={doc.photo} className="w-24 h-24 rounded-[2rem] object-cover border-2 border-gray-200" alt=""  loading="lazy" />
                                             <div>
                                                 <h4 className="text-2xl font-black tracking-tight text-gray-900">{doc.name}</h4>
                                                 <p className="text-[#000080] text-[10px] font-black uppercase tracking-widest">{doc.specialty}</p>
@@ -1050,7 +1050,7 @@ const OfflineConsultationHub = () => {
                         >
                             <div className="flex -space-x-4 pl-2">
                                 {compareList.map(doc => (
-                                    <img key={doc.id} src={doc.photo} className="w-12 h-12 rounded-full border-4 border-white object-cover" alt="" />
+                                    <img key={doc.id} src={doc.photo} className="w-12 h-12 rounded-full border-4 border-white object-cover" alt=""  loading="lazy" />
                                 ))}
                             </div>
                             <div className="pr-8">

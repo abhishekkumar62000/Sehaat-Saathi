@@ -54,11 +54,10 @@ const FaqSection = () => {
                 whileHover={{ rotateY: -10, scale: 1.02 }}
                 className="relative overflow-hidden rounded-[2.5rem] shadow-2xl"
               >
-                <img
-                  src={faqImg}
+                <img src={faqImg}
                   alt="FAQ"
                   className="w-full h-auto transform transition-transform duration-1000"
-                />
+                 loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent"></div>
                 <div className="absolute bottom-10 left-10 text-white">
                   <p className="text-xs font-black uppercase tracking-widest mb-2 opacity-80">Quick Help</p>

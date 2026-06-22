@@ -364,6 +364,25 @@ const AcademicLineageBadge = ({ lineage }) => {
     );
 };
 
+// Helper component for Audio translation waveform (Optimized CSS-only animation to prevent React re-renders)
+const TranslationWaveformHUD = ({ active }) => {
+    if (!active) return null;
+    return (
+        <div className="absolute top-0 left-0 w-full h-1 flex items-end gap-[1px] opacity-30">
+            {[...Array(20)].map((_, i) => (
+                <div 
+                    key={i} 
+                    className="flex-1 bg-rose-500 animate-pulse rounded-t-sm" 
+                    style={{ 
+                        height: `${20 + Math.random() * 80}%`,
+                        animationDuration: `${0.4 + Math.random() * 0.8}s`
+                    }} 
+                />
+            ))}
+        </div>
+    );
+};
+
 // Helper component for Voice Bio Waveform
 const VoiceBioWaveform = ({ active, onClick }) => {
     return (
@@ -1943,7 +1962,6 @@ const TeleConsultAI = () => {
     const [healthPodTimer, setHealthPodTimer] = useState(10);
     const [showHealthPod, setShowHealthPod] = useState(false);
     const [facePoints, setFacePoints] = useState([]);
-    const [waveform, setWaveform] = useState([]);
     const [insightStream, setInsightStream] = useState([]);
     const [showCelebration, setShowCelebration] = useState(false);
 
@@ -2257,16 +2275,7 @@ const TeleConsultAI = () => {
         }
     }, [callActive]);
 
-    // Generate Neural Waveform for Translation
-    useEffect(() => {
-        if (callActive) {
-            const interval = setInterval(() => {
-                const newData = [...Array(20)].map(() => Math.random() * 100);
-                setWaveform(newData);
-            }, 100);
-            return () => clearInterval(interval);
-        }
-    }, [callActive]);
+
 
     // Health Pod Insight Stream
     useEffect(() => {
@@ -3006,7 +3015,7 @@ const TeleConsultAI = () => {
                                     {/* Phase 1: Omni-Presence Map */}
                                     <OmniPresenceMap location={doc.currentLocation} affiliation={doc.hospitalAffiliation} />
 
-                                    <img src={doc.image} alt={doc.name} className="w-full h-48 object-cover rounded-3xl relative z-10 transition-all shadow-lg" />
+                                    <img src={doc.image} alt={doc.name} className="w-full h-48 object-cover rounded-3xl relative z-10 transition-all shadow-lg"  loading="lazy" />
 
 
                                     {/* Phase 6: Neural-Sync Match Score */}
@@ -3377,7 +3386,7 @@ const TeleConsultAI = () => {
                             <div className="flex-1 relative bg-slate-900 overflow-hidden">
                                 {!callActive ? (
                                     <div className="absolute inset-0 flex flex-col items-center justify-center">
-                                        <img src={selectedDoc.image} className="w-48 h-48 rounded-full border-4 border-rose-500 animate-pulse mb-8" />
+                                        <img src={selectedDoc.image} className="w-48 h-48 rounded-full border-4 border-rose-500 animate-pulse mb-8"  loading="lazy" />
                                         <h2 className="text-3xl font-black mb-2">Connecting with {selectedDoc.name}...</h2>
                                         <p className="text-rose-400 font-bold animate-bounce mt-4 tracking-widest text-sm uppercase">Neural Link Syncing</p>
                                         <div className="mt-12 flex gap-8">
@@ -3420,11 +3429,11 @@ const TeleConsultAI = () => {
                                         {/* Main Doc Feed (Mock) */}
                                         <div className="absolute inset-0">
                                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" />
-                                            <img src={selectedDoc.image} className="w-full h-full object-cover blur-sm opacity-30" />
+                                            <img src={selectedDoc.image} className="w-full h-full object-cover blur-sm opacity-30"  loading="lazy" />
                                             <div className="absolute inset-0 flex items-center justify-center">
                                                 <div className="relative">
                                                     <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black to-transparent z-20" />
-                                                    <img src={selectedDoc.image} className="w-80 h-96 object-cover rounded-3xl border-2 border-white/20 shadow-2xl relative z-10" />
+                                                    <img src={selectedDoc.image} className="w-80 h-96 object-cover rounded-3xl border-2 border-white/20 shadow-2xl relative z-10"  loading="lazy" />
                                                     <div className="absolute -bottom-4 -left-4 z-30 bg-rose-600 px-6 py-2 rounded-xl font-black text-sm shadow-xl">
                                                         {selectedDoc.name}
                                                     </div>
@@ -3499,11 +3508,7 @@ const TeleConsultAI = () => {
                                         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 w-full max-w-2xl px-6 z-[70] pointer-events-none">
                                             <div className="bg-black/60 backdrop-blur-xl border border-white/10 p-4 rounded-2xl animate-fade-in relative overflow-hidden">
                                                 {/* Audio Waveform HUD */}
-                                                <div className="absolute top-0 left-0 w-full h-1 flex items-end gap-[1px] opacity-30">
-                                                    {waveform.map((h, i) => (
-                                                        <div key={i} className="flex-1 bg-rose-500 transition-all duration-100" style={{ height: h + '%' }} />
-                                                    ))}
-                                                </div>
+                                                <TranslationWaveformHUD active={callActive} />
 
                                                 <div className="flex items-start gap-4">
                                                     <div className="w-10 h-10 bg-rose-500/20 rounded-xl flex items-center justify-center flex-shrink-0 border border-rose-500/30">
@@ -4351,7 +4356,7 @@ const TeleConsultAI = () => {
                             <div className="px-8 pb-8 -mt-16 text-center">
                                 <div className="relative inline-block mb-4">
                                     <div className={`absolute inset-0 bg-${viewingDocProfile.color}-500 blur-2xl opacity-40`} />
-                                    <img src={viewingDocProfile.image} alt={viewingDocProfile.name} className="w-32 h-32 rounded-[2rem] object-cover border-4 border-[#0f172a] relative z-10" />
+                                    <img src={viewingDocProfile.image} alt={viewingDocProfile.name} className="w-32 h-32 rounded-[2rem] object-cover border-4 border-[#0f172a] relative z-10"  loading="lazy" />
                                 </div>
                                 <h2 className="text-2xl font-black mb-1">{viewingDocProfile.name}</h2>
                                 <p className="text-rose-400 font-bold text-sm uppercase tracking-widest mb-6">{viewingDocProfile.specialty}</p>
@@ -4406,7 +4411,7 @@ const TeleConsultAI = () => {
                                 </button>
 
                                 <div className="flex items-center gap-4 mb-4">
-                                    <img src={viewingSlots.image} alt={viewingSlots.name} className="w-16 h-16 rounded-2xl object-cover" />
+                                    <img src={viewingSlots.image} alt={viewingSlots.name} className="w-16 h-16 rounded-2xl object-cover"  loading="lazy" />
                                     <div>
                                         <h2 className="text-2xl font-black">{viewingSlots.name}</h2>
                                         <p className="text-rose-400 font-bold text-sm uppercase">{viewingSlots.specialty}</p>
@@ -4509,7 +4514,7 @@ const TeleConsultAI = () => {
                                             {compareDoctors.map(doc => (
                                                 <th key={doc.id} className="p-4 min-w-[250px]">
                                                     <div className="flex items-center gap-3">
-                                                        <img src={doc.image} alt={doc.name} className="w-12 h-12 rounded-xl object-cover" />
+                                                        <img src={doc.image} alt={doc.name} className="w-12 h-12 rounded-xl object-cover"  loading="lazy" />
                                                         <div>
                                                             <div className="font-black text-white">{doc.name}</div>
                                                             <div className="text-[10px] text-rose-500 font-bold uppercase">{doc.specialty}</div>
@@ -4687,7 +4692,7 @@ const TeleConsultAI = () => {
                                                     <div key={doc.id} className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-rose-500/50 transition-all">
                                                         <div className="flex items-start gap-4">
                                                             <div className="relative flex-shrink-0">
-                                                                <img src={doc.image} alt={doc.name} className="w-20 h-20 rounded-2xl object-cover" />
+                                                                <img src={doc.image} alt={doc.name} className="w-20 h-20 rounded-2xl object-cover"  loading="lazy" />
                                                                 {idx === 0 && (
                                                                     <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-rose-500 to-orange-500 rounded-full flex items-center justify-center text-xs font-black">
                                                                         #{idx + 1}
@@ -4846,7 +4851,7 @@ const TeleConsultAI = () => {
 
                                 <div className="bg-rose-500/5 border border-rose-500/10 rounded-2xl p-6">
                                     <div className="flex items-center gap-4 mb-4">
-                                        <img src={waitingRoomData.image} className="w-12 h-12 rounded-xl object-cover ring-2 ring-rose-500/20" alt={waitingRoomData.name} />
+                                        <img src={waitingRoomData.image} className="w-12 h-12 rounded-xl object-cover ring-2 ring-rose-500/20" alt={waitingRoomData.name}  loading="lazy" />
                                         <div>
                                             <p className="text-[10px] font-black text-rose-500 uppercase tracking-widest">Consultant Active</p>
                                             <p className="text-sm font-black text-white">{waitingRoomData.name} is finalizing connection...</p>
@@ -5339,50 +5344,7 @@ const TeleConsultAI = () => {
                 )
             }
 
-            {/* Phase 4: AI Virtual Concierge (The Orb) */}
-            {
-                showConcierge && (
-                    <div className="fixed bottom-32 right-8 z-[500] animate-bounce-in flex items-end gap-4 max-w-xs">
-                        <div className="bg-slate-900/90 backdrop-blur-xl border border-sky-500/20 p-4 rounded-2xl rounded-br-none shadow-2xl glass-premium">
-                            <p className="text-[10px] font-bold text-sky-400 uppercase tracking-widest mb-1">Neural Assistant</p>
-                            <p className="text-xs text-white leading-relaxed">{conciergeMsg}</p>
-                        </div>
-                        <div className="w-12 h-12 rounded-full bg-sky-500/20 border border-sky-400/30 flex items-center justify-center orb-glow animate-pulse flex-shrink-0">
-                            <BsBroadcast className="text-sky-400" />
-                        </div>
-                    </div>
-                )
-            }
 
-            {/* Phase 4: Consultation Radar */}
-            <div className={`fixed bottom-8 left-8 z-[400] transition-all duration-1000 ${showNeuralGateway ? 'opacity-0 scale-50' : 'opacity-100 scale-100'}`}>
-                <div className="bg-black/40 backdrop-blur-xl border border-white/5 p-4 rounded-3xl group">
-                    <div className="flex items-center gap-3 mb-3">
-                        <div className="w-8 h-8 rounded-full border border-emerald-500/20 flex items-center justify-center relative overflow-hidden">
-                            <div className="absolute inset-0 bg-emerald-500/10 animate-ping" />
-                            <BsGeoAltFill className="text-emerald-500 text-xs" />
-                        </div>
-                        <div>
-                            <p className="text-[8px] font-black text-emerald-500 uppercase">Live India Radar</p>
-                            <p className="text-[10px] text-white font-bold">1.2K Sessions Active</p>
-                        </div>
-                    </div>
-                    <div className="w-32 h-32 rounded-2xl bg-white/5 border border-white/5 relative overflow-hidden">
-                        {[...Array(5)].map((_, i) => (
-                            <div
-                                key={i}
-                                className="absolute w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.5)]"
-                                style={{
-                                    top: Math.random() * 80 + 10 + '%',
-                                    left: Math.random() * 80 + 10 + '%',
-                                    animationDelay: `${i * 0.5}s`
-                                }}
-                            />
-                        ))}
-                        <div className="absolute inset-0 bg-[conic-gradient(from_0deg,transparent_0%,rgba(16,185,129,0.1)_25%,transparent_50%)] animate-[spin_4s_linear_infinite]" />
-                    </div>
-                </div>
-            </div>
             {/* Phase 5: Holographic Prescription Pop-up */}
             {
                 showHoloPrescription && (

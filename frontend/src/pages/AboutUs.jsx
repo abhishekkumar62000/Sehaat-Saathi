@@ -71,7 +71,7 @@ const AboutUs = () => {
           <div className="relative group animate-in fade-in slide-in-from-right duration-700">
             <div className="absolute -inset-6 bg-teal-100/50 rounded-full blur-3xl opacity-40 group-hover:opacity-60 transition-opacity animate-pulse"></div>
             <div className="relative rounded-[60px] overflow-hidden shadow-2xl border-[12px] border-white ring-1 ring-gray-100">
-              <img src={aboutUsHero} alt="About Sehaat Saathi" className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-1000" />
+              <img src={aboutUsHero} alt="About Sehaat Saathi" className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-1000"  loading="lazy" />
             </div>
           </div>
         </div>

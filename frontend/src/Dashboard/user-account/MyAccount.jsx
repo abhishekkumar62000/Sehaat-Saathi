@@ -31,11 +31,10 @@ const MyAccount = () => {
           <div className="w-full lg:w-[25%] px-[20px] pb-3 rounded-md shadow-md">
             <div className="flex items-center justify-center">
               <figure className="w-[100px] h-[100px] rounded-full border-2 border-solid border-violet-700">
-                <img
-                  src={userData?.photo ? userData?.photo : userAvatar}
+                <img src={userData?.photo ? userData?.photo : userAvatar}
                   alt=""
                   className="w-full h-full rounded-full"
-                />
+                 loading="lazy" />
               </figure>
             </div>
 

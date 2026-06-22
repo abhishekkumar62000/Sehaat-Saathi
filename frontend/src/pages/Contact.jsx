@@ -71,7 +71,7 @@ const Contact = () => {
           <div className="lg:w-1/2 mb-12 lg:mb-0 lg:flex hidden justify-center">
             <div className="relative group">
               <div className="absolute inset-0 bg-teal-200 rounded-full blur-[100px] opacity-20 group-hover:opacity-40 transition-opacity"></div>
-              <img src={contactImg} alt="Contact Us" className="relative w-full max-w-md animate-float" />
+              <img src={contactImg} alt="Contact Us" className="relative w-full max-w-md animate-float"  loading="lazy" />
             </div>
           </div>
 

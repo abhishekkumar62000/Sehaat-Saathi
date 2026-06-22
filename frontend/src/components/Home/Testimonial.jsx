@@ -55,11 +55,10 @@ const Testimonial = () => {
               <div className="absolute -top-10 left-10 transition-transform duration-500 group-hover:scale-110">
                 <div className="relative">
                   <div className="absolute inset-0 bg-violet-500 rounded-full blur-lg opacity-20 group-hover:opacity-40"></div>
-                  <img
-                    src={testimonial.image}
+                  <img src={testimonial.image}
                     alt={testimonial.patient}
                     className="w-20 h-20 rounded-full border-4 border-white shadow-xl relative z-10 object-cover"
-                  />
+                   loading="lazy" />
                 </div>
               </div>
 

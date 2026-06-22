@@ -225,7 +225,7 @@ const QuickProfileModal = ({ doc, onClose, onBook }) => {
                 <div className="bg-gradient-to-br from-violet-600 to-indigo-700 p-6 text-white relative">
                     <button onClick={onClose} className="absolute top-4 right-4 text-white/60 hover:text-white"><BsXCircleFill className="w-6 h-6" /></button>
                     <div className="flex items-start gap-4">
-                        <img src={doc.photo} className="w-20 h-20 rounded-2xl object-cover border-4 border-white/30 shadow-xl flex-shrink-0" alt="" />
+                        <img src={doc.photo} className="w-20 h-20 rounded-2xl object-cover border-4 border-white/30 shadow-xl flex-shrink-0" alt=""  loading="lazy" />
                         <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2"><h2 className="font-black text-lg truncate">{doc.name}</h2><MdVerifiedUser className="w-5 h-5 text-green-300 flex-shrink-0" /></div>
                             <p className="text-violet-200 font-bold text-sm">{doc.specialization}</p>
@@ -547,7 +547,7 @@ const FeaturedStrip = ({ doctors, onBook, onInfo }) => {
                         <div key={doc._id + '-feat'} className="flex-shrink-0 w-64 bg-gradient-to-br from-violet-600 to-indigo-700 rounded-2xl p-4 text-white shadow-xl shadow-violet-200 relative overflow-hidden">
                             <div className="absolute -right-4 -top-4 w-20 h-20 bg-white/10 rounded-full" />
                             <div className="flex items-center gap-3 mb-3">
-                                <img src={doc.photo} className="w-12 h-12 rounded-xl object-cover border-2 border-white/30 flex-shrink-0" alt="" />
+                                <img src={doc.photo} className="w-12 h-12 rounded-xl object-cover border-2 border-white/30 flex-shrink-0" alt=""  loading="lazy" />
                                 <div className="min-w-0">
                                     <p className="font-black text-sm truncate">{doc.name}</p>
                                     <p className="text-violet-200 text-xs font-bold">{doc.specialization}</p>
@@ -585,7 +585,7 @@ const VideoDoctorCard = ({ doc, onBook, onInfo }) => {
             <div className="p-5 flex-1 flex flex-col">
                 <div className="flex items-start gap-3 mb-3 mt-2">
                     <div className="relative flex-shrink-0">
-                        <img src={doc.photo} alt={doc.name} className="w-16 h-16 rounded-2xl object-cover border-4 border-white shadow-xl group-hover:scale-105 transition-transform" />
+                        <img src={doc.photo} alt={doc.name} className="w-16 h-16 rounded-2xl object-cover border-4 border-white shadow-xl group-hover:scale-105 transition-transform"  loading="lazy" />
                         <div className={`absolute -bottom-1 -right-1 w-5 h-5 rounded-full border-2 border-white shadow flex items-center justify-center ${doc.availableToday ? 'bg-green-500' : 'bg-orange-400'}`}><div className={`w-2.5 h-2.5 rounded-full ${doc.availableToday ? 'bg-white animate-ping' : 'bg-white'}`} /></div>
                     </div>
                     <div className="flex-1 min-w-0">
@@ -730,7 +730,7 @@ const BookingModal = ({ doc, token, onClose, onConfirmed, prefilledSymptoms }) =
                     <div className="absolute -right-8 -top-8 w-32 h-32 bg-white/10 rounded-full" />
                     <button onClick={onClose} className="absolute top-4 right-4 text-white/60 hover:text-white z-10"><BsXCircleFill className="w-6 h-6" /></button>
                     <div className="flex items-center gap-3">
-                        <img src={doc.photo} className="w-12 h-12 rounded-2xl object-cover border-2 border-white/40 shadow-xl" alt="" />
+                        <img src={doc.photo} className="w-12 h-12 rounded-2xl object-cover border-2 border-white/40 shadow-xl" alt=""  loading="lazy" />
                         <div><h3 className="font-black text-base leading-tight">{doc.name}</h3><p className="text-violet-200 text-xs font-bold">{doc.specialization} • Base ₹{basePrice}</p></div>
                     </div>
                     <div className="flex items-center gap-2 mt-4">
@@ -909,7 +909,7 @@ const TestimonialsSection = () => {
                         <p className="text-gray-200 text-sm font-medium leading-relaxed mb-4 line-clamp-3">"{t.text}"</p>
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-3">
-                                <img src={t.photo} className="w-9 h-9 rounded-full object-cover border-2 border-violet-400/30" alt="" />
+                                <img src={t.photo} className="w-9 h-9 rounded-full object-cover border-2 border-violet-400/30" alt=""  loading="lazy" />
                                 <div><p className="font-black text-white text-sm">{t.name}</p><p className="text-gray-400 text-xs font-medium">{t.location}</p></div>
                             </div>
                             <div className="text-right"><div className="flex items-center gap-0.5">{[...Array(t.rating)].map((_, i) => <BsStarFill key={i} className="w-3 h-3 text-yellow-400" />)}</div><span className="text-[9px] text-violet-300 font-bold">{t.specialization}</span></div>
@@ -958,7 +958,7 @@ const MyBookingsSection = ({ token }) => {
             {bookings.map(b => (
                 <div key={b._id} className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all overflow-hidden">
                     <div className="flex items-center gap-4 p-4">
-                        <img src={b.doctor?.photo} className="w-12 h-12 rounded-xl object-cover flex-shrink-0" alt="" />
+                        <img src={b.doctor?.photo} className="w-12 h-12 rounded-xl object-cover flex-shrink-0" alt=""  loading="lazy" />
                         <div className="flex-1 min-w-0"><p className="font-black text-gray-900 text-sm truncate">{b.doctor?.name}</p><p className="text-violet-600 font-bold text-xs">{b.doctor?.specialization}</p><p className="text-gray-400 text-xs font-medium">{b.appointmentDate} at {b.appointmentTime}</p></div>
                         <div className="text-right flex-shrink-0"><div className={`inline-flex items-center px-2.5 py-1 rounded-lg text-[9px] font-black uppercase tracking-wider ${statusColor(b.bookingStatus)}`}>{b.bookingStatus}</div><p className="text-xs font-black text-violet-700 mt-1">₹{b.consultationFee}</p></div>
                     </div>

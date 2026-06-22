@@ -45,7 +45,7 @@ const DoctorDetails = () => {
             <div className="md:col-span-2">
               <div className="flex items-center gap-5">
                 <figure className="max-w-[200px] max-h-[200px]">
-                  <img src={photo} alt="" className="w-full" />
+                  <img src={photo} alt="" className="w-full"  loading="lazy" />
                 </figure>
                 <div className="">
                   {/* ================ */}
@@ -59,7 +59,7 @@ const DoctorDetails = () => {
 
                   <div className="flex items-center gap-[6px]">
                     <span className="flex items-center gap-[6px] text-[14px] lg:text-[16px]  leading-5 lg:leading-7 font-semibold text-headingColor">
-                      <img src={starIcon} alt="" /> {averageRating}
+                      <img src={starIcon} alt=""  loading="lazy" /> {averageRating}
                     </span>
                     <span className="text-[14px] lg:text-[16px]  leading-5 lg:leading-7 font-[400] text-headingColor">
                       ({totalRating})

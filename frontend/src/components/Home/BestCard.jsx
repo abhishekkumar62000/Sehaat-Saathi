@@ -51,11 +51,10 @@ const BestCard = () => {
 
               <div className="mt-6 flex flex-col items-center gap-6">
                 <div className={`w-16 h-16 sm:w-20 sm:h-20 rounded-3xl bg-white shadow-xl flex items-center justify-center p-4 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6`}>
-                  <img
-                    src={data.icon}
+                  <img src={data.icon}
                     alt={data.title}
                     className={`w-full h-full object-contain ${data.isChakra ? 'animate-ashok-chakra' : ''}`}
-                  />
+                   loading="lazy" />
                 </div>
                 <div>
                   <h3 className={`text-xl sm:text-2xl font-black ${data.textColor} tracking-tight leading-tight mb-2 uppercase`}>

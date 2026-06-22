@@ -147,11 +147,10 @@ const Profile = ({ user }) => {
         <div className="flex flex-col lg:flex-row items-center gap-8 relative z-10">
           <div className="relative group/avatar">
             <div className="w-32 h-32 rounded-full border-4 border-violet-500 overflow-hidden shadow-2xl transition-transform group-hover/avatar:scale-105 duration-500 bg-white">
-              <img
-                src={formData.photo || userAvatar}
+              <img src={formData.photo || userAvatar}
                 alt="Profile"
                 className={`w-full h-full object-cover ${isPhotoLoading ? 'opacity-30' : 'opacity-100'}`}
-              />
+               loading="lazy" />
               {isPhotoLoading && (
                 <div className="absolute inset-0 flex items-center justify-center bg-black/5">
                   <div className="w-8 h-8 border-4 border-violet-600 border-t-transparent rounded-full animate-spin"></div>

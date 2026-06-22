@@ -82,11 +82,10 @@ const InsurancePartners = () => {
                 className="block group/item"
               >
                 <div className="bg-white/40 backdrop-blur-md border border-white rounded-3xl p-8 h-[120px] w-[280px] flex items-center justify-center transition-all duration-500 group-hover/item:bg-white group-hover/item:shadow-xl group-hover/item:-translate-y-2">
-                  <img
-                    src={data.logo}
+                  <img src={data.logo}
                     alt={data.name}
                     className="max-h-full max-w-full object-contain filter grayscale group-hover/item:grayscale-0 transition-all duration-500"
-                  />
+                   loading="lazy" />
                 </div>
                 <p className="mt-3 text-center text-xs font-bold text-slate-400 uppercase tracking-widest opacity-0 group-hover/item:opacity-100 transition-opacity">
                   {data.name}

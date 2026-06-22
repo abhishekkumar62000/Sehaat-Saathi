@@ -94,7 +94,7 @@ const Header = ({ isCompact = false }) => {
         <div className="flex items-center">
           <NavLink to="/home" className={`flex items-center gap-2 group/logo relative transition-all ${isCompact ? 'scale-[0.8] origin-left' : ''}`}>
             <div className="relative">
-              <img src={logo} alt="Sehaat Saathi Logo" className={`${isCompact ? 'w-[30px] lg:w-[35px]' : 'w-[45px] lg:w-[55px]'} drop-shadow-md transition-transform duration-500 group-hover/logo:rotate-[360deg]`} />
+              <img src={logo} alt="Sehaat Saathi Logo" className={`${isCompact ? 'w-[30px] lg:w-[35px]' : 'w-[45px] lg:w-[55px]'} drop-shadow-md transition-transform duration-500 group-hover/logo:rotate-[360deg]`}  loading="lazy" />
               <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white animate-pulse"></div>
             </div>
             <div className="flex flex-col justify-center">
@@ -148,11 +148,10 @@ const Header = ({ isCompact = false }) => {
               >
                 <span className="text-slate-800 font-black text-sm mr-2 hidden lg:block">{user.name}</span>
                 <figure className="lg:w-[48px] lg:h-[48px] w-[36px] h-[36px] rounded-full cursor-pointer flex items-center border-2 border-green-100 shadow-sm overflow-hidden">
-                  <img
-                    src={user?.photo ? user.photo : userAvatar}
+                  <img src={user?.photo ? user.photo : userAvatar}
                     alt="user"
                     className="w-full h-full object-cover"
-                  />
+                   loading="lazy" />
                 </figure>
               </Link>
 
@@ -209,7 +208,7 @@ const Header = ({ isCompact = false }) => {
           </button>
 
           <div className="mb-10 mt-6 flex items-center gap-4 bg-white/40 p-3 rounded-2xl border border-white/60">
-            <img src={logo} alt="Logo" className="w-12 h-12 object-contain drop-shadow-md" />
+            <img src={logo} alt="Logo" className="w-12 h-12 object-contain drop-shadow-md"  loading="lazy" />
             <div className="flex flex-col">
               <span className="text-xl font-black leading-none drop-shadow-sm" style={{ color: "#FF9933" }}>Sehaat</span>
               <span className="text-xl font-black leading-none drop-shadow-sm" style={{ color: "#138808" }}>Saathi</span>

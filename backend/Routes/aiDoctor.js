@@ -441,4 +441,172 @@ function generateFallbackResponse(message, userContext, medicineContext) {
     return `I want to understand your concern better, ${fName}. \n\nSince I couldn't map this to a specific condition, could you tell me: \n1. How long has this been happening? \n2. Are you taking any medications? \n\nTip: ${randomTip}`;
 }
 
+// --- Symptom Checker Endpoint (Groq LLM + Smart Clinical Fallback) ---
+router.post("/symptom-check", async (req, res) => {
+    const { bodyPart, symptoms, intensityMap, gender } = req.body;
+
+    try {
+        const groqApiKey = process.env.GROQ_API_KEY;
+        if (!groqApiKey) throw new Error("Missing GROQ_API_KEY");
+
+        const groqClient = new OpenAI({
+            apiKey: groqApiKey,
+            baseURL: "https://api.groq.com/openai/v1",
+        });
+
+        const prompt = `
+            You are a world-class AI Medical Diagnostician.
+            Analyze the following patient profile and symptoms to provide a detailed assessment:
+            - Affected Body Part: ${bodyPart}
+            - Gender: ${gender}
+            - Symptoms Reported: ${symptoms.join(", ")}
+            - Intensity Ratings (1-10 Scale): ${JSON.stringify(intensityMap)}
+
+            Provide a JSON response with exactly the following structure (no markdown, raw JSON only):
+            {
+                "results": [
+                    { "name": "Condition Name 1", "prob": 80, "color": "bg-red-500", "advice": "Detailed clinical advice 1..." },
+                    { "name": "Condition Name 2", "prob": 15, "color": "bg-orange-500", "advice": "Detailed clinical advice 2..." },
+                    { "name": "Condition Name 3", "prob": 5, "color": "bg-yellow-500", "advice": "Detailed clinical advice 3..." }
+                ],
+                "summary": "A cohesive clinical summary explanation of the symptoms and potential causes..."
+            }
+        `;
+
+        const chatCompletion = await groqClient.chat.completions.create({
+            messages: [{ role: "user", content: prompt }],
+            model: "llama3-8b-8192",
+            temperature: 0.2,
+            response_format: { type: "json_object" }
+        });
+
+        const resultData = JSON.parse(chatCompletion.choices[0].message.content);
+        return res.status(200).json({
+            success: true,
+            isFallback: false,
+            results: resultData.results,
+            summary: resultData.summary
+        });
+
+    } catch (err) {
+        console.error("Groq Symptom Check Error:", err.message);
+        // Smart Clinical Fallback - generates real symptom-specific diagnoses
+        const clinicalFallback = generateClinicalFallback(bodyPart, symptoms, intensityMap, gender);
+        return res.status(200).json({
+            success: true,
+            isFallback: true,
+            results: clinicalFallback.results,
+            summary: clinicalFallback.summary
+        });
+    }
+});
+
+// ============================================================
+// Smart Clinical Fallback Engine
+// Generates medically-relevant diagnoses based on symptoms
+// when the Groq LLM API is unavailable.
+// ============================================================
+function generateClinicalFallback(bodyPart, symptoms, intensityMap, gender) {
+    const s = (symptoms || []).map(x => x.toLowerCase());
+    const intensityVals = intensityMap ? Object.values(intensityMap) : [5];
+    const maxIntensity = intensityVals.length > 0 ? Math.max(...intensityVals) : 5;
+    const isSevere = maxIntensity > 7;
+
+    const conditionMap = [
+        {
+            keywords: ["headache", "dizziness", "blurred vision", "migraine"],
+            bodyParts: ["Head"],
+            name: "Tension / Migraine Headache",
+            prob: 72,
+            color: "bg-purple-500",
+            advice: "Rest in a dark, quiet room. Apply a cold compress to your forehead. Paracetamol 500mg can help. If pain is severe (>8/10) or accompanied by stiff neck or vomiting, visit an ER immediately."
+        },
+        {
+            keywords: ["sore throat", "earache", "runny nose", "congestion"],
+            bodyParts: ["Head"],
+            name: "Upper Respiratory Infection (URI)",
+            prob: 68,
+            color: "bg-blue-500",
+            advice: "Gargle warm salt water, stay hydrated, and rest. Steam inhalation can ease congestion. If fever persists beyond 3 days or you have difficulty swallowing, see a doctor."
+        },
+        {
+            keywords: ["chest pain", "palpitations", "tightness", "shortness of breath"],
+            bodyParts: ["Chest"],
+            name: "Cardiac / Pulmonary Alert",
+            prob: 85,
+            color: "bg-red-500",
+            advice: "URGENT: Chest pain must not be ignored. If radiating to left arm/jaw or accompanied by sweating, call 102 immediately. If mild, rest, avoid exertion, and visit a cardiologist today."
+        },
+        {
+            keywords: ["cough", "phlegm", "mucus", "wheezing"],
+            bodyParts: ["Chest"],
+            name: "Bronchitis / Respiratory Infection",
+            prob: 65,
+            color: "bg-orange-500",
+            advice: "Stay well hydrated. Warm steam helps loosen mucus. Avoid cold beverages. If cough persists > 2 weeks or blood appears in sputum, see a pulmonologist."
+        },
+        {
+            keywords: ["stomach ache", "nausea", "bloating", "cramps", "acid reflux"],
+            bodyParts: ["Abdomen"],
+            name: "Gastritis / Dyspepsia",
+            prob: 70,
+            color: "bg-amber-500",
+            advice: "Eat small, light meals. Avoid spicy, oily foods. Antacids like Gelusil or Pantoprazole may help. If pain is severe or accompanied by black stool, visit a gastroenterologist urgently."
+        },
+        {
+            keywords: ["joint pain", "muscle cramp", "numbness", "stiffness", "swelling"],
+            bodyParts: ["Limbs"],
+            name: "Musculoskeletal Strain / Arthritis",
+            prob: 65,
+            color: "bg-teal-500",
+            advice: "Apply RICE protocol: Rest, Ice (15 min), Compression bandage, Elevate. Take Ibuprofen 400mg if no contraindications. Persistent swelling > 48h warrants an orthopedic review."
+        },
+        {
+            keywords: ["fever", "chills", "body ache", "fatigue", "loss of appetite"],
+            bodyParts: ["General"],
+            name: "Viral Fever / Systemic Infection",
+            prob: 74,
+            color: "bg-rose-500",
+            advice: "Rest and stay hydrated (2-3L water/day). Paracetamol for fever (>38.5C). Monitor for rash or persistent fever > 3 days — may indicate Dengue or Typhoid requiring blood tests."
+        }
+    ];
+
+    const scored = conditionMap
+        .filter(c => !c.bodyParts || c.bodyParts.includes(bodyPart) || bodyPart === "General")
+        .map(c => {
+            const matches = c.keywords.filter(k => s.some(sym => sym.includes(k) || k.includes(sym)));
+            return { ...c, score: matches.length, prob: Math.min(95, c.prob + matches.length * 5) };
+        })
+        .filter(c => c.score > 0)
+        .sort((a, b) => b.score - a.score);
+
+    const defaults = {
+        Head:    { name: "Tension Headache",          prob: 60, color: "bg-purple-500", advice: "Rest, hydrate well, apply cold compress. Avoid screen time. Visit a neurologist if headaches recur frequently." },
+        Chest:   { name: "Musculoskeletal Chest Strain", prob: 55, color: "bg-orange-500", advice: "Deep breathing exercises, rest. If sharp stabbing pain worsens on movement, see a physician." },
+        Abdomen: { name: "Indigestion / Gastritis",   prob: 65, color: "bg-amber-500",  advice: "Light diet, avoid spicy food, take antacids. Consult a gastroenterologist if symptoms persist." },
+        Limbs:   { name: "Muscle Fatigue / Strain",   prob: 60, color: "bg-teal-500",   advice: "Rest the affected limb, apply warm compress after 24h. Gentle stretching can help recovery." },
+        General: { name: "General Viral Illness",     prob: 65, color: "bg-blue-500",   advice: "Rest, stay hydrated, monitor temperature. See a physician if symptoms worsen after 48 hours." }
+    };
+
+    const topConditions = scored.length >= 2 ? scored.slice(0, 3) : [
+        ...(scored.length > 0 ? scored : [{ ...(defaults[bodyPart] || defaults.General), score: 1 }]),
+        { name: "Dehydration / Electrolyte Imbalance", prob: 25, color: "bg-cyan-500",    advice: "Drink ORS or coconut water. Ensure 2-3L fluid intake daily." },
+        { name: "Seasonal Allergy / Inflammation",     prob: 15, color: "bg-emerald-500", advice: "Antihistamines (Cetirizine 10mg) can help. Avoid known allergens and dust." }
+    ].slice(0, 3);
+
+    const total = topConditions.reduce((sum, c) => sum + c.prob, 0);
+    const normalizedResults = topConditions.map(c => ({
+        name:   c.name,
+        prob:   Math.round((c.prob / total) * 100),
+        color:  c.color,
+        advice: c.advice
+    }));
+
+    const severityNote = isSevere ? " Given the high intensity ratings, please consider consulting a doctor today." : "";
+    const symptomList  = (symptoms || []).join(", ");
+    const summary      = `Based on your reported ${symptomList} in the ${bodyPart} region, our clinical engine has identified ${normalizedResults[0].name} as the most likely concern (${normalizedResults[0].prob}% probability).${severityNote} This analysis is based on symptom pattern matching and should be confirmed by a licensed physician.`;
+
+    return { results: normalizedResults, summary };
+}
+
 export default router;

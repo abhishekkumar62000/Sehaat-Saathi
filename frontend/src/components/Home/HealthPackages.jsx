@@ -35,11 +35,10 @@ const HealthPackages = () => {
 
             {/* Image Container with Zoom Effect */}
             <div className="relative overflow-hidden h-[240px]">
-              <img
-                src={pkg.image}
+              <img src={pkg.image}
                 alt={pkg.name}
                 className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-              />
+               loading="lazy" />
               {/* Subtle Gradient Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-white/20 to-transparent"></div>
             </div>

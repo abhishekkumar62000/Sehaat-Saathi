@@ -134,11 +134,10 @@ const Dashboard = () => {
                   >
                     <div className="lg:flex items-center gap-4 pt-3">
                       <figure className="lg:max-w-[200px] max-w-[150px] lg:max-h-[200px] max-h-[150px] ">
-                        <img
-                          src={data?.photo ? data?.photo : doctorAvatar}
+                        <img src={data?.photo ? data?.photo : doctorAvatar}
                           alt=""
                           className="w-full"
-                        />
+                         loading="lazy" />
                       </figure>
 
                       <div>
@@ -161,7 +160,7 @@ const Dashboard = () => {
                             className="flex items-center gap-[6px] text-headingColor font-semibold leading-5 text-[14px] lg:leading-6 lg:text-[16px] 
                           "
                           >
-                            <img src={starIcon} alt="" /> {data.averageRating}
+                            <img src={starIcon} alt=""  loading="lazy" /> {data.averageRating}
                           </span>
                           <span
                             className="text-textColor font-semibold leading-5 text-[14px] lg:leading-6 lg:text-[16px] 

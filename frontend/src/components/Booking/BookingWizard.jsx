@@ -102,7 +102,7 @@ const BookingWizard = ({ doc, onClose, onSuccess }) => {
 
                 {/* Left panel - Info */}
                 <div className="w-full md:w-1/3 border-b md:border-b-0 md:border-r border-slate-100 pr-8">
-                    <img src={doc.photo} alt={doc.name} className="w-24 h-24 rounded-2xl object-cover mb-4" />
+                    <img src={doc.photo} alt={doc.name} className="w-24 h-24 rounded-2xl object-cover mb-4"  loading="lazy" />
                     <h3 className="text-xl font-black text-slate-900 uppercase">{doc.name}</h3>
                     <p className="text-xs font-bold text-slate-500 uppercase">{doc.specialty}</p>
 

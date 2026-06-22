@@ -59,7 +59,7 @@ const WorkflowPanel = ({ appointments, doctorId }) => {
             >
               <div className="flex justify-between items-start">
                 <div className="flex items-center gap-3">
-                  <img src={item.user?.photo} alt="" className="w-10 h-10 rounded-full border border-white shadow-sm" />
+                  <img src={item.user?.photo} alt="" className="w-10 h-10 rounded-full border border-white shadow-sm"  loading="lazy" />
                   <div>
                     <h4 className="font-bold text-headingColor">{item.user?.name}</h4>
                     <span className={`text-[10px] uppercase font-black px-2 py-0.5 rounded-full ${

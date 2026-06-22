@@ -11,11 +11,10 @@ const Awards = () => {
             key={award.id}
             className="flex justify-between items-center border rounded px-3 mx-3 shadow-md mb-4 lg:mb-0"
           >
-            <img
-              src={award.photo}
+            <img src={award.photo}
               alt="Award"
               className="lg:max-w-32 max-w-24"
-            />
+             loading="lazy" />
             <div>
               <h2 className="lg:text-[22px] text-[16px] font-bold leading-6 mb-2 text-yellow-600">
                 {award.name}

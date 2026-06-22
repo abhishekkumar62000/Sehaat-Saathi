@@ -63,16 +63,22 @@ code {
     }
 }
 
+
 .animate-ecg {
     animation: ecg-flow 3s linear infinite;
+    will-change: stroke-dashoffset;
 }
 
 .animate-float-dna {
     animation: float-dna 6s ease-in-out infinite;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
 }
 
 .animate-float-particle {
     animation: float-particle 8s ease-in-out infinite;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
 }
 
 /* Pulse Ring Animation */
@@ -90,6 +96,8 @@ code {
 
 .animate-pulse-ring {
     animation: pulse-ring 3s ease-out infinite;
+    will-change: transform, opacity;
+    transform: translate3d(0, 0, 0);
 }
 
 /* Medical Cross Fade */
@@ -107,6 +115,7 @@ code {
 
 .animate-medical-cross {
     animation: medical-cross-fade 4s ease-in-out infinite;
+    will-change: opacity;
 }
 
 /* Heartbeat Pulse */
@@ -142,6 +151,8 @@ code {
 
 .animate-heartbeat {
     animation: heartbeat-pulse 2s ease-in-out infinite;
+    will-change: transform, opacity;
+    transform: translate3d(0, 0, 0);
 }
 
 /* Data Stream Animation */
@@ -167,6 +178,8 @@ code {
 
 .animate-data-stream {
     animation: data-stream 10s linear infinite;
+    will-change: transform, opacity;
+    transform: translate3d(0, 0, 0);
 }
 
 /* === ADVANCED PREMIUM ANIMATIONS === */

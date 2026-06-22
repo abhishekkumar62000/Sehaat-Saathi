@@ -31,11 +31,10 @@ const ArticlesPage = () => {
                         >
                             {/* Image Container */}
                             <div className="relative h-64 overflow-hidden">
-                                <img
-                                    src={article.img}
+                                <img src={article.img}
                                     alt={article.title}
                                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                                />
+                                 loading="lazy" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                                 <div className="absolute bottom-4 left-4 text-white text-xs font-bold px-3 py-1 bg-teal-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 translate-y-4 group-hover:translate-y-0">
                                     {article.post_date}

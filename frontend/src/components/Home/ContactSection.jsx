@@ -50,11 +50,10 @@ const ContactSection = () => {
             <div className="lg:w-5/12 space-y-10 flex flex-col items-center lg:items-start text-center lg:text-left">
               <div className="relative group w-full max-w-[400px] lg:max-w-none">
                 <div className="absolute inset-0 bg-gradient-to-br from-orange-100 to-green-100 rounded-[2.5rem] blur-3xl opacity-30 group-hover:opacity-60 transition-opacity"></div>
-                <img
-                  src={contactImg}
+                <img src={contactImg}
                   alt="Contact Illustration"
                   className="relative rounded-[2.5rem] w-full shadow-2xl transform group-hover:scale-105 transition-transform duration-700"
-                />
+                 loading="lazy" />
               </div>
 
               <div className="w-full space-y-4">

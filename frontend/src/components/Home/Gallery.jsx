@@ -37,11 +37,10 @@ const Gallery = () => {
               index % 5 === 0 ? "row-span-2" : ""
             }`}
           >
-            <img
-              src={img.src}
+            <img src={img.src}
               alt=""
               className="w-full h-full object-cover transition-transform duration-300 transform hover:scale-110"
-            />
+             loading="lazy" />
             {/* <h1 className="text-3xl">{img.id}</h1> */}
           </div>
         ))}

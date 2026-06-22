@@ -223,11 +223,10 @@ const HeroSection = () => {
             <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-transparent via-emerald-400 to-transparent z-40 animate-scan shadow-[0_0_20px_rgba(52,211,153,0.5)]"></div>
 
             <div className="relative overflow-hidden rounded-[2rem] lg:rounded-[3.8rem] bg-slate-900/10 shadow-inner group-hover:shadow-[0_0_50px_rgba(0,0,0,0.1)] transition-all duration-500">
-              <img
-                src={heroImg01}
+              <img src={heroImg01}
                 alt="Sehaat Saathi Doctors"
                 className="w-full max-w-[280px] sm:max-w-[400px] lg:max-w-[650px] h-auto object-cover transform transition-all duration-1000 lg:group-hover:scale-110"
-              />
+               loading="lazy" />
 
               {/* Glass Overlay with Mesh Gradient */}
               <div className="absolute inset-0 bg-gradient-to-tr from-emerald-500/10 via-transparent to-blue-500/10 mix-blend-overlay group-hover:opacity-0 transition-opacity duration-500"></div>

@@ -39,11 +39,10 @@ const Articles = () => {
             className="group bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2"
           >
             <div className="relative h-56 overflow-hidden">
-              <img
-                src={article.img}
+              <img src={article.img}
                 alt={article.title}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              />
+               loading="lazy" />
               <div className="absolute top-4 left-4">
                 <span className="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-[10px] font-bold text-slate-900 uppercase tracking-widest">
                   {article.post_date}

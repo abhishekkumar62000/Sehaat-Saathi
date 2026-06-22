@@ -38,7 +38,7 @@ const BookingPass = ({ passDetails, onClose }) => {
             passRef.current.style.maxHeight = originalMaxHeight;
             passRef.current.style.overflowY = originalOverflowY;
 
-            const windowContent = '<!DOCTYPE html><html><head><title>Print Pass</title></head><body style="margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh;"><img src="' + dataUrl + '" style="max-width: 100%; max-height: 100vh;"></body></html>';
+            const windowContent = '<!DOCTYPE html><html><head><title>Print Pass</title></head><body style="margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh;"><img src="' + dataUrl + '" style="max-width: 100%; max-height: 100vh;" loading="lazy" /></body></html>';
             const printWin = window.open('', '', 'width=800,height=900');
             if (printWin) {
                 printWin.document.open();

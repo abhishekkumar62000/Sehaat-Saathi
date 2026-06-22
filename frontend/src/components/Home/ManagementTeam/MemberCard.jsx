@@ -4,7 +4,7 @@ const MemberCard = ({ member }) => {
 
   return (
     <div className="w-[320px] h-[320px] lg:w-[400px] lg:h-[375px] bg-accent rounded-md text-white shadow hover:shadow-xl hover:shadow-accent duration-75">
-      <img src={photo} alt={name} className="" />
+      <img src={photo} alt={name} className=""  loading="lazy" />
       <div className="py-2 text-center">
         <h2 className="text-[18px] lg:text-[24px] font-bold text-gray-800">
           {name}

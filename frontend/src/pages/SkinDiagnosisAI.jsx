@@ -156,7 +156,7 @@ const SkinDiagnosisAI = () => {
                                     </div>
                                 ) : (
                                     <div className="relative w-full h-[500px] rounded-[3rem] overflow-hidden border-2 border-white/10 group/scanner">
-                                        <img src={image} className="w-full h-full object-cover" alt="Skin Scan" />
+                                        <img src={image} className="w-full h-full object-cover" alt="Skin Scan"  loading="lazy" />
 
                                         {/* Laser Sweep Animation */}
                                         {isScanning && (

@@ -18,7 +18,7 @@ const OfflineDoctorCard = ({ doc, liveQueueData, crowdDelay, onBookNow, onViewDe
             <div className="flex items-start gap-6 mb-8 mt-4 relative z-10">
                 <div className="relative flex-shrink-0">
                     <div className="absolute inset-0 bg-[#FF9933] rounded-[2rem] blur-xl opacity-0 group-hover:opacity-20 transition-opacity duration-700"></div>
-                    <img src={doc.photo} alt={doc.name} className="w-24 h-24 rounded-[2rem] object-cover grayscale transition-all duration-700 group-hover:grayscale-0 border-2 border-white shadow-lg" />
+                    <img src={doc.photo} alt={doc.name} className="w-24 h-24 rounded-[2rem] object-cover grayscale transition-all duration-700 group-hover:grayscale-0 border-2 border-white shadow-lg"  loading="lazy" />
                     <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-slate-900 text-white rounded-full px-3 py-1 text-[9px] font-black flex items-center gap-1 shadow-lg z-20">
                         <BsStarFill className="text-yellow-400 text-[10px]" /> {doc.rating}
                     </div>

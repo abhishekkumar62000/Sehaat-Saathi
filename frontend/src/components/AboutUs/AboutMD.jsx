@@ -14,11 +14,10 @@ const AboutMD = () => {
         <div className="text-center w-full lg:w-5/12 mb-12 lg:mb-0">
           <div className="relative group inline-block">
             <div className="absolute -inset-4 bg-teal-100 rounded-full blur-2xl opacity-40 group-hover:opacity-60 transition-opacity"></div>
-            <img
-              className="relative mx-auto rounded-3xl shadow-2xl w-56 md:w-64 lg:w-72 border-8 border-white object-cover aspect-[4/5] transform group-hover:scale-105 transition-transform duration-700"
+            <img className="relative mx-auto rounded-3xl shadow-2xl w-56 md:w-64 lg:w-72 border-8 border-white object-cover aspect-[4/5] transform group-hover:scale-105 transition-transform duration-700"
               src={mdImg}
               alt="Rahul & Supriya Yadav - MD"
-            />
+             loading="lazy" />
             <div className="absolute -bottom-4 -right-4 bg-white p-4 rounded-2xl shadow-xl border border-teal-50 flex items-center gap-3">
               <div className="w-10 h-10 bg-teal-500 rounded-lg flex items-center justify-center text-white">
                 <FaLaptopCode size={20} />

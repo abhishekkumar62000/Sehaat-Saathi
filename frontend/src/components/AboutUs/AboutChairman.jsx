@@ -13,11 +13,10 @@ const AboutChairman = () => {
         <div className="text-center w-full lg:w-5/12 mb-12 lg:mb-0">
           <div className="relative group inline-block">
             <div className="absolute -inset-4 bg-teal-100 rounded-full blur-2xl opacity-40 group-hover:opacity-60 transition-opacity"></div>
-            <img
-              className="relative mx-auto rounded-full shadow-2xl w-56 md:w-64 lg:w-72 border-8 border-white object-cover aspect-square transform group-hover:scale-105 transition-transform duration-700"
+            <img className="relative mx-auto rounded-full shadow-2xl w-56 md:w-64 lg:w-72 border-8 border-white object-cover aspect-square transform group-hover:scale-105 transition-transform duration-700"
               src={founderImg}
               alt="Abhishek Kumar - Founder"
-            />
+             loading="lazy" />
             <div className="absolute bottom-4 right-4 w-12 h-12 bg-[#2eb8a6] rounded-full flex items-center justify-center text-white shadow-lg border-4 border-white">
               <span className="text-xl font-black">AK</span>
             </div>

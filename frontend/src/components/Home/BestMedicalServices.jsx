@@ -72,11 +72,10 @@ const BestMedicalServices = () => {
               {/* Icon Container with Floating Animation */}
               <div className="mb-8 relative transition-transform duration-700 group-hover:scale-110">
                 <div className={`absolute inset-0 bg-gradient-to-br ${item.color} rounded-full blur-2xl opacity-10 group-hover:opacity-30 transition-opacity`}></div>
-                <img
-                  src={item.icon}
+                <img src={item.icon}
                   alt={item.title}
                   className="w-24 h-24 object-contain relative z-10 animate-float"
-                />
+                 loading="lazy" />
               </div>
 
               {/* Title & Description */}

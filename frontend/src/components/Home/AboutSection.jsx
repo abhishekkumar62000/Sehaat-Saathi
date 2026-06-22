@@ -68,11 +68,10 @@ const AboutSection = () => {
                 <div className="relative group w-full max-w-lg mx-auto lg:max-w-none">
                     <div className="absolute -inset-4 sm:-inset-6 bg-gradient-to-tr from-[#FF9933] via-white to-[#138808] rounded-[2rem] sm:rounded-[50px] blur-2xl sm:blur-3xl opacity-20 group-hover:opacity-40 transition-opacity animate-pulse"></div>
                     <div className="relative rounded-[2rem] sm:rounded-[50px] overflow-hidden shadow-2xl border-[6px] sm:border-[12px] border-white/80 backdrop-blur-md">
-                        <img
-                            src={aboutImage}
+                        <img src={aboutImage}
                             alt="Sehaat Saathi Medical Team"
                             className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-1000"
-                        />
+                         loading="lazy" />
                     </div>
                 </div>
             </div>

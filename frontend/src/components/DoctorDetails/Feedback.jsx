@@ -18,7 +18,7 @@ const Feedback = ({ reviews, totalRating }) => {
           <div key={index} className="flex justify-between gap-10 mb-[30px]">
             <div className="flex gap-3">
               <figure className="w-10 h-10 rounded-full">
-                <img src={review?.user?.photo} alt="" className="w-full" />
+                <img src={review?.user?.photo} alt="" className="w-full"  loading="lazy" />
               </figure>
               <div className="">
                 <h5 className="text-[16px] leading-6 text-primaryColor font-bold">

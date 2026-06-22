@@ -171,7 +171,7 @@ const ExpressTrack = () => {
                         <div className="bg-white rounded-[2rem] p-6 shadow-xl border border-slate-100">
                             <div className="flex items-center gap-4 mb-8">
                                 <div className="relative">
-                                    <img src={userAvatar} className="w-16 h-16 rounded-2xl bg-slate-100 object-cover border-2 border-green-500 p-1" alt="Technician" />
+                                    <img src={userAvatar} className="w-16 h-16 rounded-2xl bg-slate-100 object-cover border-2 border-green-500 p-1" alt="Technician"  loading="lazy" />
                                     <div className="absolute -bottom-1 -right-1 bg-green-500 text-white p-1 rounded-lg border-2 border-white">
                                         <BsCheckCircleFill className="text-[10px]" />
                                     </div>
@@ -228,7 +228,7 @@ const ExpressTrack = () => {
                     <div className="bg-white w-full max-w-md rounded-t-[2.5rem] sm:rounded-[2.5rem] shadow-2xl overflow-hidden animate-slide-up">
                         <div className="bg-green-600 p-6 text-white flex justify-between items-center">
                             <div className="flex items-center gap-3">
-                                <img src={userAvatar} className="w-10 h-10 rounded-full border-2 border-white/20" alt="" />
+                                <img src={userAvatar} className="w-10 h-10 rounded-full border-2 border-white/20" alt=""  loading="lazy" />
                                 <div>
                                     <h3 className="font-black text-lg">Amit (Technician)</h3>
                                     <p className="text-[10px] font-bold text-green-100 uppercase tracking-widest">Online • SS Express</p>

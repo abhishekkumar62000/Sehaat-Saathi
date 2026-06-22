@@ -14,7 +14,7 @@ const DoctorDetailsModal = ({ doc, onClose }) => {
 
                 <div className="flex flex-col md:flex-row gap-8 items-start">
                     <div className="w-full md:w-1/3">
-                        <img src={doc.photo} alt={doc.name} className="w-full h-auto rounded-[2rem] object-cover shadow-lg border-4 border-slate-100" />
+                        <img src={doc.photo} alt={doc.name} className="w-full h-auto rounded-[2rem] object-cover shadow-lg border-4 border-slate-100"  loading="lazy" />
                         <div className="mt-6 space-y-4">
                             <div className="p-4 bg-orange-50 rounded-2xl flex items-center gap-4 border border-orange-100">
                                 <BsStarFill className="text-orange-500 text-2xl" />

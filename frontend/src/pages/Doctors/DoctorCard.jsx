@@ -22,7 +22,7 @@ const DoctorCard = ({ doctor }) => {
       {/* RATING BADGE */}
       <div className="absolute top-4 right-4 z-10">
         <div className="flex items-center gap-1 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm border border-slate-100 group-hover:bg-[#FF8C00] group-hover:text-white transition-colors duration-300">
-          <img src={starIcon} alt="" className="w-3.5 h-3.5" />
+          <img src={starIcon} alt="" className="w-3.5 h-3.5"  loading="lazy" />
           <span className="text-xs font-black">{avgRating}</span>
           <span className="text-[10px] font-medium opacity-70">({totalRating})</span>
         </div>
@@ -35,11 +35,10 @@ const DoctorCard = ({ doctor }) => {
           <div className="absolute inset-0 bg-[#009E60]/10 rounded-full blur-2xl transform scale-0 group-hover:scale-150 transition-transform duration-700"></div>
 
           <div className="w-32 h-32 lg:w-40 lg:h-40 rounded-full p-1 bg-gradient-to-tr from-[#009E60] to-[#FF8C00] relative z-10">
-            <img
-              src={photo}
+            <img src={photo}
               alt={name}
               className="w-full h-full object-cover rounded-full border-4 border-white shadow-md transition-transform duration-500 group-hover:scale-105"
-            />
+             loading="lazy" />
             <div className="absolute bottom-1 right-1 bg-white p-1 rounded-full text-[#009E60] text-sm shadow-md">
               <BsCheckCircleFill />
             </div>

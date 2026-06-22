@@ -83,11 +83,10 @@ const HealthCalculators = () => {
                 className="relative group hidden lg:block"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-orange-100 to-green-100 rounded-[3rem] blur-3xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
-                <img
-                  src={calculatorImg}
+                <img src={calculatorImg}
                   alt="Health Hub"
                   className="relative rounded-[3rem] w-full shadow-2xl transition-transform duration-700"
-                />
+                 loading="lazy" />
               </motion.div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">

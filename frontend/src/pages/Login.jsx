@@ -74,11 +74,10 @@ const Login = () => {
         <div className="flex justify-center mb-6">
           <div className="relative group inline-block">
             <div className="absolute -inset-4 bg-violet-200 rounded-full blur-2xl opacity-40 group-hover:opacity-60 transition-opacity"></div>
-            <img
-              src={logo}
+            <img src={logo}
               alt="Sehaat Saathi Logo"
               className="relative w-[140px] floating-icon"
-            />
+             loading="lazy" />
           </div>
         </div>
 

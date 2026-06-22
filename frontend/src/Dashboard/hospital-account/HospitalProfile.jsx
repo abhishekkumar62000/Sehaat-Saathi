@@ -164,7 +164,7 @@ const HospitalProfile = ({ hospitalData }) => {
 
             <div className="mb-10 flex items-center gap-6">
                 <figure className="w-16 h-16 rounded-2xl bg-slate-100 flex items-center justify-center p-2 border border-slate-200 overflow-hidden">
-                    <img src={formData.photo} alt="" className="w-full h-full object-contain" />
+                    <img src={formData.photo} alt="" className="w-full h-full object-contain"  loading="lazy" />
                 </figure>
                 <div className="relative">
                     <input
