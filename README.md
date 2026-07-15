@@ -23,7 +23,7 @@ The **Sehaat Saathi** website is a comprehensive platform designed to enhance pa
 - **Online Payment**: Pay securely via Stripe for all services.
 - **Patient Reviews**: View feedback from other patients on doctor profiles.
 - **Health Packages**: Explore and purchase health packages based on diagnostic needs.
-- **Educational Resources**: Access educational videos and health articles.
+- **Educational Resources**: Access educational videos and health articles
 - **Responsive Design**: Fully optimized for mobile with a floating dashboard drawer.
 
 ### Frontend Features
