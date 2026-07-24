@@ -73,76 +73,26 @@
     }
 }
 
+/* Optimized Performance Animations */
 @keyframes float {
-
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-20px);
-    }
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(0, -10px, 0); }
 }
 
 @keyframes float-rotate {
-
-    0%,
-    100% {
-        transform: translateY(0) rotate(0deg);
-    }
-
-    33% {
-        transform: translateY(-20px) rotate(4deg);
-    }
-
-    66% {
-        transform: translateY(-10px) rotate(-4deg);
-    }
+    0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+    50% { transform: translate3d(0, -10px, 0) rotate(2deg); }
 }
 
 @keyframes scan {
-    0% {
-        top: 0%;
-        opacity: 0;
-    }
-
-    50% {
-        opacity: 1;
-    }
-
-    100% {
-        top: 100%;
-        opacity: 0;
-    }
-}
-
-@keyframes orbital {
-
-    0%,
-    100% {
-        transform: translate(0, 0) rotate(0deg);
-    }
-
-    33% {
-        transform: translate(20px, -20px) rotate(8deg);
-    }
-
-    66% {
-        transform: translate(-15px, 15px) rotate(-8deg);
-    }
+    0% { top: 0%; opacity: 0; }
+    50% { opacity: 0.8; }
+    100% { top: 100%; opacity: 0; }
 }
 
 @keyframes float-complex {
-
-    0%,
-    100% {
-        transform: translateY(0) scale(1) rotate(0);
-    }
-
-    50% {
-        transform: translateY(-30px) scale(1.05) rotate(1deg);
-    }
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(0, -15px, 0); }
 }
 
 @keyframes float-x {

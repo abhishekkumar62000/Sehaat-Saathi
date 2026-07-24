@@ -204,20 +204,6 @@ const Smarthub = () => {
 
                 {/* Feature Sections - Grid layout directly displayed */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 animate-slide-up">
-                    <Link to="/express-track">
-                        <FeatureRoadmapCard
-                            icon={<BsTruck />}
-                            title={
-                                <span>
-                                    <span style={{ color: "#FF9933" }}>Sehaat</span>{" "}
-                                    <span style={{ color: "#138808" }}>Saathi</span> Express
-                                </span>
-                            }
-                            desc="Real-time live tracking of home sample collection technicians. See them moving on the map!"
-                            color="orange"
-                            status="Live Demo"
-                        />
-                    </Link>
                     <Link to="/doctor-ai">
                         <FeatureRoadmapCard
                             icon={<BsChatDots />}
@@ -230,25 +216,6 @@ const Smarthub = () => {
                             desc="Instant one-on-one health chat like Gemini. Ask symptoms, get diet advice and medical guidance."
                             color="blue"
                             status="Live"
-                        />
-                    </Link>
-                    <Link to="/tele-consult">
-                        <FeatureRoadmapCard
-                            icon={<BsPhone className="animate-bounce-slow" />}
-                            title={
-                                <span>
-                                    <span style={{ color: "#FF9933" }}>Sehaat</span>{" "}
-                                    <span style={{ color: "#138808" }}>Saathi</span> Instant Video Consultations Hub
-                                </span>
-                            }
-                            desc="Talk to top specialist doctors in seconds via private video calls. Includes instant prescriptions and health monitoring."
-                            color="green"
-                            status="Live & Premium"
-                            outstanding={true}
-                            example={{
-                                patient: "I need an urgent cardiologist consult for chest tightness.",
-                                ai: "Analyzing vitals... SpO2 98%, Pulse-Rate 82. Connecting you to Dr. Verma (Senior Cardiologist) in 15 seconds."
-                            }}
                         />
                     </Link>
                     <Link to="/offline-consultation">
@@ -267,6 +234,25 @@ const Smarthub = () => {
                             example={{
                                 patient: "Need a Cardiologist in Madhubani for an offline visit.",
                                 ai: "Found 3 verified Doctors. Dr. Jha (8.2km) has 'Low Rush' right now. Booking slot for 4:00 PM."
+                            }}
+                        />
+                    </Link>
+                    <Link to="/tele-consult">
+                        <FeatureRoadmapCard
+                            icon={<BsPhone className="animate-bounce-slow" />}
+                            title={
+                                <span>
+                                    <span style={{ color: "#FF9933" }}>Sehaat</span>{" "}
+                                    <span style={{ color: "#138808" }}>Saathi</span> Instant Video Consultations Hub
+                                </span>
+                            }
+                            desc="Talk to top specialist doctors in seconds via private video calls. Includes instant prescriptions and health monitoring."
+                            color="green"
+                            status="Live & Premium"
+                            outstanding={true}
+                            example={{
+                                patient: "I need an urgent cardiologist consult for chest tightness.",
+                                ai: "Analyzing vitals... SpO2 98%, Pulse-Rate 82. Connecting you to Dr. Verma (Senior Cardiologist) in 15 seconds."
                             }}
                         />
                     </Link>
@@ -304,6 +290,24 @@ const Smarthub = () => {
                             example={{
                                 patient: "I have a sore throat and fever.",
                                 ai: "These symptoms indicate possible flu. Drink warm fluids and take rest."
+                            }}
+                        />
+                    </Link>
+                    <Link to="/pharmacy-hub">
+                        <FeatureRoadmapCard
+                            icon={<BsCartCheck className="animate-bounce" />}
+                            title={
+                                <span>
+                                    <span style={{ color: "#FF9933" }}>Sehaat</span>{" "}
+                                    <span style={{ color: "#138808" }}>Saathi</span> Pharmacy-Hub
+                                </span>
+                            }
+                            desc="India's Premiere AI-Powered Pharmacy. Order 10000+ medicines, wellness gear, and surgical kits with 45-min express delivery."
+                            color="emerald"
+                            status="Upcoming"
+                            example={{
+                                patient: "I need regular insulin and B12 supplements.",
+                                ai: <>Found in stock! Added to your <span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span> Cart. Your 15% subscriber discount applied. Delivery in 38 mins.</>
                             }}
                         />
                     </Link>
@@ -416,24 +420,7 @@ const Smarthub = () => {
                             }}
                         />
                     </Link>
-                    <Link to="/follow-up-hub">
-                        <FeatureRoadmapCard
-                            icon={<BsBellFill className="animate-bounce-slow" />}
-                            title={
-                                <span>
-                                    <span style={{ color: "#FF9933" }}>Sehaat</span>{" "}
-                                    <span style={{ color: "#138808" }}>Saathi</span> Follow-up & Reminders
-                                </span>
-                            }
-                            desc="AI medicine reminders, daily symptom tracking, and proactive checkup alerts to ensure smooth recovery."
-                            color="emerald"
-                            status="Upcoming"
-                            example={{
-                                patient: "When should I take paracetamol?",
-                                ai: "You took it 4 hours ago. The next dose will be due in 2 hours. I will remind you."
-                            }}
-                        />
-                    </Link>
+
                     <Link to="/personalized-health">
                         <FeatureRoadmapCard
                             icon={<BsCpuFill className="animate-spin-slow" />}
@@ -470,22 +457,18 @@ const Smarthub = () => {
                             }}
                         />
                     </Link>
-                    <Link to="/pharmacy-hub">
+                    <Link to="/express-track">
                         <FeatureRoadmapCard
-                            icon={<BsCartCheck className="animate-bounce" />}
+                            icon={<BsTruck />}
                             title={
                                 <span>
                                     <span style={{ color: "#FF9933" }}>Sehaat</span>{" "}
-                                    <span style={{ color: "#138808" }}>Saathi</span> Pharmacy-Hub
+                                    <span style={{ color: "#138808" }}>Saathi</span> Express
                                 </span>
                             }
-                            desc="India's Premiere AI-Powered Pharmacy. Order 10000+ medicines, wellness gear, and surgical kits with 45-min express delivery."
-                            color="emerald"
-                            status="Upcoming"
-                            example={{
-                                patient: "I need regular insulin and B12 supplements.",
-                                ai: <>Found in stock! Added to your <span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span> Cart. Your 15% subscriber discount applied. Delivery in 38 mins.</>
-                            }}
+                            desc="Real-time live tracking of home sample collection technicians. See them moving on the map!"
+                            color="orange"
+                            status="Live Demo"
                         />
                     </Link>
 
