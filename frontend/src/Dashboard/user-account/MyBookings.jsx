@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-// import DoctorCard from "../../components/Home/Doctors/DoctorCard";
 import Error from "../../components/Shared/Error";
 import Loading from "../../components/Shared/Loading";
 import { BASE_URL } from "../../config";
 import useFetchData from "../../hooks/useFetchData";
 import { formatDate } from "../../utils/formatDate";
 import PatientJourneyTimeline from "../../components/Patient/PatientJourneyTimeline";
+import DigitalPrescriptionModal from "../../components/Booking/DigitalPrescriptionModal";
 
 const MyBookings = () => {
   const {
@@ -15,6 +15,7 @@ const MyBookings = () => {
   } = useFetchData(`${BASE_URL}/appointments/patient`);
 
   const [expandedBooking, setExpandedBooking] = useState(null);
+  const [viewRxBooking, setViewRxBooking] = useState(null);
 
   return (
     <section className="mt-8 bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
@@ -138,10 +139,19 @@ const MyBookings = () => {
                         <div className="flex flex-col gap-2 mt-2">
                             <button 
                                 onClick={() => setExpandedBooking(expandedBooking === item._id ? null : item._id)}
-                                className="text-primaryColor font-black uppercase text-[10px] hover:underline"
+                                className="text-primaryColor font-black uppercase text-[10px] hover:underline text-left"
                             >
                                 {expandedBooking === item._id ? 'Hide Flux' : 'View Journey'}
                             </button>
+
+                            {(item.status === 'completed' || item.prescriptionDetails) && (
+                                <button
+                                    onClick={() => setViewRxBooking(item)}
+                                    className="px-2.5 py-1 bg-emerald-100 text-emerald-800 border border-emerald-300 rounded-lg text-[9px] font-black uppercase tracking-widest hover:bg-emerald-600 hover:text-white transition-all flex items-center gap-1 shadow-sm w-fit"
+                                >
+                                    📋 View e-Prescription
+                                </button>
+                            )}
                             
                             {(item.status === 'REQUESTED' || item.status === 'confirmed') && (
                                 <button 
@@ -200,9 +210,18 @@ const MyBookings = () => {
           </div>
         )}
       </div>
+
+      {/* Patient Digital Prescription Modal */}
+      {viewRxBooking && (
+        <DigitalPrescriptionModal
+          booking={viewRxBooking}
+          doctorData={viewRxBooking.doctor}
+          isDoctorView={false}
+          onClose={() => setViewRxBooking(null)}
+        />
+      )}
     </section>
   );
-
 };
 
 export default MyBookings;

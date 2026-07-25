@@ -6,15 +6,17 @@ import { authContext } from "../../context/AuthContext";
 import { useSocket } from "../../context/SocketContext";
 import useRecordActivity from "../../hooks/useRecordActivity";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import DigitalPrescriptionModal from "../../components/Booking/DigitalPrescriptionModal";
 
 /* eslint-disable react/prop-types */
 const Appointments = ({ appointments: initialAppointments }) => {
-  const { token } = useContext(authContext);
+  const { token, user: doctorUser } = useContext(authContext);
   const { socket } = useSocket();
   const { recordActivity } = useRecordActivity();
   const [appointments, setAppointments] = useState(initialAppointments || []);
   const [loading, setLoading] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState(null);
+  const [prescriptionModalBooking, setPrescriptionModalBooking] = useState(null);
   const [confirmTime, setConfirmTime] = useState("");
   const [statusMsg, setStatusMsg] = useState("");
 
@@ -214,17 +216,21 @@ const Appointments = ({ appointments: initialAppointments }) => {
                         </button>
                       </div>
                      ) : (
-                      <div className="flex items-center gap-2">
-                        {item.appointmentType === 'teleconsult' && item.status === 'confirmed' ? (
+                      <div className="flex flex-wrap items-center gap-2">
+                        {item.appointmentType === 'teleconsult' && item.status === 'confirmed' && (
                           <button 
                             onClick={() => window.open(`/tele-consult-ai?session=${item._id}`, '_blank')}
-                            className="bg-rose-600 hover:bg-rose-500 text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-rose-100 animate-pulse transition-all active:scale-95 flex items-center justify-center gap-1"
+                            className="bg-rose-600 hover:bg-rose-500 text-white px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-rose-100 animate-pulse transition-all active:scale-95 flex items-center justify-center gap-1"
                           >
                             🚀 START NEURAL
                           </button>
-                         ) : (
-                           <span className="text-gray-300 font-black text-[10px] uppercase tracking-[0.2em]">Finalized</span>
-                         )}
+                        )}
+                        <button
+                          onClick={() => setPrescriptionModalBooking(item)}
+                          className="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-emerald-100 transition-all active:scale-95 flex items-center justify-center gap-1"
+                        >
+                          📋 e-Prescription
+                        </button>
                       </div>
                     )}
                   </div>
@@ -288,6 +294,15 @@ const Appointments = ({ appointments: initialAppointments }) => {
             </div>
           </div>
         </div>
+      {/* Digital Prescription Modal */}
+      {prescriptionModalBooking && (
+        <DigitalPrescriptionModal
+          booking={prescriptionModalBooking}
+          doctorData={doctorUser}
+          isDoctorView={true}
+          onClose={() => setPrescriptionModalBooking(null)}
+          onPrescriptionSaved={() => fetchAppointments()}
+        />
       )}
     </section>
   );
