@@ -215,10 +215,16 @@ const Appointments = ({ appointments: initialAppointments }) => {
               <div className="w-10 h-10 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin" />
             </div>
           ) : filtered.length === 0 ? (
-            <div className="text-center py-16">
+            <div className="text-center py-16 px-4">
               <div className="text-5xl mb-3">📭</div>
-              <p className="text-slate-400 font-bold">No appointments found.</p>
-              {searchQuery && <p className="text-xs text-slate-300 mt-1">Try clearing your search</p>}
+              <p className="text-slate-700 font-bold text-base">No appointments found in this database.</p>
+              {searchQuery ? (
+                <p className="text-xs text-slate-400 mt-1">Try clearing your search filters</p>
+              ) : (
+                <div className="mt-3 max-w-md mx-auto bg-amber-50 border border-amber-200 rounded-2xl p-4 text-xs text-amber-800 font-medium">
+                  💡 <strong>Tip for Vercel Deployment:</strong> If you created appointments on your local machine (<code className="font-mono bg-amber-100 px-1 rounded">localhost</code>), make sure to configure <code className="font-mono bg-amber-100 px-1 rounded">VITE_BACKEND_URL</code> in Vercel settings to point to your live cloud MongoDB backend!
+                </div>
+              )}
             </div>
           ) : (
             <table className="w-full text-left text-sm border-separate border-spacing-0">
