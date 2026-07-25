@@ -35,7 +35,7 @@ const Appointments = ({ appointments: initialAppointments }) => {
     setLoading(true);
     try {
       const res = await fetch(`${BASE_URL}/appointments/doctor`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token || localStorage.getItem("token")}` },
       });
       const result = await res.json();
       if (!res.ok) throw new Error(result.message);
@@ -73,7 +73,7 @@ const Appointments = ({ appointments: initialAppointments }) => {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token || localStorage.getItem("token")}`,
         },
         body: JSON.stringify({ status, appointmentTime: time, statusMessage: msg }),
       });
@@ -95,7 +95,7 @@ const Appointments = ({ appointments: initialAppointments }) => {
     try {
       const res = await fetch(`${BASE_URL}/appointments/${bookingId}`, {
         method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token || localStorage.getItem("token")}` },
       });
       const result = await res.json();
       if (!res.ok) { setAppointments(orig); throw new Error(result.message); }

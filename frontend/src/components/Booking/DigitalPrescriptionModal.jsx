@@ -124,7 +124,7 @@ const DigitalPrescriptionModal = ({
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token || localStorage.getItem("token")}`,
         },
         body: JSON.stringify({
           status: "completed",

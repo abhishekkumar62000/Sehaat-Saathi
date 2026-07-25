@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BsCalendarCheck, BsCheckCircleFill, BsXCircleFill, BsCloudArrowUp, BsMicFill, BsMicMuteFill } from 'react-icons/bs';
 import uploadImageToCloudinary from '../../utils/uploadCloudinary';
+import { BASE_URL } from '../../config';
 
 const BookingWizard = ({ doc, onClose, onSuccess }) => {
     const [step, setStep] = useState(1);
@@ -56,7 +57,7 @@ const BookingWizard = ({ doc, onClose, onSuccess }) => {
         if (date && doc) {
             setLoadingSlots(true);
             // Fetch real slots if API is wired, otherwise mock
-            fetch(`http://localhost:8001/api/bookings/available-slots/${doc.id || doc._id}?date=${date}`, {
+            fetch(`${BASE_URL}/bookings/available-slots/${doc.id || doc._id}?date=${date}`, {
                 headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
             })
             .then(res => res.json())
