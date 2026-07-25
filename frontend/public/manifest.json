@@ -1,0 +1,17 @@
+{
+  "short_name": "Sehaat Saathi",
+  "name": "Sehaat Saathi - India's AI Health Hub",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "type": "image/png",
+      "sizes": "192x192 512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#ffffff",
+  "theme_color": "#FF9933",
+  "display": "standalone",
+  "orientation": "portrait"
+}
