@@ -42,7 +42,15 @@ const corsOptions = {
 };
 
 app.get("/", (req, res) => {
-  res.send("Api is working");
+  res.status(200).json({ status: "online", message: "Sehaat Saathi API is active and running ✅" });
+});
+
+app.get("/api/v1", (req, res) => {
+  res.status(200).json({ status: "online", message: "Sehaat Saathi API v1 is active and running ✅" });
+});
+
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "ok", mongoState: mongoose.connection.readyState });
 });
 
 // database connection
