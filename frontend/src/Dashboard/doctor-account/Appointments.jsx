@@ -291,9 +291,10 @@ const Appointments = ({ appointments: initialAppointments }) => {
                   Abort
                 </button>
               </div>
-            </div>
           </div>
         </div>
+      )}
+
       {/* Digital Prescription Modal */}
       {prescriptionModalBooking && (
         <DigitalPrescriptionModal
