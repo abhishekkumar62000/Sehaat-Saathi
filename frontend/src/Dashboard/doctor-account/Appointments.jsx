@@ -291,6 +291,7 @@ const Appointments = ({ appointments: initialAppointments }) => {
                   Abort
                 </button>
               </div>
+            </div>
           </div>
         </div>
       )}
