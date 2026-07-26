@@ -11,10 +11,11 @@ import { toast } from "react-toastify";
 import {
   BsCapsule, BsClock, BsCheckCircleFill, BsXCircleFill,
   BsArrowRepeat, BsPersonBadge, BsCalendarCheck, BsShieldCheck,
-  BsJournalMedical
+  BsJournalMedical, BsChatDotsFill
 } from "react-icons/bs";
 import { MdVideoCall, MdHealthAndSafety, MdStar } from "react-icons/md";
 import { FaFilePrescription, FaMapMarkerAlt } from "react-icons/fa";
+import LiveChatDrawer from "../../components/Chat/LiveChatDrawer";
 
 const STATUS_STYLES = {
   pending:         { pill: "bg-amber-100 text-amber-800 border-amber-200",  dot: "bg-amber-500 animate-pulse", label: "Pending" },
@@ -31,6 +32,7 @@ const MyBookings = () => {
 
   const [expandedBooking, setExpandedBooking] = useState(null);
   const [viewRxBooking, setViewRxBooking]     = useState(null);
+  const [activeChatDoctor, setActiveChatDoctor] = useState(null);
   const [filterTab, setFilterTab]             = useState("all");
   const [liveStatuses, setLiveStatuses]       = useState({});
 
@@ -251,6 +253,14 @@ const MyBookings = () => {
                           </button>
                         )}
 
+                        {/* Chat with Doctor */}
+                        <button
+                          onClick={() => setActiveChatDoctor({ partner: item.doctor, bookingId: item._id })}
+                          className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all active:scale-95"
+                        >
+                          <BsChatDotsFill /> Chat with Doctor
+                        </button>
+
                         {/* Leave a Review */}
                         {liveStatus === "completed" && (
                           <button
@@ -293,6 +303,15 @@ const MyBookings = () => {
           booking={viewRxBooking}
           isDoctorView={false}
           onClose={() => setViewRxBooking(null)}
+        />
+      )}
+
+      {/* Live Chat Drawer */}
+      {activeChatDoctor && (
+        <LiveChatDrawer
+          partner={activeChatDoctor.partner}
+          bookingId={activeChatDoctor.bookingId}
+          onClose={() => setActiveChatDoctor(null)}
         />
       )}
     </section>

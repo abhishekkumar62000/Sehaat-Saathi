@@ -282,3 +282,32 @@ export const getActivityHistory = async (req, res) => {
     res.status(500).json({ success: false, message: "Failed to fetch activity history" });
   }
 };
+
+// PUT /api/v1/doctors/availability/me
+export const updateDoctorAvailability = async (req, res) => {
+  const { availability, unavailabilityDates, maxPatientsPerDay } = req.body;
+  const doctorId = req.userId;
+
+  try {
+    const doctor = await Doctor.findByIdAndUpdate(
+      doctorId,
+      {
+        $set: {
+          availability: availability || [],
+          unavailabilityDates: unavailabilityDates || [],
+          maxPatientsPerDay: maxPatientsPerDay || 20,
+        },
+      },
+      { new: true }
+    ).select("-password");
+
+    res.status(200).json({
+      success: true,
+      message: "Availability schedule updated successfully",
+      data: doctor,
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Failed to update availability: " + err.message });
+  }
+};
+

@@ -23,15 +23,17 @@ const DoctorSchema = new mongoose.Schema({
   bio: { type: String, maxLength: 100 },
   about: { type: String },
   
-  // Advanced Availability
   availability: [
     {
       day: { type: String, enum: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] },
-      startTime: { type: String },
-      endTime: { type: String },
-      slotDuration: { type: Number, default: 30 } // in minutes
+      startTime: { type: String, default: "09:00" },
+      endTime: { type: String, default: "17:00" },
+      slotDuration: { type: Number, default: 30 },
+      isAvailable: { type: Boolean, default: true }
     }
   ],
+  unavailabilityDates: [{ type: String }],
+  maxPatientsPerDay: { type: Number, default: 20 },
   
   hospital: {
     type: mongoose.Schema.Types.ObjectId,

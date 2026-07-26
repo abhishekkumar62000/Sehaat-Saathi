@@ -9,10 +9,11 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import {
   BsCheckCircleFill, BsXCircleFill, BsArrowRepeat,
   BsCapsule, BsPersonBadge, BsCalendarCheck, BsClock,
-  BsSearch, BsFunnelFill
+  BsSearch, BsFunnelFill, BsChatDotsFill
 } from "react-icons/bs";
 import { MdHealthAndSafety, MdVideoCall } from "react-icons/md";
 import DigitalPrescriptionModal from "../../components/Booking/DigitalPrescriptionModal";
+import LiveChatDrawer from "../../components/Chat/LiveChatDrawer";
 
 /* eslint-disable react/prop-types */
 const Appointments = ({ appointments: initialAppointments }) => {
@@ -24,6 +25,7 @@ const Appointments = ({ appointments: initialAppointments }) => {
   const [loading, setLoading] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [prescriptionModalBooking, setPrescriptionModalBooking] = useState(null);
+  const [activeChatPartner, setActiveChatPartner] = useState(null);
   const [confirmTime, setConfirmTime] = useState("");
   const [statusMsg, setStatusMsg] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -318,6 +320,13 @@ const Appointments = ({ appointments: initialAppointments }) => {
                           </button>
                         )}
 
+                        {/* Chat Button */}
+                        <button onClick={() => setActiveChatPartner({ partner: item.patient, bookingId: item._id })}
+                          title="Chat with Patient"
+                          className="flex items-center gap-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 px-3 py-1.5 rounded-xl text-[10px] font-black transition-all active:scale-95">
+                          <BsChatDotsFill /> Chat
+                        </button>
+
                         {/* e-Prescription Button */}
                         {(item.status === "confirmed" || item.status === "completed" || item.status === "CONSULTATION_STARTED" || item.status === "PATIENT_ARRIVED") && (
                           <button onClick={() => setPrescriptionModalBooking(item)}
@@ -386,6 +395,12 @@ const Appointments = ({ appointments: initialAppointments }) => {
           isDoctorView={true}
           onClose={() => setPrescriptionModalBooking(null)}
           onPrescriptionSaved={fetchAppointments}
+      {/* Live Chat Drawer */}
+      {activeChatPartner && (
+        <LiveChatDrawer
+          partner={activeChatPartner.partner}
+          bookingId={activeChatPartner.bookingId}
+          onClose={() => setActiveChatPartner(null)}
         />
       )}
     </section>

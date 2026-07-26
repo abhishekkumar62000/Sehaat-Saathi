@@ -7,7 +7,8 @@ import {
   updateDoctor,
   recordActivity,
   getActivityHistory,
-  getRecommendedDoctors
+  getRecommendedDoctors,
+  updateDoctorAvailability
 } from "../Controllers/doctorController.js";
 import { updateBookingStatus } from "../Controllers/bookingController.js";
 import { authenticate, restrict } from "../auth/verifyToken.js";
@@ -18,12 +19,13 @@ const router = express.Router();
 //nested route
 router.use("/:doctorId/reviews", reviewRouter);
 
-router.get("/:id", getSingleDoctor);
+router.get("/profile/me", authenticate, restrict(["doctor", "hospital"]), getDoctorProfile);
+router.put("/availability/me", authenticate, restrict(["doctor"]), updateDoctorAvailability);
 router.get("/recommendations", getRecommendedDoctors);
+router.get("/:id", getSingleDoctor);
 router.get("/", getAllDoctor);
 router.put("/:id", authenticate, restrict(["doctor", "hospital"]), updateDoctor);
 router.delete("/:id", authenticate, restrict(["doctor", "hospital"]), deleteDoctor);
-router.get("/profile/me", authenticate, restrict(["doctor", "hospital"]), getDoctorProfile);
 
 // Booking and Activity
 router.patch("/booking/:id/status", authenticate, restrict(["doctor", "hospital"]), updateBookingStatus);

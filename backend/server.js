@@ -70,6 +70,7 @@ const connectDB = async () => {
 };
 
 import analyticsRoute from "./Routes/analytics.js";
+import chatRoute from "./Routes/chat.js";
 
 // middleware
 app.use(express.json());
@@ -88,6 +89,7 @@ app.use("/api/v1/admin", adminRoute);
 app.use("/api/v1/appointments", appointmentRoute);
 app.use("/api/v1/video-consult", videoConsultRoute);
 app.use("/api/v1/analytics", analyticsRoute);
+app.use("/api/v1/chat", chatRoute);
 
 server.listen(port, () => {
   console.log("\n==========================================");
