@@ -1,0 +1,28 @@
+{
+  "name": "sehaat-saathi-root",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "20.x"
+  },
+  "scripts": {
+    "install": "cd frontend && npm install",
+    "build": "cd frontend && npm run build && cd .. && cp -r frontend/dist dist"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.8.0",
+    "mongoose": "^8.6.1",
+    "node-cron": "^4.2.1",
+    "node-fetch": "^2.7.0",
+    "openai": "^6.22.0",
+    "socket.io": "^4.8.3",
+    "stripe": "^16.11.0"
+  }
+}
