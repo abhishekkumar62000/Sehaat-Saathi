@@ -58,6 +58,10 @@ const AppointmentSchema = new mongoose.Schema(
     bookingToken: {
       type: String,
     },
+    reminderSent: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

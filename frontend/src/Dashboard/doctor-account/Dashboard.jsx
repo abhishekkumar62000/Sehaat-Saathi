@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { BiSolidUserDetail, BiHistory } from "react-icons/bi";
-import { BsActivity, BsCalendarCheck } from "react-icons/bs";
+import { BsActivity, BsCalendarCheck, BsCurrencyRupee, BsStarFill } from "react-icons/bs";
 import { CgDanger } from "react-icons/cg";
 import { FaUserEdit } from "react-icons/fa";
 import { RiPlayListAddFill } from "react-icons/ri";
@@ -19,6 +19,8 @@ import WorkflowPanel from "./WorkflowPanel";
 import useRecordActivity from "../../hooks/useRecordActivity";
 import DoctorAnalyticsOverview from "../../components/DoctorDetails/DoctorAnalyticsOverview";
 import DoctorAvailabilityManager from "../../components/DoctorDetails/DoctorAvailabilityManager";
+import RevenueEarningsPanel from "../../components/DoctorDetails/RevenueEarningsPanel";
+import ReviewReputationManager from "../../components/DoctorDetails/ReviewReputationManager";
 
 const Dashboard = () => {
   const [tab, setTab] = useState("overview");
@@ -78,14 +80,30 @@ const Dashboard = () => {
               <p className="ml-3 hidden lg:block">Workflow Panel</p>
             </button>
             <button
-              onClick={() => setTab("availability")}
-              className={`${
-                tab == "availability" ? activeTabClass : inactiveTabClass
-              } w-full mt-2 rounded-md flex items-center lg:justify-start justify-center lg:px-5 lg:py-2 px-1`}
-            >
-              <BsCalendarCheck className="w-6 h-6" />
-              <p className="ml-3 hidden lg:block">Availability Schedule</p>
-            </button>
+                  onClick={() => setTab("availability")}
+                  className={`${tab == "availability" ? activeTabClass : inactiveTabClass} w-full mt-2 rounded-md flex items-center lg:justify-start justify-center lg:px-5 lg:py-2 px-1`}
+                >
+                  <BsCalendarCheck className="w-6 h-6" />
+                  <p className="ml-3 hidden lg:block">Availability Schedule</p>
+                </button>
+
+                {/* Revenue Panel Tab */}
+                <button
+                  onClick={() => setTab("revenue")}
+                  className={`${tab == "revenue" ? activeTabClass : inactiveTabClass} w-full mt-2 rounded-md flex items-center lg:justify-start justify-center lg:px-5 lg:py-2 px-1`}
+                >
+                  <BsCurrencyRupee className="w-6 h-6" />
+                  <p className="ml-3 hidden lg:block">Revenue & Earnings</p>
+                </button>
+
+                {/* Reviews Tab */}
+                <button
+                  onClick={() => setTab("reviews")}
+                  className={`${tab == "reviews" ? activeTabClass : inactiveTabClass} w-full mt-2 rounded-md flex items-center lg:justify-start justify-center lg:px-5 lg:py-2 px-1`}
+                >
+                  <BsStarFill className="w-6 h-6" />
+                  <p className="ml-3 hidden lg:block">Reviews</p>
+                </button>
             <button
               onClick={() => setTab("settings")}
               className={`${
@@ -141,6 +159,8 @@ const Dashboard = () => {
               {tab == "availability" && (
                 <DoctorAvailabilityManager doctorData={data} />
               )}
+              {tab == "revenue" && (<RevenueEarningsPanel doctorData={data} />)}
+              {tab == "reviews" && (<ReviewReputationManager doctorData={data} />)}
               {tab == "settings" && <Profile doctorData={data} />}
               {tab == "activity" && <DoctorActivity />}
             </div>

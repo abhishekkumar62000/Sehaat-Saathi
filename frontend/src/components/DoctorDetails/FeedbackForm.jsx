@@ -27,7 +27,7 @@ const FeedbackForm = () => {
         method: "post",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${localStorage.getItem("token") || token}`,
         },
         body: JSON.stringify({ rating, reviewText }),
       });

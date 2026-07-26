@@ -4,7 +4,7 @@ import { authContext } from "./AuthContext";
 
 import { BASE_URL as API_URL } from "../config";
 
-const BASE_URL = API_URL.replace("/api/v1", "");
+const BASE_URL = API_URL.replace("/api/v1", "") || "/";
 
 const socketContext = createContext();
 

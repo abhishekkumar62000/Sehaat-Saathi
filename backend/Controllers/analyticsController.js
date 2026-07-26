@@ -176,3 +176,54 @@ export const getDoctorAnalytics = async (req, res) => {
     res.status(500).json({ success: false, message: "Analytics computation failed: " + err.message });
   }
 };
+
+// POST /api/v1/analytics/doctor/delay-broadcast
+// Allows a doctor to notify all their pending/confirmed patients about a delay
+export const broadcastDoctorDelay = async (req, res) => {
+  const doctorId = req.userId;
+  const { message = "Your doctor is running late. We apologize for the inconvenience.", delayMinutes = 0 } = req.body;
+
+  try {
+    // Get all pending/confirmed appointments for this doctor
+    const appointments = await Appointment.find({
+      doctor: doctorId,
+      status: { $in: ["pending", "confirmed"] },
+    }).populate("patient", "_id name");
+
+    if (!appointments.length) {
+      return res.status(200).json({
+        success: true,
+        message: "No active appointments found to notify.",
+        notified: 0,
+      });
+    }
+
+    const io = req.app.get("io");
+    let notified = 0;
+
+    for (const appointment of appointments) {
+      const patientId = appointment.patient?._id?.toString();
+      if (!patientId) continue;
+
+      if (io) {
+        io.to(patientId).emit("DOCTOR_DELAYED", {
+          bookingId: appointment._id,
+          doctorId,
+          message,
+          delayMinutes,
+        });
+      }
+
+      notified++;
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: `Delay broadcast sent to ${notified} patient(s).`,
+      notified,
+    });
+  } catch (err) {
+    console.error("Delay broadcast error:", err);
+    res.status(500).json({ success: false, message: "Delay broadcast failed: " + err.message });
+  }
+};

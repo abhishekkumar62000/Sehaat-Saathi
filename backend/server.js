@@ -21,6 +21,7 @@ import hospitalRoute from "./Routes/hospital.js";
 import http from "http";
 import initSocket from "./socket/socketHandler.js";
 import initExpiryJob from "./jobs/expiryJob.js";
+import initReminderJob from "./jobs/reminderJob.js";
 
 console.log("Starting server implementation...");
 const app = express();
@@ -33,6 +34,9 @@ app.set("io", io); // Make io available in controllers
 
 // Initialize 10-Minute Expiry Guardian
 initExpiryJob(io);
+
+// Initialize Appointment Reminder Job (every 5 min)
+initReminderJob(io);
 
 const corsOptions = {
   origin: true,
@@ -56,7 +60,8 @@ app.get("/health", (req, res) => {
 // database connection
 mongoose.set("strictQuery", false);
 
-const connectDB = async () => {
+export const connectDB = async () => {
+  if (mongoose.connection.readyState >= 1) return;
   console.log("Attempting to connect to MongoDB...");
   try {
     if (!process.env.MONGODB_URL) {
@@ -91,9 +96,16 @@ app.use("/api/v1/video-consult", videoConsultRoute);
 app.use("/api/v1/analytics", analyticsRoute);
 app.use("/api/v1/chat", chatRoute);
 
-server.listen(port, () => {
-  console.log("\n==========================================");
-  console.log("🚀 Neural Server Pulse Sync on port: " + port);
-  console.log("==========================================");
+if (!process.env.VERCEL) {
+  server.listen(port, () => {
+    console.log("\n==========================================");
+    console.log("🚀 Neural Server Pulse Sync on port: " + port);
+    console.log("==========================================");
+    connectDB();
+  });
+} else {
+  // Always connect to DB in serverless environment
   connectDB();
-});
+}
+
+export default app;

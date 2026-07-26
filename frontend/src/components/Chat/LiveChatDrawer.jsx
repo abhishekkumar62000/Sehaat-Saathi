@@ -76,6 +76,33 @@ const LiveChatDrawer = ({ partner, bookingId, onClose }) => {
     return () => socket.off("NEW_MESSAGE", onNewMessage);
   }, [socket, partnerId]);
 
+  // Fallback Polling (crucial for Vercel Serverless where WebSockets might fail)
+  useEffect(() => {
+    if (!partnerId) return;
+    const interval = setInterval(async () => {
+      try {
+        const res = await fetch(`${BASE_URL}/chat/conversation/${partnerId}`, {
+          headers: {
+            Authorization: `Bearer ${token || localStorage.getItem("token")}`,
+          },
+        });
+        const result = await res.json();
+        if (res.ok && result.data) {
+          setMessages(prev => {
+            // Only update if there is a new message to prevent unwanted re-renders
+            if (prev.length !== result.data.length) {
+              return result.data;
+            }
+            return prev;
+          });
+        }
+      } catch (err) {
+        // silent fail for background polling
+      }
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [partnerId, token]);
+
   // Auto-scroll to bottom
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
