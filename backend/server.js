@@ -69,6 +69,8 @@ const connectDB = async () => {
   }
 };
 
+import analyticsRoute from "./Routes/analytics.js";
+
 // middleware
 app.use(express.json());
 app.use(cookieParser());
@@ -85,6 +87,7 @@ app.use("/api/v1/health-copilot", healthCopilotRoute);
 app.use("/api/v1/admin", adminRoute);
 app.use("/api/v1/appointments", appointmentRoute);
 app.use("/api/v1/video-consult", videoConsultRoute);
+app.use("/api/v1/analytics", analyticsRoute);
 
 server.listen(port, () => {
   console.log("\n==========================================");

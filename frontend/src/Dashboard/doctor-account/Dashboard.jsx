@@ -17,6 +17,7 @@ import Profile from "./Profile";
 import DoctorActivity from "./DoctorActivity";
 import WorkflowPanel from "./WorkflowPanel";
 import useRecordActivity from "../../hooks/useRecordActivity";
+import DoctorAnalyticsOverview from "../../components/DoctorDetails/DoctorAnalyticsOverview";
 
 const Dashboard = () => {
   const [tab, setTab] = useState("overview");
@@ -119,69 +120,7 @@ const Dashboard = () => {
 
             <div className="lg:px-0 px-[10px]">
               {tab == "overview" && (
-                <div>
-                  <h1 className="font-serif bg-green-600 text-center text-white font-bold py-2 lg:text-[22px] text-[15px] leading-[30px] flex items-center gap-2 justify-center mb-2">
-                    About of
-                    <span className="font-extrabold text-black lg:text-[26px] text-[18px] leading-9">
-                      {data?.name}
-                    </span>
-                  </h1>
-                  <div
-                    className="flex items-center justify-center lg:text-start text-center"
-                    style={{
-                      backgroundImage: `url(${bgImg})`,
-                    }}
-                  >
-                    <div className="lg:flex items-center gap-4 pt-3">
-                      <figure className="lg:max-w-[200px] max-w-[150px] lg:max-h-[200px] max-h-[150px] ">
-                        <img src={data?.photo ? data?.photo : doctorAvatar}
-                          alt=""
-                          className="w-full"
-                         loading="lazy" />
-                      </figure>
-
-                      <div>
-                        <h3 className="font-bold text-[22px] text-headingColor">
-                          {data.name}
-                        </h3>
-                        <p className="text-textColor font-semibold text-[12px] lg:text-[14px]">
-                          {data.specialization ? (
-                            data.specialization
-                          ) : (
-                            <p className="text-red-600 animate-pulse">
-                              Specialization profile isn&apos;t updated. Please
-                              update your Specialization profile.
-                            </p>
-                          )}
-                        </p>
-
-                        <div className="flex items-center lg:justify-start justify-center gap-[6px] mt-[6px]">
-                          <span
-                            className="flex items-center gap-[6px] text-headingColor font-semibold leading-5 text-[14px] lg:leading-6 lg:text-[16px] 
-                          "
-                          >
-                            <img src={starIcon} alt=""  loading="lazy" /> {data.averageRating}
-                          </span>
-                          <span
-                            className="text-textColor font-semibold leading-5 text-[14px] lg:leading-6 lg:text-[16px] 
-                          "
-                          >
-                            ({data.totalRating})
-                          </span>
-                        </div>
-                        <p className="lg:block flex justify-center items-center font-[15px] text-slate-500 lg:max-w-[390px] text-justify">
-                          {data?.bio}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <DoctorAbout
-                    name={data?.name}
-                    about={data?.about}
-                    qualifications={data?.qualifications}
-                    experiences={data?.experiences}
-                  />
-                </div>
+                <DoctorAnalyticsOverview doctorData={data} />
               )}
               {tab == "appointments" && (
                 <Appointments appointments={data.appointments} />
