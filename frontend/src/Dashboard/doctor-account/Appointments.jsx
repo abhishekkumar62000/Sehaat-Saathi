@@ -395,6 +395,9 @@ const Appointments = ({ appointments: initialAppointments }) => {
           isDoctorView={true}
           onClose={() => setPrescriptionModalBooking(null)}
           onPrescriptionSaved={fetchAppointments}
+        />
+      )}
+
       {/* Live Chat Drawer */}
       {activeChatPartner && (
         <LiveChatDrawer
@@ -408,3 +411,4 @@ const Appointments = ({ appointments: initialAppointments }) => {
 };
 
 export default Appointments;
+
