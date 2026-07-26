@@ -17,35 +17,161 @@ import { FaUserMd } from "react-icons/fa";
 import Loading from "../../components/Shared/Loading";
 import Error from "../../components/Shared/Error";
 
+const computeFallbackAnalytics = (doctor) => {
+  const appts = doctor?.appointments || [];
+  const now = new Date();
+  const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const startOfWeek = new Date(now);
+  startOfWeek.setDate(now.getDate() - now.getDay());
+  startOfWeek.setHours(0, 0, 0, 0);
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+  const total = appts.length;
+  const todayAppts = appts.filter(a => new Date(a.createdAt || a.date) >= startOfToday);
+  const weekAppts  = appts.filter(a => new Date(a.createdAt || a.date) >= startOfWeek);
+  const monthAppts = appts.filter(a => new Date(a.createdAt || a.date) >= startOfMonth);
+
+  const pending   = appts.filter(a => a.status === "pending").length;
+  const confirmed = appts.filter(a => a.status === "confirmed").length;
+  const completed = appts.filter(a => a.status === "completed").length;
+  const cancelled = appts.filter(a => a.status === "cancelled" || a.status === "rejected").length;
+
+  const calcEarnings = (list) =>
+    list
+      .filter(a => a.status === "completed" && a.paymentStatus === "paid")
+      .reduce((sum, a) => sum + (a.ticketPrice || 0), 0);
+
+  const earningsToday   = calcEarnings(todayAppts);
+  const earningsWeek    = calcEarnings(weekAppts);
+  const earningsMonth   = calcEarnings(monthAppts);
+  const earningsTotal   = calcEarnings(appts);
+  const pendingRevenue  = appts
+    .filter(a => a.status === "completed" && a.paymentStatus !== "paid")
+    .reduce((sum, a) => sum + (a.ticketPrice || 0), 0);
+
+  const last7Days = [];
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(now);
+    d.setDate(now.getDate() - i);
+    const dayStart = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    const dayEnd   = new Date(dayStart.getTime() + 86400000);
+    const count = appts.filter(a => {
+      const t = new Date(a.createdAt || a.date);
+      return t >= dayStart && t < dayEnd;
+    }).length;
+    const earnings = calcEarnings(
+      appts.filter(a => {
+        const t = new Date(a.createdAt || a.date);
+        return t >= dayStart && t < dayEnd;
+      })
+    );
+    last7Days.push({
+      label: d.toLocaleDateString("en-IN", { weekday: "short", month: "short", day: "numeric" }),
+      count,
+      earnings,
+    });
+  }
+
+  const last6Months = [];
+  for (let i = 5; i >= 0; i--) {
+    const mDate = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const mEnd  = new Date(now.getFullYear(), now.getMonth() - i + 1, 1);
+    const count = appts.filter(a => {
+      const t = new Date(a.createdAt || a.date);
+      return t >= mDate && t < mEnd;
+    }).length;
+    const earnings = calcEarnings(
+      appts.filter(a => {
+        const t = new Date(a.createdAt || a.date);
+        return t >= mDate && t < mEnd;
+      })
+    );
+    last6Months.push({
+      label: mDate.toLocaleDateString("en-IN", { month: "short", year: "2-digit" }),
+      count,
+      earnings,
+    });
+  }
+
+  const hourBuckets = Array(24).fill(0);
+  appts.forEach(a => {
+    if (a.timeSlot) {
+      const match = a.timeSlot.match(/(\d{1,2})[:h](\d{2})?\s*(AM|PM)?/i);
+      if (match) {
+        let hour = parseInt(match[1]);
+        const meridiem = match[3];
+        if (meridiem?.toUpperCase() === "PM" && hour !== 12) hour += 12;
+        if (meridiem?.toUpperCase() === "AM" && hour === 12) hour = 0;
+        if (hour >= 0 && hour < 24) hourBuckets[hour]++;
+      }
+    } else if (a.createdAt || a.date) {
+      const h = new Date(a.createdAt || a.date).getHours();
+      hourBuckets[h]++;
+    }
+  });
+
+  const peakHours = hourBuckets.map((count, hour) => ({
+    hour,
+    label: `${hour === 0 ? 12 : hour > 12 ? hour - 12 : hour}${hour < 12 ? "am" : "pm"}`,
+    count,
+  }));
+
+  const offline     = appts.filter(a => a.appointmentType !== "teleconsult").length;
+  const teleconsult = appts.filter(a => a.appointmentType === "teleconsult").length;
+
+  const statusDist = [
+    { status: "Completed", count: completed, color: "#6366f1" },
+    { status: "Pending",   count: pending,   color: "#f59e0b" },
+    { status: "Confirmed", count: confirmed, color: "#10b981" },
+    { status: "Cancelled", count: cancelled, color: "#ef4444" },
+  ];
+
+  return {
+    total, todayCount: todayAppts.length, weekCount: weekAppts.length, monthCount: monthAppts.length,
+    pending, confirmed, completed, cancelled,
+    earningsToday, earningsWeek, earningsMonth, earningsTotal, pendingRevenue,
+    last7Days, last6Months, peakHours,
+    statusDist, offline, teleconsult,
+    avgRating: doctor?.averageRating || 0,
+    totalReviews: doctor?.totalRating || 0,
+    ratingBreakdown: { 5: doctor?.totalRating || 0, 4: 0, 3: 0, 2: 0, 1: 0 },
+    uniquePatients: new Set(appts.map(a => a.patient?.toString() || a.user?.toString())).size,
+    completionRate: total > 0 ? Math.round((completed / total) * 100) : 0,
+  };
+};
+
 const DoctorAnalyticsOverview = ({ doctorData }) => {
   const { token } = useContext(authContext);
-  const [analytics, setAnalytics] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [analytics, setAnalytics] = useState(() => computeFallbackAnalytics(doctorData));
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [timeframe, setTimeframe] = useState("week"); // 'today' | 'week' | 'month' | 'all'
 
   useEffect(() => {
     const fetchAnalytics = async () => {
-      setLoading(true);
       try {
         const res = await fetch(`${BASE_URL}/analytics/doctor`, {
           headers: {
             Authorization: `Bearer ${token || localStorage.getItem("token")}`,
           },
         });
-        const result = await res.json();
-        if (!res.ok) throw new Error(result.message || "Failed to load analytics");
-        setAnalytics(result.data);
+        const contentType = res.headers.get("content-type");
+        if (res.ok && contentType && contentType.includes("application/json")) {
+          const result = await res.json();
+          if (result.success && result.data) {
+            setAnalytics(result.data);
+            return;
+          }
+        }
+        setAnalytics(computeFallbackAnalytics(doctorData));
       } catch (err) {
-        console.error("Analytics fetch error:", err);
-        setError(err.message);
-      } finally {
-        setLoading(false);
+        console.warn("Analytics API fallback activated:", err);
+        setAnalytics(computeFallbackAnalytics(doctorData));
       }
     };
 
     fetchAnalytics();
-  }, [token]);
+  }, [token, doctorData]);
 
   if (loading) return <div className="py-12"><Loading /></div>;
   if (error) return <div className="py-6"><Error errMessage={error} /></div>;
