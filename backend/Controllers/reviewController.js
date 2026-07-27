@@ -30,10 +30,19 @@ export const createReview = async (req, res) => {
       $push: { reviews: savedReview._id },
     });
 
+    const populatedReview = await Review.findById(savedReview._id).populate("user", "name photo");
+
+    const io = req.app.get("io");
+    if (io) {
+      // Emit to doctor's room (so the doctor dashboard gets it) and emit globally (for public profile)
+      io.to(req.body.doctor.toString()).emit("NEW_REVIEW", populatedReview);
+      io.emit(`NEW_REVIEW_${req.body.doctor}`, populatedReview);
+    }
+
     res.status(200).json({
       success: true,
       message: "Review submitted",
-      data: savedReview,
+      data: populatedReview,
     });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });

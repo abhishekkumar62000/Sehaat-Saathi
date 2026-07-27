@@ -5,13 +5,14 @@ import { toast } from "react-toastify";
 import { BASE_URL, token } from "../../config";
 import Loading from "../Shared/Loading";
 
-const FeedbackForm = () => {
+const FeedbackForm = ({ doctorId, onSuccess }) => {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const [reviewText, setReviewText] = useState("");
   const [loading, setLoading] = useState(false);
 
   const { id } = useParams();
+  const finalDoctorId = doctorId || id;
 
   const handleSubmitReview = async (e) => {
     e.preventDefault();
@@ -23,7 +24,7 @@ const FeedbackForm = () => {
         return toast.error("Rating & Review fields are required");
       }
 
-      const res = await fetch(`${BASE_URL}/doctors/${id}/reviews`, {
+      const res = await fetch(`${BASE_URL}/doctors/${finalDoctorId}/reviews`, {
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -38,6 +39,7 @@ const FeedbackForm = () => {
       }
       setLoading(false);
       toast.success(result.message);
+      if (onSuccess) onSuccess();
     } catch (err) {
       setLoading(false);
       toast.error(err.message);

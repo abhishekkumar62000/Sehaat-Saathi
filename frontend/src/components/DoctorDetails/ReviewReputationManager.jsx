@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { BASE_URL } from "../../config";
 import { authContext } from "../../context/AuthContext";
+import { useSocket } from "../../context/SocketContext";
 import { toast } from "react-toastify";
 import {
   BsStarFill, BsStar, BsStarHalf, BsShieldFillCheck,
@@ -21,15 +22,18 @@ const StarDisplay = ({ rating, size = "text-sm" }) => {
 
 const ReviewReputationManager = ({ doctorData }) => {
   const { token } = useContext(authContext);
+  const { socket } = useSocket();
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [replyText, setReplyText] = useState({});
   const [sendingReply, setSendingReply] = useState({});
   const [filterRating, setFilterRating] = useState(0); // 0 = all
+  const [liveAvg, setLiveAvg] = useState(null);
+  const [liveTotal, setLiveTotal] = useState(null);
 
   const doctorId = doctorData?._id;
-  const avgRating = doctorData?.averageRating || 0;
-  const totalReviews = doctorData?.totalRating || 0;
+  const avgRating = liveAvg ?? doctorData?.averageRating ?? 0;
+  const totalReviews = liveTotal ?? doctorData?.totalRating ?? 0;
   const isTopDoctor = avgRating >= 4.5 && totalReviews >= 1;
 
   // Fetch reviews from backend
@@ -54,6 +58,35 @@ const ReviewReputationManager = ({ doctorData }) => {
     };
     fetchReviews();
   }, [doctorId, token]);
+
+  // 🔴 REAL-TIME: Listen for new reviews via Socket.io
+  useEffect(() => {
+    if (!socket || !doctorId) return;
+
+    const handleNewReview = (newReview) => {
+      // Avoid duplicates
+      setReviews(prev => {
+        if (prev.find(r => r._id === newReview._id)) return prev;
+        const updated = [newReview, ...prev];
+        // Recalculate live average
+        const newAvg = updated.reduce((sum, r) => sum + r.rating, 0) / updated.length;
+        setLiveAvg(parseFloat(newAvg.toFixed(1)));
+        setLiveTotal(updated.length);
+        return updated;
+      });
+      toast.success(`⭐ New review received from ${newReview.user?.name || "a patient"}!`, {
+        position: "top-right",
+        autoClose: 4000,
+      });
+    };
+
+    // Listen on doctor's room event AND global broadcast event
+    socket.on("NEW_REVIEW", handleNewReview);
+
+    return () => {
+      socket.off("NEW_REVIEW", handleNewReview);
+    };
+  }, [socket, doctorId]);
 
   // Compute rating breakdown
   const ratingBreakdown = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };

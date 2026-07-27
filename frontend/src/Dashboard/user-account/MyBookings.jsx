@@ -16,6 +16,7 @@ import {
 import { MdVideoCall, MdHealthAndSafety, MdStar } from "react-icons/md";
 import { FaFilePrescription, FaMapMarkerAlt } from "react-icons/fa";
 import LiveChatDrawer from "../../components/Chat/LiveChatDrawer";
+import FeedbackForm from "../../components/DoctorDetails/FeedbackForm";
 
 const STATUS_STYLES = {
   pending:         { pill: "bg-amber-100 text-amber-800 border-amber-200",  dot: "bg-amber-500 animate-pulse", label: "Pending" },
@@ -33,6 +34,7 @@ const MyBookings = () => {
   const [expandedBooking, setExpandedBooking] = useState(null);
   const [viewRxBooking, setViewRxBooking]     = useState(null);
   const [activeChatDoctor, setActiveChatDoctor] = useState(null);
+  const [ratingDoctorId, setRatingDoctorId]   = useState(null);
   const [filterTab, setFilterTab]             = useState("all");
   const [liveStatuses, setLiveStatuses]       = useState({});
 
@@ -264,7 +266,7 @@ const MyBookings = () => {
                         {/* Leave a Review */}
                         {liveStatus === "completed" && (
                           <button
-                            onClick={() => toast.info("Review feature coming soon! 🌟")}
+                            onClick={() => setRatingDoctorId(item.doctor._id)}
                             className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all"
                           >
                             <MdStar /> Rate Doctor
@@ -313,6 +315,23 @@ const MyBookings = () => {
           bookingId={activeChatDoctor.bookingId}
           onClose={() => setActiveChatDoctor(null)}
         />
+      )}
+
+      {/* Rating Modal */}
+      {ratingDoctorId && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200">
+            <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+              <h3 className="text-lg font-black text-slate-800">Rate your Doctor</h3>
+              <button onClick={() => setRatingDoctorId(null)} className="text-slate-400 hover:text-slate-600 transition-colors">
+                <BsXCircleFill className="text-xl" />
+              </button>
+            </div>
+            <div className="p-6">
+              <FeedbackForm doctorId={ratingDoctorId} onSuccess={() => setRatingDoctorId(null)} />
+            </div>
+          </div>
+        </div>
       )}
     </section>
   );
