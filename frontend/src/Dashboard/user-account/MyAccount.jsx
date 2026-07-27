@@ -7,6 +7,7 @@ import useGetProfile from "../../hooks/useFetchData";
 import MyBookings from "./MyBookings";
 import Profile from "./Profile";
 import UserActivity from "./UserActivity";
+import { BsStarFill } from "react-icons/bs";
 
 const MyAccount = () => {
   const [tab, setTab] = useState("bookings");
@@ -91,14 +92,22 @@ const MyAccount = () => {
                 onClick={() => setTab("settings")}
                 className={`${
                   tab == "settings" && "bg-green-600 text-white"
-                } customBtn`}
+                } mr-2 customBtn`}
               >
                 Profile Settings
+              </button>
+              <button
+                onClick={() => setTab("rate")}
+                className={`${
+                  tab == "rate" ? "bg-amber-500 text-white" : "border border-amber-400 text-amber-600 hover:bg-amber-50"
+                } mr-5 customBtn flex items-center gap-1.5`}
+              >
+                <BsStarFill className="text-amber-400" /> Rate Doctors
               </button>
             </div>
 
             {/* ===active tab show_details=== */}
-            {tab == "bookings" && <MyBookings />}
+            {(tab == "bookings" || tab == "rate") && <MyBookings initialSection={tab === "rate" ? "rate" : "bookings"} />}
             {tab == "activity" && <UserActivity />}
             {tab == "settings" && <Profile user={userData} />}
           </div>
