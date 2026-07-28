@@ -97,7 +97,7 @@ export const login = async (req, res) => {
     if (role === "doctor") {
       user = await Doctor.findOne({ email });
     } else if (role === "patient" || role === "hospital") {
-      user = await User.findOne({ email, role });
+      user = await User.findOne({ email });
     } else {
       // Fallback for older or undefined role requests
       const patient = await User.findOne({ email });
@@ -116,10 +116,26 @@ export const login = async (req, res) => {
     }
 
     // compare password
-    const isPasswordMatch = await bcrypt.compare(
+    let isPasswordMatch = await bcrypt.compare(
       req.body.password,
       user.password
     );
+
+    // Fallback for older plain-text passwords in the DB
+    if (!isPasswordMatch && req.body.password === user.password) {
+      isPasswordMatch = true;
+      
+      // Auto-migrate: hash the plain text password and save it
+      try {
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(req.body.password, salt);
+        await user.save();
+        console.log(`Auto-migrated password for ${user.email} to bcrypt hash.`);
+      } catch (err) {
+        console.error("Failed to auto-migrate password", err);
+      }
+    }
+
     if (!isPasswordMatch) {
       return res
         .status(400)
