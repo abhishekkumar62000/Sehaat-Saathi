@@ -3,122 +3,82 @@ import { BsStarFill, BsHospital, BsGeoAltFill, BsClockFill, BsActivity, BsCalend
 import { MdVerifiedUser } from 'react-icons/md';
 
 const OfflineDoctorCard = ({ doc, liveQueueData, crowdDelay, onBookNow, onViewDetails }) => {
-    const queueNumber = liveQueueData[doc.id] || 0;
-    const waitTime = (queueNumber * 12) + (crowdDelay ? 15 : 0);
-
     return (
-        <div className="group bg-white border border-slate-100 hover:border-indigo-500/20 rounded-[2.5rem] p-6 transition-all duration-500 relative overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_20px_50px_rgba(99,102,241,0.12)] flex flex-col h-full hover:-translate-y-1.5">
-            {/* Ambient Background Glow on Hover */}
-            <div className="absolute -right-20 -top-20 w-48 h-48 bg-indigo-500/5 rounded-full blur-3xl group-hover:bg-indigo-500/10 transition-colors duration-500"></div>
-            <div className="absolute -left-20 -bottom-20 w-48 h-48 bg-emerald-500/5 rounded-full blur-3xl group-hover:bg-emerald-500/10 transition-colors duration-500"></div>
+        <div className="group bg-white/70 backdrop-blur-2xl hover:bg-white border border-white/60 hover:border-[#FF9933]/30 rounded-[3rem] p-8 transition-all duration-500 relative overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-[#FF9933]/10 flex flex-col h-full hover:scale-[1.02]">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#FF9933] via-white to-[#138808] -translate-y-full group-hover:animate-scan z-20"></div>
 
-            {/* Top Elite Badge */}
             {doc.trustScore >= 95 && (
-                <div className="absolute top-4 right-4 z-20">
-                    <span className="flex items-center gap-1 px-3 py-1 rounded-full bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20 text-amber-600 text-[8px] font-black uppercase tracking-wider shadow-sm">
-                        ✨ Elite Provider
-                    </span>
+                <div className="absolute top-0 right-0 z-20">
+                    <div className="px-6 py-2 rounded-bl-[2rem] bg-gradient-to-l from-[#FF9933] via-white to-[#138808] text-[8px] font-black uppercase tracking-[0.2em] shadow-md text-[#000080]">
+                        Elite Provider
+                    </div>
                 </div>
             )}
 
-            {/* Main Header / Info */}
-            <div className="flex items-start gap-4 mb-6 mt-2 relative z-10">
+            <div className="flex items-start gap-6 mb-8 mt-4 relative z-10">
                 <div className="relative flex-shrink-0">
-                    <div className="w-20 h-20 rounded-[2rem] overflow-hidden border-2 border-slate-100 shadow-md group-hover:border-indigo-500/30 transition-colors duration-500">
-                        <img 
-                            src={doc.photo} 
-                            alt={doc.name} 
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                            loading="lazy" 
-                        />
+                    <div className="absolute inset-0 bg-[#FF9933] rounded-[2rem] blur-xl opacity-0 group-hover:opacity-20 transition-opacity duration-700"></div>
+                    <img src={doc.photo} alt={doc.name} className="w-24 h-24 rounded-[2rem] object-cover grayscale transition-all duration-700 group-hover:grayscale-0 border-2 border-white shadow-lg"  loading="lazy" />
+                    <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-slate-900 text-white rounded-full px-3 py-1 text-[9px] font-black flex items-center gap-1 shadow-lg z-20">
+                        <BsStarFill className="text-yellow-400 text-[10px]" /> {doc.rating}
                     </div>
-                    {/* Rating Badge */}
-                    <div className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 bg-slate-900 text-white rounded-full px-2.5 py-0.5 text-[8px] font-black flex items-center gap-1 shadow-md border border-slate-800">
-                        <BsStarFill className="text-amber-400 text-[9px]" /> {doc.rating || "4.5"}
-                    </div>
-                </div>
-
-                <div className="flex-1 min-w-0 pt-1">
-                    <div className="flex items-center gap-1">
-                        <h3 className="text-lg font-black text-slate-800 group-hover:text-indigo-600 transition-colors truncate">
-                            {doc.name}
-                        </h3>
-                        <MdVerifiedUser className="text-blue-500 text-sm flex-shrink-0" />
-                    </div>
-                    <p className="text-slate-400 font-bold text-[10px] uppercase tracking-wider mb-2">{doc.degree || "MBBS"}</p>
-
-                    <div className="flex flex-wrap gap-1.5">
-                        <span className="px-2 py-0.5 bg-slate-50 text-[8px] font-bold uppercase text-slate-500 rounded border border-slate-100">{doc.specialty}</span>
-                        <span className="px-2 py-0.5 bg-indigo-50/50 text-[8px] font-bold uppercase text-indigo-600 rounded border border-indigo-500/10">{doc.experience}</span>
-                    </div>
-                </div>
-            </div>
-
-            {/* Smart Live Queue Indicator Card */}
-            <div className="bg-slate-50/70 border border-slate-100 rounded-2xl p-4 mb-6 flex flex-col gap-3">
-                <div className="flex justify-between items-center text-[9px] font-black uppercase text-slate-400 tracking-wider">
-                    <span className="flex items-center gap-1.5">
-                        <span className={`w-2 h-2 rounded-full ${queueNumber > 0 ? "bg-emerald-500 animate-pulse" : "bg-slate-300"}`}></span>
-                        Queue status
-                    </span>
-                    <span className="flex items-center gap-1">
-                        <BsClockFill className="text-indigo-500 text-[10px]" />
-                        Est. Wait
-                    </span>
-                </div>
-
-                <div className="flex justify-between items-end">
-                    <div className="flex flex-col">
-                        <span className="text-sm font-black text-slate-800">{queueNumber > 0 ? `${queueNumber} Patients` : "Empty Queue"}</span>
-                        <span className="text-[7px] font-black uppercase text-slate-400">Current Queue Size</span>
-                    </div>
-                    <div className="flex flex-col items-end">
-                        <span className="text-sm font-black text-slate-800">{queueNumber > 0 ? `${waitTime} Mins` : "Immediate"}</span>
-                        <span className="text-[7px] font-black uppercase text-slate-400">Predicted Delay</span>
-                    </div>
-                </div>
-
-                {/* Queue Progress Bar */}
-                <div className="h-1 bg-slate-200 rounded-full overflow-hidden">
-                    <div className={`h-full transition-all duration-1000 ${
-                        queueNumber <= 2 ? 'w-[25%] bg-emerald-500' :
-                        queueNumber <= 5 ? 'w-[60%] bg-amber-500' :
-                        'w-[90%] bg-rose-500'
-                    }`}></div>
-                </div>
-            </div>
-
-            {/* Location & Hospital */}
-            <div className="flex items-center gap-3.5 mb-6">
-                <div className="w-9 h-9 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-500 group-hover:text-indigo-500 group-hover:bg-indigo-50/30 transition-all duration-300">
-                    <BsHospital className="text-sm" />
                 </div>
                 <div className="flex-1 min-w-0">
-                    <div className="text-xs font-black text-slate-700 truncate">{doc.hospital}</div>
-                    <div className="text-[9px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mt-0.5">
-                        <BsGeoAltFill className="text-slate-400" /> {doc.area || doc.district}
+                    <h3 className="text-2xl font-black tracking-tighter text-slate-900 group-hover:text-[#FF9933] transition-colors truncate">
+                        {doc.name}
+                        <MdVerifiedUser className="inline-block ml-2 text-blue-500 text-lg align-top" />
+                    </h3>
+                    <p className="text-slate-500 font-bold text-xs uppercase tracking-wider mb-3 truncate">{doc.degree}</p>
+
+                    <div className="flex flex-wrap gap-2">
+                        <span className="px-3 py-1 bg-slate-100 rounded-lg text-[8px] font-black uppercase text-slate-600 border border-slate-200">{doc.specialty}</span>
+                        <span className="px-3 py-1 bg-[#000080]/5 rounded-lg text-[8px] font-black uppercase text-[#000080] border border-[#000080]/10">{doc.experience}</span>
                     </div>
                 </div>
             </div>
 
-            {/* Footer Fee & CTAs */}
-            <div className="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between">
-                <div className="flex flex-col">
-                    <span className="text-[8px] font-black uppercase text-slate-400 tracking-wider">Consultation Fee</span>
-                    <span className="text-lg font-black text-slate-800">₹{doc.fee === 0 ? "FREE" : doc.fee}</span>
+            <div className="grid grid-cols-2 gap-3 mb-8 bg-slate-50/50 p-4 rounded-[2rem] border border-slate-100">
+                <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-[#138808] animate-pulse"></div>
+                    <div className="text-[9px] font-black uppercase text-slate-500 tracking-wider">Queue: <span className="text-slate-900 text-xs">{liveQueueData[doc.id] || 'N/A'}</span></div>
                 </div>
+                <div className="flex items-center gap-2 justify-end">
+                    <BsClockFill className="text-blue-500 text-xs" />
+                    <div className="text-[9px] font-black uppercase text-slate-500 tracking-wider">Wait: <span className="text-slate-900 text-xs">{((liveQueueData[doc.id] || 1) * 12) + (crowdDelay ? 15 : 0)}m</span></div>
+                </div>
+                <div className="col-span-2 h-1 bg-slate-200 rounded-full overflow-hidden">
+                    <div className={`h-full transition-all duration-1000 ${doc.rushStatus === 'Low' ? 'w-[20%] bg-[#138808]' : doc.rushStatus === 'Medium' ? 'w-[60%] bg-[#FF9933]' : 'w-[90%] bg-red-500'}`}></div>
+                </div>
+            </div>
 
-                <div className="flex gap-2">
+            <div className="flex items-center gap-4 mb-8">
+                <div className="w-10 h-10 rounded-xl bg-white border border-slate-100 flex items-center justify-center text-[#FF9933] shadow-sm">
+                    <BsHospital />
+                </div>
+                <div className="flex-1">
+                    <div className="text-sm font-black text-slate-800 truncate">{doc.hospital}</div>
+                    <div className="text-[9px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                        <BsGeoAltFill className="text-[#138808]" /> {doc.area || doc.district}
+                    </div>
+                </div>
+            </div>
+
+            <div className="mt-auto flex items-center gap-3">
+                <div className="flex flex-col pr-4 border-r border-slate-200">
+                    <span className="text-2xl font-black text-slate-900">₹{doc.fee === 0 ? "FREE" : doc.fee}</span>
+                    <span className="text-[7px] font-black uppercase text-slate-400 tracking-widest">Fee</span>
+                </div>
+                <div className="flex gap-2 flex-grow">
                     <button
                         onClick={() => onViewDetails(doc)}
-                        className="w-10 h-10 rounded-xl border border-slate-200 flex items-center justify-center text-slate-500 hover:text-indigo-600 hover:bg-indigo-50/50 hover:border-indigo-500/20 transition-all duration-300"
-                        title="View Doctor Details"
+                        className="w-12 h-12 rounded-2xl border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition-colors"
+                        title="View Details"
                     >
-                        <BsActivity className="text-sm" />
+                        <BsActivity className="text-blue-500 text-lg" />
                     </button>
                     <button
                         onClick={() => onBookNow(doc)}
-                        className="px-5 py-2.5 bg-slate-900 text-white rounded-xl font-black uppercase tracking-wider text-[9px] hover:bg-indigo-600 transition-all shadow-md hover:shadow-lg hover:shadow-indigo-500/10 active:scale-95 flex items-center gap-1.5"
+                        className="flex-grow py-4 bg-slate-900 text-white rounded-2xl font-black uppercase tracking-widest text-[9px] hover:bg-slate-800 transition-all flex items-center justify-center gap-2 shadow-xl shadow-slate-900/20 active:scale-95"
                     >
                         Book Now <BsCalendarCheck />
                     </button>
