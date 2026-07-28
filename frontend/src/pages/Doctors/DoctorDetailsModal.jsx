@@ -1,5 +1,6 @@
 import React from 'react';
 import { BsArrowRight, BsCheckCircleFill, BsStarFill, BsGeoAltFill, BsHospital, BsXCircleFill } from 'react-icons/bs';
+import LiveAvailabilityTimetable from '../../components/DoctorDetails/LiveAvailabilityTimetable';
 
 const DoctorDetailsModal = ({ doc, onClose }) => {
     if (!doc) return null;
@@ -54,12 +55,11 @@ const DoctorDetailsModal = ({ doc, onClose }) => {
                         </div>
 
                         <div className="space-y-3">
-                            <h3 className="text-sm font-black uppercase text-slate-400 tracking-widest border-b border-slate-100 pb-2">OPD Timings</h3>
-                            <div className="flex gap-2 flex-wrap">
-                                {['10:00 AM - 1:00 PM', '4:00 PM - 8:00 PM'].map((time, i) => (
-                                    <span key={i} className="px-3 py-2 bg-slate-800 text-white rounded-xl text-xs font-bold uppercase tracking-wide">{time}</span>
-                                ))}
-                            </div>
+                            <LiveAvailabilityTimetable 
+                                doctorId={doc.id || doc._id} 
+                                initialAvailability={doc.availability} 
+                                initialHolidays={doc.unavailabilityDates} 
+                            />
                         </div>
                     </div>
                 </div>

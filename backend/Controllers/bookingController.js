@@ -159,12 +159,46 @@ export const getAvailableSlots = async (req, res) => {
       return res.status(404).json({ success: false, message: "Doctor not found" });
     }
 
-    // Temporary logic: For offline demo, we generate fixed slots based on availability or just standard ones
-    // In production, we would check doctor.availability and filter out booked ones.
-    const baseSlots = ['10:00 AM', '11:30 AM', '02:00 PM', '04:30 PM', '06:00 PM', '07:30 PM'];
+    // Check holidays
+    if (doctor.unavailabilityDates && doctor.unavailabilityDates.includes(date)) {
+      return res.status(200).json({ success: true, message: "Doctor is on holiday", data: [] });
+    }
+
+    // Determine Day of Week
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const requestedDate = new Date(date);
+    const dayName = days[requestedDate.getDay()];
+
+    // Find schedule for that day
+    const daySchedule = doctor.availability?.find(a => a.day === dayName);
+    
+    if (!daySchedule || daySchedule.isAvailable === false) {
+      return res.status(200).json({ success: true, message: "No availability on this day", data: [] });
+    }
+
+    // Generate slots
+    const { startTime, endTime, slotDuration } = daySchedule;
+    // startTime is like "09:00", endTime is "17:00"
+    const start = new Date(`${date}T${startTime}:00`);
+    const end = new Date(`${date}T${endTime}:00`);
+    
+    let current = start;
+    const baseSlots = [];
+
+    while (current < end) {
+      const timeString = current.toLocaleTimeString("en-US", { hour: '2-digit', minute: '2-digit' });
+      baseSlots.push(timeString);
+      // Increment by slotDuration
+      current = new Date(current.getTime() + slotDuration * 60000);
+    }
     
     // Check existing bookings for this date
-    const existingBookings = await Booking.find({ doctor: doctorId, appointmentDate: date });
+    const existingBookings = await Booking.find({ doctor: doctorId, appointmentDate: date, status: { $ne: "cancelled" } });
+    
+    if (doctor.maxPatientsPerDay && existingBookings.length >= doctor.maxPatientsPerDay) {
+       return res.status(200).json({ success: true, message: "Maximum patient cap reached for today", data: [] });
+    }
+
     const bookedTimeSlots = existingBookings.map(b => b.appointmentTime);
     
     const availableSlots = baseSlots.filter(slot => !bookedTimeSlots.includes(slot));

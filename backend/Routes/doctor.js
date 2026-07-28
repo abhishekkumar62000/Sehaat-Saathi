@@ -8,7 +8,8 @@ import {
   recordActivity,
   getActivityHistory,
   getRecommendedDoctors,
-  updateDoctorAvailability
+  updateDoctorAvailability,
+  generatePrescription
 } from "../Controllers/doctorController.js";
 import { updateBookingStatus } from "../Controllers/bookingController.js";
 import { authenticate, restrict } from "../auth/verifyToken.js";
@@ -21,6 +22,7 @@ router.use("/:doctorId/reviews", reviewRouter);
 
 router.get("/profile/me", authenticate, restrict(["doctor", "hospital"]), getDoctorProfile);
 router.put("/availability/me", authenticate, restrict(["doctor"]), updateDoctorAvailability);
+router.post("/generate-prescription", authenticate, restrict(["doctor"]), generatePrescription);
 router.get("/recommendations", getRecommendedDoctors);
 router.get("/:id", getSingleDoctor);
 router.get("/", getAllDoctor);

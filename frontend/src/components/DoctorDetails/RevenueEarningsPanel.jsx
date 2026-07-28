@@ -8,6 +8,7 @@ import {
 } from "react-icons/bs";
 import { FaMoneyBillWave } from "react-icons/fa";
 import Loading from "../../components/Shared/Loading";
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const RevenueEarningsPanel = ({ doctorData }) => {
   const { token } = useContext(authContext);
@@ -124,8 +125,6 @@ const RevenueEarningsPanel = ({ doctorData }) => {
         : analytics)
     : computeRevenue(doctorData?.appointments || []);
 
-  const max6M = Math.max(...(stats.months6?.map(m => m.earnings) || [1]), 1);
-
   if (loading) return <div className="py-10"><Loading /></div>;
 
   return (
@@ -217,7 +216,7 @@ const RevenueEarningsPanel = ({ doctorData }) => {
         ))}
       </div>
 
-      {/* ── 6 Month Earnings Bar Chart + Top Patients ── */}
+      {/* ── 6 Month Earnings Recharts AreaChart + Top Patients ── */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
         {/* 6-Month Chart */}
@@ -229,51 +228,39 @@ const RevenueEarningsPanel = ({ doctorData }) => {
             </div>
             <div className="flex gap-1 p-1 bg-slate-100 rounded-xl text-[10px] font-bold">
               <button onClick={() => setActiveChart("earnings")}
-                className={`px-2 py-1 rounded-lg transition-all ${activeChart === "earnings" ? "bg-white text-slateald-800 shadow-sm" : "text-slate-400"}`}>
+                className={`px-2 py-1 rounded-lg transition-all ${activeChart === "earnings" ? "bg-white text-emerald-800 shadow-sm" : "text-slate-400"}`}>
                 ₹ Earnings
               </button>
               <button onClick={() => setActiveChart("appointments")}
-                className={`px-2 py-1 rounded-lg transition-all ${activeChart === "appointments" ? "bg-white text-slate-800 shadow-sm" : "text-slate-400"}`}>
+                className={`px-2 py-1 rounded-lg transition-all ${activeChart === "appointments" ? "bg-white text-emerald-800 shadow-sm" : "text-slate-400"}`}>
                 # Visits
               </button>
             </div>
           </div>
 
-          {/* Bar Chart */}
-          <div className="h-48 flex items-end justify-between gap-2 border-b border-slate-100 pb-2 px-1">
-            {(stats.months6 || []).map((m, i) => {
-              const val = activeChart === "earnings" ? m.earnings : m.count;
-              const maxVal = activeChart === "earnings"
-                ? max6M
-                : Math.max(...(stats.months6?.map(x => x.count) || [1]), 1);
-              const pct = maxVal > 0 ? (val / maxVal) * 100 : 0;
-              const isLast = i === (stats.months6?.length || 0) - 1;
-
-              return (
-                <div key={i} className="flex-1 flex flex-col items-center gap-1.5 group h-full justify-end">
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-slate-900 text-white text-[9px] font-bold py-1 px-1.5 rounded-lg pointer-events-none mb-1 text-center whitespace-nowrap shadow-lg z-10">
-                    {activeChart === "earnings" ? `₹${val.toLocaleString("en-IN")}` : `${val} visits`}
-                  </div>
-                  <div className="w-full bg-slate-100 rounded-t-xl overflow-hidden flex flex-col justify-end h-full max-w-[36px]">
-                    <div
-                      style={{ height: `${Math.max(pct, 6)}%` }}
-                      className={`w-full rounded-t-xl transition-all duration-500 ${
-                        isLast
-                          ? "bg-gradient-to-t from-emerald-600 to-teal-400"
-                          : "bg-gradient-to-t from-emerald-200 to-emerald-100 group-hover:from-emerald-400 group-hover:to-emerald-300"
-                      }`}
-                    />
-                  </div>
-                  <span className="text-[10px] font-bold text-slate-400 group-hover:text-emerald-600 transition-colors">
-                    {m.label}
-                  </span>
-                </div>
-              );
-            })}
+          {/* Recharts AreaChart */}
+          <div className="h-56 w-full mt-4">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={stats.months6 || []} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="colorEarnings" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
+                    <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                  </linearGradient>
+                </defs>
+                <XAxis dataKey="label" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#94a3b8' }} />
+                <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#94a3b8' }} tickFormatter={(value) => activeChart === "earnings" ? `₹${value/1000}k` : value} />
+                <Tooltip 
+                  contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)' }}
+                  formatter={(value) => [activeChart === "earnings" ? `₹${value.toLocaleString("en-IN")}` : `${value} visits`, activeChart === "earnings" ? "Earnings" : "Visits"]}
+                />
+                <Area type="monotone" dataKey={activeChart} stroke="#10b981" strokeWidth={3} fillOpacity={1} fill="url(#colorEarnings)" />
+              </AreaChart>
+            </ResponsiveContainer>
           </div>
 
           {/* Revenue Summary Row */}
-          <div className="grid grid-cols-3 gap-3 pt-1">
+          <div className="grid grid-cols-3 gap-3 pt-4 border-t border-slate-100">
             {[
               { label: "Paid Sessions", value: stats.paidCount || 0, color: "text-emerald-600" },
               { label: "Unpaid Sessions", value: stats.unpaidCount || 0, color: "text-amber-600" },

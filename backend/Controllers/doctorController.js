@@ -287,6 +287,7 @@ export const getActivityHistory = async (req, res) => {
 export const updateDoctorAvailability = async (req, res) => {
   const { availability, unavailabilityDates, maxPatientsPerDay } = req.body;
   const doctorId = req.userId;
+  const io = req.app.get("io");
 
   try {
     const doctor = await Doctor.findByIdAndUpdate(
@@ -301,6 +302,14 @@ export const updateDoctorAvailability = async (req, res) => {
       { new: true }
     ).select("-password");
 
+    if (io) {
+      io.emit("doctor-availability-updated", {
+        doctorId: doctor._id,
+        availability: doctor.availability,
+        unavailabilityDates: doctor.unavailabilityDates
+      });
+    }
+
     res.status(200).json({
       success: true,
       message: "Availability schedule updated successfully",
@@ -308,6 +317,58 @@ export const updateDoctorAvailability = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({ success: false, message: "Failed to update availability: " + err.message });
+  }
+};
+
+// POST /api/v1/doctors/generate-prescription
+export const generatePrescription = async (req, res) => {
+  const { symptoms, notes } = req.body;
+
+  try {
+    const prompt = `You are an expert AI medical assistant helping a doctor write a formal prescription.
+The patient presented with these symptoms: "${symptoms || "Not provided"}".
+The doctor added these quick notes: "${notes || "No notes provided"}".
+
+Generate a structured medical prescription in pure JSON format containing:
+{
+  "diagnosis": "A concise diagnosis based on notes",
+  "medicines": [
+    { "name": "Medicine Name", "dosage": "e.g. 500mg", "frequency": "e.g. 1-0-1", "duration": "e.g. 5 days", "instructions": "e.g. After food" }
+  ],
+  "advice": "General advice or lifestyle recommendations",
+  "followUp": "When to follow up"
+}
+Output strictly valid JSON only. Do not include markdown tags.`;
+
+    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${process.env.GROQ_API_KEY}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: "llama3-8b-8192",
+        messages: [{ role: "user", content: prompt }],
+        temperature: 0.2,
+      })
+    });
+
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error?.message || "Groq API Failed");
+
+    let prescriptionJson = data.choices[0].message.content.trim();
+    // Clean up potential markdown formatting
+    if (prescriptionJson.startsWith("\`\`\`json")) {
+      prescriptionJson = prescriptionJson.replace(/\`\`\`json/g, "").replace(/\`\`\`/g, "").trim();
+    }
+    
+    res.status(200).json({
+      success: true,
+      data: JSON.parse(prescriptionJson)
+    });
+  } catch (error) {
+    console.error("AI Rx Generation Error:", error);
+    res.status(500).json({ success: false, message: "Failed to generate prescription" });
   }
 };
 

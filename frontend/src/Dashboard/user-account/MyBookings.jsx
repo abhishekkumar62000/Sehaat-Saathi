@@ -17,6 +17,8 @@ import { MdVideoCall, MdHealthAndSafety, MdStar, MdRateReview } from "react-icon
 import { FaFilePrescription, FaMapMarkerAlt, FaUserMd } from "react-icons/fa";
 import LiveChatDrawer from "../../components/Chat/LiveChatDrawer";
 import { authContext } from "../../context/AuthContext";
+import SharedConsultationCanvas from "../../components/DoctorDetails/SharedConsultationCanvas";
+import PatientVitalsSimulator from "../../components/Patient/PatientVitalsSimulator";
 
 const STATUS_STYLES = {
   pending:         { pill: "bg-amber-100 text-amber-800 border-amber-200",  dot: "bg-amber-500 animate-pulse", label: "Pending" },
@@ -25,6 +27,7 @@ const STATUS_STYLES = {
   rejected:        { pill: "bg-red-100 text-red-700 border-red-200",        dot: "bg-red-500",                 label: "Rejected" },
   auto_cancelled:  { pill: "bg-slate-100 text-slate-600 border-slate-200",  dot: "bg-slate-400",              label: "Auto Cancelled" },
   PATIENT_ARRIVED: { pill: "bg-orange-100 text-orange-800 border-orange-200", dot: "bg-orange-500 animate-pulse", label: "Arrived" },
+  CONSULTATION_STARTED: { pill: "bg-purple-100 text-purple-800 border-purple-200", dot: "bg-purple-500 animate-pulse", label: "In Session" },
 };
 
 // ─── Inline Rating Modal Component ───────────────────────────────────────────
@@ -181,10 +184,50 @@ const RatingModal = ({ doctor, doctorId, onClose }) => {
   );
 };
 
+// ─── Inline Breathing Relief Component ───────────────────────────────────────
+const BreathingRelief = () => {
+  const [phase, setPhase] = useState("Inhale");
+  const [count, setCount] = useState(4);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCount(c => {
+        if (c <= 1) {
+          setPhase(p => {
+            if (p === "Inhale") return "Hold";
+            if (p === "Hold") return "Exhale";
+            return "Inhale";
+          });
+          return 4;
+        }
+        return c - 1;
+      });
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="bg-slate-950 border border-slate-800 rounded-2xl p-4 flex flex-col items-center justify-center text-white relative overflow-hidden shadow-inner w-full">
+      <div className="text-[8px] font-black uppercase text-indigo-400 tracking-[0.2em] mb-3">Neural Wait Relief</div>
+      <div className={`w-20 h-20 rounded-full flex flex-col items-center justify-center transition-all duration-[1000ms] border-2 shadow-lg ${
+        phase === "Inhale" ? "scale-110 bg-indigo-500/10 border-indigo-500/40 shadow-indigo-500/10" :
+        phase === "Hold" ? "scale-105 bg-amber-500/10 border-amber-500/40 shadow-amber-500/10" :
+        "scale-90 bg-emerald-500/10 border-emerald-500/40 shadow-emerald-500/10"
+      }`}>
+        <span className="text-[10px] font-black uppercase tracking-widest">{phase}</span>
+        <span className="text-xs font-bold mt-0.5">{count}s</span>
+      </div>
+      <p className="text-[9px] text-slate-500 font-bold text-center mt-3 leading-relaxed">Pace your breath to ease pre-clinical anxiety.</p>
+    </div>
+  );
+};
+
 // ─── Main MyBookings Component ────────────────────────────────────────────────
 const MyBookings = ({ initialSection = "bookings" }) => {
-  const { data: appointments, loading, error } = useFetchData(`${BASE_URL}/appointments/patient`);
   const { socket } = useSocket();
+  const [appointments, setAppointments] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const [expandedBooking, setExpandedBooking] = useState(null);
   const [viewRxBooking, setViewRxBooking]     = useState(null);
@@ -193,18 +236,107 @@ const MyBookings = ({ initialSection = "bookings" }) => {
   const [filterTab, setFilterTab]             = useState("all");
   const [liveStatuses, setLiveStatuses]       = useState({});
   const [activeSection, setActiveSection]     = useState(initialSection); // "bookings" | "rate"
+  const [activeCanvasBookingId, setActiveCanvasBookingId] = useState(null);
+  const [servingToken, setServingToken]       = useState("");
 
-  // Real-time socket: Doctor updates status → patient sees it instantly
+  const [prescriptionDrafts, setPrescriptionDrafts] = useState({});
+  const [activePollRequest, setActivePollRequest]   = useState(null); // bookingId
+  const [pollPainLevel, setPollPainLevel]           = useState(5);
+  const [pollNotes, setPollNotes]                   = useState("");
+
+  const fetchAppointments = React.useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(`${BASE_URL}/appointments/patient`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+      const result = await res.json();
+      if (!res.ok) throw new Error(result.message);
+      setAppointments(result.data || []);
+      setError(null);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchAppointments();
+  }, [fetchAppointments]);
+
+  // Real-time socket: Doctor updates status → patient sees it instantly and re-fetches
   useEffect(() => {
     if (!socket) return;
+
+    // Join prescription room for active consultations
+    appointments.forEach(appt => {
+      if (appt.status === "CONSULTATION_STARTED" || liveStatuses[appt._id] === "CONSULTATION_STARTED") {
+        socket.emit("JOIN_PRESCRIPTION", appt._id);
+      }
+    });
+
     const onStatusSync = (data) => {
       const { bookingId, status, message } = data;
       toast.info(`⚡ ${message}`, { position: "top-right", autoClose: 5000 });
       setLiveStatuses(prev => ({ ...prev, [bookingId]: status }));
+      fetchAppointments();
     };
+
+    const onQueueSync = (data) => {
+      const { currentServing } = data;
+      setServingToken(currentServing);
+    };
+
+    const onDraftSync = (data) => {
+      const { bookingId, draft } = data;
+      setPrescriptionDrafts(prev => ({ ...prev, [bookingId]: draft }));
+    };
+
+    const onPollRequest = (data) => {
+      const { bookingId } = data;
+      setActivePollRequest(bookingId);
+      toast.warning("🔔 Doctor is requesting a live Symptom & Pain update!");
+    };
+
     socket.on("STATUS_SYNC", onStatusSync);
-    return () => socket.off("STATUS_SYNC", onStatusSync);
-  }, [socket]);
+    socket.on("QUEUE_SYNC", onQueueSync);
+    socket.on("PRESCRIPTION_DRAFT_SYNC", onDraftSync);
+    socket.on("PATIENT_POLL_REQUEST", onPollRequest);
+
+    return () => {
+      socket.off("STATUS_SYNC", onStatusSync);
+      socket.off("QUEUE_SYNC", onQueueSync);
+      socket.off("PRESCRIPTION_DRAFT_SYNC", onDraftSync);
+      socket.off("PATIENT_POLL_REQUEST", onPollRequest);
+    };
+  }, [socket, appointments, liveStatuses, fetchAppointments]);
+
+  const submitPatientPoll = (bookingId, doctorId) => {
+    if (!socket) return;
+    socket.emit("SUBMIT_PATIENT_POLL", {
+      bookingId,
+      doctorId,
+      pollData: {
+        painLevel: pollPainLevel,
+        notes: pollNotes
+      }
+    });
+    setActivePollRequest(null);
+    setPollNotes("");
+    toast.success("Symptom details synced to doctor dashboard!");
+  };
+
+  const getQueueDistance = (patientToken, currentServing) => {
+    if (!patientToken || !currentServing) return null;
+    const pParts = patientToken.split("-");
+    const sParts = currentServing.split("-");
+    if (pParts.length < 3 || sParts.length < 3) return null;
+    const pNum = parseInt(pParts[2]);
+    const sNum = parseInt(sParts[2]);
+    if (isNaN(pNum) || isNaN(sNum)) return null;
+    return pNum - sNum;
+  };
 
   const allBookings = appointments || [];
 
@@ -525,6 +657,16 @@ const MyBookings = ({ initialSection = "bookings" }) => {
                               <BsStarFill /> Rate Doctor
                             </button>
 
+                            {/* Whiteboard Button - Only for active consultation */}
+                            {liveStatus === "CONSULTATION_STARTED" && (
+                              <button
+                                onClick={() => setActiveCanvasBookingId(activeCanvasBookingId === item._id ? null : item._id)}
+                                className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-[10px] font-black uppercase tracking-wider shadow-md shadow-indigo-200 transition-all active:scale-95"
+                              >
+                                🎨 {activeCanvasBookingId === item._id ? "Close Whiteboard" : "Open Whiteboard"}
+                              </button>
+                            )}
+
                             {/* Spacer */}
                             <div className="flex-1" />
 
@@ -535,6 +677,144 @@ const MyBookings = ({ initialSection = "bookings" }) => {
                               </div>
                             )}
                           </div>
+
+                          {/* Live Smart Queue HUD (Pending or Arrived or Confirmed) */}
+                          {(liveStatus === "pending" || liveStatus === "confirmed" || liveStatus === "PATIENT_ARRIVED") && (
+                            <div className="border-t border-slate-100 bg-slate-50/50 px-6 py-5 animate-in fade-in duration-300">
+                              <div className="flex flex-col md:flex-row gap-6 items-stretch">
+                                {/* Queue Tracking details */}
+                                <div className="flex-1 bg-white border border-slate-200 rounded-[2rem] p-6 shadow-sm flex flex-col justify-between">
+                                  <div className="flex items-center justify-between mb-4 border-b border-slate-100 pb-3">
+                                    <h4 className="text-xs font-black uppercase text-slate-700 tracking-wider flex items-center gap-1.5">
+                                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                                      Live Queue Tracker
+                                    </h4>
+                                    <span className="text-[9px] bg-slate-100 text-slate-500 font-bold px-2 py-0.5 rounded">
+                                      Token #{item.bookingToken}
+                                    </span>
+                                  </div>
+
+                                  <div className="grid grid-cols-2 gap-4 my-2">
+                                    <div className="p-3 bg-slate-50 border border-slate-100 rounded-xl flex flex-col justify-center">
+                                      <span className="text-[8px] font-black text-slate-400 uppercase tracking-wider">Serving Token</span>
+                                      <span className="text-lg font-black text-indigo-600 mt-1">
+                                        {servingToken || "None yet"}
+                                      </span>
+                                    </div>
+                                    <div className="p-3 bg-slate-50 border border-slate-100 rounded-xl flex flex-col justify-center">
+                                      <span className="text-[8px] font-black text-slate-400 uppercase tracking-wider">Estimated Wait</span>
+                                      <span className="text-lg font-black text-slate-800 mt-1">
+                                        {getQueueDistance(item.bookingToken, servingToken) !== null 
+                                          ? `${Math.max(0, getQueueDistance(item.bookingToken, servingToken) * 12)} mins`
+                                          : "-- mins"}
+                                      </span>
+                                    </div>
+                                  </div>
+
+                                  <div className="mt-4 p-3 bg-indigo-50 border border-indigo-100 text-indigo-800 text-[10px] font-bold rounded-xl flex items-center gap-2">
+                                    <span>⏳</span>
+                                    <span>
+                                      {getQueueDistance(item.bookingToken, servingToken) !== null 
+                                        ? `${Math.max(0, getQueueDistance(item.bookingToken, servingToken))} patient(s) ahead of you in the live queue.`
+                                        : "Waiting for the doctor to begin serving patients."}
+                                    </span>
+                                  </div>
+                                </div>
+
+                                {/* Breathing relief sidebar */}
+                                <div className="w-full md:w-1/3 flex items-center">
+                                  <BreathingRelief />
+                                </div>
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Live Consultation Section (Vitals & Canvas) */}
+                          {liveStatus === "CONSULTATION_STARTED" && (
+                            <div className="border-t border-slate-100 bg-slate-50/50 px-6 py-5 animate-in fade-in duration-300">
+                              <div className="flex flex-col md:flex-row gap-6 items-start">
+                                {/* Live Vitals Streaming & Draft Preview */}
+                                <div className="w-full md:w-1/3 flex flex-col gap-4">
+                                  <div>
+                                    <h4 className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1.5">Vitals Streamer</h4>
+                                    <PatientVitalsSimulator bookingId={item._id} />
+                                  </div>
+                                  {prescriptionDrafts[item._id] && (
+                                    <div className="bg-slate-950 border border-slate-800 rounded-[2rem] p-5 text-white flex flex-col gap-2 shadow-inner">
+                                      <div className="flex items-center gap-2 border-b border-slate-900 pb-2">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-ping"></span>
+                                        <span className="text-[8px] font-black uppercase text-indigo-400 tracking-widest">Live Prescription Draft</span>
+                                      </div>
+                                      <p className="text-xs font-bold text-slate-400 whitespace-pre-line leading-relaxed font-mono">
+                                        {prescriptionDrafts[item._id]}
+                                      </p>
+                                    </div>
+                                  )}
+                                </div>
+                                {/* Real-time Whiteboard display */}
+                                <div className="flex-grow w-full">
+                                  {activeCanvasBookingId === item._id ? (
+                                    <SharedConsultationCanvas bookingId={item._id} isDoctor={false} />
+                                  ) : (
+                                    <div className="bg-slate-100 border border-slate-200 rounded-[2rem] p-8 text-center text-slate-400 font-bold text-xs flex flex-col items-center justify-center min-h-[220px]">
+                                      <span className="text-3xl mb-2">🎨</span>
+                                      <p className="max-w-xs">Use the interactive shared whiteboard to view doctor's diagnostic canvas drawings in real-time.</p>
+                                      <button
+                                        onClick={() => setActiveCanvasBookingId(item._id)}
+                                        className="mt-4 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-[10px] font-black uppercase tracking-wider transition-all active:scale-95"
+                                      >
+                                        Launch Canvas
+                                      </button>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Active Live Poll Request Overlay */}
+                          {activePollRequest === item._id && (
+                            <div className="border-t border-slate-100 bg-amber-50/50 px-6 py-5 animate-in fade-in duration-300">
+                              <div className="bg-white border border-amber-200 rounded-[2rem] p-6 shadow-md max-w-md mx-auto flex flex-col gap-4">
+                                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                                  <h4 className="text-xs font-black uppercase text-amber-700 tracking-wider flex items-center gap-1.5">
+                                    🔔 Symptom Update Request
+                                  </h4>
+                                  <button onClick={() => setActivePollRequest(null)} className="text-slate-400 hover:text-slate-600 text-sm font-bold">✕</button>
+                                </div>
+                                <div className="space-y-4">
+                                  <div>
+                                    <div className="flex justify-between text-[9px] font-black uppercase text-slate-400 tracking-wider mb-2">
+                                      <span>Primary Pain Intensity</span>
+                                      <span className="text-amber-600 font-black">{pollPainLevel} / 10</span>
+                                    </div>
+                                    <input 
+                                      type="range" min="1" max="10" 
+                                      value={pollPainLevel} 
+                                      onChange={e => setPollPainLevel(parseInt(e.target.value))}
+                                      className="w-full accent-amber-500 h-2 bg-slate-200 rounded-full appearance-none cursor-pointer"
+                                    />
+                                  </div>
+                                  <div>
+                                    <label className="text-[9px] font-black uppercase text-slate-400 tracking-wider mb-2 block">Quick Symptom Note</label>
+                                    <input 
+                                      type="text" 
+                                      placeholder="e.g. sharp lower back pain, feeling better..."
+                                      value={pollNotes}
+                                      onChange={e => setPollNotes(e.target.value)}
+                                      className="w-full text-xs p-3 border border-slate-200 rounded-xl focus:outline-amber-500 bg-slate-50 text-slate-700 font-bold"
+                                    />
+                                  </div>
+                                  <button
+                                    onClick={() => submitPatientPoll(item._id, item.doctor?._id || item.doctor)}
+                                    className="w-full py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-black uppercase text-[10px] tracking-wider rounded-xl transition-all active:scale-95 shadow-md shadow-amber-200"
+                                  >
+                                    Submit Symptom Sync
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          )}
 
                           {/* Journey Timeline (Expanded) */}
                           {isExpanded && (

@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { BsCalendarCheck, BsCheckCircleFill, BsXCircleFill, BsCloudArrowUp, BsMicFill, BsMicMuteFill } from 'react-icons/bs';
 import uploadImageToCloudinary from '../../utils/uploadCloudinary';
 import { BASE_URL } from '../../config';
+import { useSocket } from '../../context/SocketContext';
+import { toast } from 'react-toastify';
 
 const BookingWizard = ({ doc, onClose, onSuccess }) => {
+    const { socket } = useSocket();
     const [step, setStep] = useState(1);
     const [type, setType] = useState('First Visit');
     const [date, setDate] = useState('');
@@ -53,10 +56,9 @@ const BookingWizard = ({ doc, onClose, onSuccess }) => {
         }
     };
 
-    useEffect(() => {
+    const fetchSlots = useCallback(() => {
         if (date && doc) {
             setLoadingSlots(true);
-            // Fetch real slots if API is wired, otherwise mock
             fetch(`${BASE_URL}/bookings/available-slots/${doc.id || doc._id}?date=${date}`, {
                 headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
             })
@@ -65,16 +67,37 @@ const BookingWizard = ({ doc, onClose, onSuccess }) => {
                 if(data.success) {
                     setAvailableSlots(data.data);
                 } else {
-                    setAvailableSlots(['10:00 AM', '11:30 AM', '02:00 PM', '04:30 PM']); // Fallback
+                    setAvailableSlots([]); 
                 }
                 setLoadingSlots(false);
             })
             .catch(() => {
-                setAvailableSlots(['10:00 AM', '11:30 AM', '02:00 PM', '04:30 PM']); // Fallback
+                setAvailableSlots([]);
                 setLoadingSlots(false);
             });
         }
     }, [date, doc]);
+
+    useEffect(() => {
+        fetchSlots();
+    }, [fetchSlots]);
+
+    useEffect(() => {
+        if (!socket) return;
+        
+        const handleAvailabilityUpdate = (data) => {
+            if (data.doctorId === (doc.id || doc._id)) {
+                toast.info(`⚡ Dr. ${doc.name} just updated their schedule!`);
+                fetchSlots(); // Refresh slots instantly
+            }
+        };
+
+        socket.on("doctor-availability-updated", handleAvailabilityUpdate);
+
+        return () => {
+            socket.off("doctor-availability-updated", handleAvailabilityUpdate);
+        };
+    }, [socket, doc, fetchSlots]);
 
     const handleConfirm = () => {
         // Prepare data
