@@ -19,14 +19,14 @@ import { MdHealthAndSafety, MdOutlineWaterDrop } from "react-icons/md";
 import { FaUserEdit } from "react-icons/fa";
 
 const TABS = [
+  { id: "settings", label: "Profile",      icon: <FaUserEdit />,           color: "from-rose-500 to-pink-600" },
   { id: "bookings", label: "Bookings",     icon: <BsCalendarCheckFill />,  color: "from-violet-600 to-indigo-600" },
   { id: "activity", label: "Activity",     icon: <BsClockHistory />,       color: "from-emerald-500 to-teal-600" },
-  { id: "settings", label: "Profile",      icon: <FaUserEdit />,           color: "from-rose-500 to-pink-600" },
   { id: "rate",     label: "Rate",         icon: <BsStarFill />,           color: "from-amber-500 to-orange-500" },
 ];
 
 const MyAccount = () => {
-  const [tab, setTab] = useState("bookings");
+  const [tab, setTab] = useState("settings");
   const { dispatch } = useContext(authContext);
 
   const {
