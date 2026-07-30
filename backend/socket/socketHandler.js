@@ -25,7 +25,56 @@ const initSocket = (server) => {
       if (hospitalId) io.to(hospitalId).emit("QUEUE_SYNC", { currentServing });
     });
 
-    // Handle Appointment Interaction (e.g. Patient arriving)
+    // =====================================================================
+    // FEATURE 1: Enhanced Live Token Queue — "Smart Alert" Notifications
+    // =====================================================================
+    socket.on("CALL_NEXT_PATIENT", (data) => {
+      const { doctorId, currentToken, queueState } = data;
+      io.to(doctorId).emit("QUEUE_UPDATED", { currentToken, queueState });
+      io.to(`lobby:${doctorId}`).emit("LOBBY_ANNOUNCE", { token: currentToken, roomName: data.roomName || "Consultation Room" });
+    });
+
+    socket.on("PATIENT_JOIN_QUEUE", (data) => {
+      const { doctorId, patientId, tokenNumber } = data;
+      socket.join(doctorId);
+      io.to(patientId).emit("QUEUE_JOINED", { tokenNumber });
+    });
+
+    // =====================================================================
+    // FEATURE 2: OPD Lobby Display — Clinic reception screen
+    // =====================================================================
+    socket.on("JOIN_LOBBY", (doctorId) => {
+      socket.join(`lobby:${doctorId}`);
+    });
+
+    // =====================================================================
+    // FEATURE 3: Pre-Consultation Vitals — Patient fills before entering
+    // =====================================================================
+    socket.on("JOIN_PRECONSULT", (bookingId) => {
+      socket.join(`preconsult:${bookingId}`);
+    });
+
+    socket.on("PRECONSULT_VITALS_SUBMIT", (data) => {
+      const { bookingId, doctorId, vitalsForm } = data;
+      io.to(doctorId).emit("PRECONSULT_VITALS_RECEIVED", { bookingId, vitalsForm });
+      io.to(`preconsult:${bookingId}`).emit("PRECONSULT_ACK", { bookingId });
+    });
+
+    // =====================================================================
+    // FEATURE 4: Emergency Delay Alert + Telehealth Pivot
+    // =====================================================================
+    socket.on("DOCTOR_DELAY_ALERT", (data) => {
+      const { doctorId, delayMinutes, reason, affectedBookingIds } = data;
+      affectedBookingIds.forEach(bookingId => {
+        io.to(bookingId).emit("DELAY_NOTIFICATION", { delayMinutes, reason, bookingId });
+      });
+      io.to(doctorId).emit("DELAY_BROADCAST_DONE", { count: affectedBookingIds.length });
+    });
+
+    socket.on("PATIENT_PIVOT_CHOICE", (data) => {
+      const { bookingId, doctorId, choice } = data;
+      io.to(doctorId).emit("PATIENT_PIVOT_SELECTED", { bookingId, choice });
+    });
     socket.on("PATIENT_ARRIVAL_SIGNAL", (data) => {
       const { bookingId, doctorId, hospitalId } = data;
       io.to(doctorId).emit("BOOKING_UPDATE_SIGNAL", { bookingId, status: "PATIENT_ARRIVED" });

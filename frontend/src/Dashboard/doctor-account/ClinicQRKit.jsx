@@ -2,24 +2,38 @@ import React, { useRef } from "react";
 import { QRCodeCanvas } from "qrcode.react";
 import { BsPrinterFill, BsDownload, BsBadgeAd, BsQrCodeScan } from "react-icons/bs";
 import { toast } from "react-toastify";
+import html2canvas from "html2canvas";
 
 const ClinicQRKit = ({ doctorData }) => {
-  const qrRef = useRef(null);
+  const posterRef = useRef(null);
   
   // Direct scan routing link
   const qrValue = `${window.location.origin}/doctor-profile-qr/${doctorData?._id || doctorData?.id}`;
 
   const downloadQR = () => {
-    const canvas = qrRef.current.querySelector("canvas");
-    if (!canvas) return;
-    const url = canvas.toDataURL("image/png");
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `Sehaat-Saathi-QR-${doctorData.name.replace(/\s+/g, "-")}.png`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    toast.success("QR Code image downloaded successfully!");
+    const posterElement = posterRef.current;
+    if (!posterElement) return;
+
+    toast.info("Generating high-resolution clinic poster...");
+
+    html2canvas(posterElement, {
+      useCORS: true,
+      scale: 2.5, // Crisp rendering resolution
+      backgroundColor: "#ffffff",
+      logging: false
+    }).then((canvas) => {
+      const url = canvas.toDataURL("image/png");
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `Sehaat-Saathi-ClinicKit-${doctorData.name.replace(/\s+/g, "-")}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      toast.success("✅ Complete clinic poster flyer downloaded!");
+    }).catch((err) => {
+      console.error("Flyer capture failed", err);
+      toast.error("Failed to generate flyer image.");
+    });
   };
 
   const handlePrint = () => {
@@ -58,7 +72,7 @@ const ClinicQRKit = ({ doctorData }) => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
         {/* Poster Mockup Sheet */}
         <div className="lg:col-span-2 flex justify-center bg-slate-50 p-6 rounded-3xl border border-slate-100 print:bg-white print:border-none print:p-0">
-          <div className="w-full max-w-md bg-white border-8 border-indigo-600 rounded-[3rem] p-8 text-center flex flex-col items-center justify-between gap-6 shadow-xl relative overflow-hidden print:border-indigo-600 print:shadow-none print:rounded-[2rem]">
+          <div ref={posterRef} className="w-full max-w-md bg-white border-8 border-indigo-600 rounded-[3rem] p-8 text-center flex flex-col items-center gap-6 shadow-xl relative overflow-hidden print:border-indigo-600 print:shadow-none print:rounded-[2rem]">
             {/* Design accents */}
             <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-orange-400 via-white to-green-500"></div>
             
@@ -72,16 +86,16 @@ const ClinicQRKit = ({ doctorData }) => {
 
             {/* Doctor Info Box */}
             <div className="bg-slate-50 border border-slate-100 w-full p-4 rounded-2xl flex items-center gap-4 text-left">
-              <img src={doctorData?.photo} alt={doctorData?.name} className="w-14 h-14 rounded-xl object-cover border border-slate-200" />
-              <div className="min-w-0">
-                <div className="text-sm font-black text-slate-800 truncate">{doctorData?.name}</div>
-                <div className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">{doctorData?.specialization}</div>
-                <div className="text-[9px] font-bold text-indigo-500 uppercase tracking-wider">{doctorData?.hospitalName || "Private Clinic"}</div>
+              <img src={doctorData?.photo} alt={doctorData?.name} crossOrigin="anonymous" className="w-14 h-14 rounded-xl object-cover border border-slate-200 flex-shrink-0" />
+              <div className="flex-grow">
+                <div className="text-sm font-black text-slate-800 leading-tight whitespace-normal">{doctorData?.name}</div>
+                <div className="text-[9px] font-bold text-slate-400 uppercase tracking-wider mt-0.5">{doctorData?.specialization}</div>
+                <div className="text-[9px] font-bold text-indigo-500 uppercase tracking-wider mt-0.5">{doctorData?.hospitalName || "Private Clinic"}</div>
               </div>
             </div>
 
             {/* QR Wrapper */}
-            <div ref={qrRef} className="p-4 bg-slate-50 border-4 border-dashed border-indigo-200 rounded-3xl flex items-center justify-center shadow-inner">
+            <div className="p-4 bg-slate-50 border-4 border-dashed border-indigo-200 rounded-3xl flex items-center justify-center shadow-inner">
               <QRCodeCanvas
                 value={qrValue}
                 size={180}

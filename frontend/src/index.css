@@ -388,3 +388,27 @@ code {
 .animate-satellite-pulse {
     animation: satellite-glow 2.5s infinite;
 }
+
+/* ── Mobile Utility Classes ── */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Safe area for iPhone bottom notch */
+.safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* border-3 utility */
+.border-3 {
+    border-width: 3px;
+}
+
+/* Mobile card flex shrink guard */
+.flex-shrink-0 {
+    flex-shrink: 0;
+}

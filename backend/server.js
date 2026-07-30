@@ -1,6 +1,17 @@
 import dotenv from "dotenv";
 dotenv.config();
 
+// Global Enterprise Process-Safety Guardians (Prevents crash on network dropouts/background failures)
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("⚠️ Unhandled Promise Rejection at:", promise, "reason:", reason);
+  // Log and bypass crash to keep server online 100%
+});
+
+process.on("uncaughtException", (error) => {
+  console.error("⚠️ Uncaught Exception thrown:", error);
+  // Log and bypass crash to keep server online 100%
+});
+
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";

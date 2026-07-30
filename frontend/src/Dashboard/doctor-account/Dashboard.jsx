@@ -22,6 +22,7 @@ import DoctorAvailabilityManager from "../../components/DoctorDetails/DoctorAvai
 import RevenueEarningsPanel from "../../components/DoctorDetails/RevenueEarningsPanel";
 import ReviewReputationManager from "../../components/DoctorDetails/ReviewReputationManager";
 import ClinicQRKit from "./ClinicQRKit";
+import PromotionalQRKit from "../../components/Shared/PromotionalQRKit";
 
 const Dashboard = () => {
   const [tab, setTab] = useState("overview");
@@ -175,6 +176,8 @@ const Dashboard = () => {
               {tab == "activity" && <DoctorActivity />}
               {tab == "qr-kit" && <ClinicQRKit doctorData={data} />}
             </div>
+            {/* Promotional Website Advertisement Kit */}
+            <PromotionalQRKit />
           </div>
         </div>
       )}

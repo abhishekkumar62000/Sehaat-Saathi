@@ -11,11 +11,14 @@ import {
   BsCheckCircleFill,
   BsHourglassSplit,
   BsCameraVideoFill,
-  BsBuilding
+  BsBuilding,
+  BsDisplay
 } from "react-icons/bs";
 import { FaUserMd } from "react-icons/fa";
 import Loading from "../../components/Shared/Loading";
 import Error from "../../components/Shared/Error";
+import { DoctorQueueController } from "../Shared/LiveQueuePanel";
+import EmergencyDelayManager from "../Shared/EmergencyDelayManager";
 
 const computeFallbackAnalytics = (doctor) => {
   const appts = doctor?.appointments || [];
@@ -198,6 +201,33 @@ const DoctorAnalyticsOverview = ({ doctorData }) => {
 
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
+      {/* ── NEW: Live Queue Panel + Emergency Alert ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="lg:col-span-2">
+          <DoctorQueueController
+            appointments={doctorData?.appointments || []}
+            doctorId={doctorData?._id}
+          />
+        </div>
+        <div className="space-y-3">
+          <EmergencyDelayManager
+            appointments={doctorData?.appointments || []}
+            doctorId={doctorData?._id}
+          />
+          {doctorData?._id && (
+            <a
+              href={`/opd-lobby/${doctorData._id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white border border-slate-700 rounded-2xl px-4 py-3 text-sm font-black transition-all"
+            >
+              <BsDisplay className="text-indigo-400" />
+              <span className="flex-grow text-left">Open Lobby Screen</span>
+              <span className="text-[9px] text-slate-400">For Clinic TV</span>
+            </a>
+          )}
+        </div>
+      </div>
       {/* --- TOP BANNER / HEADER --- */}
       <div className="bg-gradient-to-r from-indigo-900 via-indigo-800 to-purple-950 rounded-3xl p-6 text-white shadow-xl relative overflow-hidden">
         <div className="absolute right-0 top-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />

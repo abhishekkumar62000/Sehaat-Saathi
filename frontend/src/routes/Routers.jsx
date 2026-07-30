@@ -47,6 +47,7 @@ const ArticlesPage = lazy(() => import("../pages/ArticlesPage"));
 const Doctors = lazy(() => import("../pages/Doctors/Doctors"));
 const DoctorDetails = lazy(() => import("../pages/Doctors/DoctorDetails"));
 const DoctorQRLandingPage = lazy(() => import("../pages/Doctors/DoctorQRLandingPage"));
+const OPDLobbyDisplay = lazy(() => import("../pages/OPDLobbyDisplay"));
 
 const Dashboard = lazy(() => import("../Dashboard/doctor-account/Dashboard"));
 const MyAccount = lazy(() => import("../Dashboard/user-account/MyAccount"));
@@ -105,6 +106,7 @@ const Routers = () => {
         <Route path="/doctors" element={<Doctors />} />
         <Route path="/doctors/:id" element={<DoctorDetails />} />
         <Route path="/doctor-profile-qr/:id" element={<DoctorQRLandingPage />} />
+        <Route path="/opd-lobby/:doctorId" element={<OPDLobbyDisplay />} />
         <Route
           path="/users/profile/me"
           element={

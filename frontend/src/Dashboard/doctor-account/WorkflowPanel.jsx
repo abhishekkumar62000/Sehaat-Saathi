@@ -28,6 +28,7 @@ const WorkflowPanel = ({ appointments: initialAppointments, doctorId }) => {
   
   const [vitalsData, setVitalsData] = useState({});
   const [activeCanvasBookingId, setActiveCanvasBookingId] = useState(null);
+  const [preConsultData, setPreConsultData] = useState({});
   
   const [isScribing, setIsScribing] = useState(false);
   const [recognition, setRecognition] = useState(null);
@@ -106,12 +107,21 @@ const WorkflowPanel = ({ appointments: initialAppointments, doctorId }) => {
       toast.success("⚡ Live Symptom Poll received from patient!");
     };
 
+    // Pre-consultation vitals form submission from patient
+    const handlePreConsultVitals = (data) => {
+      const { bookingId, vitalsForm } = data;
+      setPreConsultData(prev => ({ ...prev, [bookingId]: vitalsForm }));
+      toast.success(`📋 Pre-Consult form received from ${vitalsForm.patientName || "patient"}!`, { autoClose: 6000 });
+    };
+
     socket.on("PATIENT_VITAL_SYNC", handleVitalSync);
     socket.on("PATIENT_POLL_RESPONSE", handlePollResponse);
+    socket.on("PRECONSULT_VITALS_RECEIVED", handlePreConsultVitals);
 
     return () => {
       socket.off("PATIENT_VITAL_SYNC", handleVitalSync);
       socket.off("PATIENT_POLL_RESPONSE", handlePollResponse);
+      socket.off("PRECONSULT_VITALS_RECEIVED", handlePreConsultVitals);
     };
   }, [socket, appointments]);
 
@@ -373,6 +383,27 @@ const WorkflowPanel = ({ appointments: initialAppointments, doctorId }) => {
                                 </p>
                               </div>
                             </div>
+
+                            {/* Pre-Consult Vitals Badge */}
+                            {preConsultData[item._id] && (
+                              <div className="bg-violet-50 border border-violet-200 rounded-xl p-2.5 text-[9px] font-bold text-violet-800">
+                                <div className="flex items-center gap-1 mb-1.5 text-violet-600">
+                                  <span>📋</span> Pre-Consult Form Received
+                                </div>
+                                <div className="flex flex-wrap gap-1">
+                                  {(preConsultData[item._id].symptoms || []).map(s => (
+                                    <span key={s} className="bg-violet-100 text-violet-700 px-1.5 py-0.5 rounded-lg">{s}</span>
+                                  ))}
+                                </div>
+                                {preConsultData[item._id].severity && (
+                                  <div className="mt-1 text-[8px] text-violet-500">
+                                    Severity: <strong>{preConsultData[item._id].severity}</strong>
+                                    {preConsultData[item._id].temperature && ` | Temp: ${preConsultData[item._id].temperature}°F`}
+                                    {preConsultData[item._id].bp_systolic && ` | BP: ${preConsultData[item._id].bp_systolic}/${preConsultData[item._id].bp_diastolic}`}
+                                  </div>
+                                )}
+                              </div>
+                            )}
 
                             {/* Show AI Rx button if In Consultation or Completed */}
                             {(colId === "CONSULTATION_STARTED" || colId === "completed") && (
