@@ -304,7 +304,7 @@ export const updateDoctorAvailability = async (req, res) => {
 
     if (io) {
       io.emit("doctor-availability-updated", {
-        doctorId: doctor._id,
+        doctorId: doctor._id.toString(),
         availability: doctor.availability,
         unavailabilityDates: doctor.unavailabilityDates
       });

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BsClock, BsCalendarX, BsLightningChargeFill } from 'react-icons/bs';
 import { useSocket } from '../../context/SocketContext';
 import convertTime from '../../utils/convertTime';
+import { toast } from 'react-toastify';
 
 const DAYS_ORDER = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
@@ -10,9 +11,9 @@ const LiveAvailabilityTimetable = ({ doctorId, initialAvailability = [], initial
     const [availability, setAvailability] = useState(initialAvailability);
     const [holidays, setHolidays] = useState(initialHolidays);
     const [isLive, setIsLive] = useState(false);
+    const [justUpdated, setJustUpdated] = useState(false);
 
     useEffect(() => {
-        // Sync state if props change (initial load)
         setAvailability(initialAvailability);
         setHolidays(initialHolidays);
     }, [initialAvailability, initialHolidays]);
@@ -26,6 +27,12 @@ const LiveAvailabilityTimetable = ({ doctorId, initialAvailability = [], initial
             if (data.doctorId === doctorId) {
                 setAvailability(data.availability || []);
                 setHolidays(data.unavailabilityDates || []);
+                setJustUpdated(true);
+                toast.info("⚡ Doctor has updated their availability timings in real-time!", {
+                    position: "top-center",
+                    autoClose: 3000
+                });
+                setTimeout(() => setJustUpdated(false), 3000);
             }
         };
 
@@ -46,7 +53,9 @@ const LiveAvailabilityTimetable = ({ doctorId, initialAvailability = [], initial
     const currentDay = new Date().toLocaleDateString('en-US', { weekday: 'long' });
 
     return (
-        <div className="bg-slate-50 border border-slate-200 rounded-[2rem] p-6 lg:p-8 shadow-inner animate-in fade-in duration-500">
+        <div className={`bg-slate-50 border rounded-[2rem] p-6 lg:p-8 shadow-inner transition-all duration-500 ${
+            justUpdated ? "border-indigo-500 ring-4 ring-indigo-500/20 scale-[1.01]" : "border-slate-200"
+        } animate-in fade-in duration-500`}>
             <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-200">
                 <h3 className="text-sm lg:text-base font-black uppercase text-slate-800 tracking-widest flex items-center gap-2">
                     <BsClock className="text-indigo-600" /> Live OPD Timings
