@@ -12,8 +12,8 @@ import { authContext } from "../../context/AuthContext";
 import {
   BsCalendarCheckFill, BsStarFill, BsClockHistory,
   BsPersonFill, BsDropletFill, BsGenderAmbiguous,
-  BsShieldCheckFill, BsHouseFill, BsBellFill, BsGearFill,
-  BsArrowRight, BsHeartPulseFill
+  BsShieldFill, BsHouseFill, BsBellFill, BsGearFill,
+  BsArrowRight, BsHeartFill
 } from "react-icons/bs";
 import { MdHealthAndSafety, MdOutlineWaterDrop } from "react-icons/md";
 import { FaUserEdit } from "react-icons/fa";
@@ -99,7 +99,7 @@ const MyAccount = () => {
                 />
               </div>
               <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-emerald-400 rounded-lg border-2 border-indigo-800 flex items-center justify-center">
-                <BsShieldCheckFill className="text-white text-[9px]" />
+                <BsShieldFill className="text-white text-[9px]" />
               </div>
             </div>
 
@@ -138,7 +138,7 @@ const MyAccount = () => {
             {[
               { label: "Appointments", value: userData?.appointments?.length || 0, icon: <BsCalendarCheckFill className="text-violet-300" /> },
               { label: "Reviews", value: userData?.reviews?.length || 0, icon: <BsStarFill className="text-amber-300" /> },
-              { label: "Active", value: (userData?.appointments || []).filter(a => a.status === "confirmed" || a.status === "pending").length, icon: <BsHeartPulseFill className="text-emerald-300 animate-pulse" /> },
+              { label: "Active", value: (userData?.appointments || []).filter(a => a.status === "confirmed" || a.status === "pending").length, icon: <BsHeartFill className="text-emerald-300 animate-pulse" /> },
             ].map(stat => (
               <div key={stat.label} className="bg-white/15 backdrop-blur-sm rounded-2xl p-3 text-center border border-white/20">
                 <div className="flex justify-center mb-1">{stat.icon}</div>
