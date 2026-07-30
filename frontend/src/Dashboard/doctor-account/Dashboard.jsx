@@ -25,8 +25,8 @@ import ReviewReputationManager from "../../components/DoctorDetails/ReviewReputa
 const Dashboard = () => {
   const [tab, setTab] = useState("overview");
 
-  const activeTabClass = "bg-indigo-100 text-primaryColor";
-  const inactiveTabClass = "bg-transparent text-headingColor";
+  const activeTabClass = "bg-indigo-600 text-white font-black shadow-md shadow-indigo-100 scale-[1.02] transition-all duration-200";
+  const inactiveTabClass = "bg-slate-50 text-slate-500 font-bold hover:bg-slate-100 hover:text-slate-800 transition-all duration-200";
 
   const { data, loading, error } = useGetProfile(
     `${BASE_URL}/doctors/profile/me`
@@ -41,90 +41,92 @@ const Dashboard = () => {
   }, [data]);
 
   return (
-    <section className="max-w-[1220px] px-5 mx-auto my-6">
+    <section className="max-w-[1220px] px-4 md:px-6 mx-auto my-6">
       {loading && !error && <Loading />}
 
       {error && !loading && <Error errMessage={error} />}
 
       {!loading && !error && (
-        <div className="flex w-full mx-auto">
+        <div className="flex flex-col md:flex-row w-full gap-6">
           {/* =======================
                  left side/Tabs
           =========================== */}
-          <div className="w-[13%] lg:w-[25%] lg:py-6 lg:px-[20px] px-1 pb-3 rounded-md shadow-md bg-white h-max lg:mr-0 mr-[6px]">
+          <div className="flex flex-row md:flex-col overflow-x-auto md:overflow-visible pb-4 md:pb-6 pt-2 md:pt-6 px-3 md:px-4 rounded-2xl shadow-sm bg-white h-max w-full md:w-[25%] gap-2 scrollbar-none border border-slate-100 flex-shrink-0">
             <button
               onClick={() => setTab("overview")}
               className={`${
                 tab == "overview" ? activeTabClass : inactiveTabClass
-              } w-full mt-0 rounded-md flex items-center lg:justify-start justify-center lg:px-5 lg:py-2 px-1`}
+              } flex-shrink-0 rounded-xl flex items-center justify-start px-4 md:px-5 py-3`}
             >
-              <BiSolidUserDetail className="w-7 h-7" />
-              <p className="ml-3 hidden lg:block">Overview</p>
+              <BiSolidUserDetail className="w-5 h-5" />
+              <p className="ml-3 text-xs md:text-sm uppercase tracking-wider">Overview</p>
             </button>
             <button
               onClick={() => setTab("appointments")}
               className={`${
                 tab == "appointments" ? activeTabClass : inactiveTabClass
-              } w-full mt-2 rounded-md flex items-center lg:justify-start justify-center lg:px-5 lg:py-2 px-1`}
+              } flex-shrink-0 rounded-xl flex items-center justify-start px-4 md:px-5 py-3`}
             >
-              <RiPlayListAddFill className="w-6 h-6" />
-              <p className="ml-3 hidden lg:block">Appointments</p>
+              <RiPlayListAddFill className="w-5 h-5" />
+              <p className="ml-3 text-xs md:text-sm uppercase tracking-wider">Appointments</p>
             </button>
             <button
               onClick={() => setTab("workflow")}
               className={`${
                 tab == "workflow" ? activeTabClass : inactiveTabClass
-              } w-full mt-2 rounded-md flex items-center lg:justify-start justify-center lg:px-5 lg:py-2 px-1`}
+              } flex-shrink-0 rounded-xl flex items-center justify-start px-4 md:px-5 py-3`}
             >
-              <BsActivity className="w-6 h-6" />
-              <p className="ml-3 hidden lg:block">Workflow Panel</p>
+              <BsActivity className="w-5 h-5" />
+              <p className="ml-3 text-xs md:text-sm uppercase tracking-wider">Workflow</p>
             </button>
             <button
-                  onClick={() => setTab("availability")}
-                  className={`${tab == "availability" ? activeTabClass : inactiveTabClass} w-full mt-2 rounded-md flex items-center lg:justify-start justify-center lg:px-5 lg:py-2 px-1`}
-                >
-                  <BsCalendarCheck className="w-6 h-6" />
-                  <p className="ml-3 hidden lg:block">Availability Schedule</p>
-                </button>
-
-                {/* Revenue Panel Tab */}
-                <button
-                  onClick={() => setTab("revenue")}
-                  className={`${tab == "revenue" ? activeTabClass : inactiveTabClass} w-full mt-2 rounded-md flex items-center lg:justify-start justify-center lg:px-5 lg:py-2 px-1`}
-                >
-                  <BsCurrencyRupee className="w-6 h-6" />
-                  <p className="ml-3 hidden lg:block">Revenue & Earnings</p>
-                </button>
-
-                {/* Reviews Tab */}
-                <button
-                  onClick={() => setTab("reviews")}
-                  className={`${tab == "reviews" ? activeTabClass : inactiveTabClass} w-full mt-2 rounded-md flex items-center lg:justify-start justify-center lg:px-5 lg:py-2 px-1`}
-                >
-                  <BsStarFill className="w-6 h-6" />
-                  <p className="ml-3 hidden lg:block">Reviews</p>
-                </button>
+              onClick={() => setTab("availability")}
+              className={`${
+                tab == "availability" ? activeTabClass : inactiveTabClass
+              } flex-shrink-0 rounded-xl flex items-center justify-start px-4 md:px-5 py-3`}
+            >
+              <BsCalendarCheck className="w-5 h-5" />
+              <p className="ml-3 text-xs md:text-sm uppercase tracking-wider">Schedule</p>
+            </button>
+            <button
+              onClick={() => setTab("revenue")}
+              className={`${
+                tab == "revenue" ? activeTabClass : inactiveTabClass
+              } flex-shrink-0 rounded-xl flex items-center justify-start px-4 md:px-5 py-3`}
+            >
+              <BsCurrencyRupee className="w-5 h-5" />
+              <p className="ml-3 text-xs md:text-sm uppercase tracking-wider">Revenue</p>
+            </button>
+            <button
+              onClick={() => setTab("reviews")}
+              className={`${
+                tab == "reviews" ? activeTabClass : inactiveTabClass
+              } flex-shrink-0 rounded-xl flex items-center justify-start px-4 md:px-5 py-3`}
+            >
+              <BsStarFill className="w-5 h-5" />
+              <p className="ml-3 text-xs md:text-sm uppercase tracking-wider">Reviews</p>
+            </button>
             <button
               onClick={() => setTab("settings")}
               className={`${
                 tab == "settings" ? activeTabClass : inactiveTabClass
-              } w-full mt-2 rounded-md flex items-center lg:justify-start justify-center lg:px-5 lg:py-2 px-1`}
+              } flex-shrink-0 rounded-xl flex items-center justify-start px-4 md:px-5 py-3`}
             >
-              <FaUserEdit className="w-7 h-7" />
-              <p className="ml-3 hidden lg:block">Profile</p>
+              <FaUserEdit className="w-5 h-5" />
+              <p className="ml-3 text-xs md:text-sm uppercase tracking-wider">Profile</p>
             </button>
             <button
               onClick={() => setTab("activity")}
               className={`${
                 tab == "activity" ? activeTabClass : inactiveTabClass
-              } w-full mt-2 rounded-md flex items-center lg:justify-start justify-center lg:px-5 lg:py-2 px-1`}
+              } flex-shrink-0 rounded-xl flex items-center justify-start px-4 md:px-5 py-3`}
             >
-              <BiHistory className="w-7 h-7" />
-              <p className="ml-3 hidden lg:block">Activity Hub</p>
+              <BiHistory className="w-5 h-5" />
+              <p className="ml-3 text-xs md:text-sm uppercase tracking-wider">Activity</p>
             </button>
 
-            <div className="lg:block hidden mt-[100px] w-full">
-              <button className="lg:text-[16px] text-[14px] rounded-md w-full bg-red-600 mt-4 text-white lg:p-3 p-1">
+            <div className="md:block hidden mt-6 w-full">
+              <button className="text-xs font-black uppercase tracking-wider rounded-xl w-full bg-red-50 hover:bg-red-100 text-red-600 p-3 transition-colors border border-red-100">
                 Delete Account
               </button>
             </div>
@@ -133,20 +135,18 @@ const Dashboard = () => {
           {/* =======================
            right side/details layout
           =========================== */}
-          <div className="w-[87%] lg:w-[75%] lg:px-0 px-3 lg:ml-8 rounded-md lg:rounded-none shadow-md lg:shadow-none ">
+          <div className="w-full md:w-[75%] bg-white rounded-2xl p-4 md:p-6 shadow-sm border border-slate-100">
             {data.isApproved == "pending" && (
-              <div className="flex justify-center items-center py-3 my-4 text-white bg-red-400 rounded-lg animate-bounce">
+              <div className="flex justify-center items-center py-3 mb-4 text-white bg-red-400 rounded-xl animate-bounce">
                 <CgDanger className="w-5 h-5" />
-
                 <span className="sr-only">Info</span>
-                <div className="ml-3 text-sm font-medium">
-                  To get approval please complete your profile. We&apos;ll
-                  review manually and approve within 3days.
+                <div className="ml-3 text-xs font-black uppercase tracking-wider">
+                  Complete your profile to request manual clinical approval (within 3 days).
                 </div>
               </div>
             )}
 
-            <div className="lg:px-0 px-[10px]">
+            <div>
               {tab == "overview" && (
                 <DoctorAnalyticsOverview doctorData={data} />
               )}

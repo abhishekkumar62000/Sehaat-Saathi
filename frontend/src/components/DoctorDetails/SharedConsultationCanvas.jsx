@@ -112,28 +112,45 @@ const SharedConsultationCanvas = ({ bookingId, isDoctor = false }) => {
   const lastX = useRef(0);
   const lastY = useRef(0);
 
-  const startDrawing = ({ nativeEvent }) => {
+  const getCoordinates = (e) => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
-
+    if (!canvas) return { x: 0, y: 0 };
     const rect = canvas.getBoundingClientRect();
-    const x = nativeEvent.clientX - rect.left;
-    const y = nativeEvent.clientY - rect.top;
+    
+    // Touch event check
+    if (e.touches && e.touches.length > 0) {
+      return {
+        x: e.touches[0].clientX - rect.left,
+        y: e.touches[0].clientY - rect.top
+      };
+    }
+    
+    // Mouse event fallback
+    return {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
+    };
+  };
+
+  const startDrawing = (e) => {
+    if (e.cancelable) e.preventDefault();
+    const eventObj = e.touches ? e : e.nativeEvent;
+    const { x, y } = getCoordinates(eventObj);
 
     lastX.current = x;
     lastY.current = y;
     setIsDrawing(true);
   };
 
-  const draw = ({ nativeEvent }) => {
+  const draw = (e) => {
     if (!isDrawing) return;
+    if (e.cancelable) e.preventDefault();
     const canvas = canvasRef.current;
     const ctx = contextRef.current;
     if (!canvas || !ctx) return;
 
-    const rect = canvas.getBoundingClientRect();
-    const x = nativeEvent.clientX - rect.left;
-    const y = nativeEvent.clientY - rect.top;
+    const eventObj = e.touches ? e : e.nativeEvent;
+    const { x, y } = getCoordinates(eventObj);
 
     ctx.strokeStyle = color;
     ctx.lineWidth = lineWidth;
@@ -258,6 +275,9 @@ const SharedConsultationCanvas = ({ bookingId, isDoctor = false }) => {
           onMouseMove={draw}
           onMouseUp={stopDrawing}
           onMouseLeave={stopDrawing}
+          onTouchStart={startDrawing}
+          onTouchMove={draw}
+          onTouchEnd={stopDrawing}
           className="absolute inset-0 w-full h-full z-20"
         />
       </div>
