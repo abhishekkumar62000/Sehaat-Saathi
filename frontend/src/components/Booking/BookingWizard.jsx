@@ -119,18 +119,20 @@ const BookingWizard = ({ doc, onClose, onSuccess }) => {
         <div className="fixed inset-0 z-[130] flex items-center justify-center p-4">
             <div onClick={onClose} className="absolute inset-0 bg-slate-900/60 backdrop-blur-md"></div>
             
-            <div className="relative w-full max-w-4xl bg-white border border-slate-200 rounded-[3rem] p-8 lg:p-12 overflow-hidden shadow-2xl flex flex-col md:flex-row gap-8 animate-in zoom-in-95 duration-300">
-                <button onClick={onClose} className="absolute top-6 right-6 text-slate-400 hover:text-red-500 text-2xl transition-colors z-10">
+            <div className="relative w-full max-w-4xl bg-white border border-slate-200 rounded-[2.5rem] p-5 md:p-8 lg:p-12 overflow-y-auto max-h-[90vh] shadow-2xl flex flex-col md:flex-row gap-6 md:gap-8 animate-in zoom-in-95 duration-300">
+                <button onClick={onClose} className="absolute top-4 right-4 text-slate-400 hover:text-red-500 text-2xl transition-colors z-10">
                     <BsXCircleFill />
                 </button>
 
                 {/* Left panel - Info */}
-                <div className="w-full md:w-1/3 border-b md:border-b-0 md:border-r border-slate-100 pr-8">
-                    <img src={doc.photo} alt={doc.name} className="w-24 h-24 rounded-2xl object-cover mb-4"  loading="lazy" />
-                    <h3 className="text-xl font-black text-slate-900 uppercase">{doc.name}</h3>
-                    <p className="text-xs font-bold text-slate-500 uppercase">{doc.specialty}</p>
+                <div className="w-full md:w-1/3 border-b md:border-b-0 md:border-r border-slate-100 pb-4 md:pb-0 md:pr-8 flex flex-row md:flex-col items-center md:items-start gap-4 md:gap-0">
+                    <img src={doc.photo} alt={doc.name} className="w-16 h-16 md:w-24 md:h-24 rounded-2xl object-cover mb-0 md:mb-4 flex-shrink-0"  loading="lazy" />
+                    <div className="min-w-0 flex-grow md:flex-grow-0">
+                        <h3 className="text-base md:text-xl font-black text-slate-900 uppercase truncate">{doc.name}</h3>
+                        <p className="text-[10px] md:text-xs font-bold text-slate-500 uppercase truncate">{doc.specialty}</p>
+                    </div>
 
-                    <div className="mt-8 space-y-4">
+                    <div className="hidden md:block mt-8 space-y-4 w-full">
                         <div className="flex justify-between text-sm">
                             <span className="text-slate-400 font-bold uppercase">Consultation Fee</span>
                             <span className="text-slate-900 font-black">₹{doc.fee === 0 ? "FREE" : doc.fee}</span>
@@ -196,21 +198,21 @@ const BookingWizard = ({ doc, onClose, onSuccess }) => {
                             <div className="space-y-4 animate-in slide-in-from-right duration-300">
                                 <h4 className="text-lg font-black uppercase tracking-widest text-slate-800 mb-6">Select Time Slot</h4>
                                 {loadingSlots ? <p>Loading slots...</p> : (
-                                    <div className="grid grid-cols-2 gap-4">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                         {availableSlots.length > 0 ? availableSlots.map(t => (
                                             <button 
                                                 key={t}
                                                 onClick={() => setTimeSlot(t)}
-                                                className={`py-4 rounded-2xl border font-bold text-sm flex flex-col items-center justify-center gap-1 transition-all ${timeSlot === t ? 'border-orange-500 bg-orange-50 text-orange-600 shadow-md transform scale-[1.02]' : 'border-slate-200 hover:border-slate-300'}`}
+                                                className={`py-3.5 rounded-2xl border font-bold text-sm flex flex-col items-center justify-center gap-1 transition-all ${timeSlot === t ? 'border-orange-500 bg-orange-50 text-orange-600 shadow-md transform scale-[1.02]' : 'border-slate-200 hover:border-slate-300'}`}
                                             >
                                                 <span>{t}</span>
                                                 {t.includes('AM') || (t.includes('PM') && ['12', '01', '1'].some(h => t.startsWith(h))) ? (
-                                                    <span className="text-[9px] text-red-500 bg-red-50 px-2 rounded-full font-black uppercase tracking-widest">🔥 High Traffic</span>
+                                                    <span className="text-[8px] text-red-500 bg-red-50 px-2 rounded-full font-black uppercase tracking-widest">🔥 High Traffic</span>
                                                 ) : (
-                                                    <span className="text-[9px] text-green-600 bg-green-50 px-2 rounded-full font-black uppercase tracking-widest">🟢 Fast Track</span>
+                                                    <span className="text-[8px] text-green-600 bg-green-50 px-2 rounded-full font-black uppercase tracking-widest">🟢 Fast Track</span>
                                                 )}
                                             </button>
-                                        )) : <p className="col-span-2 text-slate-400">No slots available for this date.</p>}
+                                        )) : <p className="col-span-full text-center text-slate-400 font-bold py-8">No slots available for this date.</p>}
                                     </div>
                                 )}
                             </div>
