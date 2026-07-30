@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { BiSolidUserDetail, BiHistory } from "react-icons/bi";
-import { BsActivity, BsCalendarCheck, BsCurrencyRupee, BsStarFill } from "react-icons/bs";
+import { BsActivity, BsCalendarCheck, BsCurrencyRupee, BsStarFill, BsQrCodeScan } from "react-icons/bs";
 import { CgDanger } from "react-icons/cg";
 import { FaUserEdit } from "react-icons/fa";
 import { RiPlayListAddFill } from "react-icons/ri";
@@ -21,6 +21,7 @@ import DoctorAnalyticsOverview from "../../components/DoctorDetails/DoctorAnalyt
 import DoctorAvailabilityManager from "../../components/DoctorDetails/DoctorAvailabilityManager";
 import RevenueEarningsPanel from "../../components/DoctorDetails/RevenueEarningsPanel";
 import ReviewReputationManager from "../../components/DoctorDetails/ReviewReputationManager";
+import ClinicQRKit from "./ClinicQRKit";
 
 const Dashboard = () => {
   const [tab, setTab] = useState("overview");
@@ -124,6 +125,15 @@ const Dashboard = () => {
               <BiHistory className="w-5 h-5" />
               <p className="ml-3 text-xs md:text-sm uppercase tracking-wider">Activity</p>
             </button>
+            <button
+              onClick={() => setTab("qr-kit")}
+              className={`${
+                tab == "qr-kit" ? activeTabClass : inactiveTabClass
+              } flex-shrink-0 rounded-xl flex items-center justify-start px-4 md:px-5 py-3`}
+            >
+              <BsQrCodeScan className="w-5 h-5" />
+              <p className="ml-3 text-xs md:text-sm uppercase tracking-wider">Clinic QR</p>
+            </button>
 
             <div className="md:block hidden mt-6 w-full">
               <button className="text-xs font-black uppercase tracking-wider rounded-xl w-full bg-red-50 hover:bg-red-100 text-red-600 p-3 transition-colors border border-red-100">
@@ -163,6 +173,7 @@ const Dashboard = () => {
               {tab == "reviews" && (<ReviewReputationManager doctorData={data} />)}
               {tab == "settings" && <Profile doctorData={data} />}
               {tab == "activity" && <DoctorActivity />}
+              {tab == "qr-kit" && <ClinicQRKit doctorData={data} />}
             </div>
           </div>
         </div>
