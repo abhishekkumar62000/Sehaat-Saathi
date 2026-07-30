@@ -25,7 +25,7 @@ import ClinicQRKit from "./ClinicQRKit";
 import PromotionalQRKit from "../../components/Shared/PromotionalQRKit";
 
 const Dashboard = () => {
-  const [tab, setTab] = useState("overview");
+  const [tab, setTab] = useState("settings");
 
   const activeTabClass = "bg-indigo-600 text-white font-black shadow-md shadow-indigo-100 scale-[1.02] transition-all duration-200";
   const inactiveTabClass = "bg-slate-50 text-slate-500 font-bold hover:bg-slate-100 hover:text-slate-800 transition-all duration-200";
@@ -54,6 +54,15 @@ const Dashboard = () => {
                  left side/Tabs
           =========================== */}
           <div className="flex flex-row md:flex-col overflow-x-auto md:overflow-visible pb-4 md:pb-6 pt-2 md:pt-6 px-3 md:px-4 rounded-2xl shadow-sm bg-white h-max w-full md:w-[25%] gap-2 scrollbar-none border border-slate-100 flex-shrink-0">
+            <button
+              onClick={() => setTab("settings")}
+              className={`${
+                tab == "settings" ? activeTabClass : inactiveTabClass
+              } flex-shrink-0 rounded-xl flex items-center justify-start px-4 md:px-5 py-3`}
+            >
+              <FaUserEdit className="w-5 h-5" />
+              <p className="ml-3 text-xs md:text-sm uppercase tracking-wider">Profile</p>
+            </button>
             <button
               onClick={() => setTab("overview")}
               className={`${
@@ -107,15 +116,6 @@ const Dashboard = () => {
             >
               <BsStarFill className="w-5 h-5" />
               <p className="ml-3 text-xs md:text-sm uppercase tracking-wider">Reviews</p>
-            </button>
-            <button
-              onClick={() => setTab("settings")}
-              className={`${
-                tab == "settings" ? activeTabClass : inactiveTabClass
-              } flex-shrink-0 rounded-xl flex items-center justify-start px-4 md:px-5 py-3`}
-            >
-              <FaUserEdit className="w-5 h-5" />
-              <p className="ml-3 text-xs md:text-sm uppercase tracking-wider">Profile</p>
             </button>
             <button
               onClick={() => setTab("activity")}
