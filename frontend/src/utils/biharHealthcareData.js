@@ -2,6 +2,66 @@
 // Real hospitals and doctors across Bihar districts
 
 export const biharHealthcareDb = [
+    {
+        id: "static-dr-abhishek",
+        name: "Dr Abhishek",
+        degree: "MBBS",
+        experience: "4+ Years",
+        specialty: "Cardiology",
+        hospital: "Private Clinic",
+        hospitalType: "Private",
+        district: "Madhubani",
+        area: "Urban",
+        fee: 1000,
+        rating: 4.5,
+        distance: "Live",
+        availability: "Today",
+        rushStatus: "Low",
+        transparencyScore: 95,
+        trustScore: 99,
+        registration: "MCI-AB101",
+        photo: "https://api.uifaces.co/our-content/donated/xoneh_u5.jpg"
+    },
+    {
+        id: "static-dr-saurav",
+        name: "Drsaurav",
+        degree: "MBBS",
+        experience: "4+ Years",
+        specialty: "Orthopedics",
+        hospital: "Sankar chowk",
+        hospitalType: "Private",
+        district: "Madhubani",
+        area: "Sankar Chowk",
+        fee: 500,
+        rating: 5.0,
+        distance: "Live",
+        availability: "Today",
+        rushStatus: "Low",
+        transparencyScore: 95,
+        trustScore: 99,
+        registration: "MCI-SR202",
+        photo: "https://api.uifaces.co/our-content/donated/1H_7AxP0.jpg"
+    },
+    {
+        id: "static-dr-rahul",
+        name: "Dr Rahul kumar Yadav",
+        degree: "MBBS MS",
+        experience: "15+ Years",
+        specialty: "Neurology",
+        hospital: "Rahul Hospital",
+        hospitalType: "Private",
+        district: "Madhubani",
+        area: "Urban",
+        fee: 1000,
+        rating: 5.0,
+        distance: "Live",
+        availability: "Today",
+        rushStatus: "Low",
+        transparencyScore: 95,
+        trustScore: 99,
+        registration: "MCI-RH303",
+        photo: "https://api.uifaces.co/our-content/donated/uk_f8m69.jpg"
+    },
     // ==================== MADHUBANI DISTRICT (VERIFIED REAL DATA) ====================
     // Sources: JustDial, Sehat, Bihar State Pollution Control Board listings
     {

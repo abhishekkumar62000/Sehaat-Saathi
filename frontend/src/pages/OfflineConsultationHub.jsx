@@ -145,7 +145,13 @@ const OfflineConsultationHub = () => {
             registration: doc.licenseNumber || "Verified",
             photo: doc.photo || "https://api.uifaces.co/our-content/donated/xoneh_u5.jpg"
         }));
-        return [...mappedLiveDoctors, ...biharHealthcareDb];
+        const fallbackDoctors = biharHealthcareDb.filter(staticDoc => {
+            const exists = mappedLiveDoctors.some(liveDoc => 
+                liveDoc.name.toLowerCase().replace(/\s+/g, "") === staticDoc.name.toLowerCase().replace(/\s+/g, "")
+            );
+            return !exists;
+        });
+        return [...mappedLiveDoctors, ...fallbackDoctors];
     }, [liveDoctors]);
 
     const filteredDocs = combinedDb.filter(doc => (

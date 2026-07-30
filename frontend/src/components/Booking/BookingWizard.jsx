@@ -116,10 +116,10 @@ const BookingWizard = ({ doc, onClose, onSuccess }) => {
     };
 
     return (
-        <div className="fixed inset-0 z-[130] flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[130] flex items-end md:items-center justify-center p-0 md:p-4">
             <div onClick={onClose} className="absolute inset-0 bg-slate-900/60 backdrop-blur-md"></div>
             
-            <div className="relative w-full max-w-4xl bg-white border border-slate-200 rounded-[2.5rem] p-5 md:p-8 lg:p-12 overflow-y-auto max-h-[90vh] shadow-2xl flex flex-col md:flex-row gap-6 md:gap-8 animate-in zoom-in-95 duration-300">
+            <div className="relative w-full max-w-4xl bg-white border border-slate-200 rounded-t-[2.5rem] md:rounded-[2.5rem] p-6 md:p-12 overflow-y-auto h-[92vh] md:h-auto md:max-h-[90vh] shadow-2xl flex flex-col md:flex-row gap-6 md:gap-8 animate-in slide-in-from-bottom md:zoom-in-95 duration-300">
                 <button onClick={onClose} className="absolute top-4 right-4 text-slate-400 hover:text-red-500 text-2xl transition-colors z-10">
                     <BsXCircleFill />
                 </button>
@@ -145,14 +145,15 @@ const BookingWizard = ({ doc, onClose, onSuccess }) => {
                 </div>
 
                 {/* Right panel - Wizard */}
-                <div className="w-full md:w-2/3 flex flex-col">
-                    <div className="flex gap-2 mb-8 bg-slate-100 p-1 rounded-full">
-                        {[1, 2, 3, 4, 5].map(idx => (
-                            <div key={idx} className={`flex-1 h-2 rounded-full transition-all ${idx <= step ? 'bg-orange-500' : 'bg-slate-300'}`}></div>
-                        ))}
-                    </div>
+                <div className="w-full md:w-2/3 flex flex-col justify-between min-h-[50vh] md:min-h-0">
+                    <div>
+                        <div className="flex gap-2 mb-8 bg-slate-100 p-1 rounded-full">
+                            {[1, 2, 3, 4, 5].map(idx => (
+                                <div key={idx} className={`flex-1 h-2 rounded-full transition-all ${idx <= step ? 'bg-orange-500' : 'bg-slate-300'}`}></div>
+                            ))}
+                        </div>
 
-                    <div className="flex-1 overflow-y-auto max-h-[50vh] pr-4 custom-scrollbar">
+                        <div className="flex-grow pr-1 md:pr-4">
                         {step === 1 && (
                             <div className="space-y-4 animate-in slide-in-from-right duration-300">
                                 
@@ -291,8 +292,9 @@ const BookingWizard = ({ doc, onClose, onSuccess }) => {
                             </div>
                         )}
                     </div>
+                </div>
 
-                    <div className="mt-8 pt-6 border-t border-slate-100 flex justify-between">
+                <div className="mt-8 pt-6 border-t border-slate-100 flex justify-between">
                         <button 
                             disabled={step === 1} 
                             onClick={() => setStep(s => s - 1)}

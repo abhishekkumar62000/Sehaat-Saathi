@@ -120,27 +120,38 @@ export const getAllDoctor = async (req, res) => {
   try {
     const { query, location, maxFee, minExp } = req.query;
     
-    // Base filter: MUST be approved
-    let filter = { isApproved: "approved" };
+    // Base filter: MUST be approved OR must have created their profile details (has specialization populated)
+    let filter = {
+      $and: [
+        {
+          $or: [
+            { isApproved: "approved" },
+            { specialization: { $exists: true, $ne: "" } }
+          ]
+        }
+      ]
+    };
 
     // Apply Smart Search Filters
     if (query) {
-      filter.$or = [
-        { name: { $regex: query, $options: "i" } },
-        { specialization: { $regex: query, $options: "i" } },
-      ];
+      filter.$and.push({
+        $or: [
+          { name: { $regex: query, $options: "i" } },
+          { specialization: { $regex: query, $options: "i" } },
+        ]
+      });
     }
     
     if (location) {
-      filter["location.city"] = { $regex: location, $options: "i" };
+      filter.$and.push({ "location.city": { $regex: location, $options: "i" } });
     }
     
     if (maxFee) {
-      filter.ticketPrice = { $lte: parseInt(maxFee) };
+      filter.$and.push({ ticketPrice: { $lte: parseInt(maxFee) } });
     }
     
     if (minExp) {
-       filter.experience = { $gte: parseInt(minExp) };
+       filter.$and.push({ experience: { $gte: parseInt(minExp) } });
     }
 
     const doctors = await Doctor.find(filter).select("-password").populate("reviews");

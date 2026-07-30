@@ -49,13 +49,13 @@ const DoctorQRLandingPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white flex flex-col justify-between py-6 px-4 md:px-8 relative overflow-hidden">
+    <div className="min-h-screen bg-slate-900 text-white flex flex-col justify-between py-6 px-4 md:px-8 relative overflow-y-auto">
       {/* Background glow effects */}
       <div className="absolute top-0 right-0 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 left-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl"></div>
 
       {/* Main landing container */}
-      <div className="w-full max-w-lg mx-auto bg-slate-950 border border-slate-800 rounded-[3rem] p-6 md:p-8 flex flex-col gap-6 shadow-2xl z-10">
+      <div className="w-full max-w-lg mx-auto bg-slate-950 border border-slate-800 rounded-[2rem] md:rounded-[3rem] p-5 md:p-8 flex flex-col gap-6 shadow-2xl z-10 my-auto">
         
         {/* Header Branding */}
         <div className="flex items-center justify-between border-b border-slate-800 pb-4">
