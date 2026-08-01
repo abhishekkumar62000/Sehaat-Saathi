@@ -193,14 +193,14 @@ const HeroSection = () => {
 
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row items-center gap-6 mt-12 justify-center lg:justify-start">
-              <a
+              {/* <a
                 href="https://calendly.com/codewithabhi5/sehaat-saathi-app-booking"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="tri-btn w-full sm:w-auto px-10 py-5 text-sm sm:text-base group hover:shadow-[0_10px_40px_rgba(255,153,51,0.4)] hover:-translate-y-1 transition-all duration-300"
               >
                 Book a Doctor Now <BsArrowRight className="ml-2 inline group-hover:translate-x-2 transition-transform text-lg" />
-              </a>
+              </a> */}
 
               <Link
                 to="/about"
