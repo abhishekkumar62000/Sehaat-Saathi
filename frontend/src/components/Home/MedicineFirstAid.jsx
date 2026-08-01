@@ -115,7 +115,7 @@ const MedicineFirstAid = () => {
 
                     <div className="w-full max-w-md flex flex-col gap-6">
                         {/* Tab Switcher - Floating Glassmorph Design */}
-                        <div className="flex bg-white/40 backdrop-blur-3xl p-2 rounded-[2.5rem] border border-white/60 shadow-2xl relative overflow-hidden group">
+                        <div className="flex bg-white/40 backdrop-blur-md p-2 rounded-[2.5rem] border border-white/60 shadow-2xl relative overflow-hidden group">
                             <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 via-white/5 to-green-500/5 opacity-50"></div>
                             <button
                                 onClick={() => setActiveTab('medicine')}
@@ -156,7 +156,7 @@ const MedicineFirstAid = () => {
                     {activeTab === 'medicine' ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 animate-slide-up">
                             {filteredMeds.map((cat) => (
-                                <div key={cat.id} className="group bg-white/40 backdrop-blur-3xl rounded-[3rem] p-10 shadow-sm hover:shadow-2xl transition-all duration-700 border border-white/60 relative overflow-hidden flex flex-col items-center text-center transform hover:-translate-y-4">
+                                <div key={cat.id} className="group bg-white/40 backdrop-blur-md rounded-[3rem] p-10 shadow-sm hover:shadow-2xl transition-all duration-700 border border-white/60 relative overflow-hidden flex flex-col items-center text-center transform hover:-translate-y-4">
                                     <div className={`absolute top-0 left-0 w-full h-2 bg-gradient-to-r ${cat.gradient} opacity-50`}></div>
                                     <div className={`w-20 h-20 bg-gradient-to-tr ${cat.gradient} rounded-[2rem] flex items-center justify-center text-white mb-8 shadow-xl transform group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500`}>
                                         {cat.icon}
@@ -288,3 +288,4 @@ const MedicineFirstAid = () => {
 };
 
 export default MedicineFirstAid;
+

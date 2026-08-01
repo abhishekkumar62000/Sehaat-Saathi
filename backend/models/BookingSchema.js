@@ -63,7 +63,12 @@ const bookingSchema = new mongoose.Schema(
       symptoms: { type: String },
       duration: { type: String },
       previousIllness: { type: String },
-      files: [{ type: String }]
+      files: [{ type: String }],
+      vitals: {
+        bloodPressure: { type: String }, // systolic/diastolic (e.g. 120/80)
+        temperature: { type: String },   // fahrenheit (e.g. 98.6)
+        sugarLevel: { type: String }     // mg/dL (e.g. 100)
+      }
     },
     journeyTimeline: [
       {

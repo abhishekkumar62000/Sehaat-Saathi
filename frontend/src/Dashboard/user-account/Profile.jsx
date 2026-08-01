@@ -37,6 +37,13 @@ const Profile = ({ user }) => {
     emergencyContactPhone: "",
     city: "",
     pincode: "",
+    abhaId: "",
+    bplCardHolder: false,
+    primaryLanguage: "",
+    district: "",
+    block: "",
+    hospitalPreference: "Both",
+    accessibilityNeeds: "",
   });
 
   const navigate = useNavigate();
@@ -57,6 +64,13 @@ const Profile = ({ user }) => {
         emergencyContactPhone: user.emergencyContactPhone || "",
         city: user.city || "",
         pincode: user.pincode || "",
+        abhaId: user.abhaId || "",
+        bplCardHolder: user.bplCardHolder || false,
+        primaryLanguage: user.primaryLanguage || "",
+        district: user.district || "",
+        block: user.block || "",
+        hospitalPreference: user.hospitalPreference || "Both",
+        accessibilityNeeds: user.accessibilityNeeds || "",
         password: "", // Always start empty for security
       });
     }
@@ -265,19 +279,39 @@ const Profile = ({ user }) => {
                         </div>
                     </div>
                 </div>
-                <div className="relative group">
-                   <p className="text-[10px] font-black text-violet-600 uppercase tracking-widest mb-2 ml-1">Gender</p>
-                   <select
-                    name="gender"
-                    value={formData.gender}
-                    onChange={handleInputChange}
-                    className="w-full px-6 py-4 rounded-2xl bg-white border border-slate-100 focus:border-violet-500 outline-none transition-all font-bold text-slate-700 shadow-sm appearance-none cursor-pointer"
-                  >
-                    <option value="">Select Gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
-                  </select>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="relative group">
+                       <p className="text-[10px] font-black text-violet-600 uppercase tracking-widest mb-2 ml-1">Gender</p>
+                       <select
+                        name="gender"
+                        value={formData.gender}
+                        onChange={handleInputChange}
+                        className="w-full px-6 py-4 rounded-2xl bg-white border border-slate-100 focus:border-violet-500 outline-none transition-all font-bold text-slate-700 shadow-sm appearance-none cursor-pointer"
+                      >
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    </div>
+                    
+                    <div className="relative group">
+                       <p className="text-[10px] font-black text-violet-600 uppercase tracking-widest mb-2 ml-1 flex items-center gap-2">🗣️ Primary Language (भाषा)</p>
+                       <select
+                        name="primaryLanguage"
+                        value={formData.primaryLanguage}
+                        onChange={handleInputChange}
+                        className="w-full px-6 py-4 rounded-2xl bg-white border border-slate-100 focus:border-violet-500 outline-none transition-all font-bold text-slate-700 shadow-sm appearance-none cursor-pointer"
+                      >
+                        <option value="">Select Dialect/Language</option>
+                        <option value="Hindi">Hindi (हिंदी)</option>
+                        <option value="Bhojpuri">Bhojpuri (भोजपुरी)</option>
+                        <option value="Maithili">Maithili (मैथिली)</option>
+                        <option value="Magahi">Magahi (मगही)</option>
+                        <option value="Angika">Angika (अंगिका)</option>
+                        <option value="English">English</option>
+                      </select>
+                    </div>
                 </div>
               </div>
             </motion.div>
@@ -331,21 +365,65 @@ const Profile = ({ user }) => {
                         />
                     </div>
                 </div>
-                <div className="relative group">
-                   <p className="text-[10px] font-black text-rose-600 uppercase tracking-widest mb-2 ml-1 flex items-center gap-2">
-                        <FaBiohazard /> Chronic Illness (Medical History)
-                   </p>
-                   <textarea
-                    name="chronicConditions"
-                    value={formData.chronicConditions}
-                    onChange={handleInputChange}
-                    placeholder="e.g. Diabetes, Blood Pressure, Asthma..."
-                    className="w-full px-6 py-8 rounded-[2.5rem] bg-slate-900 border border-slate-800 text-rose-400 placeholder:text-slate-600 outline-none transition-all font-black text-lg shadow-2xl tracking-tighter"
-                    rows="3"
-                  />
-                   <p className="text-[9px] text-slate-400 mt-3 ml-4 font-medium uppercase tracking-widest flex items-center gap-1">
-                      <MdCheckCircle className="text-emerald-500" /> Information is securely stored
-                   </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="relative group">
+                       <p className="text-[10px] font-black text-rose-600 uppercase tracking-widest mb-2 ml-1 flex items-center gap-2">
+                            <FaBiohazard /> Chronic Illness (Medical History)
+                       </p>
+                       <textarea
+                        name="chronicConditions"
+                        value={formData.chronicConditions}
+                        onChange={handleInputChange}
+                        placeholder="e.g. Diabetes, Blood Pressure, Asthma..."
+                        className="w-full px-6 py-6 rounded-[2rem] bg-slate-900 border border-slate-800 text-rose-400 placeholder:text-slate-600 outline-none transition-all font-black text-sm shadow-xl"
+                        rows="2"
+                      />
+                    </div>
+                    <div className="relative group">
+                       <p className="text-[10px] font-black text-rose-600 uppercase tracking-widest mb-2 ml-1 flex items-center gap-2">
+                            ♿ Accessibility Needs (विकलांगता)
+                       </p>
+                       <textarea
+                        name="accessibilityNeeds"
+                        value={formData.accessibilityNeeds}
+                        onChange={handleInputChange}
+                        placeholder="e.g. Wheelchair access needed, Hearing Impaired..."
+                        className="w-full px-6 py-6 rounded-[2rem] bg-white border border-slate-100 focus:border-rose-500 text-slate-700 placeholder:text-slate-400 outline-none transition-all font-black text-sm shadow-xl"
+                        rows="2"
+                      />
+                    </div>
+                </div>
+
+                <div className="p-6 bg-gradient-to-r from-orange-50 to-green-50 rounded-[2.5rem] border border-orange-100 shadow-inner">
+                    <p className="text-[11px] font-black text-slate-700 uppercase tracking-widest mb-4 flex items-center gap-2">
+                         🏥 Government Healthcare Schemes (सरकारी योजनाएं)
+                    </p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                        <div>
+                            <p className="text-[10px] font-bold text-slate-500 mb-2 ml-1">ABHA ID (Ayushman Bharat)</p>
+                            <input
+                                type="text"
+                                name="abhaId"
+                                value={formData.abhaId}
+                                onChange={handleInputChange}
+                                placeholder="Enter ABHA ID (Optional)"
+                                className="w-full px-5 py-3 rounded-xl bg-white border border-slate-200 focus:border-orange-400 outline-none transition-all font-bold text-slate-700 shadow-sm"
+                            />
+                        </div>
+                        <div className="flex items-center gap-4 bg-white px-5 py-3 rounded-xl border border-slate-200 shadow-sm">
+                            <input
+                                type="checkbox"
+                                id="bplCardHolder"
+                                checked={formData.bplCardHolder}
+                                onChange={(e) => setFormData({ ...formData, bplCardHolder: e.target.checked })}
+                                className="w-6 h-6 rounded text-orange-500 focus:ring-orange-500 border-gray-300"
+                            />
+                            <div>
+                                <label htmlFor="bplCardHolder" className="text-sm font-bold text-slate-800 cursor-pointer">BPL Card Holder</label>
+                                <p className="text-[9px] font-medium text-slate-500">Below Poverty Line (गरीबी रेखा से नीचे)</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
               </div>
             </motion.div>
@@ -385,31 +463,50 @@ const Profile = ({ user }) => {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div className="relative group">
-                        <p className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-2 ml-1">Current City</p>
-                        <div className="relative">
-                            <MdLocationOn className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-400" />
-                            <input
-                                type="text"
-                                name="city"
-                                value={formData.city}
-                                onChange={handleInputChange}
-                                placeholder="Your City"
-                                className="w-full pl-12 pr-6 py-4 rounded-2xl bg-white border border-slate-100 focus:border-blue-500 outline-none transition-all font-bold text-slate-700 shadow-sm"
-                            />
-                        </div>
+                        <p className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-2 ml-1 flex items-center gap-1"><MdLocationOn className="text-blue-400" /> District (ज़िला)</p>
+                        <select
+                            name="district"
+                            value={formData.district}
+                            onChange={handleInputChange}
+                            className="w-full px-5 py-4 rounded-2xl bg-white border border-slate-100 focus:border-blue-500 outline-none transition-all font-bold text-slate-700 shadow-sm appearance-none cursor-pointer"
+                        >
+                            <option value="">Select District</option>
+                            <option value="Patna">Patna (पटना)</option>
+                            <option value="Gaya">Gaya (गया)</option>
+                            <option value="Muzaffarpur">Muzaffarpur (मुजफ्फरपुर)</option>
+                            <option value="Bhagalpur">Bhagalpur (भागलपुर)</option>
+                            <option value="Darbhanga">Darbhanga (दरभंगा)</option>
+                            <option value="Purnia">Purnia (पूर्णिया)</option>
+                            <option value="Samastipur">Samastipur (समस्तीपुर)</option>
+                            <option value="Rohtas">Rohtas (रोहतास)</option>
+                            <option value="Other">Other</option>
+                        </select>
                     </div>
                     <div className="relative group">
-                        <p className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-2 ml-1">Pincode</p>
+                        <p className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-2 ml-1">Block / Panchayat</p>
                         <input
-                            type="number"
-                            name="pincode"
-                            value={formData.pincode}
+                            type="text"
+                            name="block"
+                            value={formData.block}
                             onChange={handleInputChange}
-                            placeholder="Pincode"
-                            className="w-full px-6 py-4 rounded-2xl bg-white border border-slate-100 focus:border-blue-500 outline-none transition-all font-bold text-slate-700 shadow-sm"
+                            placeholder="e.g. Phulwari Sharif"
+                            className="w-full px-5 py-4 rounded-2xl bg-white border border-slate-100 focus:border-blue-500 outline-none transition-all font-bold text-slate-700 shadow-sm"
                         />
+                    </div>
+                    <div className="relative group">
+                        <p className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-2 ml-1">Hospital Preference</p>
+                        <select
+                            name="hospitalPreference"
+                            value={formData.hospitalPreference}
+                            onChange={handleInputChange}
+                            className="w-full px-5 py-4 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 focus:border-blue-500 outline-none transition-all font-black text-blue-800 shadow-sm appearance-none cursor-pointer"
+                        >
+                            <option value="Both">Both (Gov & Private)</option>
+                            <option value="Government">Government Hospitals</option>
+                            <option value="Private">Private Clinics</option>
+                        </select>
                     </div>
                 </div>
 

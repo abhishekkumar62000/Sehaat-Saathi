@@ -147,6 +147,32 @@ const Dashboard = () => {
            right side/details layout
           =========================== */}
           <div className="w-full md:w-[75%] bg-white rounded-2xl p-4 md:p-6 shadow-sm border border-slate-100">
+            
+            {/* WOW FACTOR: SOS Emergency Radar Alert */}
+            <div className="mb-6 relative group/radar overflow-hidden rounded-[2rem] shadow-2xl shadow-red-500/20 bg-white border-2 border-red-500">
+                <div className="absolute inset-0 bg-red-50 opacity-50"></div>
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(239,68,68,0.15)_0%,_transparent_70%)] animate-pulse duration-1000"></div>
+                <div className="relative px-6 py-6 flex flex-col md:flex-row items-center justify-between z-10 gap-4">
+                    <div className="flex items-center gap-5">
+                        <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center shadow-inner relative">
+                            <div className="absolute inset-0 bg-red-400 rounded-full animate-ping opacity-60"></div>
+                            <CgDanger className="text-red-600 text-3xl animate-pulse" />
+                        </div>
+                        <div>
+                            <h2 className="text-red-600 font-black text-xl tracking-widest uppercase flex items-center gap-2">
+                                🚨 SOS Radar Active
+                            </h2>
+                            <p className="text-slate-600 text-xs font-bold tracking-wider mt-1">
+                                Scanning for nearby patient emergencies...
+                            </p>
+                        </div>
+                    </div>
+                    <button className="px-6 py-3 bg-red-600 text-white font-black uppercase tracking-widest text-xs rounded-xl shadow-lg shadow-red-600/30 hover:bg-red-700 active:scale-95 transition-all">
+                        View Active Alerts
+                    </button>
+                </div>
+            </div>
+
             {data.isApproved == "pending" && (
               <div className="flex justify-center items-center py-3 mb-4 text-white bg-red-400 rounded-xl animate-bounce">
                 <CgDanger className="w-5 h-5" />

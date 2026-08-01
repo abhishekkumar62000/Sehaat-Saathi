@@ -1,12 +1,15 @@
 import { BsArrowRight } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import heroBg from "../../assets/images/home/heroBg.png";
 import heroImg01 from "../../assets/images/home/heroImg.png";
 
 const HeroSection = () => {
+  const navigate = useNavigate();
+  
   return (
     <section
-      className="container mx-auto min-h-[600px] lg:min-h-[800px] pt-10 pb-16 lg:pb-0 flex items-center tri-color-mesh rounded-[2rem] sm:rounded-[3rem] lg:rounded-[5rem] my-4 sm:my-8 lg:my-12 relative shadow-2xl shadow-orange-500/10 overflow-hidden px-4 sm:px-8 lg:px-16"
+      onClick={() => navigate('/smarthub')}
+      className="container mx-auto min-h-[600px] lg:min-h-[800px] pt-10 pb-16 lg:pb-0 flex items-center tri-color-mesh rounded-[2rem] sm:rounded-[3rem] lg:rounded-[5rem] my-4 sm:my-8 lg:my-12 relative shadow-2xl shadow-orange-500/10 overflow-hidden px-4 sm:px-8 lg:px-16 cursor-pointer group/herosection"
     >
       {/* Decorative Ashoka Chakra Silhouette Background */}
       <div className="absolute top-1/2 left-1/2 opacity-[0.08] pointer-events-none animate-ashok-chakra">
@@ -149,7 +152,7 @@ const HeroSection = () => {
               className="my-8 animate-slide-in-left flex justify-center lg:justify-start cursor-pointer block"
             >
               <div className="bg-gradient-to-r from-[#FF9933] via-white to-[#138808] p-[1.5px] rounded-2xl shadow-[0_15px_35px_rgba(255,153,51,0.25)] group hover:shadow-[0_20px_50px_rgba(19,136,8,0.3)] transition-all duration-500 hover:scale-[1.03]">
-                <div className="bg-white/60 backdrop-blur-2xl text-slate-900 px-6 py-4 rounded-2xl flex items-center gap-5 border border-white/50 group-hover:bg-white/80 transition-colors">
+                <div className="bg-white/60 backdrop-blur-sm text-slate-900 px-6 py-4 rounded-2xl flex items-center gap-5 border border-white/50 group-hover:bg-white/80 transition-colors">
                   <div className="w-12 h-12 bg-white rounded-xl shadow-lg flex items-center justify-center text-2xl animate-bounce group-hover:rotate-12 transition-transform duration-500">
                     🇮🇳
                   </div>
@@ -214,11 +217,11 @@ const HeroSection = () => {
 
         <div className="flex-1 flex justify-center items-center relative py-10 lg:py-0 w-full group perspective-1000">
           {/* Dynamic Background Neural Glows */}
-          <div className="absolute top-[20%] right-[10%] w-[400px] h-[400px] bg-emerald-400/20 rounded-full blur-[120px] animate-pulse-slow"></div>
-          <div className="absolute bottom-[20%] left-[10%] w-[350px] h-[350px] bg-blue-400/10 rounded-full blur-[100px] animate-pulse-slow animation-delay-2000"></div>
+          <div className="absolute top-[20%] right-[10%] w-[400px] h-[400px] bg-emerald-400/20 rounded-full blur-[120px] md:animate-pulse-slow hidden md:block"></div>
+          <div className="absolute bottom-[20%] left-[10%] w-[350px] h-[350px] bg-blue-400/10 rounded-full blur-[100px] md:animate-pulse-slow animation-delay-2000 hidden md:block"></div>
 
           {/* Main Holographic Container with Perspective */}
-          <div className="relative z-10 p-3 sm:p-5 lg:p-6 bg-white/10 backdrop-blur-3xl rounded-[2.5rem] lg:rounded-[4.5rem] border-[1px] md:border-[4px] lg:border-[8px] border-white/40 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.2)] lg:shadow-[0_50px_100px_-20px_rgba(0,0,0,0.25)] transition-all duration-700 lg:group-hover:rotate-y-12 lg:group-hover:rotate-x-6 lg:group-hover:scale-105 preserve-3d">
+          <div onClick={() => navigate('/smarthub')} className="relative z-10 p-3 sm:p-5 lg:p-6 bg-white/10 backdrop-blur-md rounded-[2.5rem] lg:rounded-[4.5rem] border-[1px] md:border-[4px] lg:border-[8px] border-white/40 shadow-lg md:shadow-md md:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.2)] lg:shadow-[0_50px_100px_-20px_rgba(0,0,0,0.25)] transition-all duration-700 lg:group-hover:rotate-y-12 lg:group-hover:rotate-x-6 lg:group-hover:scale-105 md:preserve-3d cursor-pointer group/heroimg">
             {/* Holographic Scanning Line */}
             <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-transparent via-emerald-400 to-transparent z-40 animate-scan shadow-[0_0_20px_rgba(52,211,153,0.5)]"></div>
 
@@ -233,14 +236,14 @@ const HeroSection = () => {
             </div>
 
             {/* Premium Orbital Floating Elements - Optimized Mobile Position */}
-            <div className="absolute -top-6 -right-6 lg:-top-12 lg:-right-12 w-16 h-16 lg:w-32 lg:h-32 bg-white/80 backdrop-blur-xl rounded-[2rem] lg:rounded-[3rem] shadow-[0_20px_50px_rgba(0,0,0,0.15)] flex items-center justify-center animate-orbital border border-white/60 lg:group-hover:scale-110 lg:group-hover:rotate-12 transition-all duration-500 z-50 hover:bg-white cursor-pointer group/orb">
+            <div className="absolute -top-6 -right-6 lg:-top-12 lg:-right-12 w-16 h-16 lg:w-32 lg:h-32 bg-white/80 backdrop-blur-sm rounded-[2rem] lg:rounded-[3rem] shadow-[0_20px_50px_rgba(0,0,0,0.15)] flex items-center justify-center md:animate-orbital border border-white/60 lg:group-hover:scale-110 lg:group-hover:rotate-12 transition-all duration-500 z-50 hover:bg-white cursor-pointer group/orb">
               <div className="flex flex-col items-center transform lg:group-hover:scale-110 transition-transform">
                 <span className="text-2xl lg:text-6xl animate-pulse drop-shadow-lg">🩺</span>
                 <span className="text-[8px] lg:text-xs font-black uppercase text-emerald-600 mt-1 lg:mt-2 tracking-[0.2em] group-hover/orb:text-emerald-500 transition-colors">Active</span>
               </div>
             </div>
 
-            <div className="absolute -bottom-6 -left-6 lg:-bottom-12 lg:-left-12 bg-white/80 backdrop-blur-2xl rounded-[2rem] lg:rounded-[3rem] shadow-[0_20px_50px_rgba(0,0,0,0.15)] flex flex-col gap-2 px-6 py-4 lg:px-10 lg:py-8 animate-float-complex border border-white/60 lg:group-hover:-translate-y-8 lg:group-hover:-translate-x-4 transition-transform duration-700 z-50 hover:bg-white cursor-pointer group/stat">
+            <div className="absolute -bottom-6 -left-6 lg:-bottom-12 lg:-left-12 bg-white/90 md:bg-white/80 backdrop-blur-sm rounded-[2rem] lg:rounded-[3rem] shadow-lg md:shadow-[0_20px_50px_rgba(0,0,0,0.15)] flex flex-col gap-2 px-6 py-4 lg:px-10 lg:py-8 md:animate-float-complex border border-white/60 lg:group-hover:-translate-y-8 lg:group-hover:-translate-x-4 transition-transform duration-700 z-50 hover:bg-white cursor-pointer group/stat">
               <div className="flex items-center gap-4 lg:gap-6">
                 <div className="relative">
                   <div className="absolute inset-0 bg-emerald-500 animate-ping rounded-full scale-150 opacity-20"></div>
@@ -274,3 +277,4 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
+

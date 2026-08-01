@@ -44,7 +44,7 @@ const BestCard = () => {
           {cardData.map((data) => (
             <div
               key={data.id}
-              className={`group relative p-8 rounded-[2.5rem] backdrop-blur-3xl border border-white/40 ${data.bgColor} ${data.shadow} hover:shadow-2xl transition-all duration-500 hover:-translate-y-4 flex flex-col items-center text-center`}
+              className={`group relative p-8 rounded-[2.5rem] backdrop-blur-md border border-white/40 ${data.bgColor} ${data.shadow} hover:shadow-2xl transition-all duration-500 hover:-translate-y-4 flex flex-col items-center text-center`}
             >
               {/* Top Accent Bar */}
               <div className={`absolute top-6 left-1/2 -translate-x-1/2 w-12 h-1.5 rounded-full ${data.accentColor} opacity-50 group-hover:w-20 transition-all duration-500`}></div>
@@ -77,3 +77,4 @@ const BestCard = () => {
 };
 
 export default BestCard;
+

@@ -63,6 +63,14 @@ const DoctorSchema = new mongoose.Schema({
   
   // Verification Engine (New Requirements)
   hospitalName: { type: String },
+  hospitalType: { 
+    type: String, 
+    enum: ["Government Hospital", "Private Hospital", "Personal Clinic"],
+    default: "Private Hospital"
+  },
+  inHouseFacilities: [{ type: String }],
+  acceptsEmergency: { type: Boolean, default: false },
+  acceptsAyushmanBharat: { type: Boolean, default: false },
   licenseNumber: { type: String },
   verificationDocuments: [{ type: String }],
   

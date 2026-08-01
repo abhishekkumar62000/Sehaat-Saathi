@@ -49,7 +49,7 @@ const InfiniteScrollBar = () => {
   ];
 
   return (
-    <div className="overflow-hidden whitespace-nowrap w-full bg-slate-50/10 backdrop-blur-3xl py-3 sm:py-4 border-y border-white/40 relative group cursor-default">
+    <div className="overflow-hidden whitespace-nowrap w-full bg-slate-50/10 backdrop-blur-md py-3 sm:py-4 border-y border-white/40 relative group cursor-default">
       {/* Neural Pulse (EKG Line) Background */}
       <div className="absolute inset-0 opacity-[0.1] pointer-events-none overflow-hidden">
         <svg className="w-full h-full" viewBox="0 0 1000 100" preserveAspectRatio="none">
@@ -140,3 +140,4 @@ const InfiniteScrollBar = () => {
 };
 
 export default InfiniteScrollBar;
+

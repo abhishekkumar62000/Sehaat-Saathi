@@ -15,6 +15,15 @@ const OfflineDoctorCard = ({ doc, liveQueueData, crowdDelay, onBookNow, onViewDe
                 </div>
             )}
 
+            {doc.distance === 'Live' && (
+                <div className="absolute top-8 right-0 z-20">
+                    <div className="px-4 py-1.5 rounded-l-full bg-green-500 text-[9px] font-black uppercase text-white shadow-lg flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+                        LIVE Verified
+                    </div>
+                </div>
+            )}
+
             <div className="flex items-start gap-6 mb-8 mt-4 relative z-10">
                 <div className="relative flex-shrink-0">
                     <div className="absolute inset-0 bg-[#FF9933] rounded-[2rem] blur-xl opacity-0 group-hover:opacity-20 transition-opacity duration-700"></div>

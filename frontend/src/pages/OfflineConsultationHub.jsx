@@ -17,11 +17,16 @@ import OfflineDoctorCard from './Doctors/OfflineDoctorCard';
 import DoctorDetailsModal from './Doctors/DoctorDetailsModal';
 import BookingWizard from '../components/Booking/BookingWizard';
 import BookingPass from '../components/Booking/BookingPass';
+import offlineAdvImg from "../assets/offline_booking_adv.png";
 
 const OfflineConsultationHub = () => {
     const [selectedDistrict, setSelectedDistrict] = useState('Madhubani');
     const [selectedSpecialty, setSelectedSpecialty] = useState([]);
     const [hospitalType, setHospitalType] = useState('All');
+    const [selectedGender, setSelectedGender] = useState('All');
+    const [acceptsEmergency, setAcceptsEmergency] = useState(false);
+    const [acceptsAyushmanBharat, setAcceptsAyushmanBharat] = useState(false);
+    const [requiredFacilities, setRequiredFacilities] = useState([]);
     const [feeRange, setFeeRange] = useState(3000);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedDoc, setSelectedDoc] = useState(null);
@@ -94,6 +99,41 @@ const OfflineConsultationHub = () => {
         }
     };
 
+    const specialtyTranslations = {
+        "General Physician": "General Physician (सामान्य चिकित्सक / Aam Doctor)",
+        "Orthopedic": "Orthopedic (हड्डी रोग विशेषज्ञ / Haddi Wale Doctor)",
+        "Cardiologist": "Cardiologist (हृदय रोग विशेषज्ञ / Dil Ke Doctor)",
+        "Neurologist": "Neurologist (स्नायु रोग विशेषज्ञ / Nas Ke Doctor)",
+        "Gynecologist": "Gynecologist (स्त्री रोग विशेषज्ञ / Mahila Doctor)",
+        "Pediatrician": "Pediatrician (बाल रोग विशेषज्ञ / Bacho Ke Doctor)",
+        "Dermatologist": "Dermatologist (त्वचा रोग विशेषज्ञ / Skin Doctor)",
+        "ENT": "ENT (कान, नाक, गला विशेषज्ञ)",
+        "Dentist": "Dentist (दंत चिकित्सक / Daant Ke Doctor)",
+        "Psychiatrist": "Psychiatrist (मनोचिकित्सक / Dimaag Ke Doctor)",
+        "Ophthalmologist": "Ophthalmologist (नेत्र रोग विशेषज्ञ / Aankh Ke Doctor)",
+        "Homoeopath": "Homoeopath (होम्योपैथी / Homeopathy)",
+        "Physiotherapist": "Physiotherapist (फिज़ियोथेरेपिस्ट / Kasrat Wale Doctor)",
+        "Multi-Specialty": "Multi-Specialty (मल्टी-स्पेशियलिटी / Sabhi Bimari Ke)",
+        "Urologist": "Urologist (मूत्र रोग विशेषज्ञ / Peshab Ke Doctor)",
+        "Gastroenterologist": "Gastroenterologist (पेट रोग विशेषज्ञ / Pet Ke Doctor)",
+        "Diabetologist": "Diabetologist (मधुमेह विशेषज्ञ / Sugar Ke Doctor)",
+        "Anaesthesiologist": "Anaesthesiologist (एनेस्थिसियोलॉजिस्ट / Behosh Karne Wale Doctor)",
+        "Neurology": "Neurology (स्नायु रोग विशेषज्ञ / Nas Ke Doctor)",
+        "Orthopedics": "Orthopedics (हड्डी रोग विशेषज्ञ / Haddi Wale Doctor)",
+        "Cardiology": "Cardiology (हृदय रोग विशेषज्ञ / Dil Ke Doctor)"
+    };
+
+    const providerTranslations = {
+        'All': 'All (सभी)',
+        'Government Hospital': 'Government Hospital (सरकारी अस्पताल)',
+        'Private Hospital': 'Private Hospital (निजी अस्पताल)',
+        'Personal Clinic': 'Personal Clinic (निजी क्लिनिक)'
+    };
+
+    const toggleFacility = (fac) => {
+        setRequiredFacilities(prev => prev.includes(fac) ? prev.filter(f => f !== fac) : [...prev, fac]);
+    };
+
     const t = translations[language];
 
     // Live Queue Simulation
@@ -131,7 +171,12 @@ const OfflineConsultationHub = () => {
             experience: `${doc.experience || 0}+ Years`,
             specialty: doc.specialization || "General Physician",
             hospital: doc.hospitalName || "Private Clinic",
-            hospitalType: doc.hospitalType || "Private",
+            hospitalType: doc.hospitalType || "Private Hospital",
+            gender: doc.gender || "All",
+            languagesSpoken: doc.languagesSpoken || [],
+            inHouseFacilities: doc.inHouseFacilities || [],
+            acceptsEmergency: doc.acceptsEmergency || false,
+            acceptsAyushmanBharat: doc.acceptsAyushmanBharat || false,
             district: doc.location?.city || "Patna",
             area: doc.location?.district || "Urban",
             fee: doc.ticketPrice || 0,
@@ -155,9 +200,13 @@ const OfflineConsultationHub = () => {
     }, [liveDoctors]);
 
     const filteredDocs = combinedDb.filter(doc => (
-        (doc.district === selectedDistrict || doc.area === selectedDistrict) &&
+        (selectedDistrict === 'All' || doc.district === selectedDistrict || doc.area === selectedDistrict) &&
         (selectedSpecialty.length === 0 || selectedSpecialty.includes(doc.specialty)) &&
         (hospitalType === 'All' || doc.hospitalType === hospitalType) &&
+        (selectedGender === 'All' || doc.gender === selectedGender) &&
+        (!acceptsEmergency || doc.acceptsEmergency) &&
+        (!acceptsAyushmanBharat || doc.acceptsAyushmanBharat) &&
+        (requiredFacilities.length === 0 || requiredFacilities.every(f => doc.inHouseFacilities?.includes(f))) &&
         doc.fee <= feeRange &&
         (doc.name.toLowerCase().includes(searchQuery.toLowerCase()) || doc.hospital.toLowerCase().includes(searchQuery.toLowerCase()))
     ));
@@ -193,11 +242,14 @@ const OfflineConsultationHub = () => {
                     <div className="flex items-center gap-3">
                         <button
                             onClick={() => setLanguage(l => l === 'en' ? 'hi' : 'en')}
-                            className="px-3 py-2 rounded-xl bg-gray-100 border border-gray-200 text-[10px] font-black uppercase tracking-widest hover:bg-[#FF9933]/10 transition-all flex items-center gap-2"
+                            className="relative flex items-center w-[120px] h-14 bg-gray-100 rounded-full border-[3px] border-gray-200 p-1 shadow-inner overflow-hidden transition-all duration-500 hover:shadow-lg active:scale-95 cursor-pointer"
                         >
-                            <span className={language === 'hi' ? 'text-[#FF9933]' : 'text-gray-400'}>HI</span>
-                            <div className="w-[1px] h-3 bg-gray-300"></div>
-                            <span className={language === 'en' ? 'text-[#000080]' : 'text-gray-400'}>EN</span>
+                            {/* Sliding Background */}
+                            <div className={`absolute top-1 left-1 w-[54px] h-[calc(100%-8px)] rounded-full transition-transform duration-500 shadow-md ${language === 'hi' ? 'translate-x-0 bg-gradient-to-r from-[#FF9933] to-[#e68a2e]' : 'translate-x-[52px] bg-gradient-to-r from-[#000080] to-[#00004d]'}`}></div>
+                            
+                            {/* Text Labels */}
+                            <span className={`w-1/2 text-center text-[13px] font-black z-10 transition-colors duration-500 ${language === 'hi' ? 'text-white drop-shadow-md' : 'text-gray-400'}`}>हिंदी</span>
+                            <span className={`w-1/2 text-center text-[13px] font-black z-10 transition-colors duration-500 ${language === 'en' ? 'text-white drop-shadow-md' : 'text-gray-400'}`}>ENG</span>
                         </button>
                         <button
                             onClick={() => setVoiceMedicActive(!voiceMedicActive)}
@@ -215,41 +267,72 @@ const OfflineConsultationHub = () => {
 
             <main className="container mx-auto max-w-7xl px-4 md:px-6 py-12 relative z-10">
                 {/* Hero / Hero Title */}
-                <div className="mb-16 flex flex-col md:flex-row justify-between items-end gap-8">
-                    <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="px-3 py-1 rounded-full bg-[#FF9933]/10 border border-[#FF9933]/20 text-[10px] font-black uppercase tracking-widest text-[#FF9933]">Bihar Healthcare Network</div>
-                            <div className="flex h-2 w-2 rounded-full bg-[#138808] animate-ping"></div>
-                            <span className="text-[10px] font-black uppercase text-[#138808] tracking-widest">Live Availability</span>
+                <div className="mb-20 flex flex-col items-center text-center relative group/hero cursor-default">
+                    {/* Background glowing aura */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[150%] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#FF9933]/15 via-transparent to-transparent blur-3xl -z-10 animate-pulse duration-1000"></div>
+                    
+                    {/* Live Availability Badge */}
+                    <div className="inline-flex items-center gap-3 mb-8 bg-white/90 backdrop-blur-xl px-6 py-3 rounded-full border border-gray-200 shadow-sm hover:shadow-xl hover:shadow-[#138808]/10 transition-all hover:-translate-y-1">
+                        <div className="relative flex items-center justify-center h-4 w-4">
+                            <div className="absolute inset-0 rounded-full bg-[#138808] animate-ping opacity-75"></div>
+                            <div className="relative rounded-full h-3 w-3 bg-[#138808]"></div>
                         </div>
-                        <h1 className="text-[clamp(40px,8vw,96px)] font-black tracking-tighter uppercase mb-6 leading-[0.9] text-gray-900">
-                            {language === 'en' ? 'Find & Book' : 'खोजें और बुक करें'} <br />
-                            <span className="bg-gradient-to-r from-[#FF9933] via-[#000080] to-[#138808] bg-clip-text text-transparent italic">
-                                {language === 'en' ? 'Trusted Doctors' : 'भरोसेमंद डॉक्टर'}
-                            </span>
-                        </h1>
-                        <p className="text-gray-500 max-w-xl text-lg font-medium leading-relaxed">
-                            {t.subtitle}
-                        </p>
+                        <span className="text-xs md:text-sm font-black uppercase tracking-[0.2em] bg-gradient-to-r from-[#FF9933] to-[#138808] bg-clip-text text-transparent transition-all">Bihar's 1st Booking Platform</span>
                     </div>
 
-                    <div className="flex flex-col gap-4 w-full md:w-auto">
-                        <button
-                            onClick={() => setShowDistrictMap(true)}
-                            className="w-full md:w-auto px-8 py-5 bg-white border border-slate-200 rounded-[2rem] font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 hover:bg-indigo-50 hover:border-indigo-200 text-indigo-900 transition-all hover:scale-105 shadow-lg"
-                        >
-                            <BsMapFill className="text-xl text-indigo-600" /> District Insights
-                        </button>
+                    {/* Massive Animated Heading */}
+                    <h1 className="text-[clamp(55px,11vw,120px)] font-black tracking-[-.05em] uppercase leading-[0.85] text-slate-900 drop-shadow-sm mb-8 relative z-10 transition-transform duration-700">
+                        {language === 'en' ? 'Find & Book' : 'खोजें और बुक करें'} <br />
+                        <span className="relative inline-block mt-2 lg:mt-4">
+                            <span className="absolute -inset-4 bg-gradient-to-r from-[#FF9933]/20 via-[#000080]/10 to-[#138808]/20 blur-2xl animate-pulse delay-75"></span>
+                            <span className="relative bg-gradient-to-r from-[#FF9933] via-[#000080] to-[#138808] bg-clip-text text-transparent italic drop-shadow-2xl hover:scale-[1.02] transition-transform inline-block duration-500">
+                                {language === 'en' ? 'Trusted Doctors' : 'भरोसेमंद डॉक्टर'}
+                            </span>
+                        </span>
+                    </h1>
+                    
+                    {/* Hero Bottom - Mission and Advertisement */}
+                    <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-center gap-6 relative z-10 px-4">
+                        
+                        {/* Mission Statement Glass Card */}
+                        <div className="flex-1 w-full max-w-3xl p-1 bg-gradient-to-r from-[#FF9933] via-white to-[#138808] rounded-[2.5rem] shadow-2xl hover:shadow-[#FF9933]/20 transition-all duration-700 hover:-translate-y-2">
+                            <div className="bg-white/95 backdrop-blur-3xl p-6 md:p-8 rounded-[2.4rem] h-full flex flex-col justify-center items-center">
+                                <p className="text-gray-700 md:text-xl font-bold leading-relaxed text-center">
+                                    <span className="text-[#FF9933] font-black uppercase tracking-widest text-sm block mb-2 border-b-2 border-dashed border-[#FF9933]/30 pb-2">Mission</span> 
+                                    Entire Bihar 38 District me <span className="text-[#000080] font-black text-2xl mx-1">Sehaat Saathi</span> Doctor Book! <br className="hidden md:block mt-2"/> 
+                                    <span className="text-gray-500 text-sm mt-3 block">{language === 'en' ? 'Connect with verified government and private healthcare professionals in real-time.' : 'वास्तविक समय में सत्यापित सरकारी और निजी स्वास्थ्य सेवा पेशेवरों से जुड़ें।'}</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Doctor Advertisement Image (WOW Factor & Mobile Responsive) */}
+                        <div className="relative group animate-fade-in-up flex-shrink-0 mt-8 md:mt-0 w-full md:w-auto flex justify-center">
+                            {/* Glowing aura behind doctor */}
+                            <div className="absolute inset-0 bg-gradient-to-br from-[#FF9933]/40 to-[#138808]/40 blur-3xl rounded-full scale-75 group-hover:scale-100 transition-transform duration-700 -z-10"></div>
+                            
+                            {/* The Image */}
+                            <img 
+                                src={offlineAdvImg} 
+                                alt="Join Sehaat Saathi Doctor Network" 
+                                className="w-48 sm:w-56 xl:w-64 h-auto object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.25)] hover:scale-110 transition-transform duration-700 hover:-translate-y-3 origin-bottom"
+                            />
+
+                            {/* Floating verification badge */}
+                            <div className="absolute top-0 right-4 md:-right-4 bg-white px-3 py-1.5 rounded-xl shadow-xl border border-gray-100 flex items-center gap-1.5 animate-bounce-slow">
+                                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                                <span className="text-[10px] font-black text-gray-800 uppercase tracking-wider">Verified Doctors</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div className="flex flex-col lg:flex-row gap-8 relative z-10">
                     {/* Mobile Filter Toggle */}
                     <button
-                        className="lg:hidden w-full py-4 bg-white border border-gray-200 rounded-2xl flex items-center justify-center gap-2 font-black uppercase tracking-widest text-xs text-slate-700 shadow-lg hover:bg-gray-50 transition-all active:scale-95"
+                        className="lg:hidden w-full py-5 mb-4 bg-gradient-to-r from-[#FF9933] via-green-600 to-[#138808] border-none rounded-[2rem] flex items-center justify-center gap-3 font-black uppercase tracking-widest text-sm text-white shadow-[0_10px_40px_-10px_rgba(255,153,51,0.5)] animate-pulse transition-all active:scale-95 z-50 relative"
                         onClick={() => setShowMobileFilters(true)}
                     >
-                        <BsFilterCircleFill className="text-[#FF9933]" /> {t.smartFilters}
+                        <BsFilterCircleFill className="text-white text-xl animate-spin-slow" /> {t.smartFilters}
                     </button>
 
                     {/* Filters Sidebar */}
@@ -276,15 +359,15 @@ const OfflineConsultationHub = () => {
 
                             {/* Hospital Type */}
                             <div className="space-y-4">
-                                <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest">{t.provider}</label>
-                                <div className="flex flex-wrap gap-2">
-                                    {['All', 'Government', 'Private', 'Personal Clinic'].map(type => (
+                                <label className="text-xs md:text-sm font-black uppercase text-gray-500 tracking-wider">{t.provider}</label>
+                                <div className="flex flex-wrap gap-3">
+                                    {['All', 'Personal Clinic', 'Private Hospital', 'Government Hospital'].map(type => (
                                         <button
                                             key={type}
                                             onClick={() => setHospitalType(type)}
-                                            className={`px-4 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-widest border transition-all ${hospitalType === type ? 'bg-gradient-to-r from-[#FF9933] to-[#138808] border-transparent text-white shadow-lg shadow-orange-500/20' : 'bg-slate-50 border-slate-200 text-slate-500 hover:bg-white hover:border-[#FF9933]/30'}`}
+                                            className={`px-5 py-3 md:px-6 md:py-4 rounded-2xl text-xs md:text-sm font-black border-2 transition-all ${hospitalType === type ? 'bg-gradient-to-r from-[#FF9933] to-[#138808] border-transparent text-white shadow-xl shadow-orange-500/30 scale-105' : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-white hover:border-[#FF9933]/50 hover:shadow-md'}`}
                                         >
-                                            {type}
+                                            {language === 'hi' ? providerTranslations[type] : type}
                                         </button>
                                     ))}
                                 </div>
@@ -292,17 +375,48 @@ const OfflineConsultationHub = () => {
 
                             {/* Specialty Multi-select */}
                             <div className="space-y-4">
-                                <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest">{t.specialty}</label>
-                                <div className="flex flex-wrap gap-2 max-h-[250px] overflow-y-auto custom-scrollbar p-1">
+                                <label className="text-xs md:text-sm font-black uppercase text-gray-500 tracking-wider">{t.specialty}</label>
+                                <div className="flex flex-wrap gap-3 max-h-[300px] overflow-y-auto custom-scrollbar p-2">
                                     {specialties.map(s => (
                                         <button
                                             key={s}
                                             onClick={() => toggleSpecialty(s)}
-                                            className={`px-3 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest border transition-all ${selectedSpecialty.includes(s) ? 'bg-[#000080] border-[#000080] text-white shadow-md' : 'bg-white border-slate-100 text-slate-400 hover:border-[#000080]/30 hover:text-[#000080]'}`}
+                                            className={`px-4 py-3 md:px-5 md:py-3.5 rounded-2xl text-xs md:text-sm font-black border-2 transition-all ${selectedSpecialty.includes(s) ? 'bg-[#000080] border-[#000080] text-white shadow-xl scale-105' : 'bg-white border-slate-200 text-slate-600 hover:border-[#000080]/50 hover:text-[#000080] hover:shadow-md'}`}
                                         >
-                                            {s}
+                                            {language === 'hi' && specialtyTranslations[s] ? specialtyTranslations[s] : s}
                                         </button>
                                     ))}
+                                </div>
+                            </div>
+
+                            {/* Gender Filter */}
+                            <div className="space-y-4">
+                                <label className="text-xs md:text-sm font-black uppercase text-gray-500 tracking-wider">Doctor Gender (लिंग)</label>
+                                <div className="flex flex-wrap gap-3">
+                                    {['All', 'male', 'female'].map(g => (
+                                        <button
+                                            key={g}
+                                            onClick={() => setSelectedGender(g)}
+                                            className={`px-5 py-3 md:px-6 md:py-4 rounded-2xl text-xs md:text-sm font-black border-2 transition-all ${selectedGender === g ? 'bg-[#FF9933] border-transparent text-white shadow-xl scale-105' : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-white hover:border-[#FF9933]/50 hover:shadow-md'}`}
+                                        >
+                                            {g === 'All' ? 'All (सभी)' : g === 'male' ? 'Male (पुरुष)' : 'Female (महिला)'}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Trust & Care Filters */}
+                            <div className="space-y-4">
+                                <label className="text-xs md:text-sm font-black uppercase text-gray-500 tracking-wider">Trust & Care (सुविधाएं)</label>
+                                <div className="flex flex-col gap-3 p-2">
+                                    <label className="flex items-center space-x-3 cursor-pointer bg-red-50 p-4 rounded-2xl border border-red-100 hover:bg-red-100 transition-all">
+                                        <input type="checkbox" checked={acceptsEmergency} onChange={(e) => setAcceptsEmergency(e.target.checked)} className="w-5 h-5 text-red-600 rounded border-red-300 focus:ring-red-500" />
+                                        <span className="text-sm font-black text-red-900">24x7 Emergency (आपातकाल)</span>
+                                    </label>
+                                    <label className="flex items-center space-x-3 cursor-pointer bg-green-50 p-4 rounded-2xl border border-green-100 hover:bg-green-100 transition-all">
+                                        <input type="checkbox" checked={acceptsAyushmanBharat} onChange={(e) => setAcceptsAyushmanBharat(e.target.checked)} className="w-5 h-5 text-green-600 rounded border-green-300 focus:ring-green-500" />
+                                        <span className="text-sm font-black text-green-900">Ayushman Bharat (आयुष्मान)</span>
+                                    </label>
                                 </div>
                             </div>
 
@@ -368,34 +482,65 @@ const OfflineConsultationHub = () => {
                                     </div>
 
                                     {/* Provider Type */}
-                                    <div className="space-y-4">
-                                        <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest">{t.provider}</label>
-                                        <div className="flex flex-wrap gap-2">
-                                            {['All', 'Government', 'Private', 'Personal Clinic'].map(type => (
+                                    <div className="space-y-5">
+                                        <label className="text-xs font-black uppercase text-gray-500 tracking-wider">{t.provider}</label>
+                                        <div className="flex flex-wrap gap-3">
+                                            {['All', 'Personal Clinic', 'Private Hospital', 'Government Hospital'].map(type => (
                                                 <button
                                                     key={type}
                                                     onClick={() => setHospitalType(type)}
-                                                    className={`px-4 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-widest border transition-all ${hospitalType === type ? 'bg-gradient-to-r from-[#FF9933] to-[#138808] border-transparent text-white shadow-lg shadow-orange-500/20' : 'bg-slate-50 border-slate-200 text-slate-500 hover:bg-white hover:border-[#FF9933]/30'}`}
+                                                    className={`px-5 py-4 w-full sm:w-auto rounded-2xl text-sm font-black border-2 transition-all ${hospitalType === type ? 'bg-gradient-to-r from-[#FF9933] to-[#138808] border-transparent text-white shadow-xl shadow-orange-500/30 scale-105' : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-white hover:border-[#FF9933]/50 hover:shadow-md'}`}
                                                 >
-                                                    {type}
+                                                    {language === 'hi' ? providerTranslations[type] : type}
                                                 </button>
                                             ))}
                                         </div>
                                     </div>
 
                                     {/* Specialty Multi-select */}
-                                    <div className="space-y-4">
-                                        <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest">{t.specialty}</label>
-                                        <div className="flex flex-wrap gap-2 max-h-[180px] overflow-y-auto custom-scrollbar p-1">
+                                    <div className="space-y-5">
+                                        <label className="text-xs font-black uppercase text-gray-500 tracking-wider">{t.specialty}</label>
+                                        <div className="flex flex-col sm:flex-row flex-wrap gap-3 max-h-[350px] overflow-y-auto custom-scrollbar p-2">
                                             {specialties.map(s => (
                                                 <button
                                                     key={s}
                                                     onClick={() => toggleSpecialty(s)}
-                                                    className={`px-3 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest border transition-all ${selectedSpecialty.includes(s) ? 'bg-[#000080] border-[#000080] text-white shadow-md' : 'bg-white border-slate-100 text-slate-400 hover:border-[#000080]/30 hover:text-[#000080]'}`}
+                                                    className={`px-5 py-4 w-full sm:w-auto rounded-2xl text-sm font-black border-2 transition-all text-left sm:text-center ${selectedSpecialty.includes(s) ? 'bg-[#000080] border-[#000080] text-white shadow-xl scale-105' : 'bg-white border-slate-200 text-slate-600 hover:border-[#000080]/50 hover:text-[#000080] hover:shadow-md'}`}
                                                 >
-                                                    {s}
+                                                    {language === 'hi' && specialtyTranslations[s] ? specialtyTranslations[s] : s}
                                                 </button>
                                             ))}
+                                        </div>
+                                    </div>
+
+                                    {/* Gender Filter */}
+                                    <div className="space-y-5">
+                                        <label className="text-xs font-black uppercase text-gray-500 tracking-wider">Doctor Gender (लिंग)</label>
+                                        <div className="flex flex-wrap gap-3">
+                                            {['All', 'male', 'female'].map(g => (
+                                                <button
+                                                    key={g}
+                                                    onClick={() => setSelectedGender(g)}
+                                                    className={`px-5 py-4 w-full sm:w-auto rounded-2xl text-sm font-black border-2 transition-all ${selectedGender === g ? 'bg-[#FF9933] border-transparent text-white shadow-xl scale-105' : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-white hover:border-[#FF9933]/50 hover:shadow-md'}`}
+                                                >
+                                                    {g === 'All' ? 'All (सभी)' : g === 'male' ? 'Male (पुरुष)' : 'Female (महिला)'}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    {/* Trust & Care Filters */}
+                                    <div className="space-y-5">
+                                        <label className="text-xs font-black uppercase text-gray-500 tracking-wider">Trust & Care (सुविधाएं)</label>
+                                        <div className="flex flex-col gap-3 p-2">
+                                            <label className="flex items-center space-x-3 cursor-pointer bg-red-50 p-4 rounded-2xl border border-red-100 hover:bg-red-100 transition-all">
+                                                <input type="checkbox" checked={acceptsEmergency} onChange={(e) => setAcceptsEmergency(e.target.checked)} className="w-5 h-5 text-red-600 rounded border-red-300 focus:ring-red-500" />
+                                                <span className="text-sm font-black text-red-900">24x7 Emergency (आपातकाल)</span>
+                                            </label>
+                                            <label className="flex items-center space-x-3 cursor-pointer bg-green-50 p-4 rounded-2xl border border-green-100 hover:bg-green-100 transition-all">
+                                                <input type="checkbox" checked={acceptsAyushmanBharat} onChange={(e) => setAcceptsAyushmanBharat(e.target.checked)} className="w-5 h-5 text-green-600 rounded border-green-300 focus:ring-green-500" />
+                                                <span className="text-sm font-black text-green-900">Ayushman Bharat (आयुष्मान)</span>
+                                            </label>
                                         </div>
                                     </div>
 
@@ -754,7 +899,7 @@ const OfflineConsultationHub = () => {
                                         </div>
                                         <div>
                                             <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Appointment Details</p>
-                                            <p className="text-xs font-black text-slate-900 uppercase tracking-tighter">Room: 4-B | {selectedDoc.hospitalType === 'Government' ? 'Ground' : '2nd'} Floor</p>
+                                            <p className="text-xs font-black text-slate-900 uppercase tracking-tighter">Room: 4-B | {selectedDoc.hospitalType === 'Government Hospital' ? 'Ground' : '2nd'} Floor</p>
                                         </div>
                                     </div>
                                 </div>
@@ -770,7 +915,7 @@ const OfflineConsultationHub = () => {
                                             date: "05 Feb 2026",
                                             brief: diagnosticBrief,
                                             room: "Room 4-B",
-                                            floor: selectedDoc.hospitalType === 'Government' ? 'Ground' : '2nd'
+                                            floor: selectedDoc.hospitalType === 'Government Hospital' ? 'Ground' : '2nd'
                                         });
                                         setShowToken(true);
                                         setSelectedDoc(null);

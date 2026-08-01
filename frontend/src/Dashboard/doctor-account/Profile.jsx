@@ -42,6 +42,10 @@ const Profile = ({ doctorData }) => {
     state: "",
     pincode: "",
     hospitalName: "",
+    hospitalType: "Private Hospital",
+    inHouseFacilities: [],
+    acceptsEmergency: false,
+    acceptsAyushmanBharat: false,
     experience: 0,
     teleConsultPrice: 0,
     isTeleConsultActive: true,
@@ -81,6 +85,10 @@ const Profile = ({ doctorData }) => {
         state: doctorData?.location?.state || "",
         pincode: doctorData?.location?.pincode || "",
         hospitalName: doctorData?.hospitalName || "",
+        hospitalType: doctorData?.hospitalType || "Private Hospital",
+        inHouseFacilities: doctorData?.inHouseFacilities || [],
+        acceptsEmergency: doctorData?.acceptsEmergency || false,
+        acceptsAyushmanBharat: doctorData?.acceptsAyushmanBharat || false,
         experience: doctorData?.experience || 0,
         teleConsultPrice: doctorData?.teleConsultPrice || 0,
         isTeleConsultActive: doctorData?.isTeleConsultActive ?? true,
@@ -110,6 +118,16 @@ const Profile = ({ doctorData }) => {
 
   const handleCheckboxChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.checked });
+  };
+
+  const handleArrayToggle = (e, fieldName) => {
+    const value = e.target.value;
+    setFormData(prev => ({
+      ...prev,
+      [fieldName]: prev[fieldName].includes(value) 
+        ? prev[fieldName].filter(item => item !== value)
+        : [...prev[fieldName], value]
+    }));
   };
 
   const handleDocumentUpload = async (event) => {
@@ -542,6 +560,21 @@ const Profile = ({ doctorData }) => {
                   <span className="absolute -top-3 left-4 bg-white px-2 text-xs font-black text-indigo-900 uppercase tracking-widest">Clinic or Hospital Name*</span>
                 </div>
 
+                <div className="relative group">
+                  <FaBriefcase className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-indigo-600 transition-colors" />
+                  <select
+                    name="hospitalType"
+                    value={formData.hospitalType}
+                    onChange={handleInputChange}
+                    className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all font-medium appearance-none"
+                  >
+                    <option value="Private Hospital">Private Hospital</option>
+                    <option value="Government Hospital">Government Hospital</option>
+                    <option value="Personal Clinic">Personal Clinic</option>
+                  </select>
+                  <span className="absolute -top-3 left-4 bg-white px-2 text-xs font-black text-indigo-900 uppercase tracking-widest">Provider Type*</span>
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   {[
                     { name: "city", label: "City", placeholder: "Mumbai" },
@@ -561,6 +594,54 @@ const Profile = ({ doctorData }) => {
                       <span className="absolute -top-3 left-4 bg-white px-2 text-[10px] font-black text-indigo-900 uppercase tracking-widest">{loc.label}*</span>
                     </div>
                   ))}
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+                  <label className="flex items-center space-x-3 cursor-pointer bg-red-50 p-4 rounded-2xl border border-red-100 hover:bg-red-100 transition-all group">
+                    <input
+                      type="checkbox"
+                      name="acceptsEmergency"
+                      checked={formData.acceptsEmergency}
+                      onChange={handleCheckboxChange}
+                      className="w-5 h-5 text-red-600 rounded border-red-300 focus:ring-red-500"
+                    />
+                    <div>
+                      <p className="text-sm font-black text-red-900">24x7 Emergency Services</p>
+                      <p className="text-xs font-medium text-red-700">Accepts trauma & emergency cases</p>
+                    </div>
+                  </label>
+
+                  <label className="flex items-center space-x-3 cursor-pointer bg-green-50 p-4 rounded-2xl border border-green-100 hover:bg-green-100 transition-all group">
+                    <input
+                      type="checkbox"
+                      name="acceptsAyushmanBharat"
+                      checked={formData.acceptsAyushmanBharat}
+                      onChange={handleCheckboxChange}
+                      className="w-5 h-5 text-green-600 rounded border-green-300 focus:ring-green-500"
+                    />
+                    <div>
+                      <p className="text-sm font-black text-green-900">Ayushman Bharat Accepted</p>
+                      <p className="text-xs font-medium text-green-700">Accepts cashless insurance for treatment</p>
+                    </div>
+                  </label>
+                </div>
+
+                <div className="relative group pt-4">
+                  <span className="absolute -top-3 left-4 bg-white px-2 text-xs font-black text-indigo-900 uppercase tracking-widest">In-House Facilities (सुविधाएं)</span>
+                  <div className="flex flex-wrap gap-3 p-4 bg-gray-50 border border-gray-200 rounded-2xl">
+                    {['Pharmacy (दवाखाना)', 'X-Ray (एक्स-रे)', 'Pathology Lab (खून जांच)', 'Ultrasound', 'ICU'].map(facility => (
+                      <label key={facility} className="flex items-center space-x-2 cursor-pointer bg-white px-4 py-2 rounded-xl shadow-sm border border-gray-100 hover:border-indigo-300 transition-all">
+                        <input
+                          type="checkbox"
+                          value={facility}
+                          checked={formData.inHouseFacilities?.includes(facility)}
+                          onChange={(e) => handleArrayToggle(e, 'inHouseFacilities')}
+                          className="w-4 h-4 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500"
+                        />
+                        <span className="text-sm font-bold text-gray-700">{facility}</span>
+                      </label>
+                    ))}
+                  </div>
                 </div>
 
                 <div className="p-6 bg-slate-50 rounded-2xl border-2 border-dashed border-gray-200 flex flex-col md:flex-row shadow-inner items-center gap-6">

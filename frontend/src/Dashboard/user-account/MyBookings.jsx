@@ -652,7 +652,7 @@ const MyBookings = ({ initialSection = "bookings" }) => {
                             )}
 
                             {/* Pre-Consultation Form */}
-                            {(item.status === "confirmed" || item.status === "pending") && item.bookingMode === "Offline" && (
+                            {(item.status === "confirmed" || item.status === "pending") && (item.bookingMode === "offline" || item.bookingMode === "Offline") && (
                               <button
                                 onClick={() => setExpandedBooking(isExpanded ? null : item._id)}
                                 className="flex items-center gap-1.5 px-3 py-1.5 bg-violet-600 hover:bg-violet-700 text-white rounded-xl text-[10px] font-black uppercase tracking-wider shadow-md shadow-violet-200 transition-all active:scale-95"
@@ -839,9 +839,17 @@ const MyBookings = ({ initialSection = "bookings" }) => {
                             </div>
                           )}
 
-                          {/* Journey Timeline (Expanded) */}
+                          {/* Journey Timeline & Forms (Expanded) */}
                           {isExpanded && (
                             <div className="border-t border-slate-100 bg-slate-50/50 px-6 py-5 animate-in fade-in slide-in-from-top-2 duration-300">
+                              
+                              {/* Live Pre-Consult Vitals Broadcaster (Only if pending/confirmed offline) */}
+                              {(item.status === "pending" || item.status === "confirmed") && (item.bookingMode === "offline" || item.bookingMode === "Offline") && (
+                                <div className="mb-6">
+                                  <PreConsultVitalsForm booking={item} bookingId={item._id} />
+                                </div>
+                              )}
+
                               <PatientJourneyTimeline journey={item.journeyTimeline} />
                             </div>
                           )}

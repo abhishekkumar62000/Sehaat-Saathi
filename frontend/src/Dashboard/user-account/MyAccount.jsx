@@ -133,8 +133,60 @@ const MyAccount = () => {
             </div>
           </div>
 
+          {/* WOW FACTOR: SOS Emergency Button */}
+          <div className="mt-6">
+            <button className="w-full relative group/sos overflow-hidden rounded-[2rem] shadow-2xl shadow-red-600/30 transition-all hover:scale-[1.02] active:scale-95">
+              <div className="absolute inset-0 bg-gradient-to-r from-red-600 via-rose-600 to-red-600 animate-pulse duration-1000"></div>
+              <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
+              <div className="relative px-6 py-5 flex items-center justify-between z-10">
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-inner relative">
+                    <div className="absolute inset-0 bg-red-500 rounded-full animate-ping opacity-40"></div>
+                    <BsHeartFill className="text-red-600 text-2xl animate-pulse" />
+                  </div>
+                  <div className="text-left">
+                    <h2 className="text-white font-black text-xl tracking-widest uppercase">SOS Emergency</h2>
+                    <p className="text-red-100 text-[10px] font-bold tracking-widest uppercase">Tap to alert nearby doctors immediately</p>
+                  </div>
+                </div>
+                <BsArrowRight className="text-white text-3xl opacity-50 group-hover/sos:translate-x-2 transition-transform" />
+              </div>
+            </button>
+          </div>
+
+          {/* WOW FACTOR: Live OPD Tracker */}
+          <div className="mt-4 bg-white/10 backdrop-blur-md rounded-[2rem] p-5 border border-white/20 shadow-xl">
+             <div className="flex items-center justify-between mb-4">
+                 <h3 className="text-white font-black uppercase tracking-widest text-sm flex items-center gap-2">
+                     <BsClockHistory className="text-emerald-400" /> Live OPD Tracker
+                 </h3>
+                 <span className="px-3 py-1 bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 rounded-full text-[9px] font-black uppercase tracking-widest animate-pulse">
+                     Live Status
+                 </span>
+             </div>
+             <div className="flex items-center justify-between bg-black/20 rounded-2xl p-4 border border-white/10">
+                 <div className="text-center">
+                     <p className="text-indigo-200 text-[9px] font-black uppercase tracking-widest mb-1">Current Token</p>
+                     <p className="text-white font-black text-3xl">12</p>
+                 </div>
+                 <div className="w-[1px] h-10 bg-white/20"></div>
+                 <div className="text-center">
+                     <p className="text-indigo-200 text-[9px] font-black uppercase tracking-widest mb-1">Your Token</p>
+                     <p className="text-emerald-400 font-black text-3xl">15</p>
+                 </div>
+                 <div className="w-[1px] h-10 bg-white/20"></div>
+                 <div className="text-center">
+                     <p className="text-indigo-200 text-[9px] font-black uppercase tracking-widest mb-1">Est. Wait</p>
+                     <p className="text-amber-400 font-black text-3xl">45<span className="text-sm">m</span></p>
+                 </div>
+             </div>
+             <div className="mt-4 w-full bg-black/20 h-2 rounded-full overflow-hidden border border-white/10">
+                 <div className="h-full bg-gradient-to-r from-emerald-400 to-teal-400 w-[80%] rounded-full shadow-[0_0_10px_rgba(52,211,153,0.5)]"></div>
+             </div>
+          </div>
+
           {/* Quick Stats Row */}
-          <div className="grid grid-cols-3 gap-3 mt-6">
+          <div className="grid grid-cols-3 gap-3 mt-4">
             {[
               { label: "Appointments", value: userData?.appointments?.length || 0, icon: <BsCalendarCheckFill className="text-violet-300" /> },
               { label: "Reviews", value: userData?.reviews?.length || 0, icon: <BsStarFill className="text-amber-300" /> },

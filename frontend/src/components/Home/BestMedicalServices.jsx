@@ -67,7 +67,7 @@ const BestMedicalServices = () => {
             <div className={`absolute -inset-1 bg-gradient-to-r ${item.color} rounded-[2.5rem] blur opacity-0 group-hover:opacity-20 transition duration-700`}></div>
 
             {/* Card Content */}
-            <div className="relative h-full bg-white/40 backdrop-blur-3xl border border-white rounded-[2.5rem] p-8 sm:p-10 shadow-sm hover:shadow-2xl transition-all duration-700 flex flex-col items-center text-center transform group-hover:-translate-y-4">
+            <div className="relative h-full bg-white/40 backdrop-blur-md border border-white rounded-[2.5rem] p-8 sm:p-10 shadow-sm hover:shadow-2xl transition-all duration-700 flex flex-col items-center text-center transform group-hover:-translate-y-4">
 
               {/* Icon Container with Floating Animation */}
               <div className="mb-8 relative transition-transform duration-700 group-hover:scale-110">
@@ -129,3 +129,4 @@ const BestMedicalServices = () => {
 };
 
 export default BestMedicalServices;
+

@@ -70,7 +70,7 @@ const HealthCalculators = () => {
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="w-full max-w-7xl bg-white border border-slate-100 p-8 lg:p-16 rounded-[4rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)] relative overflow-hidden"
+          className="w-full max-w-7xl bg-white border border-slate-100 p-8 lg:p-16 rounded-[4rem] shadow-lg md:shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)] relative overflow-hidden"
         >
           {/* Internal Glow */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-slate-50 rounded-full blur-3xl opacity-50 -z-10"></div>

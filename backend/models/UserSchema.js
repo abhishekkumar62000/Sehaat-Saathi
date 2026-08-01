@@ -20,6 +20,16 @@ const UserSchema = new mongoose.Schema({
   emergencyContactPhone: { type: Number },
   city: { type: String },
   pincode: { type: Number },
+  
+  // Sehaat Saathi Localized Rural Fields
+  abhaId: { type: String }, // Ayushman Bharat ID
+  bplCardHolder: { type: Boolean, default: false }, // Below Poverty Line
+  primaryLanguage: { type: String, enum: ["Hindi", "Bhojpuri", "Maithili", "Magahi", "Angika", "English"] },
+  district: { type: String },
+  block: { type: String },
+  hospitalPreference: { type: String, enum: ["Government", "Private", "Both"], default: "Both" },
+  accessibilityNeeds: { type: String }, // E.g., Wheelchair, Hearing Impaired
+  
   appointments: [{ type: mongoose.Types.ObjectId, ref: "Appointment" }],
 });
 

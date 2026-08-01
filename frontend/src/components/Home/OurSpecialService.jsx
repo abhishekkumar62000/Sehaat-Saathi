@@ -92,7 +92,7 @@ const OurSpecialService = () => {
     ];
 
     return (
-        <section className="container mx-auto px-4 lg:px-16 py-20 mb-20 relative overflow-hidden tri-color-mesh rounded-[3rem] sm:rounded-[80px] border border-white/40 shadow-2xl backdrop-blur-3xl">
+        <section className="container mx-auto px-4 lg:px-16 py-20 mb-20 relative overflow-hidden tri-color-mesh rounded-[3rem] sm:rounded-[80px] border border-white/40 shadow-2xl backdrop-blur-md">
             {/* Background Decorative Aura */}
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange-500/5 rounded-full blur-[120px] -z-10 animate-pulse"></div>
             <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-green-500/5 rounded-full blur-[120px] -z-10"></div>
@@ -220,3 +220,4 @@ const OurSpecialService = () => {
 };
 
 export default OurSpecialService;
+

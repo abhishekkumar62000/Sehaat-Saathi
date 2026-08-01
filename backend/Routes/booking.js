@@ -1,12 +1,13 @@
 import express from "express";
 import { authenticate } from "../auth/verifyToken.js";
-import { getCheckoutSession, updateBookingStatus, createOfflineBooking, getAvailableSlots, acceptBooking, rejectBooking, patientCancelBooking, deleteBooking } from "../Controllers/bookingController.js";
+import { getCheckoutSession, updateBookingStatus, updatePreConsultationDetails, createOfflineBooking, getAvailableSlots, acceptBooking, rejectBooking, patientCancelBooking, deleteBooking } from "../Controllers/bookingController.js";
 import { generateSymptomSummary } from "../Controllers/aiController.js";
 
 const router = express.Router();
 
 router.post("/checkout-session/:doctorId", authenticate, getCheckoutSession);
 router.patch("/:bookingId/status", authenticate, updateBookingStatus);
+router.patch("/:bookingId/pre-consultation", authenticate, updatePreConsultationDetails);
 router.post("/:bookingId/ai-summary", authenticate, generateSymptomSummary);
 
 // Offline Consultation Routes

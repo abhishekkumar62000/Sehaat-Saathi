@@ -15,7 +15,7 @@ const AboutSection = () => {
     ];
 
     return (
-        <section className="container mx-auto px-4 lg:px-16 py-16 mb-20 relative overflow-hidden tri-color-mesh rounded-[2.5rem] sm:rounded-[60px] shadow-2xl border border-white/40 backdrop-blur-3xl">
+        <section className="container mx-auto px-4 lg:px-16 py-16 mb-20 relative overflow-hidden tri-color-mesh rounded-[2.5rem] sm:rounded-[60px] shadow-2xl border border-white/40 backdrop-blur-md">
             {/* Decorative Background Ashoka Aura */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[600px] sm:h-[600px] bg-blue-500/5 rounded-full blur-[80px] sm:blur-[120px] -z-10 animate-pulse"></div>
 
@@ -80,3 +80,4 @@ const AboutSection = () => {
 };
 
 export default AboutSection;
+

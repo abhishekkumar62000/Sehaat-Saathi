@@ -90,7 +90,7 @@ const OurLocation = () => {
             transition={{ duration: 1, ease: "easeOut" }}
             className="w-full lg:w-7/12 perspective-2000"
           >
-            <div className="relative group p-3 bg-white border border-slate-100 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] rounded-[2.5rem] overflow-hidden">
+            <div className="relative group p-3 bg-white border border-slate-100 shadow-lg md:shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] rounded-[2.5rem] overflow-hidden">
               <div className="h-[350px] sm:h-[450px] lg:h-[500px] rounded-[2rem] overflow-hidden relative">
                 {/* Overlay gradient */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent pointer-events-none z-10"></div>

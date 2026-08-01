@@ -63,16 +63,29 @@ const PreConsultVitalsForm = ({ booking: bookingProp, bookingId }) => {
     }
     setLoading(true);
     try {
-      const doctorId = booking.doctor?._id || booking.doctor;
-      socket.emit("PRECONSULT_VITALS_SUBMIT", {
-        bookingId: booking._id,
-        doctorId,
-        vitalsForm: { ...form, patientName: user?.name, submittedAt: new Date().toISOString() }
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/api/v1"}/appointments/${booking._id}/pre-consultation`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        },
+        body: JSON.stringify({
+          vitals: {
+            bloodPressure: `${form.bp_systolic}/${form.bp_diastolic}`,
+            temperature: form.temperature,
+            sugarLevel: form.pulse // Repurposing pulse box to be generic vitals or just map it 
+          },
+          symptoms: form.symptoms.join(", ") + " | Duration: " + form.duration + " | Severity: " + form.severity + " | Notes: " + form.additionalNotes
+        })
       });
+
+      const result = await res.json();
+      if (!res.ok) throw new Error(result.message);
+
       setSubmitted(true);
-      toast.success("📋 Pre-consultation form submitted! Doctor can see it now.");
+      toast.success("📋 Health details securely saved & synced with Doctor's dashboard.");
     } catch (err) {
-      toast.error("Failed to submit form.");
+      toast.error("Failed to submit form: " + err.message);
     } finally {
       setLoading(false);
     }

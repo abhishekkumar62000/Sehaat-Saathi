@@ -148,6 +148,62 @@ export const updateBookingStatus = async (req, res) => {
   }
 };
 
+// updatePreConsultationDetails controller (Vitals & Health Locker)
+export const updatePreConsultationDetails = async (req, res) => {
+  const { bookingId } = req.params;
+  const { vitals, files, symptoms } = req.body;
+  const io = req.app.get("io");
+
+  try {
+    const booking = await Booking.findById(bookingId).populate("user doctor");
+    if (!booking) {
+      return res.status(404).json({ success: false, message: "Booking not found" });
+    }
+
+    // Initialize if null
+    if (!booking.preConsultationDetails) booking.preConsultationDetails = {};
+    if (!booking.preConsultationDetails.vitals) booking.preConsultationDetails.vitals = {};
+    if (!booking.preConsultationDetails.files) booking.preConsultationDetails.files = [];
+
+    // Update fields securely
+    if (vitals) {
+      if (vitals.bloodPressure) booking.preConsultationDetails.vitals.bloodPressure = vitals.bloodPressure;
+      if (vitals.temperature) booking.preConsultationDetails.vitals.temperature = vitals.temperature;
+      if (vitals.sugarLevel) booking.preConsultationDetails.vitals.sugarLevel = vitals.sugarLevel;
+    }
+    if (files && Array.isArray(files)) {
+      // Append new files safely
+      booking.preConsultationDetails.files = [...new Set([...booking.preConsultationDetails.files, ...files])];
+    }
+    if (symptoms) {
+      booking.preConsultationDetails.symptoms = symptoms;
+    }
+
+    await booking.save();
+
+    // Emit Real-Time Socket Event to Doctor so their dashboard updates instantly
+    if (io) {
+      io.to(booking.doctor._id.toString()).emit("VITALS_SYNC", {
+        bookingId: booking._id,
+        vitals: booking.preConsultationDetails.vitals,
+        patientName: booking.user.name,
+        message: "Patient has updated their Pre-Consultation Vitals/Files."
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Pre-consultation data safely synced.",
+      data: booking.preConsultationDetails
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Data sync failure: " + error.message
+    });
+  }
+};
+
 // getAvailableSlots controller
 export const getAvailableSlots = async (req, res) => {
   const { doctorId } = req.params;

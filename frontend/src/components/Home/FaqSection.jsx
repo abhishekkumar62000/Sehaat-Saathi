@@ -45,7 +45,7 @@ const FaqSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20 bg-white border border-slate-100 p-8 lg:p-16 rounded-[3rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)] relative overflow-hidden"
+            className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20 bg-white border border-slate-100 p-8 lg:p-16 rounded-[3rem] shadow-lg md:shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)] relative overflow-hidden"
           >
             {/* Image Section - Hidden on mobile, prominent on desktop */}
             <div className="hidden lg:block lg:w-1/2 relative group perspective-2000">

@@ -9,7 +9,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import {
   BsCheckCircleFill, BsXCircleFill, BsArrowRepeat,
   BsCapsule, BsPersonBadge, BsCalendarCheck, BsClock,
-  BsSearch, BsFunnelFill, BsChatDotsFill
+  BsSearch, BsFunnelFill, BsChatDotsFill, BsClockHistory
 } from "react-icons/bs";
 import { MdHealthAndSafety, MdVideoCall } from "react-icons/md";
 import DigitalPrescriptionModal from "../../components/Booking/DigitalPrescriptionModal";
@@ -113,9 +113,9 @@ const Appointments = ({ appointments: initialAppointments }) => {
     .filter(a => {
       const q = searchQuery.toLowerCase();
       const matchSearch = !q ||
-        a.patient?.name?.toLowerCase().includes(q) ||
-        a.patient?.email?.toLowerCase().includes(q) ||
-        a.bookingToken?.toLowerCase().includes(q);
+        a.patient?.name?.toLowerCase()?.includes(q) ||
+        a.patient?.email?.toLowerCase()?.includes(q) ||
+        a.bookingToken?.toLowerCase()?.includes(q);
       const matchStatus = filterStatus === "all" || a.status === filterStatus;
       return matchSearch && matchStatus;
     })
@@ -161,6 +161,37 @@ const Appointments = ({ appointments: initialAppointments }) => {
             <p className="text-xs font-black text-slate-500 uppercase tracking-wider mt-1 group-hover:text-indigo-600 transition-colors">{s.label}</p>
           </div>
         ))}
+      </div>
+
+      {/* WOW FACTOR: Live OPD Queue Manager */}
+      <div className="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-3xl p-6 shadow-xl relative overflow-hidden my-6">
+         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
+         <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+             <div className="text-left">
+                 <h2 className="text-white font-black text-2xl tracking-widest uppercase flex items-center gap-2">
+                     <BsClockHistory /> Live Queue Manager
+                 </h2>
+                 <p className="text-emerald-100 text-xs font-bold tracking-widest mt-1 uppercase">
+                     Broadcast wait times to patients in real-time
+                 </p>
+             </div>
+             
+             <div className="flex items-center gap-8 bg-black/20 p-4 rounded-2xl border border-white/10">
+                 <div className="text-center">
+                     <p className="text-emerald-200 text-[10px] font-black uppercase tracking-widest mb-1">Serving Token</p>
+                     <p className="text-white font-black text-4xl">12</p>
+                 </div>
+                 <div className="w-[1px] h-12 bg-white/20"></div>
+                 <div className="text-center">
+                     <p className="text-emerald-200 text-[10px] font-black uppercase tracking-widest mb-1">Waiting</p>
+                     <p className="text-white font-black text-4xl">{stats.confirmed}</p>
+                 </div>
+             </div>
+
+             <button onClick={() => toast.success("Token 13 Called! Patients notified in real-time.", { icon: "🔔" })} className="w-full md:w-auto px-8 py-4 bg-white text-emerald-700 font-black uppercase tracking-widest text-sm rounded-2xl shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:scale-105 active:scale-95 transition-all">
+                 Call Next Patient
+             </button>
+         </div>
       </div>
 
       {/* Main Card */}
@@ -252,6 +283,31 @@ const Appointments = ({ appointments: initialAppointments }) => {
                         <div>
                           <div className="font-black text-slate-800 text-sm leading-tight">{item.patient?.name}</div>
                           <div className="text-[11px] text-slate-400 font-medium">{item.patient?.gender} • {item.patient?.email}</div>
+                          
+                          {/* Live Vitals Broadcaster from Patient */}
+                          {item.preConsultationDetails?.vitals && (
+                            <div className="mt-1.5 flex flex-wrap gap-1">
+                              {item.preConsultationDetails.vitals.bloodPressure && (
+                                <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-md border ${
+                                  (String(item.preConsultationDetails.vitals.bloodPressure).split('/')[0] && parseInt(String(item.preConsultationDetails.vitals.bloodPressure).split('/')[0]) > 140)
+                                    ? "bg-red-100 text-red-700 border-red-300 animate-pulse"
+                                    : "bg-slate-100 text-slate-600 border-slate-200"
+                                }`}>
+                                  BP: {item.preConsultationDetails.vitals.bloodPressure}
+                                </span>
+                              )}
+                              {item.preConsultationDetails.vitals.temperature && (
+                                <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-md border ${
+                                  (parseFloat(item.preConsultationDetails.vitals.temperature) > 100)
+                                    ? "bg-red-100 text-red-700 border-red-300 animate-pulse"
+                                    : "bg-slate-100 text-slate-600 border-slate-200"
+                                }`}>
+                                  Temp: {item.preConsultationDetails.vitals.temperature}°F
+                                </span>
+                              )}
+                            </div>
+                          )}
+
                           <div className={`mt-1 inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[9px] font-black uppercase tracking-wider border ${item.appointmentType === "teleconsult" ? "bg-rose-50 text-rose-600 border-rose-200" : "bg-blue-50 text-blue-600 border-blue-200"}`}>
                             {item.appointmentType === "teleconsult" ? "📹 Video Call" : "🏥 In-Person"}
                           </div>

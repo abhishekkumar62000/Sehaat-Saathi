@@ -49,7 +49,7 @@ const Testimonial = () => {
       >
         {testimonials.map((testimonial) => (
           <SwiperSlide key={testimonial.id} className="py-10">
-            <div className="group relative bg-white/70 backdrop-blur-3xl border border-white/60 rounded-[2.5rem] p-8 shadow-sm hover:shadow-2xl transition-all duration-700 flex flex-col h-full transform hover:-translate-y-4">
+            <div className="group relative bg-white/70 backdrop-blur-md border border-white/60 rounded-[2.5rem] p-8 shadow-sm hover:shadow-2xl transition-all duration-700 flex flex-col h-full transform hover:-translate-y-4">
 
               {/* Floating Avatar */}
               <div className="absolute -top-10 left-10 transition-transform duration-500 group-hover:scale-110">
@@ -111,3 +111,4 @@ const Testimonial = () => {
 };
 
 export default Testimonial;
+

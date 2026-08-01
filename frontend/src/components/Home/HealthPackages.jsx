@@ -22,7 +22,7 @@ const HealthPackages = () => {
         {packages.map((pkg, index) => (
           <div
             key={index}
-            className="group relative bg-white/70 backdrop-blur-3xl rounded-[2.5rem] shadow-sm hover:shadow-2xl transition-all duration-700 overflow-hidden border border-white/60 flex flex-col hover:-translate-y-4"
+            className="group relative bg-white/70 backdrop-blur-md rounded-[2.5rem] shadow-sm hover:shadow-2xl transition-all duration-700 overflow-hidden border border-white/60 flex flex-col hover:-translate-y-4"
           >
             {/* Glowing Border Card Effect */}
             <div className="absolute inset-0 bg-gradient-to-br from-violet-500/0 to-violet-500/5 group-hover:from-violet-500/5 transition-all duration-700"></div>
@@ -83,3 +83,4 @@ const HealthPackages = () => {
 };
 
 export default HealthPackages;
+
