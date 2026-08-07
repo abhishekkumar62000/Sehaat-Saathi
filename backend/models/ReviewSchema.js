@@ -1,11 +1,16 @@
 import mongoose from "mongoose";
 import Doctor from "./DoctorSchema.js";
+import Hospital from "./HospitalSchema.js";
 
 const reviewSchema = new mongoose.Schema(
   {
     doctor: {
       type: mongoose.Types.ObjectId,
       ref: "Doctor",
+    },
+    hospital: {
+      type: mongoose.Types.ObjectId,
+      ref: "Hospital",
     },
     user: {
       type: mongoose.Types.ObjectId,
@@ -34,26 +39,41 @@ reviewSchema.pre(/^find/, function (next) {
   next();
 });
 
-reviewSchema.statics.calcAverageRatings = async function (doctorId) {
+reviewSchema.statics.calcAverageRatings = async function (targetId, isHospital = false) {
+  if (!targetId) return;
+  const matchField = isHospital ? { hospital: targetId } : { doctor: targetId };
   const stats = await this.aggregate([
-    {
-      $match: { doctor: doctorId },
-    },
+    { $match: matchField },
     {
       $group: {
-        _id: "$doctor",
+        _id: isHospital ? "$hospital" : "$doctor",
         numOfRating: { $sum: 1 },
         avgRating: { $avg: "$rating" },
       },
     },
   ]);
-  await Doctor.findByIdAndUpdate(doctorId, {
-    totalRating: stats[0].numOfRating,
-    averageRating: stats[0].avgRating,
-  });
+
+  if (stats && stats.length > 0) {
+    if (isHospital) {
+      await Hospital.findByIdAndUpdate(targetId, {
+        totalRating: stats[0].numOfRating,
+        averageRating: Math.round(stats[0].avgRating * 10) / 10,
+      });
+    } else {
+      await Doctor.findByIdAndUpdate(targetId, {
+        totalRating: stats[0].numOfRating,
+        averageRating: Math.round(stats[0].avgRating * 10) / 10,
+      });
+    }
+  }
 };
 
 reviewSchema.post("save", function () {
-  this.constructor.calcAverageRatings(this.doctor);
+  if (this.hospital) {
+    this.constructor.calcAverageRatings(this.hospital, true);
+  } else if (this.doctor) {
+    this.constructor.calcAverageRatings(this.doctor, false);
+  }
 });
+
 export default mongoose.model("Review", reviewSchema);

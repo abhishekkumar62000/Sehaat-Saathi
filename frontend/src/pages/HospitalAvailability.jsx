@@ -37,6 +37,8 @@ const HospitalAvailability = () => {
     // Doctor availability states
     const [showDoctors, setShowDoctors] = useState(false);
     const [selectedSpecialization, setSelectedSpecialization] = useState('all');
+    const [selectedCity, setSelectedCity] = useState('All');
+    const [searchName, setSearchName] = useState('');
 
     // Department expansion states
     const [expandedHospitalId, setExpandedHospitalId] = useState(null);
@@ -137,6 +139,7 @@ const HospitalAvailability = () => {
     const mockHospitals = hospitalList.map(h => ({
         id: h.id,
         name: h.name,
+        city: h.city,
         location: { address: `${h.addr}, ${h.city}`, lat: 25.5 + (Math.random() * 2), lng: 85.1 + (Math.random() * 2) },
         distance: h.dist,
         icuBeds: { total: h.beds, available: Math.floor(h.beds * 0.25) },
@@ -167,24 +170,49 @@ const HospitalAvailability = () => {
         ]
     }));
 
-    const hospitals = dbHospitals?.length > 0 
-        ? dbHospitals.map(h => ({
-            id: h._id,
-            name: h.hospitalName,
-            location: { address: h.location || h.district },
-            distance: "1.2 km",
-            icuBeds: { total: h.totalBeds, available: h.availableBeds },
-            generalBeds: { total: h.totalBeds * 2, available: h.availableBeds * 2 },
-            oxygen: true,
-            ventilators: 5,
-            emergency24x7: true,
-            verified: true,
-            lastUpdated: "Synced Now"
-        }))
-        : mockHospitals;
+    const mappedDbHospitals = (dbHospitals || []).map(h => ({
+        id: h._id,
+        name: h.hospitalName,
+        city: h.city || h.district,
+        location: { address: h.address ? `${h.address}, ${h.city || h.district}` : h.district },
+        distance: "🏥 Live Node",
+        icuBeds: {
+          total: h.capacityDetails?.icu?.total || h.icuBeds || 10,
+          available: h.capacityDetails?.icu?.available !== undefined ? h.capacityDetails.icu.available : 3
+        },
+        generalBeds: {
+          total: h.capacityDetails?.generalWard?.total || h.totalBeds || 50,
+          available: h.capacityDetails?.generalWard?.available !== undefined ? h.capacityDetails.generalWard.available : h.availableBeds || 15
+        },
+        oxygen: h.capacityDetails?.oxygenBeds?.enabled || h.facilities?.includes("Oxygen Supply") || true,
+        ventilators: h.capacityDetails?.ventilators?.available !== undefined ? h.capacityDetails.ventilators.available : h.ventilators || 2,
+        emergency24x7: h.acceptsEmergency !== undefined ? h.acceptsEmergency : true,
+        verified: h.verified || true,
+        lastUpdated: "Live Sync",
+        accreditations: h.accreditations || [],
+        insurancePartners: h.insurancePartners || [],
+        doctorRoster: h.doctorRoster || [],
+        ambulanceFleet: h.ambulanceFleet || { total: 2, blsCount: 1, alsCount: 1, hotline: "+91 108" },
+        facilities: h.facilities || ['ICU', 'OPD', 'Oxygen', 'Ventilator', 'Emergency'],
+        bloodBank: h.bloodBank?.inventory ? {
+          "O+": h.bloodBank.inventory["O+"]?.units || 0,
+          "B+": h.bloodBank.inventory["B+"]?.units || 0,
+          "AB+": h.bloodBank.inventory["AB+"]?.units || 0,
+          "A+": h.bloodBank.inventory["A+"]?.units || 0,
+        } : { "O+": 5, "B+": 3, "AB+": 2, "A+": 4 }
+    }));
+
+    const hospitals = [...mappedDbHospitals, ...mockHospitals];
 
     const filteredHospitals = hospitals.filter(hospital => {
-        if (selectedFacility === 'all') return true;
+        // City/District filter
+        const cityMatch = selectedCity === 'All' || 
+            hospital.location?.address?.toLowerCase().includes(selectedCity.toLowerCase()) ||
+            (hospital.city || '').toLowerCase() === selectedCity.toLowerCase();
+        if (!cityMatch) return false;
+        // Name search filter
+        if (searchName && !hospital.name?.toLowerCase().includes(searchName.toLowerCase())) return false;
+        // Facility filter
         if (selectedFacility === 'ICU') return hospital.icuBeds?.available > 0;
         if (selectedFacility === 'Oxygen') return hospital.oxygen;
         if (selectedFacility === 'Ventilator') return (hospital.ventilators || 0) > 0;
@@ -198,6 +226,10 @@ const HospitalAvailability = () => {
         }
         return parseFloat(a.distance || 0) - parseFloat(b.distance || 0);
     });
+
+    // All unique cities for filter dropdown
+    const allCities = ['All', ...Array.from(new Set(hospitals.map(h => h.location?.address?.split(',')[1]?.trim() || h.city || '').filter(Boolean))).sort()];
+
 
     const handleEmergencyToggle = () => {
         setEmergencyMode(!emergencyMode);
@@ -401,6 +433,39 @@ const HospitalAvailability = () => {
                     <div className="space-y-6 animate-fade-in">
                         {/* Search Controls */}
                         <div className="bg-slate-900/70 border border-slate-700 rounded-3xl p-6 backdrop-blur-sm">
+                            {/* Row 1: Search + City Filter */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                {/* Hospital Name Search */}
+                                <div>
+                                    <label className="block text-sm font-bold text-slate-400 mb-2">🔍 Search Hospital by Name</label>
+                                    <div className="relative">
+                                        <BsSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
+                                        <input
+                                            type="text"
+                                            value={searchName}
+                                            onChange={e => setSearchName(e.target.value)}
+                                            placeholder="e.g. AIIMS, PMCH, City Hospital..."
+                                            className="w-full pl-12 pr-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white font-bold focus:border-red-500 focus:outline-none placeholder-slate-500"
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* City / District Filter */}
+                                <div>
+                                    <label className="block text-sm font-bold text-slate-400 mb-2">📍 Filter by City / District</label>
+                                    <select
+                                        value={selectedCity}
+                                        onChange={e => setSelectedCity(e.target.value)}
+                                        className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white font-bold focus:border-red-500 focus:outline-none"
+                                    >
+                                        {allCities.map(city => (
+                                            <option key={city} value={city}>{city === 'All' ? '🌍 All Cities / Districts' : `📍 ${city}`}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+
+                            {/* Row 2: Facility + Radius + View Mode */}
                             <div className="grid md:grid-cols-3 gap-4 mb-4">
                                 {/* Facility Filter */}
                                 <div>
@@ -442,17 +507,46 @@ const HospitalAvailability = () => {
                                             onClick={() => setViewMode('grid')}
                                             className={`flex-1 px-4 py-3 rounded-xl font-bold transition-all ${viewMode === 'grid' ? 'bg-red-600 text-white' : 'bg-slate-800 text-slate-400 hover:bg-slate-700'}`}
                                         >
-                                            <BsGrid className="inline mr-2" /> Grid
+                                            <BsGrid className="inline mr-2" />Grid
                                         </button>
                                         <button
                                             onClick={() => setViewMode('list')}
                                             className={`flex-1 px-4 py-3 rounded-xl font-bold transition-all ${viewMode === 'list' ? 'bg-red-600 text-white' : 'bg-slate-800 text-slate-400 hover:bg-slate-700'}`}
                                         >
-                                            <BsListUl className="inline mr-2" /> List
+                                            <BsListUl className="inline mr-2" />List
                                         </button>
                                     </div>
                                 </div>
                             </div>
+
+                            {/* Active Filter Chips */}
+                            {(selectedCity !== 'All' || searchName || selectedFacility !== 'all') && (
+                                <div className="flex flex-wrap gap-2 mt-2">
+                                    <span className="text-xs text-slate-500 font-bold uppercase tracking-widest pt-1">Active Filters:</span>
+                                    {selectedCity !== 'All' && (
+                                        <button onClick={() => setSelectedCity('All')}
+                                            className="flex items-center gap-1.5 px-3 py-1 bg-blue-600/20 border border-blue-500/40 rounded-full text-blue-300 text-xs font-black hover:bg-red-600/20 hover:border-red-500/40 hover:text-red-300 transition-all">
+                                            📍 {selectedCity} <BsXLg className="w-2.5 h-2.5" />
+                                        </button>
+                                    )}
+                                    {searchName && (
+                                        <button onClick={() => setSearchName('')}
+                                            className="flex items-center gap-1.5 px-3 py-1 bg-purple-600/20 border border-purple-500/40 rounded-full text-purple-300 text-xs font-black hover:bg-red-600/20 hover:border-red-500/40 hover:text-red-300 transition-all">
+                                            🔍 "{searchName}" <BsXLg className="w-2.5 h-2.5" />
+                                        </button>
+                                    )}
+                                    {selectedFacility !== 'all' && (
+                                        <button onClick={() => setSelectedFacility('all')}
+                                            className="flex items-center gap-1.5 px-3 py-1 bg-orange-600/20 border border-orange-500/40 rounded-full text-orange-300 text-xs font-black hover:bg-red-600/20 hover:border-red-500/40 hover:text-red-300 transition-all">
+                                            🏥 {selectedFacility} <BsXLg className="w-2.5 h-2.5" />
+                                        </button>
+                                    )}
+                                    <button onClick={() => { setSelectedCity('All'); setSearchName(''); setSelectedFacility('all'); }}
+                                        className="flex items-center gap-1.5 px-3 py-1 bg-red-600/20 border border-red-500/40 rounded-full text-red-300 text-xs font-black hover:bg-red-600 hover:text-white transition-all">
+                                        Clear All
+                                    </button>
+                                </div>
+                            )}
 
                             {emergencyMode && (
                                 <div className="p-4 bg-red-500/10 border border-red-500/50 rounded-2xl flex items-start gap-3 animate-pulse">

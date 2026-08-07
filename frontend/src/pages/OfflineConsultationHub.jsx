@@ -162,6 +162,7 @@ const OfflineConsultationHub = () => {
     };
 
     const { data: liveDoctors } = useFetchData(`${BASE_URL}/doctors`);
+    const { data: liveHospitals } = useFetchData(`${BASE_URL}/hospitals`);
 
     const combinedDb = React.useMemo(() => {
         const mappedLiveDoctors = (liveDoctors || []).map(doc => ({
@@ -190,14 +191,47 @@ const OfflineConsultationHub = () => {
             registration: doc.licenseNumber || "Verified",
             photo: doc.photo || "https://api.uifaces.co/our-content/donated/xoneh_u5.jpg"
         }));
+        const mappedLiveHospitals = (liveHospitals || []).filter(hosp => hosp.isLive).map(hosp => ({
+            id: hosp._id,
+            name: hosp.hospitalName || "Registered Hospital",
+            degree: hosp.tagline || "Multi-Specialty Hospital",
+            experience: `${hosp.totalBeds || 0} Beds`,
+            specialty: hosp.specializations?.length > 0 ? hosp.specializations[0] : (hosp.departments?.length > 0 ? hosp.departments.join(', ') : "Multi-Specialty"),
+            hospital: hosp.hospitalName,
+            hospitalType: hosp.hospitalType === "Private" ? "Private Hospital" : hosp.hospitalType === "Government" ? "Government Hospital" : hosp.hospitalType || "Private Hospital",
+            gender: "All",
+            languagesSpoken: ["Hindi", "English", "Bhojpuri"],
+            inHouseFacilities: hosp.facilities || ["Emergency", "Pharmacy", "Diagnostics"],
+            acceptsEmergency: hosp.acceptsEmergency || true,
+            acceptsAyushmanBharat: hosp.acceptsAyushmanBharat || false,
+            district: hosp.district || hosp.city || "Patna",
+            area: hosp.city || hosp.address || "Urban",
+            fee: hosp.consultationFee || 500,
+            rating: hosp.averageRating || 5.0,
+            distance: "🏥 Live Hospital",
+            availability: [],
+            unavailabilityDates: [],
+            rushStatus: "Medium",
+            transparencyScore: 98,
+            trustScore: 100,
+            registration: hosp.registrationNumber || "Registered Hospital",
+            photo: hosp.photo || "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            isHospitalNode: true,
+            departments: hosp.departments || [],
+            address: hosp.address,
+            contactNumber: hosp.contactNumber,
+            workingHours: hosp.workingHours || "8:00 AM – 8:00 PM",
+        }));
+
         const fallbackDoctors = biharHealthcareDb.filter(staticDoc => {
             const exists = mappedLiveDoctors.some(liveDoc => 
                 liveDoc.name.toLowerCase().replace(/\s+/g, "") === staticDoc.name.toLowerCase().replace(/\s+/g, "")
             );
             return !exists;
         });
-        return [...mappedLiveDoctors, ...fallbackDoctors];
-    }, [liveDoctors]);
+        
+        return [...mappedLiveHospitals, ...mappedLiveDoctors, ...fallbackDoctors];
+    }, [liveDoctors, liveHospitals]);
 
     const filteredDocs = combinedDb.filter(doc => (
         (selectedDistrict === 'All' || doc.district === selectedDistrict || doc.area === selectedDistrict) &&

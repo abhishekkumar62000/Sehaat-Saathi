@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import bgImg from "../assets/images/bgImg.png";
@@ -19,8 +19,20 @@ const Login = () => {
 
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
   const { dispatch } = useContext(authContext);
+
+  useEffect(() => {
+    const isRemembered = localStorage.getItem("remember_me") === "true";
+    if (isRemembered) {
+      const email = localStorage.getItem("remembered_email") || "";
+      const password = localStorage.getItem("remembered_password") || "";
+      const role = localStorage.getItem("remembered_role") || "patient";
+      setFormData({ email, password, role });
+      setRememberMe(true);
+    }
+  }, []);
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -43,6 +55,18 @@ const Login = () => {
 
       if (!res.ok) {
         throw new Error(result.message);
+      }
+
+      if (rememberMe) {
+        localStorage.setItem("remember_me", "true");
+        localStorage.setItem("remembered_email", formData.email);
+        localStorage.setItem("remembered_password", formData.password);
+        localStorage.setItem("remembered_role", formData.role);
+      } else {
+        localStorage.removeItem("remember_me");
+        localStorage.removeItem("remembered_email");
+        localStorage.removeItem("remembered_password");
+        localStorage.removeItem("remembered_role");
       }
 
       dispatch({
@@ -148,6 +172,19 @@ const Login = () => {
                 </select>
               </label>
             </motion.div>
+
+            {/* Remember Me Checkbox */}
+            <div className="flex items-center justify-between px-2 pt-1 text-xs">
+              <label className="flex items-center gap-2 font-bold text-gray-500 uppercase tracking-widest cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                  className="w-4 h-4 rounded border-gray-300 accent-violet-600 cursor-pointer"
+                />
+                Remember My Session
+              </label>
+            </div>
           </div>
 
           <div className="mt-8">

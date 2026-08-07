@@ -71,19 +71,43 @@ app.get("/health", (req, res) => {
 // database connection
 mongoose.set("strictQuery", false);
 
+let isConnecting = false;
+
 export const connectDB = async () => {
   if (mongoose.connection.readyState >= 1) return;
+  if (isConnecting) return;
+
+  isConnecting = true;
   console.log("Attempting to connect to MongoDB...");
   try {
     if (!process.env.MONGODB_URL) {
       throw new Error("MONGODB_URL is not defined in environment variables");
     }
-    await mongoose.connect(process.env.MONGODB_URL);
+    await mongoose.connect(process.env.MONGODB_URL, {
+      maxPoolSize: 50,
+      minPoolSize: 5,
+      serverSelectionTimeoutMS: 15000,
+      socketTimeoutMS: 45000,
+      family: 4,
+    });
     console.log("MongoDB is connected successfully ✅");
   } catch (err) {
     console.error("MongoDB connection fail ❌:", err.message);
+  } finally {
+    isConnecting = false;
   }
 };
+
+mongoose.connection.on("disconnected", () => {
+  console.warn("⚠️ MongoDB connection lost. Triggering auto-reconnect in 3s...");
+  setTimeout(() => {
+    connectDB();
+  }, 3000);
+});
+
+mongoose.connection.on("error", (err) => {
+  console.error("❌ MongoDB connection error event:", err.message);
+});
 
 import analyticsRoute from "./Routes/analytics.js";
 import chatRoute from "./Routes/chat.js";

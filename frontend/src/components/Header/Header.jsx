@@ -133,7 +133,7 @@ const Header = ({ isCompact = false }) => {
           {token && user ? (
             <div className="flex items-center space-x-4">
               {/* Neural Notification Bell */}
-              <div className="relative cursor-pointer group/bell" onClick={() => navigate(`${role === "doctor" ? "/doctors/profile/me" : "/users/profile/me"}`)}>
+              <div className="relative cursor-pointer group/bell" onClick={() => navigate(role === "doctor" ? "/doctors/profile/me" : role === "hospital" ? "/hospitals/profile/me" : "/users/profile/me")}>
                 <BiBell className="w-6 h-6 text-slate-700 group-hover/bell:text-orange-600 transition-colors" />
                 {unreadCount > 0 && (
                   <span className="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center animate-pulse border border-white shadow-sm">
@@ -143,7 +143,7 @@ const Header = ({ isCompact = false }) => {
               </div>
 
               <Link
-                to={`${role === "doctor" ? "/doctors/profile/me" : "/users/profile/me"}`}
+                to={role === "doctor" ? "/doctors/profile/me" : role === "hospital" ? "/hospitals/profile/me" : "/users/profile/me"}
                 className="flex items-center hover:scale-105 transition-all"
               >
                 <span className="text-slate-800 font-black text-sm mr-2 hidden lg:block">{user.name}</span>
