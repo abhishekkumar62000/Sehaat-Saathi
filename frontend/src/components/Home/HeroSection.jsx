@@ -166,17 +166,17 @@ const HeroSection = () => {
 
             {/* Enhanced Description */}
             <div className="text_para lg:pr-4 space-y-6">
-              <p className="font-black text-gray-900 text-[clamp(13px,1.4vw,20px)] leading-tight whitespace-nowrap">
+              <p className="font-black text-gray-900 text-[clamp(13px,1.4vw,20px)] leading-tight whitespace-normal md:whitespace-nowrap">
                 The right doctor, at the right time —{" "}<span style={{ color: "#FF9933" }} className="inline-block hover:scale-110 transition-transform">always</span>{" "}by your{" "}<span style={{ color: "#138808" }} className="inline-block hover:scale-110 transition-transform">side</span>.
               </p>
               <p className="text-slate-600 font-medium text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">
                 Sehaat Saathi makes it easy to find a good doctor, book an appointment, check your health, order medicines, and get emergency help — all from your phone, any time of the day. We are here for every family in Bharat. 🌿
               </p>
             </div>
-
+ 
             {/* Feature Highlights */}
             {/* Feature Highlights - Ultra Responsive Grid */}
-            <div className="my-10 grid grid-cols-2 gap-4 max-w-lg mx-auto lg:mx-0">
+            <div className="my-10 grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-lg mx-auto lg:mx-0">
               {[
                 { t: "Smart Health Check", c: "text-orange-600", bg: "bg-orange-50", i: "🤖" },
                 { t: "Help 24/7", c: "text-green-600", bg: "bg-green-50", i: "📞" },
