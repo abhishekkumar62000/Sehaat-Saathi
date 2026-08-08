@@ -2,6 +2,7 @@ import Stripe from "stripe";
 import Booking from "../models/BookingSchema.js";
 import Doctor from "../models/DoctorSchema.js";
 import User from "../models/UserSchema.js";
+import Hospital from "../models/HospitalSchema.js";
 import Notification from "../models/NotificationSchema.js";
 
 export const getCheckoutSession = async (req, res) => {
@@ -204,29 +205,59 @@ export const updatePreConsultationDetails = async (req, res) => {
   }
 };
 
+// Helper to parse time strings in various formats (e.g. "09:00 AM", "05:00 PM", "14:30")
+const parseTimeToMinutes = (timeStr) => {
+  if (!timeStr) return { hours: 9, minutes: 0 };
+  const clean = timeStr.trim().toUpperCase();
+  const isPM = clean.includes("PM");
+  const isAM = clean.includes("AM");
+  
+  const timePart = clean.replace("AM", "").replace("PM", "").trim();
+  const [hoursStr, minutesStr] = timePart.split(":");
+  let hours = parseInt(hoursStr, 10);
+  let minutes = parseInt(minutesStr, 10) || 0;
+  
+  if (isPM && hours < 12) {
+    hours += 12;
+  } else if (isAM && hours === 12) {
+    hours = 0;
+  }
+  
+  return { hours, minutes };
+};
+
 // getAvailableSlots controller
 export const getAvailableSlots = async (req, res) => {
   const { doctorId } = req.params;
   const { date } = req.query; // format: YYYY-MM-DD
   
   try {
-    const doctor = await Doctor.findById(doctorId);
-    if (!doctor) {
-      return res.status(404).json({ success: false, message: "Doctor not found" });
+    let provider = await Doctor.findById(doctorId);
+    let isHospital = false;
+
+    if (!provider) {
+      provider = await Hospital.findById(doctorId);
+      if (!provider) {
+        return res.status(404).json({ success: false, message: "Doctor or Hospital not found" });
+      }
+      isHospital = true;
     }
 
     // Check holidays
-    if (doctor.unavailabilityDates && doctor.unavailabilityDates.includes(date)) {
-      return res.status(200).json({ success: true, message: "Doctor is on holiday", data: [] });
+    if (provider.unavailabilityDates && provider.unavailabilityDates.includes(date)) {
+      return res.status(200).json({ success: true, message: "Provider is on holiday/off-day", data: [] });
     }
 
-    // Determine Day of Week
+    // Determine Day of Week timezone-safely
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    const requestedDate = new Date(date);
+    const [year, month, day] = date.split("-").map(num => parseInt(num, 10));
+    const requestedDate = new Date(year, month - 1, day);
     const dayName = days[requestedDate.getDay()];
 
     // Find schedule for that day
-    const daySchedule = doctor.availability?.find(a => a.day === dayName);
+    const daySchedule = isHospital
+      ? provider.weeklySchedule?.find(a => a.day?.toLowerCase() === dayName.toLowerCase())
+      : provider.availability?.find(a => a.day?.toLowerCase() === dayName.toLowerCase());
     
     if (!daySchedule || daySchedule.isAvailable === false) {
       return res.status(200).json({ success: true, message: "No availability on this day", data: [] });
@@ -234,34 +265,44 @@ export const getAvailableSlots = async (req, res) => {
 
     // Generate slots
     const { startTime, endTime, slotDuration } = daySchedule;
-    // startTime is like "09:00", endTime is "17:00"
-    const start = new Date(`${date}T${startTime}:00`);
-    const end = new Date(`${date}T${endTime}:00`);
+    const { hours: startH, minutes: startM } = parseTimeToMinutes(startTime);
+    const { hours: endH, minutes: endM } = parseTimeToMinutes(endTime);
     
-    let current = start;
+    const start = new Date(year, month - 1, day, startH, startM, 0, 0);
+    const end = new Date(year, month - 1, day, endH, endM, 0, 0);
+    
+    let current = new Date(start);
     const baseSlots = [];
 
     while (current < end) {
-      const timeString = current.toLocaleTimeString("en-US", { hour: '2-digit', minute: '2-digit' });
+      const timeString = current.toLocaleTimeString("en-US", { 
+        hour: '2-digit', 
+        minute: '2-digit',
+        hour12: true 
+      });
       baseSlots.push(timeString);
       // Increment by slotDuration
-      current = new Date(current.getTime() + slotDuration * 60000);
+      current = new Date(current.getTime() + (slotDuration || 30) * 60000);
     }
     
     // Check existing bookings for this date
-    const existingBookings = await Booking.find({ doctor: doctorId, appointmentDate: date, status: { $ne: "cancelled" } });
+    const bookingQuery = isHospital
+      ? { hospital: doctorId, appointmentDate: date, status: { $ne: "cancelled" } }
+      : { doctor: doctorId, appointmentDate: date, status: { $ne: "cancelled" } };
+
+    const existingBookings = await Booking.find(bookingQuery);
     
-    if (doctor.maxPatientsPerDay && existingBookings.length >= doctor.maxPatientsPerDay) {
+    const maxCap = isHospital ? (provider.maxPatientsPerDay || 100) : (provider.maxPatientsPerDay || 50);
+    if (maxCap && existingBookings.length >= maxCap) {
        return res.status(200).json({ success: true, message: "Maximum patient cap reached for today", data: [] });
     }
 
     const bookedTimeSlots = existingBookings.map(b => b.appointmentTime);
-    
     const availableSlots = baseSlots.filter(slot => !bookedTimeSlots.includes(slot));
 
     res.status(200).json({
       success: true,
-      message: "Slots retrieved",
+      message: "Slots retrieved successfully",
       data: availableSlots
     });
   } catch (err) {
@@ -274,23 +315,32 @@ export const createOfflineBooking = async (req, res) => {
   try {
     const { doctorId, amount, consultationType, date, timeSlot, symptoms, paymentMethod, patientReports, patientName } = req.body;
     const user = await User.findById(req.userId);
-    const doctor = await Doctor.findById(doctorId);
-    const io = req.app.get("io");
+    
+    let provider = await Doctor.findById(doctorId);
+    let isHospital = false;
 
-    if (!doctor) {
-      return res.status(404).json({ success: false, message: "Doctor not found" });
+    if (!provider) {
+      provider = await Hospital.findById(doctorId);
+      if (!provider) {
+        return res.status(404).json({ success: false, message: "Doctor or Hospital not found" });
+      }
+      isHospital = true;
     }
 
+    const io = req.app.get("io");
+
     // Generate Token Number
-    const count = await Booking.countDocuments({ doctor: doctorId, appointmentDate: date });
+    const countQuery = isHospital
+      ? { hospital: provider._id, appointmentDate: date }
+      : { doctor: provider._id, appointmentDate: date };
+
+    const count = await Booking.countDocuments(countQuery);
     const tokenNumber = `SS-${date.split('-')[2]}-${100 + count + 1}`;
 
     // Create the Offline Booking
-    const booking = new Booking({
-      doctor: doctor._id,
+    const bookingData = {
       user: user._id,
-      ticketPrice: amount || doctor.ticketPrice,
-      hospital: doctor.hospital,
+      ticketPrice: amount || (isHospital ? (provider.consultationFee || 500) : (provider.ticketPrice || 300)),
       status: "REQUESTED",
       appointmentDate: date,
       appointmentTime: timeSlot,
@@ -302,17 +352,27 @@ export const createOfflineBooking = async (req, res) => {
       tokenNumber,
       patientName: patientName || user.name || "Self / User",
       patientReports: patientReports || []
-    });
+    };
+
+    if (isHospital) {
+      bookingData.hospital = provider._id;
+      bookingData.doctor = provider._id; // Store in doctor field too for schema validation/safeguards
+    } else {
+      bookingData.doctor = provider._id;
+      bookingData.hospital = provider.hospital;
+    }
+
+    const booking = new Booking(bookingData);
 
     // Simulate QR code content (could be a generated hash)
     booking.qrCode = `DATA:${booking._id}|${tokenNumber}|${req.userId}`;
 
     await booking.save();
 
-    // Notify Doctor via Realtime Socket
+    // Notify via Realtime Socket
     const newNotification = new Notification({
-      recipient: doctor._id,
-      recipientModel: "Doctor",
+      recipient: provider._id,
+      recipientModel: isHospital ? "Hospital" : "Doctor",
       sender: user._id,
       senderModel: "User",
       message: `${user.name} requested an OFFLINE appointment on ${date} at ${timeSlot}.`,
@@ -322,13 +382,13 @@ export const createOfflineBooking = async (req, res) => {
     await newNotification.save();
 
     if (io) {
-      io.to(doctor._id.toString()).emit("booking:new", {
+      io.to(provider._id.toString()).emit("booking:new", {
         message: newNotification.message,
         booking: booking
       });
-      if (doctor.hospital) {
-        io.to(doctor.hospital.toString()).emit("booking:new", {
-          message: `Doctor ${doctor.name} received an offline appointment request.`,
+      if (!isHospital && provider.hospital) {
+        io.to(provider.hospital.toString()).emit("booking:new", {
+          message: `Doctor ${provider.name} received an offline appointment request.`,
           booking: booking
         });
       }

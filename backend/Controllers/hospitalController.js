@@ -70,6 +70,7 @@ export const getHospitalProfile = async (req, res) => {
 
 export const updateHospitalProfile = async (req, res) => {
   const userId = req.userId;
+  const io = req.app.get("io");
 
   try {
     const updatedHospital = await Hospital.findOneAndUpdate(
@@ -77,6 +78,15 @@ export const updateHospitalProfile = async (req, res) => {
       { $set: req.body },
       { new: true, upsert: true }
     );
+
+    if (io) {
+      io.emit("doctor-availability-updated", {
+        doctorId: updatedHospital._id.toString(),
+        availability: updatedHospital.weeklySchedule,
+        unavailabilityDates: updatedHospital.unavailabilityDates,
+        isHospital: true
+      });
+    }
 
     res.status(200).json({
       success: true,

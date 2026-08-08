@@ -10,6 +10,7 @@ import { MdVerifiedUser, MdOutlineCleanHands, MdOutlineTimer, MdOutlineReduceCap
 import { biharHealthcareDb, districts, specialties } from '../utils/biharHealthcareData';
 import { BASE_URL } from "../config";
 import useFetchData from "../hooks/useFetchData";
+import { useSocket } from "../context/SocketContext";
 
 import { authContext } from '../context/AuthContext.jsx';
 import { toast } from 'react-toastify';
@@ -164,8 +165,69 @@ const OfflineConsultationHub = () => {
     const { data: liveDoctors } = useFetchData(`${BASE_URL}/doctors`);
     const { data: liveHospitals } = useFetchData(`${BASE_URL}/hospitals`);
 
+    const { socket } = useSocket();
+    const [hospitalsList, setHospitalsList] = useState([]);
+    const [doctorsList, setDoctorsList] = useState([]);
+
+    useEffect(() => {
+        if (liveDoctors) setDoctorsList(liveDoctors);
+    }, [liveDoctors]);
+
+    useEffect(() => {
+        if (liveHospitals) setHospitalsList(liveHospitals);
+    }, [liveHospitals]);
+
+    useEffect(() => {
+        if (!socket) return;
+
+        const handleRealtimeAvailability = (data) => {
+            if (data.isHospital) {
+                setHospitalsList(prev => prev.map(hosp => {
+                    if (hosp._id === data.doctorId) {
+                        return {
+                            ...hosp,
+                            weeklySchedule: data.availability,
+                            unavailabilityDates: data.unavailabilityDates
+                        };
+                    }
+                    return hosp;
+                }));
+            } else {
+                setDoctorsList(prev => prev.map(doc => {
+                    if (doc._id === data.doctorId) {
+                        return {
+                            ...doc,
+                            availability: data.availability,
+                            unavailabilityDates: data.unavailabilityDates
+                        };
+                    }
+                    return doc;
+                }));
+            }
+
+            // Also update currently selected details modal doc state in real-time
+            setSelectedDoc(prev => {
+                if (prev && (prev._id === data.doctorId || prev.id === data.doctorId)) {
+                    return {
+                        ...prev,
+                        availability: data.availability,
+                        unavailabilityDates: data.unavailabilityDates,
+                        weeklySchedule: data.isHospital ? data.availability : prev.weeklySchedule
+                    };
+                }
+                return prev;
+            });
+        };
+
+        socket.on("doctor-availability-updated", handleRealtimeAvailability);
+
+        return () => {
+            socket.off("doctor-availability-updated", handleRealtimeAvailability);
+        };
+    }, [socket]);
+
     const combinedDb = React.useMemo(() => {
-        const mappedLiveDoctors = (liveDoctors || []).map(doc => ({
+        const mappedLiveDoctors = (doctorsList || []).map(doc => ({
             id: doc._id,
             name: doc.name,
             degree: doc.qualifications?.map(q => q.degree).join(", ") || "MBBS",
@@ -191,7 +253,7 @@ const OfflineConsultationHub = () => {
             registration: doc.licenseNumber || "Verified",
             photo: doc.photo || "https://api.uifaces.co/our-content/donated/xoneh_u5.jpg"
         }));
-        const mappedLiveHospitals = (liveHospitals || []).filter(hosp => hosp.isLive).map(hosp => ({
+        const mappedLiveHospitals = (hospitalsList || []).filter(hosp => hosp.isLive).map(hosp => ({
             id: hosp._id,
             name: hosp.hospitalName || "Registered Hospital",
             degree: hosp.tagline || "Multi-Specialty Hospital",
@@ -202,15 +264,15 @@ const OfflineConsultationHub = () => {
             gender: "All",
             languagesSpoken: ["Hindi", "English", "Bhojpuri"],
             inHouseFacilities: hosp.facilities || ["Emergency", "Pharmacy", "Diagnostics"],
-            acceptsEmergency: hosp.acceptsEmergency || true,
-            acceptsAyushmanBharat: hosp.acceptsAyushmanBharat || false,
+            acceptsEmergency: hosp.acceptsEmergency !== undefined ? hosp.acceptsEmergency : true,
+            acceptsAyushmanBharat: hosp.acceptsAyushmanBharat || hosp.acceptsAyushmanBharat === undefined, // default true / as registered
             district: hosp.district || hosp.city || "Patna",
             area: hosp.city || hosp.address || "Urban",
             fee: hosp.consultationFee || 500,
             rating: hosp.averageRating || 5.0,
             distance: "🏥 Live Hospital",
-            availability: [],
-            unavailabilityDates: [],
+            availability: hosp.weeklySchedule || [],
+            unavailabilityDates: hosp.unavailabilityDates || [],
             rushStatus: "Medium",
             transparencyScore: 98,
             trustScore: 100,
@@ -221,6 +283,11 @@ const OfflineConsultationHub = () => {
             address: hosp.address,
             contactNumber: hosp.contactNumber,
             workingHours: hosp.workingHours || "8:00 AM – 8:00 PM",
+            doctorRoster: hosp.doctorRoster || [],
+            capacityDetails: hosp.capacityDetails || {},
+            insurancePartners: hosp.insurancePartners || [],
+            specializations: hosp.specializations || [],
+            bio: hosp.bio || hosp.tagline || ""
         }));
 
         const fallbackDoctors = biharHealthcareDb.filter(staticDoc => {
@@ -231,7 +298,7 @@ const OfflineConsultationHub = () => {
         });
         
         return [...mappedLiveHospitals, ...mappedLiveDoctors, ...fallbackDoctors];
-    }, [liveDoctors, liveHospitals]);
+    }, [doctorsList, hospitalsList]);
 
     const filteredDocs = combinedDb.filter(doc => (
         (selectedDistrict === 'All' || doc.district === selectedDistrict || doc.area === selectedDistrict) &&

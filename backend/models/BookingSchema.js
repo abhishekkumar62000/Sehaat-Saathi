@@ -5,7 +5,6 @@ const bookingSchema = new mongoose.Schema(
     doctor: {
       type: mongoose.Types.ObjectId,
       ref: "Doctor",
-      required: true,
     },
     user: {
       type: mongoose.Types.ObjectId,

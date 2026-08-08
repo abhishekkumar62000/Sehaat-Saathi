@@ -3,6 +3,7 @@ import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
 import Routers from "../routes/Routers";
 import FloatingAIWidget from "../components/FloatingAIWidget";
+import FloatingWhatsAppWidget from "../components/FloatingWhatsAppWidget";
 
 const Layout = () => {
   const location = useLocation();
@@ -47,6 +48,7 @@ const Layout = () => {
         <Routers />
       </main>
       <FloatingAIWidget />
+      <FloatingWhatsAppWidget />
       {!isHub && <Footer />}
     </>
   );

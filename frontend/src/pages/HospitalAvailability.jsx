@@ -142,8 +142,11 @@ const HospitalAvailability = () => {
         city: h.city,
         location: { address: `${h.addr}, ${h.city}`, lat: 25.5 + (Math.random() * 2), lng: 85.1 + (Math.random() * 2) },
         distance: h.dist,
+        contactNumber: "+91 9876543210",
         icuBeds: { total: h.beds, available: Math.floor(h.beds * 0.25) },
         generalBeds: { total: h.beds * 5, available: Math.floor(h.beds * 1.5) },
+        oxygenBeds: { total: Math.floor(h.beds * 2.5), available: Math.floor(h.beds * 0.8) },
+        ventilatorBeds: { total: Math.max(5, Math.floor(h.beds * 0.3)), available: Math.max(1, Math.floor(h.beds * 0.1)) },
         oxygen: true,
         ventilators: Math.floor(h.beds * 0.1),
         emergency24x7: true,
@@ -176,6 +179,7 @@ const HospitalAvailability = () => {
         city: h.city || h.district,
         location: { address: h.address ? `${h.address}, ${h.city || h.district}` : h.district },
         distance: "🏥 Live Node",
+        contactNumber: h.contactNumber || h.emergencyNumber || "+91 9876543210",
         icuBeds: {
           total: h.capacityDetails?.icu?.total || h.icuBeds || 10,
           available: h.capacityDetails?.icu?.available !== undefined ? h.capacityDetails.icu.available : 3
@@ -183,6 +187,14 @@ const HospitalAvailability = () => {
         generalBeds: {
           total: h.capacityDetails?.generalWard?.total || h.totalBeds || 50,
           available: h.capacityDetails?.generalWard?.available !== undefined ? h.capacityDetails.generalWard.available : h.availableBeds || 15
+        },
+        oxygenBeds: {
+          total: h.capacityDetails?.oxygenBeds?.total || 20,
+          available: h.capacityDetails?.oxygenBeds?.available !== undefined ? h.capacityDetails.oxygenBeds.available : 8
+        },
+        ventilatorBeds: {
+          total: h.capacityDetails?.ventilators?.total || 5,
+          available: h.capacityDetails?.ventilators?.available !== undefined ? h.capacityDetails.ventilators.available : 2
         },
         oxygen: h.capacityDetails?.oxygenBeds?.enabled || h.facilities?.includes("Oxygen Supply") || true,
         ventilators: h.capacityDetails?.ventilators?.available !== undefined ? h.capacityDetails.ventilators.available : h.ventilators || 2,
@@ -240,8 +252,12 @@ const HospitalAvailability = () => {
         }
     };
 
-    const handleCall = (hospitalName) => {
-        toast.success(`📞 Calling ${hospitalName}...`);
+    const handleCall = (hospital) => {
+        const num = hospital?.contactNumber || "+91 9876543210";
+        toast.success(`📞 Connecting you to ${hospital.name} (${num})...`);
+        setTimeout(() => {
+            window.location.href = `tel:${num}`;
+        }, 1200);
     };
 
     const handleNavigate = (hospitalName) => {
@@ -637,30 +653,60 @@ const HospitalAvailability = () => {
                                         )}
                                     </div>
 
-                                    {/* Bed Status Bars */}
-                                    <div className="space-y-3 mb-4">
-                                        <div>
-                                            <div className="flex justify-between text-xs mb-1">
+                                    {/* Bed Status Bars (2x2 Grid of Progress Rings/Counters) */}
+                                    <div className="grid grid-cols-2 gap-3 mb-4">
+                                        {/* ICU Beds */}
+                                        <div className="bg-slate-900/60 p-3 rounded-2xl border border-slate-800">
+                                            <div className="flex justify-between text-[11px] mb-1">
                                                 <span className="text-slate-400 font-bold">ICU Beds</span>
                                                 <span className="text-cyan-400 font-black">{hospital.icuBeds.available}/{hospital.icuBeds.total}</span>
                                             </div>
-                                            <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
+                                            <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
                                                 <div
                                                     className={`h-full bg-gradient-to-r from-cyan-500 to-blue-500 transition-all duration-1000`}
-                                                    style={{ width: `${(hospital.icuBeds.available / hospital.icuBeds.total) * 100}%` }}
+                                                    style={{ width: `${(hospital.icuBeds.available / (hospital.icuBeds.total || 1)) * 100}%` }}
                                                 ></div>
                                             </div>
                                         </div>
 
-                                        <div>
-                                            <div className="flex justify-between text-xs mb-1">
+                                        {/* General Beds */}
+                                        <div className="bg-slate-900/60 p-3 rounded-2xl border border-slate-800">
+                                            <div className="flex justify-between text-[11px] mb-1">
                                                 <span className="text-slate-400 font-bold">General Beds</span>
                                                 <span className="text-emerald-400 font-black">{hospital.generalBeds.available}/{hospital.generalBeds.total}</span>
                                             </div>
-                                            <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
+                                            <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
                                                 <div
                                                     className={`h-full bg-gradient-to-r from-emerald-500 to-green-500 transition-all duration-1000`}
-                                                    style={{ width: `${(hospital.generalBeds.available / hospital.generalBeds.total) * 100}%` }}
+                                                    style={{ width: `${(hospital.generalBeds.available / (hospital.generalBeds.total || 1)) * 100}%` }}
+                                                ></div>
+                                            </div>
+                                        </div>
+
+                                        {/* Oxygen Beds */}
+                                        <div className="bg-slate-900/60 p-3 rounded-2xl border border-slate-800">
+                                            <div className="flex justify-between text-[11px] mb-1">
+                                                <span className="text-slate-400 font-bold">Oxygen Beds</span>
+                                                <span className="text-amber-400 font-black">{hospital.oxygenBeds.available}/{hospital.oxygenBeds.total}</span>
+                                            </div>
+                                            <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                                                <div
+                                                    className={`h-full bg-gradient-to-r from-amber-500 to-orange-500 transition-all duration-1000`}
+                                                    style={{ width: `${(hospital.oxygenBeds.available / (hospital.oxygenBeds.total || 1)) * 100}%` }}
+                                                ></div>
+                                            </div>
+                                        </div>
+
+                                        {/* Ventilators */}
+                                        <div className="bg-slate-900/60 p-3 rounded-2xl border border-slate-800">
+                                            <div className="flex justify-between text-[11px] mb-1">
+                                                <span className="text-slate-400 font-bold">Ventilators</span>
+                                                <span className="text-purple-400 font-black">{hospital.ventilatorBeds.available}/{hospital.ventilatorBeds.total}</span>
+                                            </div>
+                                            <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                                                <div
+                                                    className={`h-full bg-gradient-to-r from-purple-500 to-indigo-500 transition-all duration-1000`}
+                                                    style={{ width: `${(hospital.ventilatorBeds.available / (hospital.ventilatorBeds.total || 1)) * 100}%` }}
                                                 ></div>
                                             </div>
                                         </div>
@@ -986,26 +1032,62 @@ const HospitalCard = ({ hospital, emergencyMode, index, onCall, onNavigate, getA
                 </div>
             </div>
 
-            {/* Bed Availability */}
-            <div className="space-y-3 mb-4">
-                <div className="p-3 bg-slate-800/50 border border-cyan-500/30 rounded-xl">
-                    <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs text-slate-400 font-bold">🛏️ ICU Beds</span>
-                        <span className={`px-2 py-0.5 ${icuBadge.color} text-white text-[10px] font-black rounded-full`}>
+            {/* Bed Availability Grid (2x2) */}
+            <div className="grid grid-cols-2 gap-3 mb-4">
+                {/* ICU Beds */}
+                <div className="p-3 bg-slate-800/50 border border-cyan-500/30 rounded-2xl flex flex-col justify-between">
+                    <div className="flex items-center justify-between mb-1.5">
+                        <span className="text-[10px] text-slate-400 font-black uppercase tracking-wider">ICU Beds</span>
+                        <span className={`px-1.5 py-0.5 ${icuBadge.color} text-white text-[8px] font-black rounded-full uppercase`}>
                             {icuBadge.text}
                         </span>
                     </div>
-                    <div className="text-2xl font-black text-cyan-400">{hospital.icuBeds.available}<span className="text-sm text-slate-500">/{hospital.icuBeds.total}</span></div>
+                    <div className="text-xl font-black text-cyan-400">
+                        {hospital.icuBeds.available}
+                        <span className="text-xs text-slate-500 font-medium">/{hospital.icuBeds.total}</span>
+                    </div>
                 </div>
 
-                <div className="p-3 bg-slate-800/50 border border-emerald-500/30 rounded-xl">
-                    <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs text-slate-400 font-bold">🛏️ General Beds</span>
-                        <span className={`px-2 py-0.5 ${generalBadge.color} text-white text-[10px] font-black rounded-full`}>
+                {/* General Beds */}
+                <div className="p-3 bg-slate-800/50 border border-emerald-500/30 rounded-2xl flex flex-col justify-between">
+                    <div className="flex items-center justify-between mb-1.5">
+                        <span className="text-[10px] text-slate-400 font-black uppercase tracking-wider">Gen Beds</span>
+                        <span className={`px-1.5 py-0.5 ${generalBadge.color} text-white text-[8px] font-black rounded-full uppercase`}>
                             {generalBadge.text}
                         </span>
                     </div>
-                    <div className="text-2xl font-black text-emerald-400">{hospital.generalBeds.available}<span className="text-sm text-slate-500">/{hospital.generalBeds.total}</span></div>
+                    <div className="text-xl font-black text-emerald-400">
+                        {hospital.generalBeds.available}
+                        <span className="text-xs text-slate-500 font-medium">/{hospital.generalBeds.total}</span>
+                    </div>
+                </div>
+
+                {/* Oxygen Beds */}
+                <div className="p-3 bg-slate-800/50 border border-amber-500/30 rounded-2xl flex flex-col justify-between">
+                    <div className="flex items-center justify-between mb-1.5">
+                        <span className="text-[10px] text-slate-400 font-black uppercase tracking-wider">O2 Beds</span>
+                        <span className={`px-1.5 py-0.5 ${getAvailabilityBadge(hospital.oxygenBeds.available, hospital.oxygenBeds.total).color} text-white text-[8px] font-black rounded-full uppercase`}>
+                            {getAvailabilityBadge(hospital.oxygenBeds.available, hospital.oxygenBeds.total).text}
+                        </span>
+                    </div>
+                    <div className="text-xl font-black text-amber-400">
+                        {hospital.oxygenBeds.available}
+                        <span className="text-xs text-slate-500 font-medium">/{hospital.oxygenBeds.total}</span>
+                    </div>
+                </div>
+
+                {/* Ventilator Beds */}
+                <div className="p-3 bg-slate-800/50 border border-purple-500/30 rounded-2xl flex flex-col justify-between">
+                    <div className="flex items-center justify-between mb-1.5">
+                        <span className="text-[10px] text-slate-400 font-black uppercase tracking-wider">Vents</span>
+                        <span className={`px-1.5 py-0.5 ${getAvailabilityBadge(hospital.ventilatorBeds.available, hospital.ventilatorBeds.total).color} text-white text-[8px] font-black rounded-full uppercase`}>
+                            {getAvailabilityBadge(hospital.ventilatorBeds.available, hospital.ventilatorBeds.total).text}
+                        </span>
+                    </div>
+                    <div className="text-xl font-black text-purple-400">
+                        {hospital.ventilatorBeds.available}
+                        <span className="text-xs text-slate-500 font-medium">/{hospital.ventilatorBeds.total}</span>
+                    </div>
                 </div>
             </div>
 
@@ -1097,7 +1179,7 @@ const HospitalCard = ({ hospital, emergencyMode, index, onCall, onNavigate, getA
             {/* Action Buttons */}
             <div className="grid grid-cols-3 gap-3">
                 <button
-                    onClick={() => onCall(hospital.name)}
+                    onClick={() => onCall(hospital)}
                     className="px-4 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-black text-xs transition-all hover:scale-105 flex items-center justify-center gap-2"
                 >
                     <BsPhone /> Call

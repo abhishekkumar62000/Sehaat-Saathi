@@ -130,8 +130,18 @@ const BookingWizard = ({ doc, onClose, onSuccess }) => {
                     <div className="min-w-0 flex-grow md:flex-grow-0">
                         <h3 className="text-base md:text-xl font-black text-slate-900 uppercase truncate">{doc.name}</h3>
                         <p className="text-[10px] md:text-xs font-bold text-slate-500 uppercase truncate">{doc.specialty}</p>
+                        
+                        {/* Mobile fee & hospital badge */}
+                        <div className="flex flex-wrap gap-2 mt-2 md:hidden">
+                            <span className="px-2.5 py-1 bg-orange-50 border border-orange-100 rounded-lg text-[9px] font-black text-orange-700">
+                                ₹{doc.fee === 0 ? "FREE" : doc.fee}
+                            </span>
+                            <span className="px-2.5 py-1 bg-slate-50 border border-slate-200 rounded-lg text-[9px] font-black text-slate-600 truncate max-w-[140px]">
+                                🏥 {doc.hospital}
+                            </span>
+                        </div>
                     </div>
-
+ 
                     <div className="hidden md:block mt-8 space-y-4 w-full">
                         <div className="flex justify-between text-sm">
                             <span className="text-slate-400 font-bold uppercase">Consultation Fee</span>
@@ -143,7 +153,7 @@ const BookingWizard = ({ doc, onClose, onSuccess }) => {
                         </div>
                     </div>
                 </div>
-
+ 
                 {/* Right panel - Wizard */}
                 <div className="w-full md:w-2/3 flex flex-col justify-between min-h-[50vh] md:min-h-0">
                     <div>
@@ -152,7 +162,7 @@ const BookingWizard = ({ doc, onClose, onSuccess }) => {
                                 <div key={idx} className={`flex-1 h-2 rounded-full transition-all ${idx <= step ? 'bg-orange-500' : 'bg-slate-300'}`}></div>
                             ))}
                         </div>
-
+ 
                         <div className="flex-grow pr-1 md:pr-4">
                         {step === 1 && (
                             <div className="space-y-4 animate-in slide-in-from-right duration-300">
@@ -168,7 +178,7 @@ const BookingWizard = ({ doc, onClose, onSuccess }) => {
                                         className="w-full p-4 rounded-xl border border-orange-200 focus:outline-none focus:border-orange-500 font-bold text-slate-800 shadow-inner"
                                     />
                                 </div>
-
+ 
                                 <h4 className="text-lg font-black uppercase tracking-widest text-slate-800 mb-4">Select Consultation Type</h4>
                                 {['First Visit', 'Follow-up', 'Emergency'].map(t => (
                                     <button 
@@ -181,7 +191,7 @@ const BookingWizard = ({ doc, onClose, onSuccess }) => {
                                 ))}
                             </div>
                         )}
-
+ 
                         {step === 2 && (
                             <div className="space-y-4 animate-in slide-in-from-right duration-300">
                                 <h4 className="text-lg font-black uppercase tracking-widest text-slate-800 mb-6">Select Date</h4>
@@ -194,23 +204,23 @@ const BookingWizard = ({ doc, onClose, onSuccess }) => {
                                 />
                             </div>
                         )}
-
+ 
                         {step === 3 && (
                             <div className="space-y-4 animate-in slide-in-from-right duration-300">
                                 <h4 className="text-lg font-black uppercase tracking-widest text-slate-800 mb-6">Select Time Slot</h4>
                                 {loadingSlots ? <p>Loading slots...</p> : (
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
                                         {availableSlots.length > 0 ? availableSlots.map(t => (
                                             <button 
                                                 key={t}
                                                 onClick={() => setTimeSlot(t)}
-                                                className={`py-3.5 rounded-2xl border font-bold text-sm flex flex-col items-center justify-center gap-1 transition-all ${timeSlot === t ? 'border-orange-500 bg-orange-50 text-orange-600 shadow-md transform scale-[1.02]' : 'border-slate-200 hover:border-slate-300'}`}
+                                                className={`py-3 px-2 rounded-2xl border font-bold text-xs flex flex-col items-center justify-center gap-0.5 transition-all ${timeSlot === t ? 'border-orange-500 bg-orange-50 text-orange-600 shadow-md transform scale-[1.02]' : 'border-slate-200 hover:border-slate-300'}`}
                                             >
-                                                <span>{t}</span>
+                                                <span className="font-bold">{t}</span>
                                                 {t.includes('AM') || (t.includes('PM') && ['12', '01', '1'].some(h => t.startsWith(h))) ? (
-                                                    <span className="text-[8px] text-red-500 bg-red-50 px-2 rounded-full font-black uppercase tracking-widest">🔥 High Traffic</span>
+                                                    <span className="text-[7px] text-red-500 bg-red-50 px-1 rounded-full font-black uppercase tracking-wider">🔥 High</span>
                                                 ) : (
-                                                    <span className="text-[8px] text-green-600 bg-green-50 px-2 rounded-full font-black uppercase tracking-widest">🟢 Fast Track</span>
+                                                    <span className="text-[7px] text-green-600 bg-green-50 px-1 rounded-full font-black uppercase tracking-wider">🟢 Fast</span>
                                                 )}
                                             </button>
                                         )) : <p className="col-span-full text-center text-slate-400 font-bold py-8">No slots available for this date.</p>}

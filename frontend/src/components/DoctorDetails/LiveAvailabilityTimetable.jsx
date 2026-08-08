@@ -28,7 +28,10 @@ const LiveAvailabilityTimetable = ({ doctorId, initialAvailability = [], initial
                 setAvailability(data.availability || []);
                 setHolidays(data.unavailabilityDates || []);
                 setJustUpdated(true);
-                toast.info("⚡ Doctor has updated their availability timings in real-time!", {
+                const toastMsg = data.isHospital 
+                    ? "⚡ Hospital has updated their OPD Timings in real-time!" 
+                    : "⚡ Doctor has updated their availability timings in real-time!";
+                toast.info(toastMsg, {
                     position: "top-center",
                     autoClose: 3000
                 });
@@ -46,7 +49,7 @@ const LiveAvailabilityTimetable = ({ doctorId, initialAvailability = [], initial
 
     // Order availability by Monday-Sunday
     const sortedAvailability = DAYS_ORDER.map(day => {
-        const found = Array.isArray(availability) ? availability.find(a => a.day === day) : null;
+        const found = Array.isArray(availability) ? availability.find(a => a.day?.toLowerCase() === day.toLowerCase()) : null;
         return found || { day, isAvailable: false };
     });
 

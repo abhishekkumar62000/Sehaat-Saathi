@@ -207,6 +207,15 @@ const HospitalProfile = ({ hospitalData }) => {
     acceptsEmergency: true,
     isLive: false,
     photo: null,
+    weeklySchedule: [
+      { day: "Monday", isAvailable: true, startTime: "09:00", endTime: "17:00" },
+      { day: "Tuesday", isAvailable: true, startTime: "09:00", endTime: "17:00" },
+      { day: "Wednesday", isAvailable: true, startTime: "09:00", endTime: "17:00" },
+      { day: "Thursday", isAvailable: false, startTime: "09:00", endTime: "17:00" },
+      { day: "Friday", isAvailable: true, startTime: "09:00", endTime: "17:00" },
+      { day: "Saturday", isAvailable: true, startTime: "09:00", endTime: "17:00" },
+      { day: "Sunday", isAvailable: false, startTime: "09:00", endTime: "17:00" }
+    ]
   });
 
   const calculateProgress = () => {
@@ -282,6 +291,15 @@ const HospitalProfile = ({ hospitalData }) => {
         acceptsEmergency: hospitalData?.acceptsEmergency || true,
         isLive: hospitalData?.isLive || false,
         photo: hospitalData?.photo || null,
+        weeklySchedule: hospitalData?.weeklySchedule?.length > 0 ? hospitalData.weeklySchedule : [
+          { day: "Monday", isAvailable: true, startTime: "09:00", endTime: "17:00" },
+          { day: "Tuesday", isAvailable: true, startTime: "09:00", endTime: "17:00" },
+          { day: "Wednesday", isAvailable: true, startTime: "09:00", endTime: "17:00" },
+          { day: "Thursday", isAvailable: false, startTime: "09:00", endTime: "17:00" },
+          { day: "Friday", isAvailable: true, startTime: "09:00", endTime: "17:00" },
+          { day: "Saturday", isAvailable: true, startTime: "09:00", endTime: "17:00" },
+          { day: "Sunday", isAvailable: false, startTime: "09:00", endTime: "17:00" }
+        ]
       });
     }
   }, [hospitalData]);
@@ -289,6 +307,20 @@ const HospitalProfile = ({ hospitalData }) => {
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData(prev => ({ ...prev, [name]: type === "checkbox" ? checked : value }));
+  };
+
+  const handleWeeklyScheduleChange = (index, field, value) => {
+    setFormData(prev => {
+      const updatedSchedule = [...(prev.weeklySchedule || [])];
+      updatedSchedule[index] = {
+        ...updatedSchedule[index],
+        [field]: value
+      };
+      return {
+        ...prev,
+        weeklySchedule: updatedSchedule
+      };
+    });
   };
 
   const handleArrayToggle = (field, value) => {
@@ -1091,17 +1123,47 @@ const HospitalProfile = ({ hospitalData }) => {
                           <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest block mb-1">Specialization</label>
                           <input type="text" value={doc.specialization}
                             onChange={e => handleDoctorRosterChange(idx, "specialization", e.target.value)}
-                            placeholder="Click to Select Specialization"
-                            list="specializationList"
-                            className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm font-bold text-gray-900 outline-none focus:ring-2 focus:ring-indigo-400 cursor-pointer" />
+                            placeholder="Type or select specialization"
+                            className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm font-bold text-gray-900 outline-none focus:ring-2 focus:ring-indigo-400" />
+                          <div className="flex gap-1.5 overflow-x-auto py-1.5 mt-1 whitespace-nowrap" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}>
+                            {SUGGESTED_SPECIALIZATIONS.map(spec => (
+                              <button
+                                key={spec}
+                                type="button"
+                                onClick={() => handleDoctorRosterChange(idx, "specialization", spec)}
+                                className={`inline-block px-2.5 py-1 text-[10px] font-bold rounded-full transition-all border ${
+                                  doc.specialization === spec 
+                                    ? "bg-indigo-600 border-indigo-600 text-white shadow-sm" 
+                                    : "bg-indigo-50/50 hover:bg-indigo-100/80 border-indigo-100 text-indigo-700"
+                                }`}
+                              >
+                                {spec}
+                              </button>
+                            ))}
+                          </div>
                         </div>
                         <div>
                           <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest block mb-1">Qualification</label>
                           <input type="text" value={doc.qualification}
                             onChange={e => handleDoctorRosterChange(idx, "qualification", e.target.value)}
-                            placeholder="Click to Select Qualification"
-                            list="qualificationList"
-                            className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm font-bold text-gray-900 outline-none focus:ring-2 focus:ring-indigo-400 cursor-pointer" />
+                            placeholder="Type or select qualification"
+                            className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm font-bold text-gray-900 outline-none focus:ring-2 focus:ring-indigo-400" />
+                          <div className="flex gap-1.5 overflow-x-auto py-1.5 mt-1 whitespace-nowrap" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}>
+                            {SUGGESTED_QUALIFICATIONS.map(qual => (
+                              <button
+                                key={qual}
+                                type="button"
+                                onClick={() => handleDoctorRosterChange(idx, "qualification", qual)}
+                                className={`inline-block px-2.5 py-1 text-[10px] font-bold rounded-full transition-all border ${
+                                  doc.qualification === qual 
+                                    ? "bg-indigo-600 border-indigo-600 text-white shadow-sm" 
+                                    : "bg-indigo-50/50 hover:bg-indigo-100/80 border-indigo-100 text-indigo-700"
+                                }`}
+                              >
+                                {qual}
+                              </button>
+                            ))}
+                          </div>
                         </div>
                       </div>
 
@@ -1110,24 +1172,54 @@ const HospitalProfile = ({ hospitalData }) => {
                           <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest block mb-1">OPD Days</label>
                           <input type="text" value={doc.opdDays}
                             onChange={e => handleDoctorRosterChange(idx, "opdDays", e.target.value)}
-                            placeholder="Click to Select Days"
-                            list="opdDaysList"
-                            className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-xs font-bold text-gray-900 outline-none cursor-pointer" />
+                            placeholder="Type or select days"
+                            className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-xs font-bold text-gray-900 outline-none focus:ring-2 focus:ring-indigo-400" />
+                          <div className="flex gap-1.5 overflow-x-auto py-1.5 mt-1 whitespace-nowrap" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}>
+                            {SUGGESTED_OPD_DAYS.map(day => (
+                              <button
+                                key={day}
+                                type="button"
+                                onClick={() => handleDoctorRosterChange(idx, "opdDays", day)}
+                                className={`inline-block px-2.5 py-1 text-[10px] font-bold rounded-full transition-all border ${
+                                  doc.opdDays === day 
+                                    ? "bg-indigo-600 border-indigo-600 text-white shadow-sm" 
+                                    : "bg-indigo-50/50 hover:bg-indigo-100/80 border-indigo-100 text-indigo-700"
+                                }`}
+                              >
+                                {day}
+                              </button>
+                            ))}
+                          </div>
                         </div>
                         <div>
                           <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest block mb-1">OPD Timings</label>
                           <input type="text" value={doc.opdTime}
                             onChange={e => handleDoctorRosterChange(idx, "opdTime", e.target.value)}
-                            placeholder="Click to Select Timings"
-                            list="opdTimingsList"
-                            className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-xs font-bold text-gray-900 outline-none cursor-pointer" />
+                            placeholder="Type or select timings"
+                            className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-xs font-bold text-gray-900 outline-none focus:ring-2 focus:ring-indigo-400" />
+                          <div className="flex gap-1.5 overflow-x-auto py-1.5 mt-1 whitespace-nowrap" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}>
+                            {SUGGESTED_OPD_TIMINGS.map(time => (
+                              <button
+                                key={time}
+                                type="button"
+                                onClick={() => handleDoctorRosterChange(idx, "opdTime", time)}
+                                className={`inline-block px-2.5 py-1 text-[10px] font-bold rounded-full transition-all border ${
+                                  doc.opdTime === time 
+                                    ? "bg-indigo-600 border-indigo-600 text-white shadow-sm" 
+                                    : "bg-indigo-50/50 hover:bg-indigo-100/80 border-indigo-100 text-indigo-700"
+                                }`}
+                              >
+                                {time}
+                              </button>
+                            ))}
+                          </div>
                         </div>
                         <div>
                           <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest block mb-1">Consultation Fee (₹)</label>
                           <input type="number" value={doc.fee}
                             onChange={e => handleDoctorRosterChange(idx, "fee", Number(e.target.value))}
                             placeholder="500"
-                            className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-xs font-bold text-gray-900 outline-none" />
+                            className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-xs font-bold text-gray-900 outline-none focus:ring-2 focus:ring-indigo-400" />
                         </div>
                         <div className="flex items-center gap-3 pt-4">
                           <input type="checkbox" id={`doc-avail-${idx}`} checked={doc.isAvailable}
@@ -1167,6 +1259,69 @@ const HospitalProfile = ({ hospitalData }) => {
                   <option key={time} value={time} />
                 ))}
               </datalist>
+
+              {/* Live OPD Timings Weekly Schedule Editor */}
+              <div className="mt-8 pt-8 border-t border-gray-100">
+                <h3 className="text-base font-black text-indigo-950 uppercase tracking-widest flex items-center gap-2 mb-2">
+                  <FaClock className="text-indigo-600" /> Live OPD Weekly Timings & Availability
+                </h3>
+                <p className="text-xs text-gray-500 font-medium mb-6">
+                  Configure operational timings for each day. Offline Booking and search pages will reflect this in real-time.
+                </p>
+
+                <div className="space-y-4">
+                  {formData.weeklySchedule?.map((slot, index) => (
+                    <div key={slot.day} className="flex flex-col md:flex-row items-start md:items-center justify-between p-4 bg-gray-50 rounded-2xl border border-gray-200/85 gap-4">
+                      
+                      {/* Day Label & Available Toggle */}
+                      <div className="flex items-center gap-4 min-w-[200px]">
+                        <input 
+                          type="checkbox" 
+                          id={`schedule-day-${index}`}
+                          checked={slot.isAvailable}
+                          onChange={(e) => handleWeeklyScheduleChange(index, "isAvailable", e.target.checked)}
+                          className="w-5 h-5 accent-indigo-600 rounded cursor-pointer"
+                        />
+                        <label htmlFor={`schedule-day-${index}`} className="text-sm font-black text-gray-800 uppercase tracking-wide cursor-pointer">
+                          {slot.day}
+                        </label>
+                      </div>
+
+                      {/* Time Range Inputs */}
+                      <div className="flex items-center gap-3 w-full md:w-auto">
+                        <div className="flex-1 md:w-36">
+                          <label className="text-[9px] font-black text-gray-400 uppercase tracking-wider block mb-1">Start Time</label>
+                          <input 
+                            type="time" 
+                            value={slot.startTime} 
+                            disabled={!slot.isAvailable}
+                            onChange={(e) => handleWeeklyScheduleChange(index, "startTime", e.target.value)}
+                            className="w-full px-3 py-2 bg-white border border-gray-200 rounded-xl text-xs font-bold text-gray-900 outline-none disabled:opacity-40"
+                          />
+                        </div>
+                        <span className="text-gray-400 font-bold self-end mb-2.5">to</span>
+                        <div className="flex-1 md:w-36">
+                          <label className="text-[9px] font-black text-gray-400 uppercase tracking-wider block mb-1">End Time</label>
+                          <input 
+                            type="time" 
+                            value={slot.endTime} 
+                            disabled={!slot.isAvailable}
+                            onChange={(e) => handleWeeklyScheduleChange(index, "endTime", e.target.value)}
+                            className="w-full px-3 py-2 bg-white border border-gray-200 rounded-xl text-xs font-bold text-gray-900 outline-none disabled:opacity-40"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Status indicator pill */}
+                      <div className="self-center">
+                        <span className={`text-[9px] font-black uppercase px-3 py-1 rounded-full ${slot.isAvailable ? 'bg-indigo-100 text-indigo-700' : 'bg-gray-200 text-gray-500'}`}>
+                          {slot.isAvailable ? 'Active' : 'Closed / Off'}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         )}
