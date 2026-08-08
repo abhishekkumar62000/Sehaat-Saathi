@@ -293,6 +293,24 @@ const Smarthub = () => {
                             }}
                         />
                     </Link>
+                    <Link to="/hospital-availability">
+                        <FeatureRoadmapCard
+                            icon={<BsHeartPulse className="animate-pulse" />}
+                            title={
+                                <span>
+                                    <span style={{ color: "#FF9933" }}>Sehaat</span>{" "}
+                                    <span style={{ color: "#138808" }}>Saathi</span> Live Hospital OPD & Bed Availability System
+                                </span>
+                            }
+                            desc="Real-time hospital discovery for emergencies. Find ICU beds, oxygen, ventilators, and OPD slots instantly. AI-powered priority sorting during critical situations. Life-saving system for India."
+                            color="red"
+                            status="Life-Saving"
+                            example={{
+                                patient: "Emergency! Need ICU bed with ventilator in 10km radius.",
+                                ai: "AI Search Complete: 2 hospitals found. Apollo (3.2km): 5 ICU beds, 3 ventilators available. Fortis (7km): 12 ICU beds. Priority alert sent."
+                            }}
+                        />
+                    </Link>
                     <Link to="/pharmacy-hub">
                         <FeatureRoadmapCard
                             icon={<BsCartCheck className="animate-bounce" />}
@@ -509,24 +527,7 @@ const Smarthub = () => {
                             }}
                         />
                     </Link>
-                    <Link to="/hospital-availability">
-                        <FeatureRoadmapCard
-                            icon={<BsHeartPulse className="animate-pulse" />}
-                            title={
-                                <span>
-                                    <span style={{ color: "#FF9933" }}>Sehaat</span>{" "}
-                                    <span style={{ color: "#138808" }}>Saathi</span> Live Hospital OPD & Bed Availability System
-                                </span>
-                            }
-                            desc="Real-time hospital discovery for emergencies. Find ICU beds, oxygen, ventilators, and OPD slots instantly. AI-powered priority sorting during critical situations. Life-saving system for India."
-                            color="red"
-                            status="Life-Saving"
-                            example={{
-                                patient: "Emergency! Need ICU bed with ventilator in 10km radius.",
-                                ai: "AI Search Complete: 2 hospitals found. Apollo (3.2km): 5 ICU beds, 3 ventilators available. Fortis (7km): 12 ICU beds. Priority alert sent."
-                            }}
-                        />
-                    </Link>
+
                     <Link to="/report-interpreter">
                         <FeatureRoadmapCard
                             icon={<BsFileEarmarkMedical className="animate-pulse" />}
@@ -618,24 +619,7 @@ const Smarthub = () => {
                             }}
                         />
                     </Link>
-                    <Link to="/caregiver-panic">
-                        <FeatureRoadmapCard
-                            icon={<BsPeopleFill className="animate-pulse" />}
-                            title={
-                                <span>
-                                    <span style={{ color: "#FF9933" }}>Sehaat</span>{" "}
-                                    <span style={{ color: "#138808" }}>Saathi</span> Caregiver Panic Button
-                                </span>
-                            }
-                            desc="Patient at home & you are panicking? One-tap AI coordination. Instantly notifies Family, Trusted Neighbors, and Preferred Doctors with a live patient summary. Zero confusion, maximum speed."
-                            color="indigo"
-                            status="New"
-                            example={{
-                                patient: "Emergency! Father collapsed. I don't know what to do.",
-                                ai: "Stay Calm. Doctor notified. Neighbor (Mr. Verma) alerted & arriving in 2 mins. Start CPR: Push hard & fast in center of chest."
-                            }}
-                        />
-                    </Link>
+
 
                     {/* === SATELLITE AI HUB (STREAMLIT) === */}
                     <a href="https://sehaat-saathi-your-ai-doctor-chatbot.streamlit.app/" target="_blank" rel="noopener noreferrer">
@@ -658,25 +642,7 @@ const Smarthub = () => {
                         />
                     </a>
 
-                    <Link to="/pain-navigator">
-                        <FeatureRoadmapCard
-                            icon={<BsGeoAltFill className="animate-bounce text-blue-500" />}
-                            title={
-                                <span>
-                                    <span style={{ color: "#FF9933" }}>Chakra</span>{" "}
-                                    <span style={{ color: "#138808" }}>Pain</span> Navigator
-                                </span>
-                            }
-                            desc="Interactive 3D Anatomical Mapping. Touch where it hurts and get an AI neural triangulation of possible causes."
-                            color="tiranga"
-                            status="Neural Mapping"
-                            outstanding={true}
-                            example={{
-                                patient: "I have sharp pain in the lower left abdomen.",
-                                ai: "Triangulating... Possible Appendicitis or Hernia. Clinical Triage: Visit General Surgery Department."
-                            }}
-                        />
-                    </Link>
+
                     <Link to="/health-copilot">
                         <FeatureRoadmapCard
                             icon={<BsShieldCheck className="animate-pulse text-blue-600" />}
