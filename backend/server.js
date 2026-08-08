@@ -116,6 +116,12 @@ import chatRoute from "./Routes/chat.js";
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors(corsOptions));
+
+// Database connection sync middleware for serverless/cold-start environments
+app.use(async (req, res, next) => {
+  await connectDB();
+  next();
+});
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/users", userRoute);
 app.use("/api/v1/doctors", doctorRoute);

@@ -301,7 +301,9 @@ const OfflineConsultationHub = () => {
     }, [doctorsList, hospitalsList]);
 
     const filteredDocs = combinedDb.filter(doc => (
-        (selectedDistrict === 'All' || doc.district === selectedDistrict || doc.area === selectedDistrict) &&
+        (selectedDistrict === 'All' || 
+         doc.district?.toLowerCase().includes(selectedDistrict.toLowerCase()) || 
+         doc.area?.toLowerCase().includes(selectedDistrict.toLowerCase())) &&
         (selectedSpecialty.length === 0 || selectedSpecialty.includes(doc.specialty)) &&
         (hospitalType === 'All' || doc.hospitalType === hospitalType) &&
         (selectedGender === 'All' || doc.gender === selectedGender) &&
