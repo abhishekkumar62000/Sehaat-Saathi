@@ -16,10 +16,10 @@ const DoctorDetailsModal = ({ doc, onClose }) => {
 
     if (doc.isHospitalNode) {
         const capacity = doc.capacityDetails || {};
-        const icuBeds = capacity.icu || { total: 10, available: 3 };
-        const generalBeds = capacity.generalWard || { total: 50, available: 15 };
-        const oxygenBeds = capacity.oxygenBeds || { total: 20, available: 8 };
-        const ventilators = capacity.ventilators || { total: 5, available: 2 };
+        const icuBeds = capacity.icu?.total ? capacity.icu : { total: doc.icuBeds || 10, available: doc.icuBeds ? Math.floor(doc.icuBeds * 0.4) : 3 };
+        const generalBeds = capacity.generalWard?.total ? capacity.generalWard : { total: doc.totalBeds || 50, available: doc.availableBeds || 15 };
+        const oxygenBeds = capacity.oxygenBeds?.total ? capacity.oxygenBeds : { total: Math.floor((doc.totalBeds || 50) * 0.3), available: Math.floor((doc.availableBeds || 15) * 0.4) };
+        const ventilators = capacity.ventilators?.total ? capacity.ventilators : { total: doc.ventilators || 5, available: doc.ventilators ? Math.floor(doc.ventilators * 0.8) : 2 };
 
         return (
             <div className="fixed inset-0 z-[120] flex items-center justify-center p-4">

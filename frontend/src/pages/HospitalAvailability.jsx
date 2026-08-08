@@ -220,7 +220,7 @@ const HospitalAvailability = () => {
         // City/District filter
         const cityMatch = selectedCity === 'All' || 
             hospital.location?.address?.toLowerCase().includes(selectedCity.toLowerCase()) ||
-            (hospital.city || '').toLowerCase() === selectedCity.toLowerCase();
+            (hospital.city || '').toLowerCase().includes(selectedCity.toLowerCase());
         if (!cityMatch) return false;
         // Name search filter
         if (searchName && !hospital.name?.toLowerCase().includes(searchName.toLowerCase())) return false;
