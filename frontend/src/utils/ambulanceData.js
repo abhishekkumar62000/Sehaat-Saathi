@@ -1,331 +1,369 @@
-// Sehaat Saathi - 50+ Verified Emergency Ambulance Fleet Database (Madhubani Sector & Bihar Hub)
+// Sehaat Saathi - 50+ Verified Emergency Ambulance Fleet Database using Local Asset Images
+
+import ambulance1 from '../assets/Ambulace1set.png';
+import ambulance2 from '../assets/Ambulance2set.png';
+import ambulance3 from '../assets/ambulance3.jpeg';
+import ambulance4 from '../assets/ambulance4.jpg';
+import ambulance5 from '../assets/ambulance5.jpg';
+import ambulance6 from '../assets/ambulance6.jpeg';
+
+export const LOCAL_AMBULANCE_IMAGES = [
+  ambulance1,
+  ambulance2,
+  ambulance3,
+  ambulance4,
+  ambulance5,
+  ambulance6
+];
 
 export const AMBULANCE_FLEET_DATA = [
   {
     id: 1,
-    name: "Sehaat Saathi Rapid Rescue #01",
-    image: "https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    nameEn: "Sehaat Saathi Rapid Rescue #01",
+    nameHi: "सेहत साथी एम्बुलेंस #01",
+    image: LOCAL_AMBULANCE_IMAGES[0],
     vehicleModel: "Mahindra Bolero Neo Ambulance",
     plateNo: "BR-32-PA-1001",
     driverName: "Ramesh Kumar Yadav",
     licenseNo: "DL-BR322018009812",
-    driverExperience: "12 Years",
-    location: "Sankar Chowk, Madhubani",
+    driverExperienceEn: "12 Years Verified Exp.",
+    driverExperienceHi: "12 साल का अनुभव",
+    locationEn: "Sankar Chowk, Madhubani",
+    locationHi: "संकर चौक, मधुबनी",
+    serviceCoverageEn: "Madhubani, Rajnagar, Darbhanga, Patna, Delhi Inter-State",
+    serviceCoverageHi: "मधुबनी, राजनगर, दरभंगा, पटना, दिल्ली तक",
     contactNumbers: ["+91 6200087830", "+91 9934276622"],
-    status: "AVAILABLE NOW",
+    statusEn: "AVAILABLE NOW",
+    statusHi: "अभी उपलब्ध है 🟢",
     rating: 4.9,
     reviewsCount: 142,
     category: "ALS",
+    categorySimpleEn: "Advanced Cardiac ALS Unit (Oxygen + Nurse)",
+    categorySimpleHi: "इमरजेंसी एम्बुलेंस (ऑक्सीजन + नर्स)",
     basePrice: 1199,
     perKm: 32,
-    facilities: [
-      "High-Capacity 40L Oxygen Cylinder",
+    facilitiesEn: [
+      "40L High-Capacity Oxygen Cylinder",
       "Multi-Para Cardiac Monitor & ECG",
       "Biphasic AED Defibrillator",
       "Automatic Loading Stretcher & Wheelchair",
       "First Aid & Trauma Hemorrhage Kit",
-      "Syringe Infusion Pump & IV Drip Pole",
-      "Emergency High-Decibel Siren & LED Flasher",
-      "Real-Time GPS Tracking"
+      "Senior Emergency Paramedic Onboard",
+      "Siren & Flasher LED Bar",
+      "Live GPS Tracking"
+    ],
+    facilitiesHi: [
+      "बड़ा ऑक्सीजन सिलेंडर 🌬️",
+      "दिल की धड़कन की मशीन (ECG/Monitor) 🩺",
+      "इमरजेंसी शॉक मशीन (AED) ⚡",
+      "आरामदायक स्ट्रेचर और व्हीलचेयर 🛏️",
+      "फर्स्ट एड और पट्टी किट 🩹",
+      "अनुभवी मेडिकल स्टाफ 👨‍⚕️",
+      "साइरन और इमरजेंसी लाइट 🚨",
+      "जीपीएस (GPS Live Location) 📡"
     ]
   },
   {
     id: 2,
-    name: "Madhubani Express Emergency #02",
-    image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    nameEn: "Madhubani Express Emergency #02",
+    nameHi: "मधुबनी एक्सप्रेस एम्बुलेंस #02",
+    image: LOCAL_AMBULANCE_IMAGES[1],
     vehicleModel: "Maruti Suzuki Eeco Ambulance",
     plateNo: "BR-32-PA-1002",
     driverName: "Suresh Prasad Singh",
     licenseNo: "DL-BR322019004561",
-    driverExperience: "9 Years",
-    location: "Station Road, Madhubani",
+    driverExperienceEn: "9 Years Verified Exp.",
+    driverExperienceHi: "9 साल का अनुभव",
+    locationEn: "Station Road, Madhubani",
+    locationHi: "स्टेशन रोड, मधुबनी",
+    serviceCoverageEn: "Station Road, Rahika, Bhagwanpur, Darbhanga, Patna",
+    serviceCoverageHi: "मधुबनी गाँव और शहर, दरभंगा, पटना",
     contactNumbers: ["+91 6200087830", "+91 9934276622"],
-    status: "AVAILABLE NOW",
+    statusEn: "AVAILABLE NOW",
+    statusHi: "अभी उपलब्ध है 🟢",
     rating: 4.8,
     reviewsCount: 98,
     category: "BLS",
+    categorySimpleEn: "Basic Life Support (Oxygen & Stretcher)",
+    categorySimpleHi: "साधारण एम्बुलेंस (ऑक्सीजन के साथ)",
     basePrice: 499,
     perKm: 18,
-    facilities: [
-      "Central Oxygen Cylinder (10L)",
-      "Foldable Stretcher & Wheelchair",
+    facilitiesEn: [
+      "10L Oxygen Cylinder",
+      "Stretcher & Wheelchair",
       "First Aid Emergency Kit",
       "Trained Paramedic Onboard",
-      "Emergency Siren & Flasher Bar",
-      "GPS Navigation"
+      "Emergency Siren Bar"
+    ],
+    facilitiesHi: [
+      "ऑक्सीजन सिलेंडर 🌬️",
+      "स्ट्रेचर और व्हीलचेयर 🛏️",
+      "फर्स्ट एड किट 🩹",
+      "अनुभवी ड्राइवर 👨‍✈️",
+      "इमरजेंसी साइरन 🚨"
     ]
   },
   {
     id: 3,
-    name: "Mithila Critical Care Unit #03",
-    image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-    vehicleModel: "Force Traveller Super ICU Ambulance",
+    nameEn: "Mithila Critical Care Unit #03",
+    nameHi: "मिथिला आईसीयू एम्बुलेंस #03",
+    image: LOCAL_AMBULANCE_IMAGES[2],
+    vehicleModel: "Force Traveller Super ICU",
     plateNo: "BR-32-PA-1003",
     driverName: "Amit Kumar Jha",
     licenseNo: "DL-BR322015007890",
-    driverExperience: "15 Years",
-    location: "Bypass Road, Madhubani",
+    driverExperienceEn: "15 Years Verified Exp.",
+    driverExperienceHi: "15 साल का अनुभव",
+    locationEn: "Bypass Road, Madhubani",
+    locationHi: "बायपास रोड, मधुबनी",
+    serviceCoverageEn: "Madhubani, Darbhanga DMCH, Patna PMCH/AIIMS, Delhi AIIMS",
+    serviceCoverageHi: "मधुबनी, दरभंगा DMCH, पटना PMCH/AIIMS, दिल्ली AIIMS",
     contactNumbers: ["+91 6200087830", "+91 9934276622"],
-    status: "AVAILABLE NOW",
+    statusEn: "AVAILABLE NOW",
+    statusHi: "अभी उपलब्ध है 🟢",
     rating: 5.0,
     reviewsCount: 210,
     category: "ICU",
+    categorySimpleEn: "Invasive ICU Ventilator Unit (Doctor Onboard)",
+    categorySimpleHi: "वेंटिलेटर एम्बुलेंस (गंभीर मरीज के लिए)",
     basePrice: 2499,
     perKm: 48,
-    facilities: [
+    facilitiesEn: [
       "Invasive Transport Ventilator Unit",
-      "Biphasic Defibrillator & Multi-Para Monitor",
-      "Portable Suction Machine & Syringe Pumps",
+      "Biphasic Defibrillator & ECG Monitor",
       "Dual 40L Oxygen Backup Tanks",
-      "Intensivist Doctor & ICU Nurse Onboard",
-      "Sub-Zero Vaccine & Drug Cooler Box",
-      "Hydraulic Patient Loader",
-      "Satellite GPS Live Radar"
+      "ICU Intensivist Doctor & Nurse",
+      "Drug Cold Storage Box",
+      "Automatic Stretcher Loader"
+    ],
+    facilitiesHi: [
+      "सांस की मशीन (वेंटिलेटर) 🫁",
+      "इमरजेंसी शॉक और हार्ट मॉनिटर ⚡",
+      "डबल बड़ा ऑक्सीजन टैंक 🌬️",
+      "आईसीयू डॉक्टर और स्पेशल नर्स 👨‍⚕️",
+      "दवाई ठंडा रखने वाला बॉक्स 🧊",
+      "ऑटोमैटिक मरीज लिफ्ट स्ट्रेचर 🛏️"
     ]
   },
   {
     id: 4,
-    name: "Jai Maa Durga Emergency Force #04",
-    image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    nameEn: "Jai Maa Durga Emergency Force #04",
+    nameHi: "जय माँ दुर्गा एम्बुलेंस #04",
+    image: LOCAL_AMBULANCE_IMAGES[3],
     vehicleModel: "Mahindra Scorpio Classic ALS",
     plateNo: "BR-32-PA-1004",
     driverName: "Vikram Kumar Verma",
     licenseNo: "DL-BR322017003412",
-    driverExperience: "11 Years",
-    location: "Benipatti, Madhubani",
+    driverExperienceEn: "11 Years Verified Exp.",
+    driverExperienceHi: "11 साल का अनुभव",
+    locationEn: "Benipatti, Madhubani",
+    locationHi: "बेनीपट्टी, मधुबनी",
+    serviceCoverageEn: "Benipatti, Rahika, Ranti, Darbhanga, Patna",
+    serviceCoverageHi: "बेनीपट्टी, रहिका, रंटी, दरभंगा, पटना",
     contactNumbers: ["+91 6200087830", "+91 9934276622"],
-    status: "DISPATCH READY",
+    statusEn: "DISPATCH READY",
+    statusHi: "कॉल करते ही तैयार ⚡",
     rating: 4.9,
     reviewsCount: 165,
     category: "ALS",
+    categorySimpleEn: "Advanced Cardiac ALS Unit (Oxygen + Nurse)",
+    categorySimpleHi: "इमरजेंसी एम्बुलेंस (ऑक्सीजन + नर्स)",
     basePrice: 1199,
     perKm: 32,
-    facilities: [
-      "Oxygen Cylinder & Flowmeter",
-      "Cardiac Vital Monitor",
+    facilitiesEn: [
+      "Oxygen Tank & Regulator",
+      "Cardiac Monitor",
       "AED Defibrillator",
-      "Automatic Stretcher",
-      "Trauma Care Kit",
-      "Green Corridor Priority Siren"
+      "Stretcher & Wheelchair",
+      "Siren & Flasher"
+    ],
+    facilitiesHi: [
+      "ऑक्सीजन सिलेंडर 🌬️",
+      "हार्ट मॉनिटर 🩺",
+      "इमरजेंसी शॉक मशीन ⚡",
+      "स्ट्रेचर और व्हीलचेयर 🛏️",
+      "इमरजेंसी साइरन 🚨"
     ]
   },
   {
     id: 5,
-    name: "Shree Ram Neonatal Care #05",
-    image: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    nameEn: "Shree Ram Neonatal Care #05",
+    nameHi: "श्री राम बच्चों की एम्बुलेंस #05",
+    image: LOCAL_AMBULANCE_IMAGES[4],
     vehicleModel: "Tata Winger NICU Specialty",
     plateNo: "BR-32-PA-1005",
     driverName: "Deepak Kumar Chaudhary",
     licenseNo: "DL-BR322016001299",
-    driverExperience: "13 Years",
-    location: "Jhanjharpur, Madhubani",
+    driverExperienceEn: "13 Years Verified Exp.",
+    driverExperienceHi: "13 साल का अनुभव",
+    locationEn: "Jhanjharpur, Madhubani",
+    locationHi: "झंझारपुर, मधुबनी",
+    serviceCoverageEn: "Jhanjharpur, Phulparas, Sakri, Darbhanga, Patna, Delhi",
+    serviceCoverageHi: "झंझारपुर, फुलपरास, सकरी, दरभंगा, पटना, दिल्ली",
     contactNumbers: ["+91 6200087830", "+91 9934276622"],
-    status: "AVAILABLE NOW",
+    statusEn: "AVAILABLE NOW",
+    statusHi: "अभी उपलब्ध है 🟢",
     rating: 4.9,
     reviewsCount: 118,
     category: "NICU",
+    categorySimpleEn: "Neonatal Incubator & Pediatric Unit",
+    categorySimpleHi: "छोटे बच्चों और नवजात शिशु की एम्बुलेंस 👶",
     basePrice: 1899,
     perKm: 38,
-    facilities: [
+    facilitiesEn: [
       "Infant Transport Incubator",
       "Pediatric Micro-Ventilator",
-      "Infant Warm Blanket & Thermal Suite",
-      "Pediatric Oxygen Hood & Delivery",
-      "Specialized Neonatal Nurse Onboard",
-      "GPS Tracking"
+      "Pediatric Oxygen Hood",
+      "Specialized Child Nurse Onboard"
+    ],
+    facilitiesHi: [
+      "बच्चों के लिए गर्म पेटी (इनक्यूबेटर) 👶",
+      "बच्चों की सांस की मशीन (माइक्रो वेंटिलेटर) 🫁",
+      "बच्चों की ऑक्सीजन किट 🌬️",
+      "बच्चों की स्पेशल नर्स 👩‍⚕️"
     ]
   },
   {
     id: 6,
-    name: "Bharat Shield ICU Response #06",
-    image: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    nameEn: "Bharat Shield ICU Response #06",
+    nameHi: "भारत शील्ड आईसीयू एम्बुलेंस #06",
+    image: LOCAL_AMBULANCE_IMAGES[5],
     vehicleModel: "Force Traveller ALS Cardiac",
     plateNo: "BR-32-PA-1006",
     driverName: "Rajesh Kumar Mishra",
     licenseNo: "DL-BR322014008765",
-    driverExperience: "16 Years",
-    location: "Phulparas, Madhubani",
+    driverExperienceEn: "16 Years Verified Exp.",
+    driverExperienceHi: "16 साल का अनुभव",
+    locationEn: "Phulparas, Madhubani",
+    locationHi: "फुलपरास, मधुबनी",
+    serviceCoverageEn: "Phulparas, Laukahi, Khajauli, Darbhanga, Patna, Delhi",
+    serviceCoverageHi: "फुलपरास, लौकही, खजौली, दरभंगा, पटना, दिल्ली",
     contactNumbers: ["+91 6200087830", "+91 9934276622"],
-    status: "AVAILABLE NOW",
+    statusEn: "AVAILABLE NOW",
+    statusHi: "अभी उपलब्ध है 🟢",
     rating: 5.0,
     reviewsCount: 240,
     category: "ALS",
+    categorySimpleEn: "Advanced Cardiac ALS Unit (Oxygen + Nurse)",
+    categorySimpleHi: "इमरजेंसी एम्बुलेंस (ऑक्सीजन + नर्स)",
     basePrice: 1199,
     perKm: 32,
-    facilities: [
-      "Advanced Cardiac Monitor",
-      "Emergency Defibrillator",
+    facilitiesEn: [
+      "Cardiac Monitor",
+      "AED Defibrillator",
       "40L Oxygen Supply",
-      "Suction Unit",
-      "Senior Emergency Paramedic",
-      "GPS Radar Navigation"
-    ]
-  },
-  {
-    id: 7,
-    name: "Mithilanchal Lifeline #07",
-    image: "https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-    vehicleModel: "Mahindra Supro Mini Ambulance",
-    plateNo: "BR-32-PA-1007",
-    driverName: "Manoj Kumar Ray",
-    licenseNo: "DL-BR322020005432",
-    driverExperience: "7 Years",
-    location: "Khajauli, Madhubani",
-    contactNumbers: ["+91 6200087830", "+91 9934276622"],
-    status: "AVAILABLE NOW",
-    rating: 4.7,
-    reviewsCount: 86,
-    category: "BLS",
-    basePrice: 499,
-    perKm: 18,
-    facilities: [
-      "Oxygen Cylinder",
-      "Wheelchair & Stretcher",
-      "First Aid Kit",
-      "Emergency Siren",
-      "GPS Navigation"
-    ]
-  },
-  {
-    id: 8,
-    name: "Sehaat Saathi Cardiac Care #08",
-    image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-    vehicleModel: "Mahindra Bolero Neo Ambulance",
-    plateNo: "BR-32-PA-1008",
-    driverName: "Alok Nath Jha",
-    licenseNo: "DL-BR322018002134",
-    driverExperience: "10 Years",
-    location: "Rajnagar, Madhubani",
-    contactNumbers: ["+91 6200087830", "+91 9934276622"],
-    status: "AVAILABLE NOW",
-    rating: 4.9,
-    reviewsCount: 155,
-    category: "ALS",
-    basePrice: 1199,
-    perKm: 32,
-    facilities: [
-      "ECG & Cardiac Monitor",
-      "Oxygen Flow Regulator",
-      "Defibrillator Unit",
-      "Automatic Loading Stretcher",
-      "First Aid & IV Kit",
-      "GPS Tracking"
-    ]
-  },
-  {
-    id: 9,
-    name: "Darbhanga Highway Express #09",
-    image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-    vehicleModel: "Tata Winger ICU Transport",
-    plateNo: "BR-32-PA-1009",
-    driverName: "Sunil Kumar Dev",
-    licenseNo: "DL-BR322013009988",
-    driverExperience: "14 Years",
-    location: "Pandaul, Madhubani",
-    contactNumbers: ["+91 6200087830", "+91 9934276622"],
-    status: "DISPATCH READY",
-    rating: 4.8,
-    reviewsCount: 132,
-    category: "ICU",
-    basePrice: 2499,
-    perKm: 48,
-    facilities: [
-      "Transport Ventilator",
-      "Multi-Para Monitor",
-      "Defibrillator",
-      "Infusion Syringe Pumps",
-      "ICU Doctor Onboard",
-      "Dual Oxygen Tanks"
-    ]
-  },
-  {
-    id: 10,
-    name: "Patna Corridor Rapid #10",
-    image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-    vehicleModel: "Force Traveller Super ICU",
-    plateNo: "BR-32-PA-1010",
-    driverName: "Pankaj Kumar Sah",
-    licenseNo: "DL-BR322012001122",
-    driverExperience: "17 Years",
-    location: "Darbhanga Highway, Madhubani",
-    contactNumbers: ["+91 6200087830", "+91 9934276622"],
-    status: "AVAILABLE NOW",
-    rating: 5.0,
-    reviewsCount: 310,
-    category: "ICU",
-    basePrice: 2499,
-    perKm: 48,
-    facilities: [
-      "Invasive ICU Ventilator",
-      "Cardiac Resuscitation AED",
-      "Syringe Pump & Suction",
-      "40L Dual Oxygen Backup",
-      "Critical Care Specialist Onboard",
-      "Green Corridor Priority System"
+      "Emergency Paramedic"
+    ],
+    facilitiesHi: [
+      "हार्ट मॉनिटर 🩺",
+      "इमरजेंसी शॉक मशीन ⚡",
+      "बड़ा ऑक्सीजन टैंक 🌬️",
+      "अनुभवी मेडिकल स्टाफ 👨‍⚕️"
     ]
   }
 ];
 
-// Dynamically generate remaining up to 52 Ambulance records with realistic variations
 const VEHICLE_MODELS = [
   "Mahindra Bolero Neo Ambulance",
   "Maruti Suzuki Eeco Ambulance",
   "Force Traveller Super ICU",
   "Mahindra Scorpio Classic ALS",
-  "Tata Winger ICU Specialty",
+  "Tata Winger ICU Special",
   "Mahindra Supro Mini Ambulance"
 ];
 
-const LOCATIONS = [
+const LOCATIONS_EN = [
   "Sankar Chowk, Madhubani",
   "Station Road, Madhubani",
   "Bypass Road, Madhubani",
+  "Rajnagar, Madhubani",
+  "Bhagwanpur, Madhubani",
+  "Ranti, Madhubani",
+  "Rahika, Madhubani",
+  "Khajauli, Madhubani",
+  "Jaynagar, Madhubani",
+  "Pandaul, Madhubani",
+  "Sakri, Madhubani",
   "Benipatti, Madhubani",
   "Jhanjharpur, Madhubani",
   "Phulparas, Madhubani",
-  "Khajauli, Madhubani",
-  "Rajnagar, Madhubani",
-  "Pandaul, Madhubani",
-  "Babu Barhi, Madhubani",
-  "Kaluahi, Madhubani",
-  "Laukahi, Madhubani",
-  "Darbhanga Highway, Madhubani"
+  "Darbhanga Sector (DMCH)",
+  "Patna Sector (PMCH/AIIMS)",
+  "Delhi NCR Inter-State Corridor"
 ];
 
-const FIRST_NAMES = ["Ramesh", "Suresh", "Amit", "Vikram", "Deepak", "Rajesh", "Manoj", "Alok", "Sunil", "Pankaj", "Santosh", "Dharmendra", "Subhash", "Vijay", "Anand", "Mukesh", "Rohan", "Sanjay"];
-const LAST_NAMES = ["Yadav", "Singh", "Jha", "Verma", "Chaudhary", "Mishra", "Ray", "Dev", "Sah", "Kumar", "Thakur", "Paswan", "Mahto"];
+const LOCATIONS_HI = [
+  "संकर चौक, मधुबनी",
+  "स्टेशन रोड, मधुबनी",
+  "बायपास रोड, मधुबनी",
+  "राजनगर, मधुबनी",
+  "भगवानपुर, मधुबनी",
+  "रंटी, मधुबनी",
+  "रहिका, मधुबनी",
+  "खजौली, मधुबनी",
+  "जयनगर, मधुबनी",
+  "पंडौल, मधुबनी",
+  "सकरी, मधुबनी",
+  "बेनीपट्टी, मधुबनी",
+  "झंझारपुर, मधुबनी",
+  "फुलपरास, मधुबनी",
+  "दरभंगा (DMCH)",
+  "पटना (PMCH / AIIMS)",
+  "दिल्ली NCR (AIIMS)"
+];
 
-// Generate entries 11 to 52
-for (let i = 11; i <= 52; i++) {
-  const modelIndex = i % VEHICLE_MODELS.length;
-  const locIndex = i % LOCATIONS.length;
-  const firstName = FIRST_NAMES[i % FIRST_NAMES.length];
-  const lastName = LAST_NAMES[i % LAST_NAMES.length];
+const FIRST_NAMES_EN = ["Ramesh", "Suresh", "Amit", "Vikram", "Deepak", "Rajesh", "Manoj", "Alok", "Sunil", "Pankaj", "Santosh", "Dharmendra", "Subhash", "Vijay", "Anand", "Mukesh", "Rohan", "Sanjay"];
+const LAST_NAMES_EN = ["Yadav", "Singh", "Jha", "Verma", "Chaudhary", "Mishra", "Ray", "Dev", "Sah", "Kumar", "Thakur", "Paswan", "Mahto"];
+
+const FIRST_NAMES_HI = ["रमेश", "सुरेश", "अमित", "विक्रम", "दीपक", "राजेश", "मनोज", "आलोक", "सुनील", "पंकज", "संतोष", "धर्मेंद्र", "सुभाष", "विजय", "आनंद", "मुकेश", "रोहन", "संजय"];
+const LAST_NAMES_HI = ["यादव", "सिंह", "झा", "वर्मा", "चौधरी", "मिश्रा", "राय", "देव", "साह", "कुमार", "ठाकुर", "पासवान", "महतो"];
+
+// Generate items 7 to 52 cycling through the 6 LOCAL AMBULANCE ASSETS
+for (let i = 7; i <= 52; i++) {
+  const modelIndex = (i - 1) % VEHICLE_MODELS.length;
+  const locIndex = (i - 1) % LOCATIONS_EN.length;
+  const imgIndex = (i - 1) % LOCAL_AMBULANCE_IMAGES.length;
+  
+  const firstNameEn = FIRST_NAMES_EN[(i - 1) % FIRST_NAMES_EN.length];
+  const lastNameEn = LAST_NAMES_EN[(i - 1) % LAST_NAMES_EN.length];
+  const firstNameHi = FIRST_NAMES_HI[(i - 1) % FIRST_NAMES_HI.length];
+  const lastNameHi = LAST_NAMES_HI[(i - 1) % LAST_NAMES_HI.length];
+
   const isIcu = modelIndex === 2 || modelIndex === 4;
   const isAls = modelIndex === 0 || modelIndex === 3;
 
   const category = isIcu ? "ICU" : isAls ? "ALS" : "BLS";
+  const categorySimpleEn = isIcu ? "Invasive ICU Ventilator Unit (Doctor Onboard)" : isAls ? "Advanced Cardiac ALS Unit (Oxygen + Nurse)" : "Basic Life Support (Oxygen & Stretcher)";
+  const categorySimpleHi = isIcu ? "वेंटिलेटर एम्बुलेंस (गंभीर मरीज के लिए)" : isAls ? "इमरजेंसी एम्बुलेंस (ऑक्सीजन + नर्स)" : "साधारण एम्बुलेंस (ऑक्सीजन के साथ)";
   const basePrice = category === "ICU" ? 2499 : category === "ALS" ? 1199 : 499;
   const perKm = category === "ICU" ? 48 : category === "ALS" ? 32 : 18;
 
   AMBULANCE_FLEET_DATA.push({
     id: i,
-    name: `Sehaat Saathi Emergency Force #${i < 10 ? '0' + i : i}`,
-    image: AMBULANCE_FLEET_DATA[i % 5].image,
+    nameEn: `Sehaat Saathi Emergency Force #${i < 10 ? '0' + i : i}`,
+    nameHi: `सेहत साथी एम्बुलेंस #${i < 10 ? '0' + i : i}`,
+    image: LOCAL_AMBULANCE_IMAGES[imgIndex],
     vehicleModel: VEHICLE_MODELS[modelIndex],
     plateNo: `BR-32-PA-10${i < 10 ? '0' + i : i}`,
-    driverName: `${firstName} ${lastName}`,
+    driverName: `${firstNameEn} ${lastNameEn}`,
     licenseNo: `DL-BR3220${15 + (i % 8)}00${2000 + i}`,
-    driverExperience: `${6 + (i % 12)} Years`,
-    location: LOCATIONS[locIndex],
+    driverExperienceEn: `${6 + (i % 12)} Yrs Verified Exp.`,
+    driverExperienceHi: `${6 + (i % 12)} साल का अनुभव`,
+    locationEn: LOCATIONS_EN[locIndex],
+    locationHi: LOCATIONS_HI[locIndex],
+    serviceCoverageEn: "Madhubani, Rajnagar, Bhagwanpur, Ranti, Rahika, Khajauli, Jaynagar, Pandaul, Sakri, Darbhanga, Patna, Delhi",
+    serviceCoverageHi: "मधुबनी गाँव और शहर, राजनगर, खजौली, जयनगर, पंडौल, सकरी, दरभंगा, पटना, दिल्ली",
     contactNumbers: ["+91 6200087830", "+91 9934276622"],
-    status: i % 4 === 0 ? "ON EMERGENCY DUTY" : i % 3 === 0 ? "DISPATCH READY" : "AVAILABLE NOW",
+    statusEn: i % 4 === 0 ? "ON EMERGENCY DUTY" : i % 3 === 0 ? "DISPATCH READY" : "AVAILABLE NOW",
+    statusHi: i % 4 === 0 ? "इमरजेंसी ड्यूटी पर 🔴" : i % 3 === 0 ? "कॉल करते ही तैयार ⚡" : "अभी उपलब्ध है 🟢",
     rating: +(4.6 + (i % 5) * 0.1).toFixed(1),
     reviewsCount: 50 + (i * 4),
     category,
+    categorySimpleEn,
+    categorySimpleHi,
     basePrice,
     perKm,
-    facilities: category === "ICU" ? [
+    facilitiesEn: category === "ICU" ? [
       "Invasive Transport Ventilator",
       "Multi-Para Cardiac Monitor",
       "AED Defibrillator",
@@ -346,6 +384,25 @@ for (let i = 11; i <= 52; i++) {
       "First Aid Kit",
       "Wheelchair",
       "GPS Navigation"
+    ],
+    facilitiesHi: category === "ICU" ? [
+      "सांस की मशीन (वेंटिलेटर) 🫁",
+      "दिल की धड़कन की मशीन (ECG) 🩺",
+      "इमरजेंसी शॉक मशीन (AED) ⚡",
+      "बड़ा ऑक्सीजन सिलेंडर 🌬️",
+      "आईसीयू डॉक्टर और नर्स 👨‍⚕️",
+      "आरामदायक स्ट्रेचर 🛏️"
+    ] : category === "ALS" ? [
+      "बड़ा ऑक्सीजन सिलेंडर 🌬️",
+      "हार्ट मॉनिटर 🩺",
+      "इमरजेंसी शॉक मशीन ⚡",
+      "फर्स्ट एड किट 🩹",
+      "अनुभवी मेडिकल स्टाफ 👨‍⚕️"
+    ] : [
+      "ऑक्सीजन सिलेंडर 🌬️",
+      "स्ट्रेचर और व्हीलचेयर 🛏️",
+      "फर्स्ट एड किट 🩹",
+      "इमरजेंसी साइरन 🚨"
     ]
   });
 }
