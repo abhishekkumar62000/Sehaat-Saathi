@@ -275,6 +275,25 @@ const Smarthub = () => {
                             }}
                         />
                     </Link>
+                    <Link to="/ambulance-booking">
+                        <FeatureRoadmapCard
+                            icon={<BsTruck className="animate-bounce-slow text-red-600" />}
+                            title={
+                                <span>
+                                    <span style={{ color: "#FF9933" }}>Sehaat</span>{" "}
+                                    <span style={{ color: "#138808" }}>Saathi</span> <span className="text-red-600">Ambulance Booking Services</span>
+                                </span>
+                            }
+                            desc="Instant 2-Minute Emergency Ambulance Dispatch. Book BLS, ALS Cardiac, Portable ICU Ventilator, & Neonatal Ambulances with live GPS tracking and emergency hospital bed sync."
+                            color="red"
+                            status="24/7 Emergency 🚑"
+                            outstanding={true}
+                            example={{
+                                patient: "Need an Urgent ICU Ventilator Ambulance in Madhubani for cardiac emergency.",
+                                ai: "Dispatched ALS Ambulance (BR-32-PA-108). Driver Ramesh (4 mins away). Live GPS tracking & hospital ICU bed pre-booked."
+                            }}
+                        />
+                    </Link>
                     <Link to="/symptom-checker">
                         <FeatureRoadmapCard
                             icon={<BsStars className="animate-spin-slow" />}
