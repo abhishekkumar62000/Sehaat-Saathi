@@ -37,6 +37,7 @@ const NaturopathyHub = lazy(() => import("../pages/NaturopathyHub"));
 const NutritionHub = lazy(() => import("../pages/NutritionHub"));
 const OnlineVideoBooking = lazy(() => import("../pages/OnlineVideoBooking"));
 const AmbulanceBooking = lazy(() => import("../pages/AmbulanceBooking"));
+const HomeHealthcare = lazy(() => import("../pages/HomeHealthcare"));
 const MedicinePriceCompare = lazy(() => import("../pages/MedicinePriceCompare"));
 const PainNavigator3D = lazy(() => import("../pages/PainNavigator3D"));
 const HealthCopilot = lazy(() => import("../pages/HealthCopilot"));
@@ -95,6 +96,7 @@ const Routers = () => {
         <Route path="/offline-consultation" element={<OfflineConsultationHub />} />
         <Route path="/online-video-booking" element={<OnlineVideoBooking />} />
         <Route path="/ambulance-booking" element={<AmbulanceBooking />} />
+        <Route path="/home-healthcare" element={<HomeHealthcare />} />
         <Route path="/medicine-price-compare" element={<MedicinePriceCompare />} />
         <Route path="/pain-navigator" element={<PainNavigator3D />} />
         <Route path="/health-copilot" element={<HealthCopilot />} />

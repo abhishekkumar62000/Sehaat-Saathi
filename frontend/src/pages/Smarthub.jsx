@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
-    BsStars, BsActivity, BsShieldCheck, BsTruck,
+    BsStars, BsActivity, BsShieldCheck, BsTruck, BsHouseHeartFill,
     BsArrowRight, BsInfoCircle, BsChatDots, BsPhone, BsCapsule, BsShieldFillPlus, BsBellFill, BsCpuFill, BsCameraFill, BsCartCheck, BsPeopleFill, BsDropletFill, BsHeartPulse, BsFileEarmarkMedical, BsInboxesFill, BsGenderFemale, BsFlower1, BsTreeFill, BsCart4, BsHospital, BsShieldLockFill, BsGeoAltFill
 } from "react-icons/bs";
 import { MdFitnessCenter } from "react-icons/md";
@@ -291,6 +291,25 @@ const Smarthub = () => {
                             example={{
                                 patient: "Need an Urgent ICU Ventilator Ambulance in Madhubani for cardiac emergency.",
                                 ai: "Dispatched ALS Ambulance (BR-32-PA-108). Driver Ramesh (4 mins away). Live GPS tracking & hospital ICU bed pre-booked."
+                            }}
+                        />
+                    </Link>
+                    <Link to="/home-healthcare">
+                        <FeatureRoadmapCard
+                            icon={<BsHouseHeartFill className="animate-pulse text-emerald-500" />}
+                            title={
+                                <span>
+                                    <span style={{ color: "#FF9933" }}>Sehaat</span>{" "}
+                                    <span style={{ color: "#138808" }}>Saathi</span> <span className="text-emerald-500">Home Healthcare Services</span>
+                                </span>
+                            }
+                            desc="Book Certified Home Nurses, Elderly Care Attendants, Post-Surgery Caregivers, Home Physiotherapy & Lab Tests at Home across Madhubani & Bihar with Verified Medical Professionals."
+                            color="green"
+                            status="New Feature 🏠"
+                            outstanding={true}
+                            example={{
+                                patient: "I need a trained home nurse for dressing and IV injections for my post-op father in Madhubani.",
+                                ai: "Nurse Sunita Kumari (B.Sc Nursing, 8 Yrs Exp) assigned for 10:00 AM slot. Care Coordinator assigned."
                             }}
                         />
                     </Link>
