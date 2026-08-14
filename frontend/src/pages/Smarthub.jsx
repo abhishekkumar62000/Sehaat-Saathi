@@ -294,6 +294,25 @@ const Smarthub = () => {
                             }}
                         />
                     </Link>
+                    <Link to="/blood-bank-hub">
+                        <FeatureRoadmapCard
+                            icon={<BsDropletFill className="animate-bounce text-rose-600" />}
+                            title={
+                                <span>
+                                    <span style={{ color: "#FF9933" }}>Sehaat</span>{" "}
+                                    <span style={{ color: "#138808" }}>Saathi</span> <span className="text-rose-600">Emergency Blood Bank Services</span>
+                                </span>
+                            }
+                            desc="24/7 Emergency Blood Assistance Platform. Urgent blood coordination across Madhubani & Bihar for A+, B+, O+, AB+, O- & Rare Groups with verified blood banks & voluntary donors network."
+                            color="red"
+                            status="24/7 Emergency 🩸"
+                            outstanding={true}
+                            example={{
+                                patient: "Need 2 Units of O Negative (O-) Blood Urgently for surgery at Madhubani Sadar Hospital.",
+                                ai: "Request Received (BLD-882109). Sehaat Ground Team dispatched O- units from Red Cross Center. Attendant contacted."
+                            }}
+                        />
+                    </Link>
                     <Link to="/home-healthcare">
                         <FeatureRoadmapCard
                             icon={<BsHouseHeartFill className="animate-pulse text-emerald-500" />}
