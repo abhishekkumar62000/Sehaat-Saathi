@@ -566,24 +566,7 @@ const Smarthub = () => {
                             }}
                         />
                     </Link>
-                    <Link to="/emergency-health-id">
-                        <FeatureRoadmapCard
-                            icon={<BsHeartPulse className="animate-pulse" />}
-                            title={
-                                <span>
-                                    <span style={{ color: "#FF9933" }}>Sehaat</span>{" "}
-                                    <span style={{ color: "#138808" }}>Saathi</span> Emergency Health ID & Organ Donation Network
-                                </span>
-                            }
-                            desc="Create a secure digital emergency health identity. Instantly accessed during medical emergencies. Support organ donation consent. 100% Secure & Government-ready."
-                            color="red"
-                            status="Life-Saving"
-                            example={{
-                                patient: "Emergency! Unconscious patient found. ID Scanned.",
-                                ai: "System Alert: Critical Data Accessed. Blood: B+. Diabetic. Organ Donor: Registered. Family Notified."
-                            }}
-                        />
-                    </Link>
+
 
                     <Link to="/report-interpreter">
                         <FeatureRoadmapCard

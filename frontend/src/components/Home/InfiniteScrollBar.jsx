@@ -37,7 +37,7 @@ const InfiniteScrollBar = () => {
     { text: "• AI Skin Diagnosis", color: "text-violet-600", link: "/skin-diagnosis", power: "Neural Image Recognition" },
     { text: "• Pharmacy-Hub Express", color: "text-emerald-700", link: "/pharmacy-hub", power: "45-min Ultra Delivery" },
     { text: "• BloodBank SOS Network", color: "text-red-700", link: "/blood-bank", power: "Life-Saving Real-time Finder" },
-    { text: "• Emergency Health ID", color: "text-red-600", link: "/emergency-health-id", power: "Govt-Ready Digital ID" },
+
     { text: "• Live OPD & Bed Availability", color: "text-red-500", link: "/hospital-availability", power: "ICU/Ventilator Tracker" },
     { text: "• AI Medical Report Interpreter", color: "text-emerald-600", link: "/report-interpreter", power: "PDF to Easy Hindi/English" },
     { text: "• Medicine Shortage Finder", color: "text-indigo-600", link: "/medicine-finder", power: "Verified Alternatives Sync" },
