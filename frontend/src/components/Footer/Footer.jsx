@@ -92,22 +92,34 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
           {/* Brand & Mission with Shine Effect */}
           <div className="flex flex-col group">
-            <h2 className="text-5xl font-black mb-10 flex items-center tracking-tighter transition-all duration-700 group-hover:tracking-normal group-hover:scale-105 origin-left">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#009E60] to-[#007F4D] relative overflow-hidden">
+            <h2 className="text-4xl sm:text-5xl font-black mb-6 flex items-center tracking-tighter transition-all duration-700 group-hover:tracking-normal group-hover:scale-105 origin-left">
+              <span className="text-[#FF9933] relative overflow-hidden">
                 Sehaat
                 <span className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:animate-shine"></span>
               </span>
-              <span className="text-[#FF8C00] ml-1">Saathi</span>
+              <span className="text-[#138808] ml-1.5">Saathi</span>
             </h2>
 
-            <p className="text-gray-600 leading-relaxed text-[16px] mb-10 font-medium border-l-4 border-[#FF9933] pl-6 py-2 bg-white/30 rounded-r-xl">
-              We are honored to be a part of your healthcare journey and committed to delivering <span className="text-[#138808] font-extrabold underline decoration-[#FF9933]/50 underline-offset-4">compassionate, personalized</span>, and Top-Notch Care Every step of the way.
-            </p>
+            <div className="space-y-4 mb-6">
+              <div className="p-4 rounded-2xl bg-gradient-to-r from-orange-50/80 via-white to-emerald-50/80 border-l-4 border-[#FF9933] shadow-md space-y-2">
+                <h3 className="text-slate-900 font-black text-sm sm:text-base flex items-center gap-2">
+                  <span>🏥</span>
+                  <span>भारत का अपना 24/7 डिजिटल हेल्थकेयर नेटवर्क</span>
+                </h3>
+                <p className="text-slate-800 font-bold text-xs sm:text-sm leading-relaxed">
+                  सेहत साथी का एक ही लक्ष्य — <strong className="text-rose-600 font-black">इमरजेंसी एम्बुलेंस 🚑</strong>, <strong className="text-red-600 font-black">आपातकालीन ब्लड बैंक 🩸</strong>, <strong className="text-emerald-700 font-black">घर पर नर्सिंग व बुजुर्ग केयर 🩺</strong>, और <strong className="text-cyan-700 font-black">विशेषज्ञ डॉक्टर अपॉइंटमेंट 👨‍⚕️</strong> की सेवा 24 घंटे सीधे आपके घर तक पहुंचाना।
+                </p>
+              </div>
 
-            <div className="relative group/tagline tri-glass p-6 rounded-3xl transition-all duration-500 hover:-translate-y-2">
-              <p className="text-gray-700 leading-relaxed text-[15px] font-black italic flex items-center gap-3">
+              <p className="text-slate-600 text-xs font-bold leading-relaxed px-1">
+                "India's 1st Smart Healthcare Platform uniting emergency blood coordination, 50+ ambulance dispatch, home nursing care & doctor bookings under one roof."
+              </p>
+            </div>
+
+            <div className="relative group/tagline tri-glass p-4 sm:p-5 rounded-2xl transition-all duration-500 hover:-translate-y-1 border border-emerald-500/30 shadow-lg bg-gradient-to-r from-emerald-950 via-slate-900 to-teal-950 text-white">
+              <p className="leading-snug text-xs sm:text-sm font-black flex items-center gap-2.5">
                 <span className="text-2xl animate-bounce">🇮🇳</span>
-                STAY HEALTHY, BHARAT! CARE IS PRIDE.
+                <span>स्वस्थ भारत, सुरक्षित भारत! <span className="text-emerald-400">हर मरीज की जान बचाना ही हमारा संकल्प है।</span></span>
               </p>
             </div>
           </div>

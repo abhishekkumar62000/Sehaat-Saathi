@@ -35,11 +35,11 @@ const TRANSLATIONS = {
         smartHub: "Smart Hub",
         founderHotline: "Blood Helpline",
         emergencyBadge: "⚠️ DISCLAIMER: Demo Stock Data shown for demonstration. Sehaat Saathi team verifies live stock & coordinates blood dispatch personally with authorized blood banks upon your request.",
-        honestPromiseTitle: "OUR SACRED COMMITMENT & HONEST PROMISE",
+        honestPromiseTitle: "OUR SACRED COMMITMENT & HONEST PROMISE (100% HONEST PLEDGE)",
         honestPromiseText: "We make no fake claims of guaranteed 100% stock in every rare situation, but we promise 1000% effort from Sehaat Saathi ground team! We will knock every blood bank door and reach every volunteer donor on the ground to save your patient.",
         ambulanceLink: "Book Ambulance 🚑",
-        heroBadge: "🩸 रक्तदान महा-कल्याण • SACRED LIFE SAVING NETWORK",
-        heroTitle: "Sehaat Saathi Emergency Blood Assistance",
+        heroBadge: "🩸 24/7 EMERGENCY BLOOD ASSISTANCE NETWORK",
+        heroTitle: "Sehaat Saathi Emergency Blood Bank Assistance Network",
         heroSubtitle: "No patient will lose life due to blood shortage! Sehaat Saathi ground coordinators personally arrange blood units from verified blood banks and registered voluntary donors across Madhubani, Darbhanga & Bihar.",
         missionTitle: "FOUNDER VISION — ZERO DEATHS DUE TO BLOOD SHORTAGE",
         missionDesc: "Every life is precious. Our dedicated 24/7 emergency team works on the ground to coordinate with government Sadar Hospitals, DMCH, Red Cross centers, and registered youth donors to dispatch blood to your patient in minutes.",
@@ -71,8 +71,8 @@ const TRANSLATIONS = {
         honestPromiseTitle: "सेहत साथी का पवित्र संकल्प व सच्चा वादा (100% HONEST PLEDGE)",
         honestPromiseText: "हम यह 100% झूठा दावा नहीं करते कि हर स्थिति में तुरंत खून मिल ही जाएगा, लेकिन हम यह 1000% वादा करते हैं कि सेहत साथी टीम मरीज की जान बचाने के लिए अपना 100% पूरा जोर (Full Ground Effort) लगा देगी! हम मधुबनी व बिहार के हर ब्लड बैंक और डोनर के दरवाजे पर जाकर खून का इंतजाम करने का पूरा प्रयास करेंगे।",
         ambulanceLink: "एम्बुलेंस बुक करें 🚑",
-        heroBadge: "🩸 रक्तदान महा-कल्याण • एक बूँद रक्त, एक नया जीवन!",
-        heroTitle: "सेहत साथी इमरजेंसी ब्लड बैंक सर्विसेज",
+        heroBadge: "🩸 24/7 आपातकालीन रक्त सहायता नेटवर्क",
+        heroTitle: "सेहत साथी इमरजेंसी ब्लड बैंक असिस्टेंस नेटवर्क 🩸",
         heroSubtitle: "कोई भी मरीज खून की कमी से अपनी जान नहीं गंवाएगा! सेहत साथी की टीम मधुबनी, दरभंगा व बिहार के प्रमुख ब्लड बैंकों और वॉलिएंटियर डोनर्स से सीधे संपर्क करके मरीज के लिए तुरंत रक्त उपलब्ध करवाती है।",
         missionTitle: "संस्थापक का संकल्प — खून की कमी से कोई जान नहीं गंवाएगा",
         missionDesc: "हर जीवन अनमोल है! सेहत साथी की ग्राउंड टीम 24 घंटे सदर अस्पताल, डीएमसीएच, रेड क्रॉस और पंजीकृत युवा रक्तदाताओं से सीधे संपर्क बनाकर आपके मरीज के लिए खून का पक्का इंतजाम करने का प्रयास करती है।",
@@ -219,7 +219,7 @@ const BloodBankHub = () => {
 
             <main className="container mx-auto max-w-7xl px-2.5 sm:px-6 py-4 sm:py-10 relative z-10 space-y-6 sm:space-y-12">
 
-                {/* Emergency Disclaimer Banner */}
+                {/* 1. Emergency Disclaimer Banner */}
                 <div className="p-3.5 sm:p-5 rounded-2xl bg-gradient-to-r from-red-950/90 via-slate-900 to-rose-950/90 border border-red-500/50 text-white text-xs sm:text-sm font-bold flex flex-col sm:flex-row items-center justify-between gap-3 shadow-2xl">
                     <div className="flex items-center gap-2 text-center sm:text-left">
                         <BsDropletFill className="text-rose-400 text-xl sm:text-2xl shrink-0 animate-bounce" />
@@ -236,7 +236,34 @@ const BloodBankHub = () => {
                     </button>
                 </div>
 
-                {/* TRANSPARENT COMMITMENT & HONEST PROMISE BOX WITH BOLD HIGHLIGHTS */}
+                {/* 2. PROMINENT BOLD FEATURE NAME & TAGLINE HERO BANNER */}
+                <div className="p-5 sm:p-8 rounded-3xl bg-gradient-to-r from-red-950 via-slate-900 to-rose-950 border-2 border-rose-500/60 shadow-2xl text-center space-y-3 sm:space-y-4 relative overflow-hidden">
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-500/20 text-rose-300 text-[10px] sm:text-xs font-black uppercase tracking-widest border border-rose-500/40 shadow-md">
+                        <BsDropletFill className="text-rose-500 animate-pulse" /> {t.heroBadge}
+                    </div>
+
+                    <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tight text-white leading-tight">
+                        <span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span> <span className="text-rose-500">Emergency Blood Bank</span>
+                    </h1>
+
+                    <p className="text-slate-200 max-w-3xl mx-auto text-xs sm:text-base md:text-lg font-bold leading-relaxed px-1">
+                        <strong className="text-amber-400 font-black">कोई भी मरीज खून की कमी से अपनी जान नहीं गंवाएगा!</strong> सेहत साथी की 24/7 आपातकालीन टीम मधुबनी, दरभंगा व बिहार के प्रमुख ब्लड बैंकों, अस्पतालों एवं रजिस्टर्ड वॉलिएंटियर डोनर्स से सीधे संपर्क करके मरीज के लिए तुरंत रक्त उपलब्ध करवाती है।
+                    </p>
+
+                    <div className="flex flex-wrap justify-center gap-2.5 pt-2">
+                        <span className="px-3 py-1 rounded-xl bg-slate-950 border border-slate-800 text-[10px] sm:text-xs font-bold text-rose-300">
+                            🩸 8 Blood Groups (A+, A-, B+, B-, O+, O-, AB+, AB-)
+                        </span>
+                        <span className="px-3 py-1 rounded-xl bg-slate-950 border border-slate-800 text-[10px] sm:text-xs font-bold text-emerald-300">
+                            ⚡ 20-35 Mins Rapid Dispatch
+                        </span>
+                        <span className="px-3 py-1 rounded-xl bg-slate-950 border border-slate-800 text-[10px] sm:text-xs font-bold text-cyan-300">
+                            🏥 Sadar Hospital & DMCH Network
+                        </span>
+                    </div>
+                </div>
+
+                {/* 3. TRANSPARENT COMMITMENT & HONEST PROMISE BOX WITH BOLD HIGHLIGHTS */}
                 <div className="p-4 sm:p-6 rounded-2xl bg-slate-900/90 border-2 border-emerald-500/40 shadow-2xl space-y-2 text-center sm:text-left">
                     <div className="flex items-center justify-center sm:justify-start gap-2 text-emerald-400 font-black text-xs sm:text-sm uppercase tracking-wider">
                         <BsCheckCircleFill className="text-base text-emerald-400" />
@@ -247,7 +274,61 @@ const BloodBankHub = () => {
                     </p>
                 </div>
 
-                {/* REAL-TIME EMERGENCY COLD-CHAIN DISPATCH SLA COUNTERS WITH BOLD HIGHLIGHTS */}
+                {/* 4. PROMINENT 4 HELPLINES GLASSMORPHIC TOP BAR WITH DUAL TRIGGERS */}
+                <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-slate-900/90 border-2 border-rose-500/30 shadow-2xl space-y-3 sm:space-y-4">
+                    <div className="flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4 border-b border-slate-800 pb-3 sm:pb-4 text-center md:text-left">
+                        <div>
+                            <div className="inline-flex items-center gap-1.5 text-rose-400 text-[10px] sm:text-xs font-black uppercase tracking-wider mb-1">
+                                <BsPhoneVibrate className="animate-bounce text-sm sm:text-base" />
+                                <span>Need Blood Urgently? Call Sehaat Saathi Emergency Blood Assistance</span>
+                            </div>
+                            <h3 className="text-base sm:text-xl font-black text-white leading-tight">
+                                {language === 'hi' ? 'किसी भी ब्लड ग्रुप हेतु सीधे संस्थापक या सहायता टीम से संपर्क करें:' : 'Call or WhatsApp Founder Helpline for Immediate Blood Dispatch:'}
+                            </h3>
+                        </div>
+
+                        <button
+                            onClick={() => setShowContactModal(true)}
+                            className="w-full md:w-auto px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-black text-xs uppercase tracking-wider shadow-lg flex items-center justify-center gap-2 shrink-0"
+                        >
+                            <BsHeadset className="text-base" /> {t.contactModalTitle}
+                        </button>
+                    </div>
+
+                    {/* 4 Numbers Grid */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
+                        {HELPLINE_NUMBERS.map((h, hidx) => (
+                            <div key={hidx} className="p-3 sm:p-3.5 rounded-xl sm:rounded-2xl bg-slate-950 border border-slate-800 flex items-center justify-between hover:border-rose-500/50 transition-all">
+                                <div>
+                                    <span className="text-[9px] sm:text-[10px] font-bold text-slate-400 block uppercase">
+                                        {language === 'hi' ? h.labelHi : h.labelEn}
+                                    </span>
+                                    <span className="font-mono font-black text-white text-xs sm:text-sm">{h.number}</span>
+                                </div>
+                                <div className="flex items-center gap-1.5 shrink-0">
+                                    <a
+                                        href={`tel:${h.cleanNo}`}
+                                        className="w-8 h-8 rounded-xl bg-rose-600 hover:bg-rose-500 text-white flex items-center justify-center text-xs shadow-md"
+                                        title="Direct Phone Call"
+                                    >
+                                        <FaPhoneAlt />
+                                    </a>
+                                    <a
+                                        href={`https://api.whatsapp.com/send?phone=${h.cleanNo}&text=Hello%20Sehaat%20Saathi%2C%20Urgent%20Blood%20Assistance%20Required!`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="w-8 h-8 rounded-xl bg-slate-800 hover:bg-slate-700 text-green-400 border border-slate-700 flex items-center justify-center text-xs"
+                                        title="WhatsApp Message"
+                                    >
+                                        <BsWhatsapp />
+                                    </a>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* 5. REAL-TIME EMERGENCY COLD-CHAIN DISPATCH SLA COUNTERS */}
                 <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/90 border border-rose-500/30 space-y-3 shadow-xl">
                     <div className="flex items-center gap-2 text-rose-400 text-xs sm:text-sm font-black uppercase tracking-wider">
                         <BsSpeedometer className="text-base animate-pulse" />
@@ -268,7 +349,7 @@ const BloodBankHub = () => {
                     </div>
                 </div>
 
-                {/* LIVE IMPACT COUNTERS BAR */}
+                {/* 6. LIVE IMPACT COUNTERS BAR */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3">
                     {IMPACT_STATS.map((st, sidx) => (
                         <div key={sidx} className="p-3.5 sm:p-4 rounded-2xl bg-slate-900/90 border border-rose-500/30 text-center space-y-1 shadow-xl">
@@ -280,7 +361,7 @@ const BloodBankHub = () => {
                     ))}
                 </div>
 
-                {/* FOUNDER MISSION STATEMENT WOW BANNER WITH BOLD HIGHLIGHTS */}
+                {/* 7. FOUNDER MISSION STATEMENT WOW BANNER */}
                 <div className="p-4 sm:p-8 rounded-2xl sm:rounded-3xl bg-gradient-to-r from-rose-950 via-slate-900 to-red-950 border-2 border-rose-500/60 shadow-2xl text-center md:text-left relative overflow-hidden space-y-3 sm:space-y-4">
                     <div className="flex flex-col lg:flex-row items-center justify-between gap-4 sm:gap-6">
                         <div className="space-y-2 sm:space-y-3 max-w-3xl">
@@ -364,75 +445,6 @@ const BloodBankHub = () => {
                     >
                         <FaPhoneAlt /> Call Rare Blood Desk
                     </a>
-                </div>
-
-                {/* Prominent 4 Helplines Glassmorphic Top Bar with Dual Triggers */}
-                <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-slate-900/90 border-2 border-rose-500/30 shadow-2xl space-y-3 sm:space-y-4">
-                    <div className="flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4 border-b border-slate-800 pb-3 sm:pb-4 text-center md:text-left">
-                        <div>
-                            <div className="inline-flex items-center gap-1.5 text-rose-400 text-[10px] sm:text-xs font-black uppercase tracking-wider mb-1">
-                                <BsPhoneVibrate className="animate-bounce text-sm sm:text-base" />
-                                <span>Need Blood Urgently? Call Sehaat Saathi Emergency Blood Assistance</span>
-                            </div>
-                            <h3 className="text-base sm:text-xl font-black text-white leading-tight">
-                                {language === 'hi' ? 'किसी भी ब्लड ग्रुप हेतु सीधे संस्थापक या सहायता टीम से संपर्क करें:' : 'Call or WhatsApp Founder Helpline for Immediate Blood Dispatch:'}
-                            </h3>
-                        </div>
-
-                        <button
-                            onClick={() => setShowContactModal(true)}
-                            className="w-full md:w-auto px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-black text-xs uppercase tracking-wider shadow-lg flex items-center justify-center gap-2 shrink-0"
-                        >
-                            <BsHeadset className="text-base" /> {t.contactModalTitle}
-                        </button>
-                    </div>
-
-                    {/* 4 Numbers Grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
-                        {HELPLINE_NUMBERS.map((h, hidx) => (
-                            <div key={hidx} className="p-3 sm:p-3.5 rounded-xl sm:rounded-2xl bg-slate-950 border border-slate-800 flex items-center justify-between hover:border-rose-500/50 transition-all">
-                                <div>
-                                    <span className="text-[9px] sm:text-[10px] font-bold text-slate-400 block uppercase">
-                                        {language === 'hi' ? h.labelHi : h.labelEn}
-                                    </span>
-                                    <span className="font-mono font-black text-white text-xs sm:text-sm">{h.number}</span>
-                                </div>
-                                <div className="flex items-center gap-1.5 shrink-0">
-                                    <a
-                                        href={`tel:${h.cleanNo}`}
-                                        className="w-8 h-8 rounded-xl bg-rose-600 hover:bg-rose-500 text-white flex items-center justify-center text-xs shadow-md"
-                                        title="Direct Phone Call"
-                                    >
-                                        <FaPhoneAlt />
-                                    </a>
-                                    <a
-                                        href={`https://api.whatsapp.com/send?phone=${h.cleanNo}&text=Hello%20Sehaat%20Saathi%2C%20Urgent%20Blood%20Assistance%20Required!`}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="w-8 h-8 rounded-xl bg-slate-800 hover:bg-slate-700 text-green-400 border border-slate-700 flex items-center justify-center text-xs"
-                                        title="WhatsApp Message"
-                                    >
-                                        <BsWhatsapp />
-                                    </a>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
-                {/* Hero Header */}
-                <div className="text-center space-y-2 sm:space-y-4 relative">
-                    <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-slate-900 border border-slate-800 text-rose-400 text-[10px] sm:text-xs font-black uppercase tracking-widest shadow-md">
-                        <BsDropletFill className="text-rose-500" /> {t.heroBadge}
-                    </div>
-
-                    <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tight text-white leading-tight">
-                        {t.heroTitle}
-                    </h1>
-
-                    <p className="text-slate-300 max-w-3xl mx-auto text-xs sm:text-base md:text-lg font-bold leading-relaxed px-1">
-                        {t.heroSubtitle}
-                    </p>
                 </div>
 
                 {/* Scrollable Navigation Tabs */}

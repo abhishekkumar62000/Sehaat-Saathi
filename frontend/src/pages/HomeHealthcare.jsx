@@ -324,19 +324,57 @@ const HomeHealthcare = () => {
                     </div>
                 </div>
 
-                {/* Hero Header */}
-                <div className="text-center space-y-2 sm:space-y-4 relative">
-                    <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-slate-900 border border-slate-800 text-emerald-400 text-[10px] sm:text-xs font-black uppercase tracking-widest shadow-md">
-                        <BsPatchCheckFill className="text-emerald-400" /> {t.heroBadge}
+                {/* Dynamic Animated Hero Header */}
+                <div className="p-6 sm:p-10 rounded-3xl bg-gradient-to-r from-emerald-950 via-slate-900 to-teal-950 border-2 border-emerald-500/60 shadow-2xl text-center space-y-4 relative overflow-hidden">
+                    
+                    {/* Animated Glowing Badges */}
+                    <div className="flex flex-wrap justify-center items-center gap-2">
+                        <span className="px-3.5 py-1.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] sm:text-xs font-black uppercase tracking-widest border border-emerald-500/40 shadow-lg inline-flex items-center gap-2 animate-pulse">
+                            <BsPatchCheckFill className="text-emerald-400 text-sm" /> 🏠 HOSPITAL-GRADE CARE AT YOUR DOORSTEP
+                        </span>
+                        <span className="px-3.5 py-1.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] sm:text-xs font-black uppercase tracking-widest border border-amber-500/40 shadow-lg inline-flex items-center gap-2">
+                            📍 मधुबनी टाउन व आसपास (1-10 KM) होम डिलीवरी
+                        </span>
                     </div>
 
-                    <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tight text-white leading-tight">
-                        {t.heroTitle}
+                    {/* Brand Gradient Animated Title */}
+                    <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tight leading-tight">
+                        <span className="text-[#FF9933] drop-shadow-[0_0_15px_rgba(255,153,51,0.4)]">SEHAAT</span>{" "}
+                        <span className="text-[#138808] drop-shadow-[0_0_15px_rgba(19,136,8,0.4)]">SAATHI</span>{" "}
+                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-300 via-teal-200 to-cyan-300">
+                            HOME HEALTHCARE
+                        </span>
                     </h1>
 
-                    <p className="text-slate-300 max-w-3xl mx-auto text-xs sm:text-base md:text-lg font-bold leading-relaxed px-1">
-                        {t.heroSubtitle}
-                    </p>
+                    {/* Dynamic Tagline Pill Cards */}
+                    <div className="max-w-4xl mx-auto space-y-3 pt-1">
+                        <p className="text-slate-200 text-xs sm:text-base md:text-lg font-bold leading-relaxed">
+                            <strong className="text-emerald-400 font-black">अस्पताल नहीं जा सकते?</strong> सेहत साथी की 100% सत्यापित मेडिकल टीम अब आपके घर आएगी।
+                        </p>
+
+                        {/* 3 Interactive Highlight Pills */}
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 max-w-3xl mx-auto pt-1">
+                            <div className="p-2.5 rounded-xl bg-slate-950/80 border border-emerald-500/40 text-center space-y-0.5 hover:scale-105 transition-transform shadow-md">
+                                <span className="text-sm block">👩‍⚕️</span>
+                                <span className="text-xs font-black text-emerald-400 block uppercase">Home Nursing Care</span>
+                                <span className="text-[10px] text-slate-300 font-bold block">सर्टिफाइड मेल/फीमेल नर्स</span>
+                            </div>
+                            <div className="p-2.5 rounded-xl bg-slate-950/80 border border-amber-500/40 text-center space-y-0.5 hover:scale-105 transition-transform shadow-md">
+                                <span className="text-sm block">👴</span>
+                                <span className="text-xs font-black text-amber-400 block uppercase">Senior Citizen Care</span>
+                                <span className="text-[10px] text-slate-300 font-bold block">बुजुर्ग देखभाल स्टाफ</span>
+                            </div>
+                            <div className="p-2.5 rounded-xl bg-slate-950/80 border border-cyan-500/40 text-center space-y-0.5 hover:scale-105 transition-transform shadow-md">
+                                <span className="text-sm block">🧘</span>
+                                <span className="text-xs font-black text-cyan-400 block uppercase">Home Physiotherapy</span>
+                                <span className="text-[10px] text-slate-300 font-bold block">फिजियोथेरेपिस्ट होम विजिट</span>
+                            </div>
+                        </div>
+
+                        <p className="text-[11px] sm:text-xs text-slate-400 font-bold pt-1">
+                            ⭐ 100% Verified Staff • Transparent Low Rates • 24/7 Booking Support (Call & WhatsApp)
+                        </p>
+                    </div>
                 </div>
 
                 {/* ALL 3 MAIN SERVICES 100% HIGHLIGHTED */}
