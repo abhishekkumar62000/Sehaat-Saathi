@@ -349,18 +349,6 @@ const BloodBankHub = () => {
                     </div>
                 </div>
 
-                {/* 6. LIVE IMPACT COUNTERS BAR */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3">
-                    {IMPACT_STATS.map((st, sidx) => (
-                        <div key={sidx} className="p-3.5 sm:p-4 rounded-2xl bg-slate-900/90 border border-rose-500/30 text-center space-y-1 shadow-xl">
-                            <span className="text-2xl sm:text-3xl font-black text-rose-500 font-mono block">{st.value}</span>
-                            <span className="text-[10px] sm:text-xs font-bold text-slate-300 block uppercase">
-                                {language === 'hi' ? st.labelHi : st.labelEn}
-                            </span>
-                        </div>
-                    ))}
-                </div>
-
                 {/* 7. FOUNDER MISSION STATEMENT WOW BANNER */}
                 <div className="p-4 sm:p-8 rounded-2xl sm:rounded-3xl bg-gradient-to-r from-rose-950 via-slate-900 to-red-950 border-2 border-rose-500/60 shadow-2xl text-center md:text-left relative overflow-hidden space-y-3 sm:space-y-4">
                     <div className="flex flex-col lg:flex-row items-center justify-between gap-4 sm:gap-6">

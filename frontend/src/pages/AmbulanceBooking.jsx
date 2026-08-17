@@ -8,7 +8,7 @@ import {
     BsXCircleFill, BsCheck, BsStarFill, BsHospital, BsTelephoneFill,
     BsWhatsapp, BsShareFill, BsCompass, BsSearch, BsFilter, BsCheckLg,
     BsEyeFill, BsPatchCheckFill, BsSuitHeartFill, BsShieldShaded, BsSpeedometer,
-    BsShieldCheck
+    BsShieldCheck, BsHeadset
 } from 'react-icons/bs';
 import {
     FaAmbulance, FaUserNurse, FaLungs, FaBaby, FaHelicopter,
@@ -91,7 +91,7 @@ const TRANSLATIONS = {
         callFounderBtn: "संस्थापक को सीधा कॉल करें (+91 6200087830)",
         callHelplineBtn: "इमरजेंसी हेल्पलाइन (+91 9934276622)",
         heroTitle: "सेहत साथी इमरजेंसी एम्बुलेंस बुकिंग सर्विसेज",
-        heroSubtitle: "24 घंटे 365 दिन — 10 से 15 मिनट में आपके घर से दरभंगा, पटना और दिल्ली तक सुरक्षित एम्बुलेंस यात्रा। 50+ असली गाड़ियां • सत्यापित ड्राइवर • निश्चित फिक्स्ड किराया।",
+        heroSubtitle: "24 घंटे 365 दिन — 10 से 15 मिनट में आपके घर से दरभंगा, पटना और दिल्ली तक सुरक्षित एम्बुलेंस यात्रा। 50+ सत्यापित मेडिकल वाहन (Verified Fleet) • अनुशासित ड्राइवर • निश्चित फिक्स्ड किराया।",
         tabDirectory: "50+ एम्बुलेंस की लिस्ट",
         tabDispatch: "इमरजेंसी बुकिंग फॉर्म (Booking Form)",
         tabHospital: "अस्पताल के बेड देखें",
@@ -125,7 +125,7 @@ const TRANSLATIONS = {
         hospitalBedsTitle: "अस्पतालों में खाली बेड देखें",
         icuBedsLabel: "खाली आईसीयू (ICU) बेड",
         emergencyBedsLabel: "खाली इमरजेंसी बेड",
-        modalVerifiedBadge: "असली गाडी फोटो सत्यापित",
+        modalVerifiedBadge: "100% सत्यापित मेडिकल वाहन (Verified Vehicle)",
         modalDriverProfile: "ड्राइवर की पूरी जानकारी",
         modalFounderHotline: "सेहत साथी संस्थापक नंबर",
         modalEquipmentTitle: "गाड़ी में मौजूद उपकरण व सुविधाएं:"
@@ -239,6 +239,7 @@ const AmbulanceBooking = () => {
     const [selectedLocationFilter, setSelectedLocationFilter] = useState('ALL');
     const [selectedFacilityFilter, setSelectedFacilityFilter] = useState('ALL');
     const [selectedAmbulanceModal, setSelectedAmbulanceModal] = useState(null);
+    const [showContactModal, setShowContactModal] = useState(false);
 
     const t = TRANSLATIONS[language];
 
@@ -347,13 +348,13 @@ const AmbulanceBooking = () => {
                             <span>{t.founderHotline}</span>
                         </a>
 
-                        <a
-                            href="tel:108"
-                            className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 text-white font-black text-xs uppercase tracking-wider shadow-[0_0_20px_rgba(225,29,72,0.4)] animate-pulse"
+                        <button
+                            onClick={() => setShowContactModal(true)}
+                            className="flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-gradient-to-r from-red-600 via-rose-600 to-red-600 text-white font-black text-xs uppercase tracking-wider shadow-[0_0_20px_rgba(225,29,72,0.5)] hover:scale-105 transition-all animate-pulse"
                         >
                             <BsTelephoneFill className="text-xs animate-bounce" />
-                            <span className="text-[11px] sm:text-xs">{t.hotline108}</span>
-                        </a>
+                            <span className="text-[11px] sm:text-xs">EMERGENCY CALL</span>
+                        </button>
 
                         {/* Real-time Bilingual Language Switch Toggle Button */}
                         <button
@@ -384,13 +385,25 @@ const AmbulanceBooking = () => {
                             <p className="text-slate-200 text-xs sm:text-sm lg:text-base font-medium leading-relaxed">
                                 {t.bannerSubtitle}
                             </p>
-                            <div className="p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-slate-950/70 border border-slate-800 space-y-2 text-xs text-left">
-                                <p className="text-slate-200 font-bold text-[11px] sm:text-xs leading-relaxed">
-                                    <span className="text-emerald-400 font-black">{t.nearbyAreasTitle}</span> {t.nearbyAreasList}
-                                </p>
-                                <p className="text-slate-200 font-bold text-[11px] sm:text-xs leading-relaxed">
-                                    <span className="text-rose-400 font-black">{t.majorHubsTitle}</span> {t.majorHubsList}
-                                </p>
+                            <div className="p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2 text-xs text-left">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+                                    <div className="p-2 bg-slate-900/80 rounded-lg border border-slate-800">
+                                        <span className="text-emerald-400 font-black text-[10px] uppercase block">📍 स्टेप 1 (लोकल गाँव व शहर)</span>
+                                        <p className="text-[11px] text-slate-300 font-medium">मधुबनी, राजनगर, खजौली, जयनगर, बेनीपट्टी व सभी 21 ब्लॉक</p>
+                                    </div>
+                                    <div className="p-2 bg-slate-900/80 rounded-lg border border-slate-800">
+                                        <span className="text-amber-400 font-black text-[10px] uppercase block">🚑 स्टेप 2 (रीजनल हब)</span>
+                                        <p className="text-[11px] text-slate-300 font-medium">दरभंगा (DMCH व सभी अस्पताल)</p>
+                                    </div>
+                                    <div className="p-2 bg-slate-900/80 rounded-lg border border-slate-800">
+                                        <span className="text-cyan-400 font-black text-[10px] uppercase block">🏥 स्टेप 3 (स्टेट कैपिटल)</span>
+                                        <p className="text-[11px] text-slate-300 font-medium">पटना (PMCH / AIIMS / IGIMS)</p>
+                                    </div>
+                                    <div className="p-2 bg-slate-900/80 rounded-lg border border-slate-800">
+                                        <span className="text-rose-400 font-black text-[10px] uppercase block">✈️ स्टेप 4 (नेशनल एक्सप्रेस)</span>
+                                        <p className="text-[11px] text-slate-300 font-medium">नई दिल्ली (AIIMS - 24/7 आईसीयू)</p>
+                                    </div>
+                                </div>
                             </div>
 
                             {/* FIXED TRANSPARENT FARE POLICY BOX */}
@@ -422,7 +435,14 @@ const AmbulanceBooking = () => {
                             </div>
                         </div>
 
-                        <div className="flex flex-col sm:flex-row lg:flex-col gap-3 shrink-0 w-full lg:w-auto">
+                        <div className="flex flex-col gap-3 shrink-0 w-full lg:w-auto">
+                            <button
+                                onClick={() => setShowContactModal(true)}
+                                className="w-full px-5 sm:px-6 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl bg-gradient-to-r from-red-600 via-rose-600 to-red-600 text-white font-black text-xs sm:text-sm uppercase tracking-wider shadow-[0_0_25px_rgba(225,29,72,0.6)] hover:scale-105 transition-all animate-pulse flex items-center justify-center gap-2 border border-rose-400/40 cursor-pointer"
+                            >
+                                <BsTelephoneFill className="text-sm animate-bounce" />
+                                <span className="font-black">EMERGENCY CALL</span>
+                            </button>
                             <a
                                 href="tel:+916200087830"
                                 className="px-5 sm:px-6 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs uppercase tracking-wider shadow-2xl flex items-center justify-center gap-2 group transition-all"
@@ -459,13 +479,105 @@ const AmbulanceBooking = () => {
                     {/* Quick Fleet Metrics Bar */}
                     <div className="pt-2 flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-[11px] sm:text-xs font-bold">
                         <div className="px-3 sm:px-4 py-2 rounded-xl sm:rounded-2xl bg-slate-900 border border-slate-800 text-slate-200 flex items-center gap-2 shadow-lg">
-                            <FaAmbulance className="text-rose-500 text-sm sm:text-base" /> <span>50+ Real Vehicles</span>
+                            <FaAmbulance className="text-rose-500 text-sm sm:text-base" /> <span>50+ Verified Fleet Vehicles</span>
                         </div>
                         <div className="px-3 sm:px-4 py-2 rounded-xl sm:rounded-2xl bg-slate-900 border border-slate-800 text-slate-200 flex items-center gap-2 shadow-lg">
-                            <BsSpeedometer className="text-emerald-400 text-sm sm:text-base" /> <span>3-5 Mins Avg Dispatch</span>
+                            <BsSpeedometer className="text-emerald-400 text-sm sm:text-base" /> <span>10-15 Mins Response</span>
                         </div>
                         <div className="px-3 sm:px-4 py-2 rounded-xl sm:rounded-2xl bg-slate-900 border border-slate-800 text-slate-200 flex items-center gap-2 shadow-lg">
                             <BsShieldCheck className="text-cyan-400 text-sm sm:text-base" /> <span>100% Verified Drivers</span>
+                        </div>
+                    </div>
+                </div>
+
+                {/* WHY SEHAAT SAATHI AMBULANCE IS 100% BETTER THAN LOCAL PRIVATE CARS / AUTOS */}
+                <div className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-slate-900/95 border-2 border-rose-500/50 shadow-2xl space-y-6">
+                    <div className="text-center space-y-2 max-w-3xl mx-auto">
+                        <span className="px-3.5 py-1 rounded-full bg-rose-500/20 text-rose-300 text-[10px] sm:text-xs font-black uppercase tracking-wider border border-rose-500/40 inline-flex items-center gap-2">
+                            🚨 आपातकालीन जीवन रक्षा तुलना (LIFE-SAVING COMPARISON)
+                        </span>
+                        <h3 className="text-lg sm:text-2xl font-black text-white uppercase">
+                            क्यों सेहत साथी एम्बुलेंस सामान्य लोकल कार/ऑटो से 100% बेहतर व सुरक्षित है?
+                        </h3>
+                        <p className="text-xs sm:text-sm text-slate-300 font-bold">
+                            इमरजेंसी में सामान्य कार या ऑटो बुक करना मरीज की जान के लिए जोखिम भरा हो सकता है। जानिए सेहत साथी एम्बुलेंस में क्या खास है:
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {/* REASON 1: IN-BUILT MEDICAL EQUIPMENT */}
+                        <div className="p-4 sm:p-5 rounded-2xl bg-slate-950 border border-slate-800 space-y-3 hover:border-emerald-500/50 transition-all">
+                            <div className="flex justify-between items-start">
+                                <span className="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 font-black text-xl flex items-center justify-center">🩺</span>
+                                <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300">100% लाइफ-सपोर्ट</span>
+                            </div>
+                            <h4 className="font-black text-sm text-white">1. जीवन रक्षक मेडिकल उपकरण (Life-Saving Equipment)</h4>
+                            <div className="space-y-1.5 text-xs">
+                                <p className="text-emerald-400 font-bold">✅ सेहत साथी एम्बुलेंस:</p>
+                                <p className="text-slate-300 font-medium">इन-बिल्ट ऑक्सीजन सिलेंडर, वेंटिलेटर, स्ट्रेचर, सीपीआर बीपी मॉनिटर व प्राथमिक चिकित्सा किट।</p>
+                                <p className="text-rose-400 font-bold pt-1">❌ सामान्य लोकल कार / ऑटो:</p>
+                                <p className="text-slate-400 font-medium">कोई ऑक्सीजन या मेडिकल सपोर्ट नहीं — रास्ते में सांस रुकने या इमरजेंसी होने पर कोई सुरक्षा नहीं।</p>
+                            </div>
+                        </div>
+
+                        {/* REASON 2: TRAINED PARAMEDICS */}
+                        <div className="p-4 sm:p-5 rounded-2xl bg-slate-950 border border-slate-800 space-y-3 hover:border-rose-500/50 transition-all">
+                            <div className="flex justify-between items-start">
+                                <span className="w-10 h-10 rounded-xl bg-rose-500/20 text-rose-400 font-black text-xl flex items-center justify-center">👩‍⚕️</span>
+                                <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300">ट्रेंड मेडिकल स्टाफ</span>
+                            </div>
+                            <h4 className="font-black text-sm text-white">2. ट्रेंड पैरामेडिक्स व मेडिकल अटेंडेंट (Medical Staff)</h4>
+                            <div className="space-y-1.5 text-xs">
+                                <p className="text-emerald-400 font-bold">✅ सेहत साथी एम्बुलेंस:</p>
+                                <p className="text-slate-300 font-medium">रास्ते में ट्रेंड नर्स/पैरामेडिक्स मरीज की धड़कन, बीपी और ऑक्सीजन लेवल को हर पल संभालते हैं।</p>
+                                <p className="text-rose-400 font-bold pt-1">❌ सामान्य लोकल कार / ऑटो:</p>
+                                <p className="text-slate-400 font-medium">केवल ड्राइवर होता है — रास्ते में मरीज की मेडिकल स्थिति बिगड़ने पर कोई संभालने वाला नहीं।</p>
+                            </div>
+                        </div>
+
+                        {/* REASON 3: TRAFFIC CLEARANCE PRIORITY */}
+                        <div className="p-4 sm:p-5 rounded-2xl bg-slate-950 border border-slate-800 space-y-3 hover:border-amber-500/50 transition-all">
+                            <div className="flex justify-between items-start">
+                                <span className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 font-black text-xl flex items-center justify-center">🚨</span>
+                                <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300">ट्रैफिक में पहली प्राथमिकता</span>
+                            </div>
+                            <h4 className="font-black text-sm text-white">3. सायरन व ट्रैफिक में पहला रास्ता (Traffic Clearance)</h4>
+                            <div className="space-y-1.5 text-xs">
+                                <p className="text-emerald-400 font-bold">✅ सेहत साथी एम्बुलेंस:</p>
+                                <p className="text-slate-300 font-medium">लाल बत्ती और सायरन सुनते ही पुलिस व स्थानीय जनता तुरंत रास्ता छोड़ देती है — मरीज बिना समय गंवाए पहुँचता है।</p>
+                                <p className="text-rose-400 font-bold pt-1">❌ सामान्य लोकल कार / ऑटो:</p>
+                                <p className="text-slate-400 font-medium">सामान्य ट्रैफिक जाम में फंस जाते हैं — जिससे 1-2 घंटे की बहुमूल्य जीवन रक्षक देरी हो जाती है।</p>
+                            </div>
+                        </div>
+
+                        {/* REASON 4: FULL STRETCHER COMFORT */}
+                        <div className="p-4 sm:p-5 rounded-2xl bg-slate-950 border border-slate-800 space-y-3 hover:border-cyan-500/50 transition-all">
+                            <div className="flex justify-between items-start">
+                                <span className="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 font-black text-xl flex items-center justify-center">🛌</span>
+                                <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300">100% स्ट्रेचर आराम</span>
+                            </div>
+                            <h4 className="font-black text-sm text-white">4. 100% आराम व समतल लेटने की सुविधा (Full Stretcher)</h4>
+                            <div className="space-y-1.5 text-xs">
+                                <p className="text-emerald-400 font-bold">✅ सेहत साथी एम्बुलेंस:</p>
+                                <p className="text-slate-300 font-medium">मरीज हाइड्रोलिक स्ट्रेचर पर आराम से लेटकर बिना किसी झटके के अस्पताल पहुंचता है।</p>
+                                <p className="text-rose-400 font-bold pt-1">❌ सामान्य लोकल कार / ऑटो:</p>
+                                <p className="text-slate-400 font-medium">संकरी सीट पर बैठने या झटके से मरीज का दर्द व हालत और ज्यादा गंभीर हो जाती है।</p>
+                            </div>
+                        </div>
+
+                        {/* REASON 5: TRANSPARENT FIXED FARE */}
+                        <div className="p-4 sm:p-5 rounded-2xl bg-slate-950 border border-slate-800 space-y-3 hover:border-purple-500/50 transition-all md:col-span-2 lg:col-span-2">
+                            <div className="flex justify-between items-start">
+                                <span className="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 font-black text-xl flex items-center justify-center">🏷️</span>
+                                <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300">0% हिडन चार्ज</span>
+                            </div>
+                            <h4 className="font-black text-sm text-white">5. निश्चित पारदर्शी किराया — कोई हिडन चार्ज नहीं (Fixed Fare Guarantee)</h4>
+                            <div className="space-y-1.5 text-xs">
+                                <p className="text-emerald-400 font-bold">✅ सेहत साथी एम्बुलेंस:</p>
+                                <p className="text-slate-300 font-medium">100% फिक्स्ड सरकारी रेट कार्ड — दरभंगा व पटना के लिए पहले से निश्चित पारदर्शी किराया।</p>
+                                <p className="text-rose-400 font-bold pt-1">❌ सामान्य लोकल कार / ऑटो:</p>
+                                <p className="text-slate-400 font-medium">इमरजेंसी लाचारी का फायदा उठाकर ₹5,000 से ₹10,000 तक मनमाना किराया वसूलते हैं।</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -649,12 +761,13 @@ const AmbulanceBooking = () => {
                                         </div>
 
                                         {/* Footer Action Buttons */}
-                                        <div className="p-4 sm:p-5 pt-0 grid grid-cols-3 gap-1.5 sm:gap-2">
+                                        <div className="p-3.5 sm:p-5 pt-0 grid grid-cols-3 gap-1.5 sm:gap-2">
                                             <a
                                                 href={`tel:${amb.contactNumbers[0]}`}
-                                                className="py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] sm:text-xs uppercase flex items-center justify-center gap-1 shadow-md"
+                                                className="py-2.5 px-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-[10px] sm:text-xs uppercase flex items-center justify-center gap-1 shadow-md truncate"
                                             >
-                                                <FaPhoneAlt className="text-[10px] sm:text-xs" /> {t.callBtn}
+                                                <FaPhoneAlt className="text-[10px] sm:text-xs shrink-0" />
+                                                <span className="truncate">{t.callBtn}</span>
                                             </a>
 
                                             <button
@@ -662,16 +775,18 @@ const AmbulanceBooking = () => {
                                                     const text = `Emergency Ambulance Request: ${ambName} (${amb.vehicleModel}, Plate: ${amb.plateNo}). Driver: ${amb.driverName}. Location: ${ambLocation}.`;
                                                     window.open(`https://api.whatsapp.com/send?phone=916200087830&text=${encodeURIComponent(text)}`, '_blank');
                                                 }}
-                                                className="py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-bold text-[10px] sm:text-xs uppercase flex items-center justify-center gap-1"
+                                                className="py-2.5 px-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-black text-[10px] sm:text-xs uppercase flex items-center justify-center gap-1 truncate"
                                             >
-                                                <BsWhatsapp className="text-green-500 text-[10px] sm:text-xs" /> {t.whatsAppBtn}
+                                                <BsWhatsapp className="text-green-500 text-[10px] sm:text-xs shrink-0" />
+                                                <span className="truncate">{t.whatsAppBtn}</span>
                                             </button>
 
                                             <button
                                                 onClick={() => setSelectedAmbulanceModal(amb)}
-                                                className="py-2.5 rounded-xl bg-rose-600/20 border border-rose-500/40 text-rose-300 hover:bg-rose-600 hover:text-white font-bold text-[10px] sm:text-xs uppercase flex items-center justify-center gap-1 transition-all"
+                                                className="py-2.5 px-1.5 rounded-xl bg-rose-600/20 border border-rose-500/40 text-rose-300 hover:bg-rose-600 hover:text-white font-black text-[10px] sm:text-xs uppercase flex items-center justify-center gap-1 transition-all truncate"
                                             >
-                                                <BsEyeFill className="text-[10px] sm:text-xs" /> {t.detailsBtn}
+                                                <BsEyeFill className="text-[10px] sm:text-xs shrink-0" />
+                                                <span className="truncate">{t.detailsBtn}</span>
                                             </button>
                                         </div>
                                     </div>
@@ -1016,6 +1131,124 @@ const AmbulanceBooking = () => {
                             >
                                 <BsWhatsapp className="text-green-500" /> WhatsApp
                             </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* EMERGENCY CALL HELPLINE MODAL - MATCHING USER IMAGE */}
+            {showContactModal && (
+                <div className="fixed inset-0 z-[130] flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-md">
+                    <div className="relative w-full max-w-xl bg-slate-900 border border-slate-700 text-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-2xl space-y-4 sm:space-y-6 max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-200">
+                        <button
+                            onClick={() => setShowContactModal(false)}
+                            className="absolute top-4 right-4 sm:top-6 sm:right-6 text-slate-400 hover:text-rose-500 text-xl sm:text-2xl"
+                        >
+                            <BsXCircleFill />
+                        </button>
+
+                        <div className="space-y-1.5 sm:space-y-2 text-center">
+                            <BsHeadset className="text-3xl sm:text-4xl text-rose-400 mx-auto animate-pulse" />
+                            <h3 className="text-lg sm:text-xl font-black uppercase text-white tracking-wide">
+                                {language === 'hi' ? 'सेहत साथी इमरजेंसी एम्बुलेंस हेल्पलाइन' : 'Sehaat Saathi Emergency Ambulance Helpline'}
+                            </h3>
+                            <p className="text-xs text-slate-400 font-bold">
+                                {language === 'hi' ? '24/7 एम्बुलेंस बुकिंग व सहायता केंद्र' : '24/7 Emergency Ambulance Booking & Support Center'}
+                            </p>
+                        </div>
+
+                        <div className="space-y-2.5 sm:space-y-3">
+                            <div className="p-3.5 sm:p-4 bg-slate-950 rounded-xl sm:rounded-2xl border border-slate-800 flex items-center justify-between gap-2 hover:border-rose-500/50 transition-all">
+                                <div>
+                                    <span className="text-[10px] sm:text-xs text-slate-400 font-bold block">संस्थापक हॉटलाइन</span>
+                                    <span className="font-mono font-black text-white text-xs sm:text-base">+91 6200087830</span>
+                                </div>
+                                <div className="flex gap-1.5 sm:gap-2">
+                                    <a
+                                        href="tel:916200087830"
+                                        className="px-3.5 sm:px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-black text-[10px] sm:text-xs uppercase flex items-center gap-1 shadow-md"
+                                    >
+                                        <FaPhoneAlt /> CALL
+                                    </a>
+                                    <a
+                                        href="https://api.whatsapp.com/send?phone=916200087830&text=Hello%20Sehaat%20Saathi%2C%20I%20need%20Emergency%20Ambulance%20Booking%20Support!"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="px-3.5 sm:px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-green-400 border border-slate-700 font-black text-[10px] sm:text-xs uppercase flex items-center gap-1 shadow-md"
+                                    >
+                                        <BsWhatsapp /> WHATSAPP
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div className="p-3.5 sm:p-4 bg-slate-950 rounded-xl sm:rounded-2xl border border-slate-800 flex items-center justify-between gap-2 hover:border-rose-500/50 transition-all">
+                                <div>
+                                    <span className="text-[10px] sm:text-xs text-slate-400 font-bold block">इमरजेंसी सपोर्ट</span>
+                                    <span className="font-mono font-black text-white text-xs sm:text-base">+91 9934276622</span>
+                                </div>
+                                <div className="flex gap-1.5 sm:gap-2">
+                                    <a
+                                        href="tel:919934276622"
+                                        className="px-3.5 sm:px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-black text-[10px] sm:text-xs uppercase flex items-center gap-1 shadow-md"
+                                    >
+                                        <FaPhoneAlt /> CALL
+                                    </a>
+                                    <a
+                                        href="https://api.whatsapp.com/send?phone=919934276622&text=Hello%20Sehaat%20Saathi%2C%20I%20need%20Emergency%20Ambulance%20Booking%20Support!"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="px-3.5 sm:px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-green-400 border border-slate-700 font-black text-[10px] sm:text-xs uppercase flex items-center gap-1 shadow-md"
+                                    >
+                                        <BsWhatsapp /> WHATSAPP
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div className="p-3.5 sm:p-4 bg-slate-950 rounded-xl sm:rounded-2xl border border-slate-800 flex items-center justify-between gap-2 hover:border-rose-500/50 transition-all">
+                                <div>
+                                    <span className="text-[10px] sm:text-xs text-slate-400 font-bold block">24/7 केयर डेस्क</span>
+                                    <span className="font-mono font-black text-white text-xs sm:text-base">+91 7667352632</span>
+                                </div>
+                                <div className="flex gap-1.5 sm:gap-2">
+                                    <a
+                                        href="tel:917667352632"
+                                        className="px-3.5 sm:px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-black text-[10px] sm:text-xs uppercase flex items-center gap-1 shadow-md"
+                                    >
+                                        <FaPhoneAlt /> CALL
+                                    </a>
+                                    <a
+                                        href="https://api.whatsapp.com/send?phone=917667352632&text=Hello%20Sehaat%20Saathi%2C%20I%20need%20Emergency%20Ambulance%20Booking%20Support!"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="px-3.5 sm:px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-green-400 border border-slate-700 font-black text-[10px] sm:text-xs uppercase flex items-center gap-1 shadow-md"
+                                    >
+                                        <BsWhatsapp /> WHATSAPP
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div className="p-3.5 sm:p-4 bg-slate-950 rounded-xl sm:rounded-2xl border border-slate-800 flex items-center justify-between gap-2 hover:border-rose-500/50 transition-all">
+                                <div>
+                                    <span className="text-[10px] sm:text-xs text-slate-400 font-bold block">वरिष्ठ कॉर्डिनेटर</span>
+                                    <span className="font-mono font-black text-white text-xs sm:text-base">+91 78271 80077</span>
+                                </div>
+                                <div className="flex gap-1.5 sm:gap-2">
+                                    <a
+                                        href="tel:917827180077"
+                                        className="px-3.5 sm:px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-black text-[10px] sm:text-xs uppercase flex items-center gap-1 shadow-md"
+                                    >
+                                        <FaPhoneAlt /> CALL
+                                    </a>
+                                    <a
+                                        href="https://api.whatsapp.com/send?phone=917827180077&text=Hello%20Sehaat%20Saathi%2C%20I%20need%20Emergency%20Ambulance%20Booking%20Support!"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="px-3.5 sm:px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-green-400 border border-slate-700 font-black text-[10px] sm:text-xs uppercase flex items-center gap-1 shadow-md"
+                                    >
+                                        <BsWhatsapp /> WHATSAPP
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
