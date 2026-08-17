@@ -78,22 +78,22 @@ const TRANSLATIONS = {
         smartHub: "स्मार्ट हब (Smart Hub)",
         founderHotline: "संस्थापक: +91 6200087830",
         hotline108: "108 एम्बुलेंस कॉल",
-        bannerBadge: "🚨 24 घंटे आपातकालीन सेवा - सेहत साथी एम्बुलेंस",
-        bannerTitle: "बिहार और दिल्ली के लिए 24 घंटे 365 दिन लाइफलाइन एम्बुलेंस सेवा",
-        bannerSubtitle: "हर गाँव, हर ब्लॉक और हर शहर में 2 मिनट में एम्बुलेंस बुकिंग की पक्की सुविधा।",
-        nearbyAreasTitle: "📍 आपके पास के इलाके:",
-        nearbyAreasList: "मधुबनी, राजनगर, भगवानपुर, रंटी, रहिका, खजौली, जयनगर, पंडौल, सकरी, बेनीपट्टी, झंझारपुर, फुलपरास, कलुआही, लौकही।",
-        majorHubsTitle: "🏥 मुख्य अस्पताल व शहर:",
-        majorHubsList: "दरभंगा (DMCH) • पटना (PMCH / AIIMS) • नई दिल्ली (AIIMS)।",
-        bannerTag1: "⚡ 2 मिनट में कॉल व डिस्पैच",
+        bannerBadge: "🚨 24 घंटे आपातकालीन एम्बुलेंस सेवा - सेहत साथी नेटवर्क",
+        bannerTitle: "मधुबनी से दरभंगा, पटना एवं नई दिल्ली के लिए 24 घंटे 365 दिन लाइफलाइन एम्बुलेंस सेवा",
+        bannerSubtitle: "10 से 15 मिनट में एम्बुलेंस आपके घर/लोकेशन तक पहुँचाने की सेहत साथी टीम की 100% पूरी कोशिश।",
+        nearbyAreasTitle: "📍 स्टेप 1 (लोकल नेटवर्क):",
+        nearbyAreasList: "मधुबनी सदर, राजनगर, भगवानपुर, रंटी, रहिका, खजौली, जयनगर, पंडौल, सकरी, बेनीपट्टी, झंझारपुर, फुलपरास, कलुआही, लौकही।",
+        majorHubsTitle: "🏥 स्टेप 2, 3 व 4 (रीजनल व नेशनल हब):",
+        majorHubsList: "दरभंगा (DMCH) ➔ पटना (PMCH / AIIMS) ➔ नई दिल्ली (AIIMS)।",
+        bannerTag1: "⏱️ 10-15 मिनट में घर तक पहुँच सेवा",
         bannerTag2: "🏡 गाँव से अस्पताल तक सुरक्षित सफर",
-        bannerTag3: "🏷️ 100% सही और सरकारी रेट",
+        bannerTag3: "🏷️ 100% पारदर्शी फिक्स्ड किराया",
         callFounderBtn: "संस्थापक को सीधा कॉल करें (+91 6200087830)",
         callHelplineBtn: "इमरजेंसी हेल्पलाइन (+91 9934276622)",
         heroTitle: "सेहत साथी इमरजेंसी एम्बुलेंस बुकिंग सर्विसेज",
-        heroSubtitle: "24 घंटे 365 दिन - आपके गाँव से पटना और दिल्ली तक तुरंत एम्बुलेंस सेवा। 50+ असली गाड़ियां • सत्यापित ड्राइवर • कोई छुपे पैसे नहीं।",
+        heroSubtitle: "24 घंटे 365 दिन — 10 से 15 मिनट में आपके घर से दरभंगा, पटना और दिल्ली तक सुरक्षित एम्बुलेंस यात्रा। 50+ असली गाड़ियां • सत्यापित ड्राइवर • निश्चित फिक्स्ड किराया।",
         tabDirectory: "50+ एम्बुलेंस की लिस्ट",
-        tabDispatch: "2 मिनट में बुकिंग (Booking Form)",
+        tabDispatch: "इमरजेंसी बुकिंग फॉर्म (Booking Form)",
         tabHospital: "अस्पताल के बेड देखें",
         searchPlaceholder: "अपने गाँव या जगह का नाम लिखें (जैसे: राजनगर, खजौली, मधुबनी)...",
         allCategories: "सभी प्रकार की एम्बुलेंस",
@@ -392,6 +392,29 @@ const AmbulanceBooking = () => {
                                     <span className="text-rose-400 font-black">{t.majorHubsTitle}</span> {t.majorHubsList}
                                 </p>
                             </div>
+
+                            {/* FIXED TRANSPARENT FARE POLICY BOX */}
+                            <div className="p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border-2 border-emerald-500/40 space-y-2 text-xs text-left shadow-lg">
+                                <div className="flex items-center gap-2 text-emerald-400 font-black text-xs uppercase tracking-wider">
+                                    <BsShieldCheck className="text-base" />
+                                    <span>100% पारदर्शी फिक्स्ड किराया गारंटी (Zero Hidden Charges Policy)</span>
+                                </div>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                                    <div className="p-2.5 bg-slate-900/90 rounded-lg border border-slate-800 space-y-1">
+                                        <span className="text-[10px] text-amber-400 font-black block uppercase">🏷️ मधुबनी ➔ दरभंगा (DMCH / शहर का कोई भी अस्पताल)</span>
+                                        <p className="text-[11px] text-slate-200 font-bold leading-tight">
+                                            एक ही फिक्स्ड किराया! दरभंगा के किसी भी अस्पताल जाएं — कोई मीटर घोटाला नहीं, कोई extra चार्ज नहीं।
+                                        </p>
+                                    </div>
+                                    <div className="p-2.5 bg-slate-900/90 rounded-lg border border-slate-800 space-y-1">
+                                        <span className="text-[10px] text-rose-400 font-black block uppercase">🏷️ मधुबनी ➔ पटना (PMCH / AIIMS / शहर का कोई भी अस्पताल)</span>
+                                        <p className="text-[11px] text-slate-200 font-bold leading-tight">
+                                            एक ही फिक्स्ड किराया! पटना के किसी भी अस्पताल में भर्ती हों — निश्चित पारदर्शी फेयर गारंटी।
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 sm:gap-3 pt-1 text-[11px] sm:text-xs font-black text-slate-300">
                                 <span className="text-emerald-400 font-bold bg-emerald-500/10 px-2.5 sm:px-3 py-1 rounded-full border border-emerald-500/20">{t.bannerTag1}</span>
                                 <span className="text-amber-400 font-bold bg-amber-500/10 px-2.5 sm:px-3 py-1 rounded-full border border-amber-500/20">{t.bannerTag2}</span>
