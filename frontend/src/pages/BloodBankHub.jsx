@@ -120,6 +120,19 @@ const BloodBankHub = () => {
     const [donorPhone, setDonorPhone] = useState('');
     const [donorLocation, setDonorLocation] = useState('');
 
+    // Full-Screen Interactive Image Zoom Lightbox Modal States
+    const [zoomModalImage, setZoomModalImage] = useState(null);
+    const [zoomScale, setZoomScale] = useState(1);
+
+    const handleOpenZoomModal = (src, title = "Full Image View") => {
+        setZoomModalImage({ src, title });
+        setZoomScale(1);
+    };
+
+    const handleZoomIn = () => setZoomScale(s => Math.min(Number((s + 0.25).toFixed(2)), 3.5));
+    const handleZoomOut = () => setZoomScale(s => Math.max(Number((s - 0.25).toFixed(2)), 0.5));
+    const handleResetZoom = () => setZoomScale(1);
+
     const t = TRANSLATIONS[language];
 
     const handleBloodRequestSubmit = (e) => {
