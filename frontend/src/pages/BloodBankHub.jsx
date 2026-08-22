@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import bloodBankPosterImg from '../assets/Sehaat Saathi BloodBank.png';
 import {
     BsArrowLeft, BsDropletFill, BsShieldCheck, BsStarFill,
     BsCalendarCheck, BsClockHistory, BsCheckLg, BsTelephoneFill,
@@ -234,6 +235,20 @@ const BloodBankHub = () => {
                         <BsTelephoneFill />
                         <span>Emergency Call</span>
                     </button>
+                </div>
+
+                {/* Official Sehaat Saathi Emergency Blood Bank Poster Showcase Banner - WOW FACTOR */}
+                <div className="w-full relative rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-rose-500/60 shadow-[0_0_40px_rgba(225,29,72,0.4)] group transition-all duration-300 bg-slate-950">
+                    <img
+                        src={bloodBankPosterImg}
+                        alt="Sehaat Saathi Official Emergency Blood Bank Platform Poster"
+                        className="w-full h-auto max-h-72 sm:max-h-96 md:max-h-[440px] lg:max-h-[500px] object-contain sm:object-cover mx-auto group-hover:scale-[1.01] transition-transform duration-500 pointer-events-none"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none"></div>
+                    <div className="absolute top-3 left-3 sm:top-4 sm:left-4 px-3 py-1.5 rounded-full bg-slate-900/90 border border-rose-500/50 text-rose-300 text-[10px] sm:text-xs font-black uppercase tracking-wider flex items-center gap-2 shadow-xl backdrop-blur-md">
+                        <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping"></span>
+                        <span>🩸 24/7 EMERGENCY BLOOD BANK & VOLUNTEER DONOR NETWORK</span>
+                    </div>
                 </div>
 
                 {/* 2. PROMINENT BOLD FEATURE NAME & TAGLINE HERO BANNER */}
