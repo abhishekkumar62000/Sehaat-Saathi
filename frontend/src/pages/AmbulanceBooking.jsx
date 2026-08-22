@@ -243,6 +243,19 @@ const AmbulanceBooking = () => {
     const [selectedAmbulanceModal, setSelectedAmbulanceModal] = useState(null);
     const [showContactModal, setShowContactModal] = useState(false);
 
+    // Full-Screen Interactive Image Zoom Lightbox Modal States
+    const [zoomModalImage, setZoomModalImage] = useState(null);
+    const [zoomScale, setZoomScale] = useState(1);
+
+    const handleOpenZoomModal = (src, title = "Full Image View") => {
+        setZoomModalImage({ src, title });
+        setZoomScale(1);
+    };
+
+    const handleZoomIn = () => setZoomScale(s => Math.min(Number((s + 0.25).toFixed(2)), 3.5));
+    const handleZoomOut = () => setZoomScale(s => Math.max(Number((s - 0.25).toFixed(2)), 0.5));
+    const handleResetZoom = () => setZoomScale(1);
+
     const t = TRANSLATIONS[language];
 
     const filteredFleet = AMBULANCE_FLEET_DATA.filter(amb => {
@@ -374,7 +387,10 @@ const AmbulanceBooking = () => {
             <main className="container mx-auto max-w-7xl px-3 sm:px-6 py-6 sm:py-10 relative z-10 space-y-8 sm:space-y-12">
 
                 {/* Full-Width Official Sehaat Saathi Emergency Ambulance Poster Banner - WOW FACTOR */}
-                <div className="w-full relative rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-rose-500/50 shadow-[0_0_40px_rgba(225,29,72,0.35)] group transition-all duration-300 bg-slate-950">
+                <div
+                    onClick={() => handleOpenZoomModal(ambulancePosterImg, "Sehaat Saathi Official Emergency Ambulance Network Poster")}
+                    className="w-full relative rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-rose-500/50 shadow-[0_0_40px_rgba(225,29,72,0.35)] group transition-all duration-300 bg-slate-950 cursor-pointer"
+                >
                     <img
                         src={ambulancePosterImg}
                         alt="Sehaat Saathi Emergency Ambulance Network Poster"
@@ -384,6 +400,9 @@ const AmbulanceBooking = () => {
                     <div className="absolute top-3 left-3 sm:top-4 sm:left-4 px-3 py-1.5 rounded-full bg-slate-900/90 border border-emerald-500/50 text-emerald-400 text-[10px] sm:text-xs font-black uppercase tracking-wider flex items-center gap-2 shadow-xl backdrop-blur-md">
                         <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
                         <span>🇮🇳 24/7 BHARAT & BIHAR EMERGENCY AMBULANCE NETWORK</span>
+                    </div>
+                    <div className="absolute bottom-3 right-3 px-2.5 py-1 rounded-full bg-slate-900/90 text-rose-300 text-[10px] font-black uppercase flex items-center gap-1 border border-rose-500/40 opacity-0 group-hover:opacity-100 transition-opacity shadow-md backdrop-blur-md">
+                        <BsEyeFill /> Click to Fullscreen & Zoom
                     </div>
                 </div>
 
@@ -452,8 +471,11 @@ const AmbulanceBooking = () => {
                         </div>
 
                         <div className="flex flex-col gap-3 shrink-0 w-full lg:w-80">
-                            {/* Official Real Ambulance Showcase Card - SLIGHTLY ZOOMED OUT FOR FULL VISIBILITY */}
-                            <div className="w-full relative rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-rose-500/60 shadow-[0_0_35px_rgba(225,29,72,0.4)] group transition-all duration-300 hover:border-rose-400 bg-slate-950">
+                            {/* Official Real Ambulance Showcase Card - CLICK TO FULLSCREEN & ZOOM */}
+                            <div
+                                onClick={() => handleOpenZoomModal(ambulanceHeroImg, "24/7 Rapid ICU Ventilator Ambulance - Verified Real Fleet")}
+                                className="w-full relative rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-rose-500/60 shadow-[0_0_35px_rgba(225,29,72,0.4)] group transition-all duration-300 hover:border-rose-400 bg-slate-950 cursor-pointer"
+                            >
                                 <img
                                     src={ambulanceHeroImg}
                                     alt="Sehaat Saathi Official Emergency Ambulance Vehicle"
@@ -467,6 +489,9 @@ const AmbulanceBooking = () => {
                                 <div className="absolute bottom-2.5 left-2.5 right-2.5 text-left space-y-0.5">
                                     <span className="text-[10px] font-black text-rose-400 uppercase tracking-wider block">🚑 SEHAAT SAATHI OFFICIAL FLEET</span>
                                     <span className="text-xs sm:text-sm font-black text-white block drop-shadow-md">24/7 Rapid ICU Ventilator Ambulance</span>
+                                </div>
+                                <div className="absolute bottom-2.5 right-2.5 px-2 py-0.5 rounded-full bg-slate-900/90 text-rose-300 text-[9px] font-black uppercase flex items-center gap-1 border border-rose-500/40 opacity-0 group-hover:opacity-100 transition-opacity shadow-md backdrop-blur-md">
+                                    <BsEyeFill /> Zoom
                                 </div>
                             </div>
 
@@ -1284,6 +1309,83 @@ const AmbulanceBooking = () => {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            )}
+
+            {/* INTERACTIVE FULL-SCREEN LIGHTBOX MODAL WITH ZOOM IN & ZOOM OUT CONTROLS */}
+            {zoomModalImage && (
+                <div className="fixed inset-0 z-[200] bg-slate-950/95 backdrop-blur-2xl flex flex-col justify-between p-3 sm:p-6 animate-fade-in">
+                    {/* Modal Top Control Bar */}
+                    <div className="flex items-center justify-between gap-3 border-b border-slate-800 pb-3 z-10">
+                        <div className="flex items-center gap-2">
+                            <span className="text-rose-500 text-lg"><BsEyeFill /></span>
+                            <span className="text-white font-black text-xs sm:text-base truncate max-w-xs sm:max-w-md">{zoomModalImage.title}</span>
+                        </div>
+
+                        {/* Zoom Controls & Close Button */}
+                        <div className="flex items-center gap-2">
+                            <span className="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-emerald-400 text-xs font-mono font-black">
+                                {Math.round(zoomScale * 100)}%
+                            </span>
+                            <button
+                                onClick={handleZoomIn}
+                                className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-black text-xs sm:text-sm transition-all active:scale-95 border border-slate-700 shadow-md"
+                                title="Zoom In"
+                            >
+                                🔍 Zoom In (+)
+                            </button>
+                            <button
+                                onClick={handleZoomOut}
+                                className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-black text-xs sm:text-sm transition-all active:scale-95 border border-slate-700 shadow-md"
+                                title="Zoom Out"
+                            >
+                                🔎 Zoom Out (-)
+                            </button>
+                            <button
+                                onClick={handleResetZoom}
+                                className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-400 font-black text-xs transition-all active:scale-95 border border-slate-700 shadow-md"
+                                title="Reset Zoom"
+                            >
+                                🔄 Reset
+                            </button>
+                            <button
+                                onClick={() => setZoomModalImage(null)}
+                                className="w-9 h-9 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-black text-base flex items-center justify-center transition-all shadow-lg active:scale-95 cursor-pointer ml-1"
+                                title="Close"
+                            >
+                                ✕
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Modal Main Image Display Area */}
+                    <div
+                        onClick={() => setZoomModalImage(null)}
+                        className="flex-1 flex items-center justify-center overflow-auto p-2 sm:p-6 cursor-zoom-out select-none"
+                    >
+                        <div
+                            onClick={(e) => e.stopPropagation()}
+                            className="transition-transform duration-200 ease-out max-w-full max-h-full flex items-center justify-center"
+                            style={{ transform: `scale(${zoomScale})` }}
+                        >
+                            <img
+                                src={zoomModalImage.src}
+                                alt={zoomModalImage.title}
+                                className="max-w-full max-h-[75vh] object-contain rounded-2xl border-2 border-slate-700 shadow-[0_0_50px_rgba(0,0,0,0.8)]"
+                            />
+                        </div>
+                    </div>
+
+                    {/* Modal Footer Guidance */}
+                    <div className="border-t border-slate-800 pt-3 text-center z-10 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-400">
+                        <span className="font-medium">🔍 Click `Zoom In (+)` or `Zoom Out (-)` to inspect details. Click `✕` or tap outside to close.</span>
+                        <button
+                            onClick={() => setZoomModalImage(null)}
+                            className="px-4 py-1.5 rounded-xl bg-rose-600/20 text-rose-300 border border-rose-500/40 hover:bg-rose-600 hover:text-white font-black uppercase text-[10px] tracking-wider transition-all"
+                        >
+                            Close Fullscreen
+                        </button>
                     </div>
                 </div>
             )}
