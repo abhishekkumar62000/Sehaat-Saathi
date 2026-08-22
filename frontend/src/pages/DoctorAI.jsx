@@ -1878,7 +1878,7 @@ const DoctorAI = () => {
                                                         <BsVolumeUpFill className={isSpeaking ? 'animate-pulse' : ''} />
                                                         {isSpeaking ? 'Narrating...' : 'Voice Bridge'}
                                                     </button>
-                                                    <span className="text-[7px] md:text-[8px] font-semibold text-slate-600 uppercase tracking-tighter">Verified AI Doctor • v10.0</span>
+                                                    <span className="text-[7px] md:text-[8px] font-semibold text-slate-600 uppercase tracking-tighter">Verified Doctor Chatbot • v10.0</span>
                                                 </div>
                                             )}
                                             {msg.isL1 && <div className="mt-2.5 px-2 py-0.5 bg-emerald-500/10 text-emerald-400 text-[7px] font-semibold rounded uppercase w-fit border border-emerald-500/20">Deterministic L1</div>}

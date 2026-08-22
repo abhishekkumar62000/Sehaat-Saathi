@@ -16,6 +16,8 @@ import {
     FaStethoscope, FaGlobeAsia, FaRoute
 } from 'react-icons/fa';
 import { AMBULANCE_FLEET_DATA } from '../utils/ambulanceData';
+import ambulanceHeroImg from '../assets/Sehaat Saathi Ambulace2.jpeg';
+import ambulancePosterImg from '../assets/Sehaat Saathi Ambulace.jpeg';
 
 const TRANSLATIONS = {
     en: {
@@ -371,6 +373,20 @@ const AmbulanceBooking = () => {
 
             <main className="container mx-auto max-w-7xl px-3 sm:px-6 py-6 sm:py-10 relative z-10 space-y-8 sm:space-y-12">
 
+                {/* Full-Width Official Sehaat Saathi Emergency Ambulance Poster Banner - WOW FACTOR */}
+                <div className="w-full relative rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-rose-500/50 shadow-[0_0_40px_rgba(225,29,72,0.35)] group transition-all duration-300 bg-slate-950">
+                    <img
+                        src={ambulancePosterImg}
+                        alt="Sehaat Saathi Emergency Ambulance Network Poster"
+                        className="w-full h-auto max-h-72 sm:max-h-96 md:max-h-[420px] lg:max-h-[480px] object-contain sm:object-cover mx-auto group-hover:scale-[1.01] transition-transform duration-500 pointer-events-none"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none"></div>
+                    <div className="absolute top-3 left-3 sm:top-4 sm:left-4 px-3 py-1.5 rounded-full bg-slate-900/90 border border-emerald-500/50 text-emerald-400 text-[10px] sm:text-xs font-black uppercase tracking-wider flex items-center gap-2 shadow-xl backdrop-blur-md">
+                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+                        <span>🇮🇳 24/7 BHARAT & BIHAR EMERGENCY AMBULANCE NETWORK</span>
+                    </div>
+                </div>
+
                 {/* State-of-the-Art Futuristic Banner UI - 100% Mobile Responsive */}
                 <div className="p-5 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl bg-gradient-to-r from-slate-900/95 via-slate-900/90 to-rose-950/80 backdrop-blur-2xl border-2 border-rose-500/40 shadow-[0_20px_50px_rgba(225,29,72,0.2)] relative overflow-hidden text-center md:text-left">
                     <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#FF9933] via-white to-[#138808]"></div>
@@ -435,7 +451,25 @@ const AmbulanceBooking = () => {
                             </div>
                         </div>
 
-                        <div className="flex flex-col gap-3 shrink-0 w-full lg:w-auto">
+                        <div className="flex flex-col gap-3 shrink-0 w-full lg:w-80">
+                            {/* Official Real Ambulance Showcase Card - SLIGHTLY ZOOMED OUT FOR FULL VISIBILITY */}
+                            <div className="w-full relative rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-rose-500/60 shadow-[0_0_35px_rgba(225,29,72,0.4)] group transition-all duration-300 hover:border-rose-400 bg-slate-950">
+                                <img
+                                    src={ambulanceHeroImg}
+                                    alt="Sehaat Saathi Official Emergency Ambulance Vehicle"
+                                    className="w-full h-48 sm:h-56 lg:h-64 object-contain bg-slate-950 p-1 group-hover:scale-[1.03] transition-transform duration-500 pointer-events-none"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/10 to-transparent pointer-events-none"></div>
+                                <div className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-full bg-slate-900/90 border border-emerald-500/50 text-emerald-400 text-[9px] font-black uppercase tracking-wider flex items-center gap-1.5 shadow-md backdrop-blur-md">
+                                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                                    <span>Verified Real Fleet Unit</span>
+                                </div>
+                                <div className="absolute bottom-2.5 left-2.5 right-2.5 text-left space-y-0.5">
+                                    <span className="text-[10px] font-black text-rose-400 uppercase tracking-wider block">🚑 SEHAAT SAATHI OFFICIAL FLEET</span>
+                                    <span className="text-xs sm:text-sm font-black text-white block drop-shadow-md">24/7 Rapid ICU Ventilator Ambulance</span>
+                                </div>
+                            </div>
+
                             <button
                                 onClick={() => setShowContactModal(true)}
                                 className="w-full px-5 sm:px-6 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl bg-gradient-to-r from-red-600 via-rose-600 to-red-600 text-white font-black text-xs sm:text-sm uppercase tracking-wider shadow-[0_0_25px_rgba(225,29,72,0.6)] hover:scale-105 transition-all animate-pulse flex items-center justify-center gap-2 border border-rose-400/40 cursor-pointer"
@@ -445,13 +479,13 @@ const AmbulanceBooking = () => {
                             </button>
                             <a
                                 href="tel:+916200087830"
-                                className="px-5 sm:px-6 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs uppercase tracking-wider shadow-2xl flex items-center justify-center gap-2 group transition-all"
+                                className="px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs uppercase tracking-wider shadow-2xl flex items-center justify-center gap-2 group transition-all"
                             >
                                 <FaPhoneAlt className="group-hover:scale-110 transition-transform text-xs" /> {t.callFounderBtn}
                             </a>
                             <a
                                 href="tel:+919934276622"
-                                className="px-5 sm:px-6 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all"
+                                className="px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all"
                             >
                                 <BsTelephoneFill className="text-rose-400 text-xs" /> {t.callHelplineBtn}
                             </a>

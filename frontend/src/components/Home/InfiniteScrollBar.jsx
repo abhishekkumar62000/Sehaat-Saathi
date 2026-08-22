@@ -22,7 +22,7 @@ const InfiniteScrollBar = () => {
     { text: "🇮🇳 BHARAT'S AI HEALTH SOVEREIGNTY", color: "text-blue-700", isBold: true },
     { text: `• ${livesSaved.toLocaleString()} Bharat Lives Secured`, color: "text-red-600", isBold: true, isLive: true },
     { text: "• Sehaat Express Track", color: "text-orange-600", link: "/express-track", power: "Live Technician GPS Tracking" },
-    { text: "• Sehaat AI Doctor", color: "text-blue-600", link: "/doctor-ai", power: "Instant Symptom Chat" },
+    { text: "• Sehaat Saathi Doctor Chatbot", color: "text-blue-600", link: "/doctor-ai", power: "Instant Symptom Chat" },
     { text: "• Instant Video Consultations", color: "text-green-600", link: "/tele-consult", power: "Specialist Link in 15s" },
     { text: "• Offline Doctor Booking", color: "text-indigo-600", link: "/offline-consultation", power: "Smart Crowd Predictor" },
     { text: "• AI Symptom Checker", color: "text-purple-600", link: "/symptom-checker", power: "Medical History Mapping" },

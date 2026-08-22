@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import founderAdvImg from '../assets/offline_booking_adv.png';
 import {
     BsStars, BsActivity, BsShieldCheck, BsTruck, BsHouseHeartFill,
     BsArrowRight, BsInfoCircle, BsChatDots, BsPhone, BsCapsule, BsShieldFillPlus, BsBellFill, BsCpuFill, BsCameraFill, BsCartCheck, BsPeopleFill, BsDropletFill, BsHeartPulse, BsFileEarmarkMedical, BsInboxesFill, BsGenderFemale, BsFlower1, BsTreeFill, BsCart4, BsHospital, BsShieldLockFill, BsGeoAltFill
@@ -20,13 +21,13 @@ const Smarthub = () => {
         <div className="min-h-screen bg-gray-50 pb-20">
             {/* Hero Section */}
             <div
-                className="text-gray-800 py-24 px-5 sm:px-10 mb-10 overflow-hidden relative tri-color-mesh rounded-b-[80px] shadow-2xl"
+                className="text-gray-800 pt-3 sm:pt-14 pb-10 sm:pb-24 px-3 sm:px-10 mb-8 sm:mb-10 overflow-hidden relative tri-color-mesh rounded-b-[50px] sm:rounded-b-[80px] shadow-2xl"
             >
-                {/* Decorative Ashoka Chakra Silhouette - PRESERVED */}
-                <div className="absolute top-1/2 right-[10%] -translate-y-1/2 opacity-[0.05] pointer-events-none">
-                    <div className="w-[500px] h-[500px] border-[20px] border-blue-900 rounded-full flex items-center justify-center animate-spin-slow">
+                {/* Decorative Ashoka Chakra Silhouette - PRESERVED & 100% RESPONSIVE */}
+                <div className="absolute top-1/2 left-1/2 lg:left-auto lg:right-[4%] xl:right-[8%] -translate-x-1/2 lg:translate-x-0 -translate-y-1/2 opacity-[0.22] sm:opacity-[0.16] lg:opacity-[0.18] pointer-events-none transition-all duration-300">
+                    <div className="w-[320px] h-[320px] sm:w-[480px] sm:h-[480px] lg:w-[460px] lg:h-[460px] xl:w-[540px] xl:h-[540px] border-[14px] sm:border-[20px] border-blue-900/90 rounded-full flex items-center justify-center animate-spin-slow shadow-2xl">
                         {[...Array(24)].map((_, i) => (
-                            <div key={i} className="absolute h-full w-[1px] bg-blue-900" style={{ transform: `rotate(${i * 15}deg)` }}></div>
+                            <div key={i} className="absolute h-full w-[1.5px] sm:w-[2px] bg-blue-900/90" style={{ transform: `rotate(${i * 15}deg)` }}></div>
                         ))}
                     </div>
                 </div>
@@ -168,36 +169,76 @@ const Smarthub = () => {
                     </div>
                 ))}
 
-                <div className="container mx-auto relative z-10">
-                    <div className="max-w-3xl">
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/40 backdrop-blur-md mb-6 border border-orange-200">
-                            <BsStars className="text-orange-600" />
-                            <span className="text-sm font-bold tracking-wide uppercase text-orange-800">Innovation Hub</span>
+                <div className="container mx-auto relative z-10 px-2 sm:px-6">
+                    <div className="max-w-4xl">
+                        {/* State & National Sovereignty Badge - COMPACT MOBILE POSITIONING */}
+                        <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/85 backdrop-blur-md mb-4 sm:mb-6 border-2 border-orange-400/50 shadow-md animate-pulse">
+                            <span className="text-sm sm:text-lg shrink-0">🇮🇳</span>
+                            <span className="text-[11px] sm:text-sm font-black tracking-wide uppercase bg-gradient-to-r from-orange-600 via-slate-900 to-green-700 bg-clip-text text-transparent">
+                                बिहार व भारत का #1 डिजिटल इमरजेंसी व 100% लाइफ-सेविंग स्मार्ट हेल्थ हब
+                            </span>
+                            <BsStars className="text-orange-500 text-xs sm:text-sm animate-spin-slow shrink-0" />
                         </div>
-                        <h1 className="text-5xl md:text-7xl font-black mb-8 leading-tight tracking-tighter text-slate-800">
-                            Your <span style={{ color: "#FF9933" }}>Smart</span>{" "}
-                            <span style={{ color: "#138808" }}>Health</span> Hub
+
+                        {/* Title */}
+                        <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-4 sm:mb-6 leading-tight tracking-tight text-slate-900 drop-shadow-sm">
+                            Your <span style={{ color: "#FF9933" }} className="drop-shadow-md">Smart</span>{" "}
+                            <span style={{ color: "#138808" }} className="drop-shadow-md">Health</span> Hub
                         </h1>
-                        <p className="text-lg md:text-xl text-gray-700 font-medium leading-relaxed mb-8">
-                            Experience the future of Indian healthcare. From AI-driven tracking to real-time medical hubs,
-                            we're building a smarter <span className="font-bold" style={{ color: "#FF9933" }}>Sehaat</span> <span className="font-bold" style={{ color: "#138808" }}>Saathi</span> for your health journey.
+
+                        {/* Subtitle */}
+                        <p className="text-xs sm:text-base md:text-lg lg:text-xl text-slate-800 font-bold leading-relaxed mb-4 sm:mb-6">
+                            <span className="text-orange-600 font-black">बिहार (मधुबनी, दरभंगा, पटना)</span> से लेकर <span className="text-green-700 font-black">पूरे भारत</span> के लिए — <span className="text-blue-700 underline font-black">घर बैठे डॉक्टर बुकिंग</span>, <span className="text-violet-700 font-black">Emergency Doctor Video Calling</span>, <span className="text-red-600 font-black">24/7 लाइफलाइन एम्बुलेंस</span>, <span className="text-rose-600 font-black">इमरजेंसी ब्लड बैंक</span>, <span className="text-emerald-700 font-black">घर पर नर्सिंग व फिजियोथेरेपी</span> से लेकर <span className="text-cyan-700 font-black">लाइव ICU बेड, ऑक्सीजन व वेंटिलेटर ट्रैकिंग</span> तक!
                         </p>
+
+                        {/* Quick Highlights Pills */}
+                        <div className="flex flex-wrap gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-black mb-4 sm:mb-6">
+                            <span className="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-orange-500/10 text-orange-700 border border-orange-300 shadow-sm">
+                                👨‍⚕️ घर बैठे डॉक्टर बुकिंग
+                            </span>
+                            <span className="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-blue-500/10 text-blue-700 border border-blue-300 shadow-sm">
+                                📹 Emergency Doctor Video Calling
+                            </span>
+                            <span className="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-red-500/10 text-red-700 border border-red-300 shadow-sm">
+                                🚑 24/7 एम्बुलेंस (50+ Fleet)
+                            </span>
+                            <span className="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-rose-500/10 text-rose-700 border border-rose-300 shadow-sm">
+                                🩸 आपातकालीन ब्लड बैंक
+                            </span>
+                            <span className="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-emerald-500/10 text-emerald-700 border border-emerald-300 shadow-sm">
+                                🩺 घर पर नर्सिंग व फिजियोथेरेपी
+                            </span>
+                            <span className="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-cyan-500/10 text-cyan-700 border border-cyan-300 shadow-sm">
+                                🏥 रियल-टाइम ICU बेड व वेंटिलेटर
+                            </span>
+                        </div>
+
+                        {/* Founder Advertisement Showcase Image Pose - VISIBLE ON MOBILE/TABLET, HIDDEN ON DESKTOP */}
+                        <div className="mt-4 sm:mt-6 flex justify-center items-center lg:hidden">
+                            <img
+                                src={founderAdvImg}
+                                alt="Sehaat Saathi Founder"
+                                className="max-h-56 sm:max-h-72 md:max-h-88 w-auto object-contain drop-shadow-2xl hover:scale-[1.02] transition-transform duration-300 pointer-events-none"
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div className="container mx-auto px-4 md:px-0">
                 {/* Section Header */}
-                <div className="flex flex-wrap gap-4 mb-16 tri-glass p-4 sm:p-6 md:p-8 rounded-[40px] static md:sticky top-24 z-40 items-center justify-between">
-                    <div className="flex items-center gap-4">
-                        <div className="p-4 bg-gradient-to-tr from-[#FF9933] to-[#138808] rounded-2xl shadow-2xl">
-                            <BsStars className="text-white text-2xl" />
+                <div className="flex flex-wrap gap-4 mb-10 sm:mb-16 tri-glass p-4 sm:p-6 md:p-8 rounded-3xl sm:rounded-[40px] static md:sticky top-24 z-40 items-center justify-between shadow-2xl border-2 border-orange-300/40">
+                    <div className="flex items-center gap-3 sm:gap-4">
+                        <div className="p-3.5 sm:p-4 bg-gradient-to-tr from-[#FF9933] via-white to-[#138808] rounded-2xl shadow-2xl">
+                            <BsStars className="text-slate-900 text-2xl animate-spin-slow" />
                         </div>
                         <div>
-                            <h2 className="text-2xl font-black text-gray-900 uppercase tracking-tighter">
-                                <span style={{ color: "#FF9933" }}>Complete</span> <span style={{ color: "#138808" }}>Health Support</span>
+                            <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-gray-900 uppercase tracking-tight">
+                                <span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span> <span className="text-slate-900">Life-Saving Services</span>
                             </h2>
-                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em]">Everything you need to stay healthy</p>
+                            <p className="text-[10px] sm:text-xs font-black text-slate-600 uppercase tracking-wider">
+                                🇮🇳 बिहार व पूरे भारत के लिए 100% सत्यापित डिजिटल स्वास्थ्य सेवाएं
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -210,7 +251,7 @@ const Smarthub = () => {
                             title={
                                 <span>
                                     <span style={{ color: "#FF9933" }}>Sehaat</span>{" "}
-                                    <span style={{ color: "#138808" }}>Saathi</span> AI Doctor
+                                    <span style={{ color: "#138808" }}>Saathi</span> Doctor Chatbot
                                 </span>
                             }
                             desc="Instant one-on-one health chat like Gemini. Ask symptoms, get diet advice and medical guidance."
