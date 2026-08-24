@@ -6,6 +6,7 @@ import AboutChairman from "../components/AboutUs/AboutChairman";
 import AboutDC from "../components/AboutUs/AboutDC";
 import AboutManagementTeam from "../components/AboutUs/AboutManagementTeam";
 import AboutMD from "../components/AboutUs/AboutMD";
+import MetaHead from "../components/SEO/MetaHead";
 
 const AboutUs = () => {
   const [activeTab, setActiveTab] = useState("aboutDC");
@@ -38,6 +39,12 @@ const AboutUs = () => {
 
   return (
     <div className="min-h-screen bg-gray-50/50 pb-24">
+      <MetaHead
+        title="About Sehaat Saathi | Bihar's #1 AI Healthcare Platform Founded by Abhishek Kumar"
+        description="Learn about Sehaat Saathi (Sehat Sathi), India and Bihar's premier AI-powered healthcare platform. Founded by Abhishek Kumar (AI/ML Engineer & Entrepreneur). Our mission: accessible, affordable healthcare for every Indian family."
+        keywords="About Sehaat Saathi, Sehaat Saathi Founder, Abhishek Kumar Sehaat Saathi, Sehaat Saathi Healthcare Platform Bihar India, Sehat Sathi About, Sehaat Saathi Mission Vision"
+        canonicalUrl="https://sehaatsaathi.com/about"
+      />
       {/* Premium Hero Section */}
       <section className="container mx-auto px-6 lg:px-16 py-16 lg:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">

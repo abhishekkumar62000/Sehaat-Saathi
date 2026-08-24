@@ -18,6 +18,8 @@ import {
 import { AMBULANCE_FLEET_DATA } from '../utils/ambulanceData';
 import ambulanceHeroImg from '../assets/Sehaat Saathi Ambulace2.jpeg';
 import ambulancePosterImg from '../assets/Sehaat Saathi Ambulace.jpeg';
+import MetaHead from '../components/SEO/MetaHead';
+import AmbulanceSEOIsland from '../components/SEO/AmbulanceSEOIsland';
 
 const TRANSLATIONS = {
     en: {
@@ -338,6 +340,13 @@ const AmbulanceBooking = () => {
 
     return (
         <div className="min-h-screen bg-slate-950 text-white font-sans selection:bg-rose-500/30 overflow-x-hidden relative">
+          <MetaHead
+            title="Sehaat Saathi Emergency Ambulance Booking Services | 24/7 Bihar & India ICU Ambulance"
+            description="Sehaat Saathi Emergency Ambulance Booking Services (Sehat Sathi Ambulance) — 24/7 Lifeline across Bihar & India. 50+ verified vehicles: ICU Ventilator Ambulance, ALS, BLS, Neonatal Incubator, Oxygen ambulances. 2-min rapid dispatch across Madhubani, Darbhanga, Patna & AIIMS Delhi. Helpline: +91 6200087830."
+            keywords="Sehaat Saathi Emergency Ambulance Booking Services, Sehaat Saathi Ambulance, Sehat Sathi Ambulance, Sehaat Sathi Emergency Ambulance, Sehat Saathi Ambulance, Sehhat Sathi Ambulance, Sehaat Saathi Ambulance Service, Sehat Sathi Ambulance Booking, Sehaat Saathi Ambulance Number, Sehat Sathi Ambulance Helpline, Sehaat Saathi Ambulance Bihar, Sehat Sathi Ambulance Madhubani, Sehaat Saathi Ambulance Patna, Sehat Sathi Ambulance Darbhanga, Sehaat Saathi ICU Ambulance, Sehat Sathi Ventilator Ambulance, Sehaat Saathi Oxygen Ambulance, Sehat Sathi Air Ambulance, 24/7 Ambulance Bihar, Emergency Ambulance Booking India, Abhishek Kumar Sehaat Saathi Ambulance"
+            canonicalUrl="https://sehaatsaathi.com/ambulance"
+          />
+          <AmbulanceSEOIsland />
             
             {/* Background Ambient Glow */}
             <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">

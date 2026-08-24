@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- ===== SEHAAT SAATHI — MASTER SITEMAP ===== -->
+  <!-- Bihar & India's #1 AI Healthcare Platform | Founded by Abhishek Kumar -->
+
+  <!-- Homepage / Main Healthcare Platform -->
+  <url>
+    <loc>https://sehaatsaathi.com/</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://sehaatsaathi.com/logo.png</image:loc>
+      <image:title>Sehaat Saathi India Smart AI Health Platform</image:title>
+    </image:image>
+  </url>
+
+  <!-- Find Doctors & Specialist Consultations -->
+  <url>
+    <loc>https://sehaatsaathi.com/doctors</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <!-- Offline Consultation & Hospital Direct OPD Token Booking -->
+  <url>
+    <loc>https://sehaatsaathi.com/offline-consultation</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <!-- Emergency Ambulance Booking -->
+  <url>
+    <loc>https://sehaatsaathi.com/ambulance</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://sehaatsaathi.com/ambulance-booking</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <!-- SMART HUB - All-in-one AI Healthcare Services -->
+  <url>
+    <loc>https://sehaatsaathi.com/smarthub</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- AI Doctor Chatbot & Symptom Diagnosis -->
+  <url>
+    <loc>https://sehaatsaathi.com/doctor-ai</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Blood Bank Coordination & Emergency Hub -->
+  <url>
+    <loc>https://sehaatsaathi.com/blood-bank</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://sehaatsaathi.com/blood-bank-hub</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <!-- Online Video Booking / Telemedicine -->
+  <url>
+    <loc>https://sehaatsaathi.com/online-video-booking</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <!-- Healthcare Services Overview -->
+  <url>
+    <loc>https://sehaatsaathi.com/services</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Home Healthcare & Nursing Services -->
+  <url>
+    <loc>https://sehaatsaathi.com/home-healthcare</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Hospital Availability & Bed Tracking -->
+  <url>
+    <loc>https://sehaatsaathi.com/hospital-availability</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Medicine Finder & Pharmacy -->
+  <url>
+    <loc>https://sehaatsaathi.com/medicine-finder</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Ayurveda Healthcare Hub -->
+  <url>
+    <loc>https://sehaatsaathi.com/ayurveda</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Naturopathy Healthcare Hub -->
+  <url>
+    <loc>https://sehaatsaathi.com/naturopathy</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Symptom Checker -->
+  <url>
+    <loc>https://sehaatsaathi.com/symptom-checker</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Women Care & Maternal Health -->
+  <url>
+    <loc>https://sehaatsaathi.com/women-care</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <!-- Nutrition Hub -->
+  <url>
+    <loc>https://sehaatsaathi.com/nutrition-hub</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <!-- TeleConsult AI -->
+  <url>
+    <loc>https://sehaatsaathi.com/teleconsult-ai</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Emergency Health ID -->
+  <url>
+    <loc>https://sehaatsaathi.com/emergency-health-id</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <!-- About Sehaat Saathi Healthcare Platform & Founder -->
+  <url>
+    <loc>https://sehaatsaathi.com/about</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <!-- Contact & Emergency Support -->
+  <url>
+    <loc>https://sehaatsaathi.com/contact</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- User Registration -->
+  <url>
+    <loc>https://sehaatsaathi.com/register</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- User Login -->
+  <url>
+    <loc>https://sehaatsaathi.com/login</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- ===== VERCEL MIRROR FALLBACKS ===== -->
+  <url>
+    <loc>https://sehaat-saathi.vercel.app/</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://sehaat-saathi.vercel.app/doctors</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://sehaat-saathi.vercel.app/offline-consultation</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://sehaat-saathi.vercel.app/smarthub</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sehaat-saathi.vercel.app/ambulance</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://sehaat-saathi.vercel.app/ambulance-booking</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://sehaat-saathi.vercel.app/blood-bank-hub</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://sehaat-saathi.vercel.app/blood-bank</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://sehaat-saathi.vercel.app/online-video-booking</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+</urlset>

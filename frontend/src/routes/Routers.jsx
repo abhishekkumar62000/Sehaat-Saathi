@@ -96,6 +96,7 @@ const Routers = () => {
         <Route path="/nutrition-hub" element={<NutritionHub />} />
         <Route path="/offline-consultation" element={<OfflineConsultationHub />} />
         <Route path="/online-video-booking" element={<OnlineVideoBooking />} />
+        <Route path="/ambulance" element={<AmbulanceBooking />} />
         <Route path="/ambulance-booking" element={<AmbulanceBooking />} />
         <Route path="/blood-bank-hub" element={<BloodBankHub />} />
         <Route path="/home-healthcare" element={<HomeHealthcare />} />

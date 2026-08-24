@@ -4,6 +4,9 @@ import Loader from "../../components/Shared/Loading";
 import { BASE_URL } from "../../config";
 import useFetchData from "../../hooks/useFetchData";
 import DoctorCard from "./DoctorCard";
+import MetaHead from "../../components/SEO/MetaHead";
+import SEOKeywordIsland from "../../components/SEO/SEOKeywordIsland";
+import DoctorBookingSEOIsland from "../../components/SEO/DoctorBookingSEOIsland";
 
 const Doctors = () => {
   const [query, setQuery] = useState("");
@@ -34,6 +37,14 @@ const Doctors = () => {
 
   return (
     <section className="container mb-10">
+      <MetaHead
+        title="Sehaat Saathi Doctor Booking App | Find & Book Specialist Doctors Bihar & India"
+        description="Sehaat Saathi doctor booking App (Sehat Sathi) — Search and book top verified specialist doctors, cardiologists, gynecologists, pediatricians, and surgeons in Madhubani, Darbhanga, Patna & all Bihar. Helpline: +91 6200087830."
+        keywords="Sehaat Saathi doctor booking App, sehat sathi doctor booking App, Sehaat Saathi Offline Doctor Booking app, sehatt sehaathi offline doctor Booking, sehaat saathi doctor bboing app, sehaat saathi bihar doctor booking app, sehat sathi madhubani darbhanga doctor booking app, Sehaat Saathi Doctor Booking, Sehat Sathi Doctor Consultation, Online Doctor Bihar, Doctor Booking App India"
+        canonicalUrl="https://sehaatsaathi.com/doctors"
+      />
+      <SEOKeywordIsland />
+      <DoctorBookingSEOIsland />
       <div className="mt-3">
         <div className="container text-center">
           <h2 className="heading">Search a Doctor</h2>

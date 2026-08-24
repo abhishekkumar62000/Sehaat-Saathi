@@ -30,6 +30,9 @@ import {
     VOLUNTARY_DONORS_LIST,
     REAL_SUCCESS_STORIES
 } from '../utils/bloodBankData';
+import MetaHead from '../components/SEO/MetaHead';
+import SEOKeywordIsland from '../components/SEO/SEOKeywordIsland';
+import BloodBankSEOIsland from '../components/SEO/BloodBankSEOIsland';
 
 const TRANSLATIONS = {
     en: {
@@ -178,6 +181,14 @@ const BloodBankHub = () => {
 
     return (
         <div className="min-h-screen bg-slate-950 text-white font-sans selection:bg-rose-500/30 overflow-x-hidden relative">
+            <MetaHead
+              title="Sehaat Saathi Emergency Blood Bank Hub Booking | 24/7 Blood Availability Bihar & India"
+              description="Sehaat Saathi Emergency Blood Bank Hub Booking (Sehat Sathi Blood Bank) — 24/7 Emergency Blood Assistance across Bihar & India. Real-time blood availability & voluntary donor coordination for A+, A-, B+, B-, O+, O-, AB+, AB-, Platelets (SDP/RDP), and FFP in Madhubani, Darbhanga, Patna & Bihar. Helpline: +91 6200087830."
+              keywords="Sehaat Saathi Blood Bank Hub Booking, Sehaat Saathi Blood Bank, Sehat Sathi Blood Bank, Sehaat Sathi Bloodbank, Sehat Saathi Blood Bank, Sehhat Sathi Blood Bank, SehaatSaathi Blood Bank, SehatSathi Blood Bank, Sehaat Saathi Blood Donation, Sehat Sathi Blood Donor, Sehaat Saathi Blood Availability, Sehat Sathi Emergency Blood Bihar, Sehaat Saathi Blood Bank Madhubani, Sehat Sathi Blood Bank Patna, Sehaat Saathi Blood Bank Darbhanga, Sehat Sathi Platelets Booking, Abhishek Kumar Sehaat Saathi Blood Bank"
+              canonicalUrl="https://sehaatsaathi.com/blood-bank-hub"
+            />
+            <SEOKeywordIsland />
+            <BloodBankSEOIsland />
             
             {/* Background Ambient Glow */}
             <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">

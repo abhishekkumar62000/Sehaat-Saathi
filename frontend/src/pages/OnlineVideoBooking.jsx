@@ -19,6 +19,9 @@ import { QRCodeSVG } from 'qrcode.react';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import uploadImageToCloudinary from '../utils/uploadCloudinary';
+import MetaHead from '../components/SEO/MetaHead';
+import SEOKeywordIsland from '../components/SEO/SEOKeywordIsland';
+import VideoConsultSEOIsland from '../components/SEO/VideoConsultSEOIsland';
 
 // ─── TRANSLATIONS ───
 const TRANSLATIONS = {
@@ -1021,6 +1024,14 @@ const OnlineVideoBooking = () => {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-violet-50 via-white to-indigo-50">
+            <MetaHead
+              title="Sehaat Saathi Online Doctor Video Calling Booking App | 24/7 Teleconsultation Bihar & India"
+              description="Sehaat Saathi doctor video calling booking App (Sehat Sathi Doctor Video Call) — Connect with verified specialist doctors in 5 minutes via Google Meet, Zoom or WhatsApp video call across Madhubani, Darbhanga, Patna & India. Digital prescription included. Helpline: +91 6200087830."
+              keywords="doctor video caaling booking app, doctor video calling booking app, doctor video call booking app, online doctor video consultation app bihar, sehat sathi madhubani darbhanga instant doctor video booking app, sehat sathi doctor video call booking App, Sehaat Saathi online Doctor Booking app, sehatt sehaathi doctor video caalling Booking, Sehaat Saathi Doctor Video Calling, Sehat Sathi Telemedicine, Online Doctor Consultation India"
+              canonicalUrl="https://sehaatsaathi.com/online-video-booking"
+            />
+            <SEOKeywordIsland />
+            <VideoConsultSEOIsland />
             <LiveStatsBanner />
             {/* Hero */}
             <div className="bg-gradient-to-br from-violet-700 via-purple-700 to-indigo-800 text-white pt-14 pb-12 px-5 sm:px-10 relative overflow-hidden">

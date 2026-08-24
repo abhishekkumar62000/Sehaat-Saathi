@@ -6,6 +6,7 @@ import {
     BsInfoCircleFill, BsClockHistory, BsCheckCircleFill, BsExclamationTriangleFill,
     BsMapFill, BsCreditCardFill, BsXCircleFill
 } from 'react-icons/bs';
+import MetaHead from '../components/SEO/MetaHead';
 
 const AmbulanceDispatch = () => {
     const [step, setStep] = useState('triage'); // triage, location, searching, booking, tracking, reached
@@ -238,6 +239,12 @@ const AmbulanceDispatch = () => {
 
     return (
         <div className="min-h-screen bg-[#020617] text-white selection:bg-rose-500/30 overflow-x-hidden">
+            <MetaHead
+                title="Live 2-Minute Emergency Ambulance Dispatch | Sehaat Saathi Rapid Dispatch Network"
+                description="Live GPS tracking, AI Emergency Triage, and Instant 2-Minute Ambulance Dispatch across Bihar and India. Real-time driver pairing, vitals sync, and hospital bed reservation."
+                keywords="Live Ambulance Dispatch Bihar, Instant 2-Min Ambulance Booking, Sehaat Saathi Ambulance Dispatch, Sehat Sathi Emergency Live Tracking, ICU Ambulance Dispatch Madhubani Patna"
+                canonicalUrl="https://sehaatsaathi.com/ambulance-dispatch"
+            />
             {/* Header */}
             <header className="fixed top-0 left-0 w-full z-50 bg-[#020617]/80 backdrop-blur-xl border-b border-white/5 px-6 py-4">
                 <div className="container mx-auto flex justify-between items-center">

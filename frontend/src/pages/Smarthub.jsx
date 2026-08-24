@@ -7,6 +7,12 @@ import {
 } from "react-icons/bs";
 import { MdFitnessCenter } from "react-icons/md";
 import useRecordActivity from '../hooks/useRecordActivity';
+import MetaHead from '../components/SEO/MetaHead';
+import SEOKeywordIsland from '../components/SEO/SEOKeywordIsland';
+import AmbulanceSEOIsland from '../components/SEO/AmbulanceSEOIsland';
+import BloodBankSEOIsland from '../components/SEO/BloodBankSEOIsland';
+import DoctorBookingSEOIsland from '../components/SEO/DoctorBookingSEOIsland';
+import VideoConsultSEOIsland from '../components/SEO/VideoConsultSEOIsland';
 
 const Smarthub = () => {
     const { recordActivity } = useRecordActivity();
@@ -19,6 +25,17 @@ const Smarthub = () => {
 
     return (
         <div className="min-h-screen bg-gray-50 pb-20">
+          <MetaHead
+            title="Sehaat Saathi Smart Hub | Doctor Video Calling App, Ambulance & Blood Bank India"
+            description="Sehaat Saathi Smart Hub (Sehat Sathi) — India's #1 digital healthcare portal. Doctor Video Calling Booking App, offline doctor booking, 24/7 Emergency Ambulance Booking, blood bank network, and home nursing care across Bihar and India. Founded by Abhishek Kumar."
+            keywords="doctor video caaling booking app, doctor video calling booking app, Sehaat Saathi doctor booking App, sehat sathi doctor video call booking App, Sehaat Saathi Offline Doctor Booking app, sehatt sehaathi doctor video caalling Booking, Sehaat Saathi Smart Hub, Sehat Sathi Smart Hub, Sehaat Saathi Emergency Ambulance Booking Services, Sehat Sathi Ambulance Booking, Sehaat Saathi Blood Bank, Sehat Sathi Blood Bank, Sehaat Saathi OPD Booking, Sehaat Saathi App, Sehat Sathi App, Sehaat Saathi Bihar, Sehat Sathi Madhubani Patna Darbhanga, Abhishek Kumar Sehaat Saathi"
+            canonicalUrl="https://sehaatsaathi.com/smarthub"
+          />
+          <SEOKeywordIsland />
+          <AmbulanceSEOIsland />
+          <BloodBankSEOIsland />
+          <DoctorBookingSEOIsland />
+          <VideoConsultSEOIsland />
             {/* Hero Section */}
             <div
                 className="text-gray-800 pt-3 sm:pt-14 pb-10 sm:pb-24 px-3 sm:px-10 mb-8 sm:mb-10 overflow-hidden relative tri-color-mesh rounded-b-[50px] sm:rounded-b-[80px] shadow-2xl"

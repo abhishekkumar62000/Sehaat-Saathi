@@ -1,6 +1,7 @@
 import { BsTelephone, BsEnvelope, BsGeoAlt, BsClock, BsSend } from "react-icons/bs";
 import bgImg from "../assets/images/bgImg.png";
 import contactImg from "../assets/images/home/contactImg.svg";
+import MetaHead from "../components/SEO/MetaHead";
 
 const Contact = () => {
   const contactInfo = [
@@ -36,6 +37,12 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-gray-50/50">
+      <MetaHead
+        title="Contact Sehaat Saathi | 24/7 Healthcare Support | Madhubani, Bihar India"
+        description="Contact Sehaat Saathi healthcare platform. Phone: +91-6200087830. Email: support@sehaatsaathi.com. Location: Bara Bazar Madhubani, Bihar. We provide 24/7 support for OPD booking, doctor consultation, and health emergencies across India."
+        keywords="Contact Sehaat Saathi, Sehaat Saathi Phone Number, Sehaat Saathi Email, Sehaat Saathi Bihar, Sehaat Saathi Support, Sehat Sathi Contact"
+        canonicalUrl="https://sehaatsaathi.com/contact"
+      />
       {/* Hero Header */}
       <section className="relative py-20 bg-gradient-to-r from-blue-900 to-[#1d7a6e] text-white">
         <div className="absolute inset-0 opacity-10" style={{ backgroundImage: `url(${bgImg})`, backgroundSize: 'cover' }}></div>

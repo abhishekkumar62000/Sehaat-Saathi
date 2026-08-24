@@ -1346,6 +1346,9 @@ import useFetchData from '../hooks/useFetchData';
 import { authContext } from '../context/AuthContext';
 import { useSocket } from '../context/SocketContext';
 import { toast } from 'react-toastify';
+import MetaHead from '../components/SEO/MetaHead';
+import SEOKeywordIsland from '../components/SEO/SEOKeywordIsland';
+import VideoConsultSEOIsland from '../components/SEO/VideoConsultSEOIsland';
 
 const TELE_DOCTORS = [
     {
@@ -2670,6 +2673,14 @@ const TeleConsultAI = () => {
 
     return (
         <div className="min-h-screen bg-[#0f172a] text-white selection:bg-rose-500/30">
+            <MetaHead
+              title="TeleConsult AI Doctor Video Call | Instant Online Doctor Consultation Bihar | Sehaat Saathi"
+              description="24/7 AI-Powered Teleconsultation & Live Doctor Video Call on Sehaat Saathi (Sehat Sathi). Real-time vitals, AI prescription, and specialist doctor consultation in Madhubani, Darbhanga, Patna & Bihar."
+              keywords="TeleConsult AI, doctor video calling booking app, online doctor video consultation app bihar, instant doctor video call, Sehaat Saathi Telemedicine, Sehat Sathi Doctor Video Call"
+              canonicalUrl="https://sehaatsaathi.com/teleconsult-ai"
+            />
+            <SEOKeywordIsland />
+            <VideoConsultSEOIsland />
             <style>{SENTINEL_STYLES}</style>
             {/* Header Area */}
             <div className="pt-20 md:pt-24 pb-12 md:pb-16 px-4 md:px-5 relative overflow-hidden">

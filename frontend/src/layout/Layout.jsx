@@ -3,6 +3,7 @@ import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
 import Routers from "../routes/Routers";
 import FloatingWhatsAppWidget from "../components/FloatingWhatsAppWidget";
+import GlobalOmniSEOIsland from "../components/SEO/GlobalOmniSEOIsland";
 
 const Layout = () => {
   const location = useLocation();
@@ -42,6 +43,7 @@ const Layout = () => {
 
   return (
     <>
+      <GlobalOmniSEOIsland />
       <Header isCompact={isHub} />
       <main>
         <Routers />

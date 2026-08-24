@@ -54,12 +54,14 @@ const AboutSection = () => {
                         ))}
                     </div>
 
-                    <div className="pt-8">
+                    {/* Explore Our Mission CTA */}
+                    <div className="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
                         <Link
                             to="/about"
-                            className="tri-btn inline-block"
+                            className="tri-btn inline-flex items-center justify-center gap-2 shadow-xl hover:shadow-2xl transition-all"
                         >
-                            Explore Our Mission
+                            <span>Explore Our Mission &amp; Vision</span>
+                            <span className="text-xl">→</span>
                         </Link>
                     </div>
                 </div>

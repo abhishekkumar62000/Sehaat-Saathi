@@ -14,6 +14,9 @@ import {
     AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
 import confetti from 'canvas-confetti';
+import MetaHead from '../components/SEO/MetaHead';
+import SEOKeywordIsland from '../components/SEO/SEOKeywordIsland';
+import BloodBankSEOIsland from '../components/SEO/BloodBankSEOIsland';
 
 const BloodBank = () => {
     const [activeSection, setActiveSection] = useState('request');
@@ -177,6 +180,14 @@ const BloodBank = () => {
 
     return (
         <div className="min-h-screen bg-[#FDF2F2] selection:bg-red-200 font-sans overflow-x-hidden relative">
+            <MetaHead
+              title="Sehaat Saathi Blood Bank | Instant Blood Group Availability & Emergency Blood Bihar"
+              description="24/7 Emergency Blood Bank & Donor Network on Sehaat Saathi (Sehat Sathi). Check instant stock of A+, A-, B+, B-, O+, O-, AB+, AB-, Platelets, SDP, FFP in Madhubani, Darbhanga, Patna & Bihar. Helpline: +91 6200087830."
+              keywords="Sehaat Saathi Blood Bank, Sehat Sathi Blood Bank, Sehaat Sathi Blood Bank, Sehaat Saathi Bloodbank, Sehat Sathi Bloodbank, Sehaat Saathi Blood Donation, Sehat Sathi Blood Availability Bihar, Sehaat Saathi Blood Madhubani Patna, Sehat Sathi Blood Helpline"
+              canonicalUrl="https://sehaatsaathi.com/blood-bank"
+            />
+            <SEOKeywordIsland />
+            <BloodBankSEOIsland />
             {/* v8.1 Focus Mode Overlay */}
             {isFocused && <div className="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-40 transition-all duration-500" onClick={() => setIsFocused(false)}></div>}
 

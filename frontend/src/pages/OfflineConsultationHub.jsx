@@ -19,6 +19,9 @@ import DoctorDetailsModal from './Doctors/DoctorDetailsModal';
 import BookingWizard from '../components/Booking/BookingWizard';
 import BookingPass from '../components/Booking/BookingPass';
 import offlineAdvImg from "../assets/offline_booking_adv.png";
+import MetaHead from "../components/SEO/MetaHead";
+import SEOKeywordIsland from "../components/SEO/SEOKeywordIsland";
+import DoctorBookingSEOIsland from "../components/SEO/DoctorBookingSEOIsland";
 
 const OfflineConsultationHub = () => {
     const [selectedDistrict, setSelectedDistrict] = useState('Madhubani');
@@ -376,6 +379,14 @@ const OfflineConsultationHub = () => {
 
     return (
         <div className="min-h-screen bg-slate-50 text-gray-900 font-sans selection:bg-[#FF9933]/30 overflow-x-hidden relative">
+            <MetaHead
+              title="Sehaat Saathi Doctor Booking App | Offline Doctor Booking & OPD Token Pass Bihar India"
+              description="Sehaat Saathi Doctor Booking App (Sehat Sathi Doctor Booking) — Book offline doctor consultations and hospital direct OPD token passes with zero queue waiting time. 500+ verified specialist doctors in Madhubani, Darbhanga, Patna & all Bihar districts. Helpline: +91 6200087830."
+              keywords="Sehaat Saathi doctor booking App, sehat sathi doctor booking App, Sehaat Saathi Offline Doctor Booking app, sehatt sehaathi offline doctor Booking, sehaat saathi doctor bboing app, sehaat saathi bihar doctor booking app, sehat sathi madhubani darbhanga doctor booking app, sehaat saathi patna doctor appointment app, Sehaat Saathi Doctor Booking, Sehat Sathi Doctor Booking, Sehaat Sathi OPD Booking, Sehat Sathi OPD Token, Sehaat Saathi Hospital Pass, Sehaat Saathi App, Sehat Sathi App, Abhishek Kumar Sehaat Saathi"
+              canonicalUrl="https://sehaatsaathi.com/offline-consultation"
+            />
+            <SEOKeywordIsland />
+            <DoctorBookingSEOIsland />
             {/* Cinematic Background */}
             <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
                 <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-[#FF9933]/5 rounded-full blur-[120px] animate-pulse"></div>
