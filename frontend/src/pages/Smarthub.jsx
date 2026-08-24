@@ -795,18 +795,18 @@ const FeatureRoadmapCard = ({ icon, title, desc, color, status, example, outstan
                 {desc}
             </p>
 
-            {/* Example Preview on Hover */}
+            {/* Example Preview - Always visible on mobile, hover on desktop */}
             {example && (
-                <div className="hidden group-hover:block animate-fade-in mb-4 sm:mb-6 p-3 sm:p-4 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
-                    <p className="text-[10px] font-black uppercase text-slate-400 mb-2 tracking-tighter">Live Example:</p>
-                    <div className="space-y-3">
-                        <div className="flex gap-2">
-                            <span className="text-xs font-black text-slate-700 flex-shrink-0">P:</span>
-                            <span className="text-xs text-slate-600 italic">"{example.patient}"</span>
+                <div className="block sm:hidden sm:group-hover:block animate-fade-in mb-3 sm:mb-6 p-2.5 sm:p-4 bg-slate-50/90 rounded-xl sm:rounded-2xl border border-dashed border-slate-300">
+                    <p className="text-[9px] sm:text-[10px] font-black uppercase text-slate-500 mb-1.5 tracking-tighter">Live Example:</p>
+                    <div className="space-y-1.5">
+                        <div className="flex gap-1.5">
+                            <span className="text-[11px] sm:text-xs font-black text-slate-700 shrink-0">P:</span>
+                            <span className="text-[11px] sm:text-xs text-slate-600 italic">"{example.patient}"</span>
                         </div>
-                        <div className="flex gap-2">
-                            <span className="text-xs font-black text-purple-600 flex-shrink-0">AI:</span>
-                            <span className="text-xs text-slate-600">"{example.ai}"</span>
+                        <div className="flex gap-1.5">
+                            <span className="text-[11px] sm:text-xs font-black text-purple-600 shrink-0">AI:</span>
+                            <span className="text-[11px] sm:text-xs text-slate-700 font-medium">"{example.ai}"</span>
                         </div>
                     </div>
                 </div>
