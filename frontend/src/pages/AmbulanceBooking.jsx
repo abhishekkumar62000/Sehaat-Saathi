@@ -420,23 +420,23 @@ const AmbulanceBooking = () => {
                             <p className="text-slate-200 text-xs sm:text-sm lg:text-base font-medium leading-relaxed">
                                 {t.bannerSubtitle}
                             </p>
-                            <div className="p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2 text-xs text-left">
-                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
-                                    <div className="p-2 bg-slate-900/80 rounded-lg border border-slate-800">
-                                        <span className="text-emerald-400 font-black text-[10px] uppercase block">📍 स्टेप 1 (लोकल गाँव व शहर)</span>
-                                        <p className="text-[11px] text-slate-300 font-medium">मधुबनी, राजनगर, खजौली, जयनगर, बेनीपट्टी व सभी 21 ब्लॉक</p>
+                            <div className="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2 text-xs text-left">
+                                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+                                    <div className="p-2 sm:p-2.5 bg-slate-900/80 rounded-lg sm:rounded-xl border border-slate-800 flex flex-col justify-between">
+                                        <span className="text-emerald-400 font-black text-[9px] sm:text-[10px] uppercase block">📍 स्टेप 1 (लोकल गाँव व शहर)</span>
+                                        <p className="text-[10px] sm:text-[11px] text-slate-300 font-medium leading-tight mt-1">मधुबनी, राजनगर, खजौली, जयनगर, बेनीपट्टी व 21 ब्लॉक</p>
                                     </div>
-                                    <div className="p-2 bg-slate-900/80 rounded-lg border border-slate-800">
-                                        <span className="text-amber-400 font-black text-[10px] uppercase block">🚑 स्टेप 2 (रीजनल हब)</span>
-                                        <p className="text-[11px] text-slate-300 font-medium">दरभंगा (DMCH व सभी अस्पताल)</p>
+                                    <div className="p-2 sm:p-2.5 bg-slate-900/80 rounded-lg sm:rounded-xl border border-slate-800 flex flex-col justify-between">
+                                        <span className="text-amber-400 font-black text-[9px] sm:text-[10px] uppercase block">🚑 स्टेप 2 (रीजनल हब)</span>
+                                        <p className="text-[10px] sm:text-[11px] text-slate-300 font-medium leading-tight mt-1">दरभंगा (DMCH व सभी अस्पताल)</p>
                                     </div>
-                                    <div className="p-2 bg-slate-900/80 rounded-lg border border-slate-800">
-                                        <span className="text-cyan-400 font-black text-[10px] uppercase block">🏥 स्टेप 3 (स्टेट कैपिटल)</span>
-                                        <p className="text-[11px] text-slate-300 font-medium">पटना (PMCH / AIIMS / IGIMS)</p>
+                                    <div className="p-2 sm:p-2.5 bg-slate-900/80 rounded-lg sm:rounded-xl border border-slate-800 flex flex-col justify-between">
+                                        <span className="text-cyan-400 font-black text-[9px] sm:text-[10px] uppercase block">🏥 स्टेप 3 (स्टेट कैपिटल)</span>
+                                        <p className="text-[10px] sm:text-[11px] text-slate-300 font-medium leading-tight mt-1">पटना (PMCH / AIIMS / IGIMS)</p>
                                     </div>
-                                    <div className="p-2 bg-slate-900/80 rounded-lg border border-slate-800">
-                                        <span className="text-rose-400 font-black text-[10px] uppercase block">✈️ स्टेप 4 (नेशनल एक्सप्रेस)</span>
-                                        <p className="text-[11px] text-slate-300 font-medium">नई दिल्ली (AIIMS - 24/7 आईसीयू)</p>
+                                    <div className="p-2 sm:p-2.5 bg-slate-900/80 rounded-lg sm:rounded-xl border border-slate-800 flex flex-col justify-between">
+                                        <span className="text-rose-400 font-black text-[9px] sm:text-[10px] uppercase block">✈️ स्टेप 4 (नेशनल एक्सप्रेस)</span>
+                                        <p className="text-[10px] sm:text-[11px] text-slate-300 font-medium leading-tight mt-1">नई दिल्ली (AIIMS - 24/7 आईसीयू)</p>
                                     </div>
                                 </div>
                             </div>
