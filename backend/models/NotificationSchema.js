@@ -10,7 +10,7 @@ const notificationSchema = new mongoose.Schema(
     recipientModel: {
       type: String,
       required: true,
-      enum: ["User", "Doctor"],
+      enum: ["User", "Doctor", "Hospital"],
     },
     sender: {
       type: mongoose.Schema.Types.ObjectId,
@@ -18,7 +18,7 @@ const notificationSchema = new mongoose.Schema(
     },
     senderModel: {
       type: String,
-      enum: ["User", "Doctor"],
+      enum: ["User", "Doctor", "Hospital"],
     },
     message: {
       type: String,

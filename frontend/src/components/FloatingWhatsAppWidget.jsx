@@ -30,7 +30,7 @@ const FloatingWhatsAppWidget = () => {
   };
 
   return (
-    <div className="fixed bottom-28 right-8 z-[120] font-sans flex flex-col items-end">
+    <div className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-[120] font-sans flex flex-col items-end">
       <AnimatePresence>
         {/* Chat Window Popup */}
         {isOpen && (

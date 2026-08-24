@@ -1,7 +1,8 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { formatDate } from "../../utils/formatDate";
 import { BASE_URL } from "../../config";
 import { toast } from "react-toastify";
+import { useSocket } from "../../context/SocketContext";
 import {
   FaStar, FaRegStar, FaThumbsUp, FaReply, FaCheckCircle,
   FaFilter, FaSearch, FaSyncAlt, FaUserCheck, FaAward, FaQuoteLeft
@@ -16,6 +17,31 @@ const HospitalReviews = ({ hospitalData }) => {
   const [replyingId, setReplyingId] = useState(null);
   const [replyText, setReplyText] = useState("");
   const [replies, setReplies] = useState({});
+
+  const { socket } = useSocket();
+
+  // Real-Time Socket Listener for incoming patient reviews
+  useEffect(() => {
+    if (!socket) return;
+    const handleNewReview = (newReview) => {
+      toast.info(`⭐ Real-Time Alert: New Patient Review Received from ${newReview.user?.name || "Patient"}!`);
+      setReviewsList(prev => [newReview, ...prev]);
+    };
+
+    socket.on("NEW_REVIEW", handleNewReview);
+    socket.on("GLOBAL_NEW_REVIEW", handleNewReview);
+    if (hospitalData?._id) {
+      socket.on(`NEW_REVIEW_${hospitalData._id}`, handleNewReview);
+    }
+
+    return () => {
+      socket.off("NEW_REVIEW", handleNewReview);
+      socket.off("GLOBAL_NEW_REVIEW", handleNewReview);
+      if (hospitalData?._id) {
+        socket.off(`NEW_REVIEW_${hospitalData._id}`, handleNewReview);
+      }
+    };
+  }, [socket, hospitalData]);
 
   // Real-time rating statistics calculation
   const stats = useMemo(() => {

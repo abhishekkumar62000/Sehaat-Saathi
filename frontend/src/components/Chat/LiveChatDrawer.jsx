@@ -27,10 +27,31 @@ const LiveChatDrawer = ({ partner, bookingId, onClose }) => {
 
   const messagesEndRef = useRef(null);
 
-  const partnerId = partner?._id || partner?.id;
-  const partnerName = partner?.name || partner?.patientName || "User";
-  const partnerPhoto = partner?.photo;
-  const partnerRole = partner?.role || (partner?.specialization ? "Doctor" : "Patient");
+  const extractPartnerId = (p) => {
+    if (!p) return null;
+    if (typeof p === "string") return p;
+    if (p._id) return typeof p._id === "object" ? p._id.toString() : p._id;
+    if (p.id) return typeof p.id === "object" ? p.id.toString() : p.id;
+    if (p.partner) return extractPartnerId(p.partner);
+    if (p.user) return extractPartnerId(p.user);
+    return null;
+  };
+
+  const extractPartnerName = (p) => {
+    if (!p) return "Hospital Doctor";
+    if (typeof p === "string") return "Hospital Doctor";
+    if (p.name && p.name !== "User" && p.name !== "Contact") return p.name;
+    if (p.hospitalName) return p.hospitalName;
+    if (p.patientName) return p.patientName;
+    if (p.doctorName) return p.doctorName;
+    if (p.partner) return extractPartnerName(p.partner);
+    return "Hospital Doctor";
+  };
+
+  const partnerId = extractPartnerId(partner);
+  const partnerName = extractPartnerName(partner);
+  const partnerPhoto = partner?.photo || partner?.partner?.photo;
+  const partnerRole = partner?.role || (partner?.hospitalName || partner?.isHospitalNode ? "Hospital Doctor" : partner?.specialization ? "Doctor" : (user?.role === "patient" || user?.role === "user" ? "Hospital Doctor" : "Patient"));
 
   // Fetch Conversation History
   useEffect(() => {
@@ -60,20 +81,28 @@ const LiveChatDrawer = ({ partner, bookingId, onClose }) => {
 
   // Real-Time Socket Listener for incoming messages
   useEffect(() => {
-    if (!socket) return;
+    if (!socket || !partnerId) return;
 
     const onNewMessage = (newMsg) => {
-      // Check if message belongs to current partner conversation
-      const msgSenderId = newMsg.sender?._id || newMsg.sender;
-      if (msgSenderId === partnerId || newMsg.recipient === partnerId) {
-        setMessages(prev => [...prev, newMsg]);
-      } else {
-        toast.info(`💬 New message from ${newMsg.sender?.name || "Patient"}`);
+      const msgSenderId = (newMsg.sender?._id || newMsg.sender)?.toString();
+      const msgRecipientId = (newMsg.recipient?._id || newMsg.recipient)?.toString();
+      const pId = partnerId?.toString();
+
+      if (msgSenderId === pId || msgRecipientId === pId) {
+        setMessages(prev => {
+          if (prev.some(m => m._id === newMsg._id)) return prev;
+          return [...prev, newMsg];
+        });
       }
     };
 
     socket.on("NEW_MESSAGE", onNewMessage);
-    return () => socket.off("NEW_MESSAGE", onNewMessage);
+    socket.on("GLOBAL_NEW_MESSAGE", onNewMessage);
+
+    return () => {
+      socket.off("NEW_MESSAGE", onNewMessage);
+      socket.off("GLOBAL_NEW_MESSAGE", onNewMessage);
+    };
   }, [socket, partnerId]);
 
   // Fallback Polling (crucial for Vercel Serverless where WebSockets might fail)
@@ -132,9 +161,19 @@ const LiveChatDrawer = ({ partner, bookingId, onClose }) => {
   // Send Message
   const handleSend = async (e) => {
     e.preventDefault();
-    if (!inputText.trim() && !attachment) return;
+    if (!partnerId) {
+      return toast.error("Recipient contact ID unavailable!");
+    }
 
-    const recipientModel = user?.role === "doctor" ? "User" : "Doctor";
+    let recipientModel = "User";
+    if (user?.role === "user" || user?.role === "patient") {
+      recipientModel = (partner?.hospitalName || partner?.isHospitalNode || partnerRole === "Hospital") ? "Hospital" : "Doctor";
+    } else if (user?.role === "hospital") {
+      recipientModel = "User";
+    } else if (user?.role === "doctor") {
+      recipientModel = "User";
+    }
+
     const payload = {
       recipientId: partnerId,
       recipientModel,

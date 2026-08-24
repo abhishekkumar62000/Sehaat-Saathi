@@ -7,7 +7,24 @@ import Notification from "../models/NotificationSchema.js";
 
 export const getCheckoutSession = async (req, res) => {
   try {
-    const doctor = await Doctor.findById(req.params.doctorId);
+    let doctor = await Doctor.findById(req.params.doctorId);
+    if (!doctor) {
+      const hospital = await Hospital.findById(req.params.doctorId);
+      if (hospital) {
+        doctor = {
+          _id: hospital._id,
+          id: hospital._id,
+          name: hospital.hospitalName,
+          bio: hospital.bio || hospital.tagline || "Hospital OPD",
+          photo: hospital.photo || "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+          ticketPrice: hospital.consultationFee || 500,
+          hospital: hospital._id
+        };
+      } else {
+        return res.status(404).json({ success: false, message: "Doctor or Hospital not found" });
+      }
+    }
+
     const user = await User.findById(req.userId);
     const io = req.app.get("io");
 
@@ -24,10 +41,10 @@ export const getCheckoutSession = async (req, res) => {
         {
           price_data: {
             currency: "usd", // changed for testing/general usage
-            unit_amount: doctor.ticketPrice * 100,
+            unit_amount: (doctor.ticketPrice || 500) * 100,
             product_data: {
               name: doctor.name,
-              description: doctor.bio,
+              description: doctor.bio || "OPD Consultation",
               images: [doctor.photo],
             },
           },
@@ -101,14 +118,28 @@ export const updateBookingStatus = async (req, res) => {
     }
 
     // Role-based verification (Doctor or Hospital admin)
-    if (booking.doctor._id.toString() !== req.userId && booking.hospital?.toString() !== req.userId && req.role !== "admin") {
-      return res.status(401).json({ success: false, message: "Unauthorized status toggle." });
+    const docId = booking.doctor?._id?.toString() || booking.doctor?.toString();
+    const hospId = booking.hospital?._id?.toString() || booking.hospital?.toString();
+    const isAuthorized = 
+      req.role === "admin" || 
+      req.role === "hospital" || 
+      (docId && docId === req.userId) || 
+      (hospId && hospId === req.userId);
+
+    if (!isAuthorized) {
+      // Check if user is linked to hospital document
+      const Hospital = (await import("../models/HospitalSchema.js")).default;
+      const hospitalDoc = await Hospital.findOne({ user: req.userId });
+      if (!hospitalDoc || (hospId && hospitalDoc._id.toString() !== hospId)) {
+        return res.status(401).json({ success: false, message: "Unauthorized status toggle." });
+      }
     }
 
     // Update status and timeline
     booking.status = status;
     if (rescheduleSuggestion) booking.rescheduleSuggestion = rescheduleSuggestion;
     
+    if (!booking.journeyTimeline) booking.journeyTimeline = [];
     booking.journeyTimeline.push({
       status,
       timestamp: new Date(),
@@ -119,21 +150,39 @@ export const updateBookingStatus = async (req, res) => {
 
     // Real-Time Notification to Patient
     if (io) {
-      io.to(booking.user._id.toString()).emit("STATUS_SYNC", {
-        bookingId: booking._id,
-        status,
-        message: message || `Your booking status has been updated to ${status}`,
-        doctorName: booking.doctor.name
-      });
+      const patientUserId = booking.user?._id?.toString() || booking.user?.toString();
+      const providerDisplayName = booking.doctor?.name || booking.hospital?.hospitalName || "Healthcare Provider";
 
-      // Specific logic for Queue Entry
-      if (status === "PATIENT_ARRIVED") {
-        io.to(booking.hospital?._id.toString() || booking.doctor._id.toString()).emit("QUEUE_SYNC", {
+      if (patientUserId) {
+        io.to(patientUserId).emit("STATUS_SYNC", {
           bookingId: booking._id,
-          patientName: booking.user.name,
-          type: "ARRIVAL"
+          status,
+          message: message || `Your booking status has been updated to ${status}`,
+          doctorName: providerDisplayName
         });
       }
+
+      // Specific logic for Queue Entry & Broadcasts
+      const targetRoom = booking.hospital?._id?.toString() || booking.doctor?._id?.toString() || booking.hospital?.toString();
+      if (targetRoom) {
+        io.to(targetRoom).emit("QUEUE_SYNC", {
+          bookingId: booking._id,
+          patientName: booking.user?.name || booking.patientName || "Patient",
+          status: status,
+          type: status === "PATIENT_ARRIVED" ? "ARRIVAL" : "UPDATE"
+        });
+        io.to(targetRoom).emit("BOOKING_UPDATE_SIGNAL", {
+          bookingId: booking._id,
+          status: status
+        });
+      }
+
+      // Global socket broadcast for active dashboards
+      io.emit("STATUS_SYNC", {
+        bookingId: booking._id,
+        status,
+        patientName: booking.user?.name || booking.patientName || "Patient"
+      });
     }
 
     res.status(200).json({
@@ -255,11 +304,16 @@ export const getAvailableSlots = async (req, res) => {
     const dayName = days[requestedDate.getDay()];
 
     // Find schedule for that day
-    const daySchedule = isHospital
+    let daySchedule = isHospital
       ? provider.weeklySchedule?.find(a => a.day?.toLowerCase() === dayName.toLowerCase())
       : provider.availability?.find(a => a.day?.toLowerCase() === dayName.toLowerCase());
     
-    if (!daySchedule || daySchedule.isAvailable === false) {
+    if (!daySchedule) {
+      // Default OPD fallback schedule for hospitals/doctors
+      daySchedule = { isAvailable: true, startTime: "09:00 AM", endTime: "05:00 PM", slotDuration: 30 };
+    }
+
+    if (daySchedule.isAvailable === false) {
       return res.status(200).json({ success: true, message: "No availability on this day", data: [] });
     }
 
@@ -382,16 +436,27 @@ export const createOfflineBooking = async (req, res) => {
     await newNotification.save();
 
     if (io) {
-      io.to(provider._id.toString()).emit("booking:new", {
+      const alertPayload = {
         message: newNotification.message,
-        booking: booking
-      });
-      if (!isHospital && provider.hospital) {
-        io.to(provider.hospital.toString()).emit("booking:new", {
-          message: `Doctor ${provider.name} received an offline appointment request.`,
-          booking: booking
-        });
+        booking: booking,
+        patientName: user.name || patientName || "Patient"
+      };
+
+      io.to(provider._id.toString()).emit("booking:new", alertPayload);
+      io.to(provider._id.toString()).emit("NEW_BOOKING_ALERT", alertPayload);
+      
+      if (provider.user) {
+        io.to(provider.user.toString()).emit("booking:new", alertPayload);
+        io.to(provider.user.toString()).emit("NEW_BOOKING_ALERT", alertPayload);
       }
+
+      if (!isHospital && provider.hospital) {
+        io.to(provider.hospital.toString()).emit("booking:new", alertPayload);
+        io.to(provider.hospital.toString()).emit("HOSPITAL_SYNC", alertPayload);
+      }
+
+      // Broadcast event globally for all active hospital command centers
+      io.emit("NEW_BOOKING_ALERT", alertPayload);
     }
 
     res.status(201).json({

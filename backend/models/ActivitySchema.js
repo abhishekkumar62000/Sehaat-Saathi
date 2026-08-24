@@ -9,7 +9,7 @@ const ActivitySchema = new mongoose.Schema({
   userModel: {
     type: String,
     required: true,
-    enum: ["User", "Doctor"],
+    enum: ["User", "Doctor", "Hospital"],
   },
   featureName: {
     type: String,

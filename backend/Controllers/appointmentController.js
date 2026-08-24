@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 import Appointment from "../models/Appointment.js";
 import User from "../models/UserSchema.js";
 import Doctor from "../models/DoctorSchema.js";
+import Hospital from "../models/HospitalSchema.js";
+import Booking from "../models/BookingSchema.js";
 import Notification from "../models/NotificationSchema.js";
 import Activity from "../models/ActivitySchema.js";
 
@@ -11,8 +13,8 @@ export const bookAppointment = async (req, res) => {
     doctorId, 
     date, 
     timeSlot, 
-    paymentMethod, 
-    symptoms, 
+    paymentMethod = 'Pay at Hospital', 
+    symptoms = 'OPD Physical Visit', 
     hospitalId, 
     patientName, 
     ticketPrice,
@@ -23,75 +25,140 @@ export const bookAppointment = async (req, res) => {
   const io = req.app.get("io");
 
   try {
-    console.log("Creating new appointment for patient:", patientId);
+    console.log("Creating new appointment/booking for patient:", patientId, "Provider Target:", doctorId);
 
-    const doctor = await Doctor.findById(doctorId);
+    let doctor = await Doctor.findById(doctorId);
+    let hospital = null;
+    let isHospitalNode = false;
+
     if (!doctor) {
-      return res.status(404).json({ success: false, message: "Doctor not found" });
+      // Check if target is a registered Hospital
+      hospital = await Hospital.findById(doctorId);
+      if (!hospital && hospitalId) {
+        hospital = await Hospital.findById(hospitalId);
+      }
+
+      if (hospital) {
+        isHospitalNode = true;
+        // Create virtual provider doc representation for Hospital node
+        doctor = {
+          _id: hospital._id,
+          name: hospital.hospitalName,
+          specialization: hospital.specializations?.[0] || hospital.tagline || "Multi-Specialty Hospital",
+          hospital: hospital._id,
+          photo: hospital.photo || "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+          ticketPrice: ticketPrice || hospital.consultationFee || 500
+        };
+      } else {
+        return res.status(404).json({ success: false, message: "Doctor or Hospital node not found" });
+      }
     }
 
     const bookingToken = `SS-${Math.floor(1000 + Math.random() * 9000)}`;
-    const isHospitalIdValid = mongoose.Types.ObjectId.isValid(hospitalId);
+    const effectiveHospitalId = isHospitalNode ? hospital._id : (hospitalId && mongoose.Types.ObjectId.isValid(hospitalId) ? hospitalId : doctor.hospital);
 
+    // 1. Create Appointment Record
     const appointment = new Appointment({
       patient: patientId,
-      patientName: patientName,
-      doctor: doctorId,
-      hospital: isHospitalIdValid ? hospitalId : undefined,
-      hospitalName: !isHospitalIdValid ? hospitalId : undefined,
-      date,
-      timeSlot,
-      symptoms,
-      paymentMethod,
-      ticketPrice,
+      patientName: patientName || "Patient",
+      doctor: isHospitalNode ? hospital._id : doctor._id,
+      hospital: effectiveHospitalId,
+      hospitalName: isHospitalNode ? hospital.hospitalName : (doctor.hospitalName || "Hospital OPD"),
+      date: date || new Date().toISOString().split('T')[0],
+      timeSlot: timeSlot || "10:00 AM",
+      symptoms: symptoms || "OPD Consultation",
+      paymentMethod: paymentMethod === 'online' || paymentMethod === 'Online Payment' ? 'online' : 'cod',
+      ticketPrice: ticketPrice || doctor.ticketPrice || 500,
       bookingToken,
       appointmentType,
     });
 
     await appointment.save();
 
-    console.log("Appointment saved successfully! Count: 1");
+    // 2. Create parallel Booking Record for Hospital Command Center Dashboard sync
+    const booking = new Booking({
+      user: patientId,
+      doctor: isHospitalNode ? hospital._id : doctor._id,
+      hospital: effectiveHospitalId,
+      ticketPrice: String(ticketPrice || doctor.ticketPrice || 500),
+      status: "REQUESTED",
+      isPaid: paymentMethod === "Online Payment" || paymentMethod === "online",
+      appointmentDate: date || new Date().toISOString().split('T')[0],
+      appointmentTime: timeSlot || "10:00 AM",
+      patientName: patientName || "Patient",
+      symptoms: symptoms || "OPD Consultation",
+      bookingMode: "offline",
+      consultationType: "First Visit",
+      paymentMethod: paymentMethod === 'online' || paymentMethod === 'Online Payment' ? 'Online Payment' : 'Pay at Hospital',
+      tokenNumber: bookingToken,
+      qrCode: `DATA:${appointment._id}|${bookingToken}|${patientId}`
+    });
 
-    // Emit socket event: Real-time update for Doctor
+    await booking.save();
+
+    console.log("Appointment and Booking saved successfully! Token:", bookingToken);
+
+    // Emit Real-time WebSockets
     if (io) {
-      io.to(doctorId).emit("new-booking", appointment);
-      console.log(`Socket signal sent: new-booking to Doctor ${doctorId}`);
+      const alertPayload = {
+        message: `New offline appointment request from ${patientName || 'Patient'}`,
+        booking: booking,
+        appointment: appointment,
+        patientName: patientName || "Patient",
+        bookingToken
+      };
+
+      const targetRoom = isHospitalNode ? hospital._id.toString() : doctor._id.toString();
+      
+      io.to(targetRoom).emit("new-booking", alertPayload);
+      io.to(targetRoom).emit("NEW_BOOKING_ALERT", alertPayload);
+      io.to(targetRoom).emit("booking:new", alertPayload);
+
+      if (effectiveHospitalId) {
+        io.to(effectiveHospitalId.toString()).emit("HOSPITAL_SYNC", alertPayload);
+        io.to(effectiveHospitalId.toString()).emit("NEW_BOOKING_ALERT", alertPayload);
+        io.to(effectiveHospitalId.toString()).emit("booking:new", alertPayload);
+      }
+
+      // Global broadcast for hospital dashboard listeners
+      io.emit("NEW_BOOKING_ALERT", alertPayload);
     }
 
-    // --- Neural Persistence Layer: Always Store ---
-    // 1. Create Notification for Doctor
-    await new Notification({
-      recipient: doctorId,
-      recipientModel: "Doctor",
-      sender: patientId,
-      senderModel: "User",
-      message: `🔔 Pulse Alert: New ${appointmentType === 'teleconsult' ? 'Instant Video' : 'Offline'} consultation request from patient.`,
-      actionType: "NEW_BOOKING",
-      bookingId: appointment._id
-    }).save();
+    // --- Neural Persistence Layer (Safeguarded) ---
+    try {
+      const recipientId = isHospitalNode ? hospital._id : doctor._id;
+      const recipientModel = isHospitalNode ? "Hospital" : "Doctor";
 
-    // 2. Log Activity for Patient
-    await new Activity({
-      userId: patientId,
-      userModel: "User",
-      featureName: appointmentType === 'teleconsult' ? "Live Tele-Consult" : "Offline Consultation",
-      action: `${appointmentType === 'teleconsult' ? 'Instant Video session' : 'Physical Visit'} with ${doctor.name} (Token: ${bookingToken})`,
-      path: appointmentType === 'teleconsult' ? "/tele-consult" : "/offline-consultation"
-    }).save();
+      await new Notification({
+        recipient: recipientId,
+        recipientModel: recipientModel,
+        sender: patientId,
+        senderModel: "User",
+        message: `🔔 New consultation request from ${patientName || 'Patient'} (Token: ${bookingToken}).`,
+        actionType: "NEW_BOOKING",
+        bookingId: appointment._id
+      }).save();
 
-    // 3. Log Activity for Doctor
-    await new Activity({
-      userId: doctorId,
-      userModel: "Doctor",
-      featureName: "Appointment Matrix",
-      action: `Incoming neural record: ${appointmentType === 'teleconsult' ? 'Emergency Video' : 'Offline'} booking from ${patientName || 'Patient'}`,
-      path: "/doctors/profile/me"
-    }).save();
+      await new Activity({
+        userId: patientId,
+        userModel: "User",
+        featureName: "Offline Consultation",
+        action: `Physical Visit with ${doctor.name} (Token: ${bookingToken})`,
+        path: "/offline-consultation"
+      }).save();
+    } catch (notifErr) {
+      console.warn("Non-critical notification/activity logging warning:", notifErr.message);
+    }
 
     res.status(200).json({
       success: true,
       message: "Appointment booked successfully",
-      data: appointment,
+      data: {
+        ...appointment._doc,
+        bookingToken,
+        tokenNumber: bookingToken,
+        paymentStatus: booking.isPaid ? 'paid' : 'unpaid'
+      },
     });
   } catch (error) {
     console.error("Error booking appointment:", error);

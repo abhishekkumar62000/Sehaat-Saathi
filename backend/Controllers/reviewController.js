@@ -48,6 +48,18 @@ export const createReview = async (req, res) => {
       if (targetId) {
         io.to(targetId.toString()).emit("NEW_REVIEW", populatedReview);
         io.emit(`NEW_REVIEW_${targetId}`, populatedReview);
+        io.emit("GLOBAL_NEW_REVIEW", populatedReview);
+
+        if (req.body.hospital) {
+          try {
+            const hDoc = await Hospital.findById(req.body.hospital);
+            if (hDoc && hDoc.user) {
+              io.to(hDoc.user.toString()).emit("NEW_REVIEW", populatedReview);
+            }
+          } catch (e) {
+            // silent socket fallback
+          }
+        }
       }
     }
 

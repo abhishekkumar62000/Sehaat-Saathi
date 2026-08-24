@@ -97,21 +97,57 @@ export const deleteDoctor = async (req, res) => {
   }
 };
 
-// get_single_Doctor controller
+// get_single_Doctor controller (Supports both Doctor and Hospital Node lookups)
 export const getSingleDoctor = async (req, res) => {
   const id = req.params.id;
   try {
-    const doctor = await Doctor.findById(id)
+    let doctor = await Doctor.findById(id)
       .populate("reviews")
       .select("-password");
 
+    if (!doctor) {
+      // Fallback lookup in Hospital collection
+      const Hospital = (await import("../models/HospitalSchema.js")).default;
+      const hospital = await Hospital.findById(id).populate("reviews");
+      if (hospital) {
+        doctor = {
+          _id: hospital._id,
+          id: hospital._id,
+          name: hospital.hospitalName,
+          specialization: hospital.specializations?.[0] || hospital.tagline || "Multi-Specialty Hospital",
+          specialty: hospital.specializations?.[0] || hospital.tagline || "Multi-Specialty Hospital",
+          hospital: hospital.hospitalName,
+          hospitalName: hospital.hospitalName,
+          hospitalType: hospital.hospitalType || "Private Hospital",
+          photo: hospital.photo || "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+          ticketPrice: hospital.consultationFee || 500,
+          fee: hospital.consultationFee || 500,
+          district: hospital.district || hospital.city || "Patna",
+          city: hospital.city || hospital.district || "Patna",
+          address: hospital.address,
+          contactNumber: hospital.contactNumber,
+          isHospitalNode: true,
+          isLive: hospital.isLive,
+          weeklySchedule: hospital.weeklySchedule || [],
+          unavailabilityDates: hospital.unavailabilityDates || [],
+          capacityDetails: hospital.capacityDetails,
+          doctorRoster: hospital.doctorRoster || [],
+          reviews: hospital.reviews || [],
+          averageRating: hospital.averageRating || 5.0,
+          bio: hospital.bio || hospital.tagline || "Multi-Specialty Healthcare Facility"
+        };
+      } else {
+        return res.status(404).json({ success: false, message: "Doctor or Hospital node not found" });
+      }
+    }
+
     res.status(200).json({
       success: true,
-      message: "Successfully got a Doctor",
+      message: "Successfully retrieved provider node",
       data: doctor,
     });
   } catch (error) {
-    res.status(404).json({ success: false, message: "Doctor not found" });
+    res.status(404).json({ success: false, message: "Doctor or Hospital node not found" });
   }
 };
 

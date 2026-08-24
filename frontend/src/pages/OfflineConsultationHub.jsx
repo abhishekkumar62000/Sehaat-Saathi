@@ -219,10 +219,23 @@ const OfflineConsultationHub = () => {
             });
         };
 
+        const handleHospitalProfileUpdated = (updatedHosp) => {
+            setHospitalsList(prev => {
+                const exists = prev.some(h => h._id === updatedHosp._id);
+                if (exists) {
+                    return prev.map(h => h._id === updatedHosp._id ? updatedHosp : h);
+                }
+                return [updatedHosp, ...prev];
+            });
+            toast.info(`🏥 ${updatedHosp.hospitalName || "Hospital"} is now LIVE on network!`, { autoClose: 3000 });
+        };
+
         socket.on("doctor-availability-updated", handleRealtimeAvailability);
+        socket.on("hospital-profile-updated", handleHospitalProfileUpdated);
 
         return () => {
             socket.off("doctor-availability-updated", handleRealtimeAvailability);
+            socket.off("hospital-profile-updated", handleHospitalProfileUpdated);
         };
     }, [socket]);
 
@@ -253,7 +266,10 @@ const OfflineConsultationHub = () => {
             registration: doc.licenseNumber || "Verified",
             photo: doc.photo || "https://api.uifaces.co/our-content/donated/xoneh_u5.jpg"
         }));
-        const mappedLiveHospitals = (hospitalsList || []).filter(hosp => hosp.isLive).map(hosp => ({
+
+        const liveHospitalsArray = (hospitalsList || []).filter(hosp => hosp.isLive);
+
+        const mappedLiveHospitals = liveHospitalsArray.map(hosp => ({
             id: hosp._id,
             name: hosp.hospitalName || "Registered Hospital",
             degree: hosp.tagline || "Multi-Specialty Hospital",
@@ -265,7 +281,7 @@ const OfflineConsultationHub = () => {
             languagesSpoken: ["Hindi", "English", "Bhojpuri"],
             inHouseFacilities: hosp.facilities || ["Emergency", "Pharmacy", "Diagnostics"],
             acceptsEmergency: hosp.acceptsEmergency !== undefined ? hosp.acceptsEmergency : true,
-            acceptsAyushmanBharat: hosp.acceptsAyushmanBharat || hosp.acceptsAyushmanBharat === undefined, // default true / as registered
+            acceptsAyushmanBharat: hosp.acceptsAyushmanBharat || hosp.acceptsAyushmanBharat === undefined,
             district: hosp.district || hosp.city || "Patna",
             area: hosp.city || hosp.address || "Urban",
             fee: hosp.consultationFee || 500,
@@ -290,6 +306,44 @@ const OfflineConsultationHub = () => {
             bio: hosp.bio || hosp.tagline || ""
         }));
 
+        // Map doctor roster from registered live hospitals into individual doctor cards
+        const mappedRosterDoctors = [];
+        liveHospitalsArray.forEach(hosp => {
+            if (hosp.doctorRoster && hosp.doctorRoster.length > 0) {
+                hosp.doctorRoster.forEach((doc, idx) => {
+                    mappedRosterDoctors.push({
+                        id: `HOSP-DOC-${hosp._id}-${idx}`,
+                        name: doc.name,
+                        degree: doc.qualification || "MBBS",
+                        experience: doc.experience || "5+ Years",
+                        specialty: doc.specialization || "General Medicine",
+                        hospital: hosp.hospitalName,
+                        hospitalType: hosp.hospitalType === "Private" ? "Private Hospital" : "Government Hospital",
+                        gender: "All",
+                        languagesSpoken: ["Hindi", "English"],
+                        inHouseFacilities: hosp.facilities || ["Emergency"],
+                        acceptsEmergency: hosp.acceptsEmergency !== undefined ? hosp.acceptsEmergency : true,
+                        acceptsAyushmanBharat: hosp.acceptsAyushmanBharat || false,
+                        district: hosp.district || hosp.city || "Madhubani",
+                        area: hosp.address || "OPD",
+                        fee: doc.fee || hosp.consultationFee || 500,
+                        rating: 4.9,
+                        distance: "Live OPD",
+                        availability: hosp.weeklySchedule || [],
+                        unavailabilityDates: hosp.unavailabilityDates || [],
+                        rushStatus: "Low",
+                        transparencyScore: 98,
+                        trustScore: 99,
+                        registration: "Verified Hospital Staff",
+                        photo: doc.photo || "https://api.uifaces.co/our-content/donated/xoneh_u5.jpg",
+                        opdTime: doc.opdTime || "10:00 AM - 2:00 PM",
+                        opdDays: doc.opdDays || "Mon-Sat",
+                        parentHospitalId: hosp._id
+                    });
+                });
+            }
+        });
+
         const fallbackDoctors = biharHealthcareDb.filter(staticDoc => {
             const exists = mappedLiveDoctors.some(liveDoc => 
                 liveDoc.name.toLowerCase().replace(/\s+/g, "") === staticDoc.name.toLowerCase().replace(/\s+/g, "")
@@ -297,7 +351,7 @@ const OfflineConsultationHub = () => {
             return !exists;
         });
         
-        return [...mappedLiveHospitals, ...mappedLiveDoctors, ...fallbackDoctors];
+        return [...mappedLiveHospitals, ...mappedRosterDoctors, ...mappedLiveDoctors, ...fallbackDoctors];
     }, [doctorsList, hospitalsList]);
 
     const filteredDocs = combinedDb.filter(doc => (
@@ -772,9 +826,9 @@ const OfflineConsultationHub = () => {
                                     timeSlot: payload.timeSlot,
                                     paymentMethod: payload.paymentMethod === 'Online Payment' ? 'online' : 'cod',
                                     patientName: payload.patientName,
-                                    ticketPrice: selectedDoc.ticketPrice,
-                                    symptoms: payload.symptoms || "First Visit offline record entry.",
-                                    hospitalId: selectedDoc.hospital?._id || selectedDoc.hospital
+                                    ticketPrice: selectedDoc.fee || selectedDoc.ticketPrice || 500,
+                                    symptoms: payload.symptoms || "First Visit offline OPD record entry.",
+                                    hospitalId: selectedDoc.isHospitalNode ? (selectedDoc.id || selectedDoc._id) : (selectedDoc.hospital?._id || selectedDoc.hospital)
                                 })
                             });
                             
@@ -784,18 +838,26 @@ const OfflineConsultationHub = () => {
                                 throw new Error(result.message || "Failed to create appointment.");
                             }
 
-                            toast.success("Appointment securely recorded in the Unified Matrix!");
+                            toast.success("🏥 Appointment & Token Pass securely generated in real-time!");
+
+                            const generatedToken = result.data?.bookingToken || result.data?.tokenNumber || `SS-${Math.floor(1000 + Math.random() * 9000)}`;
 
                             const newPassDetails = {
                                 doctorId: selectedDoc.id || selectedDoc._id,
-                                doctorName: selectedDoc.name,
-                                hospital: selectedDoc.hospital,
-                                date: result.data.date,
-                                timeSlot: result.data.timeSlot,
-                                paymentMethod: result.data.paymentMethod === 'online' ? 'Online Payment' : 'Pay at Hospital',
-                                isPaid: result.data.paymentStatus === 'paid',
-                                tokenNumber: result.data.bookingToken,
-                                patientName: result.data.patientName || payload.patientName
+                                doctorName: selectedDoc.isHospitalNode ? `${selectedDoc.name} (OPD)` : selectedDoc.name,
+                                doctorSpecialty: selectedDoc.specialty || "General Medicine",
+                                hospital: selectedDoc.isHospitalNode ? selectedDoc.name : (selectedDoc.hospital || "Hospital OPD"),
+                                hospitalName: selectedDoc.isHospitalNode ? selectedDoc.name : (selectedDoc.hospital || "Hospital OPD"),
+                                hospitalAddress: selectedDoc.address || selectedDoc.area || selectedDoc.district || "Bihar Healthcare Network",
+                                date: result.data?.date || payload.date,
+                                timeSlot: result.data?.timeSlot || payload.timeSlot,
+                                fee: selectedDoc.fee || selectedDoc.ticketPrice || 500,
+                                paymentMethod: payload.paymentMethod === 'Online Payment' ? 'Online Payment' : 'Pay at Hospital',
+                                isPaid: result.data?.paymentStatus === 'paid' || payload.paymentMethod === 'Online Payment',
+                                tokenNumber: generatedToken,
+                                patientName: result.data?.patientName || payload.patientName || "Patient",
+                                bookingMode: "offline",
+                                qrCode: `DATA:${result.data?._id || 'SS'}|${generatedToken}`
                             };
                             
                             setShowBookingWizard(false);
@@ -803,7 +865,7 @@ const OfflineConsultationHub = () => {
                             setBookingPassDetails(newPassDetails);
                             
                         } catch (error) {
-                            toast.error(error.message);
+                            toast.error(error.message || "Failed to complete booking");
                         }
                     }}
                 />

@@ -145,19 +145,43 @@ const HospitalOverview = ({ hospitalData, onSwitchTab }) => {
 
             {/* Live Toggle Pill */}
             <div className="flex flex-col items-end gap-2 w-full md:w-auto">
-              <div className={`p-4 rounded-2xl border flex items-center gap-4 ${
-                hospitalData?.isLive ? "bg-green-500/20 border-green-400/40 text-green-300" : "bg-orange-500/20 border-orange-400/40 text-orange-300"
-              }`}>
+              <button
+                onClick={async () => {
+                  try {
+                    const token = localStorage.getItem("token");
+                    const newLiveState = !hospitalData?.isLive;
+                    const res = await fetch(`${window.location.origin.includes('localhost') ? 'http://localhost:8001' : ''}/api/v1/hospitals/${hospitalData?._id}`, {
+                      method: "PUT",
+                      headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`
+                      },
+                      body: JSON.stringify({ isLive: newLiveState })
+                    });
+                    const resData = await res.json();
+                    if (resData.success) {
+                      toast.success(newLiveState ? "🟢 Hospital is now LIVE on website Offline Booking & Bed Tracker!" : "⚫ Hospital is now Offline");
+                      if (hospitalData) hospitalData.isLive = newLiveState;
+                    }
+                  } catch (err) {
+                    toast.error("Failed to update Live status");
+                  }
+                }}
+                className={`p-4 rounded-2xl border flex items-center gap-4 cursor-pointer transition-all active:scale-95 shadow-md ${
+                  hospitalData?.isLive ? "bg-green-500/20 border-green-400/40 text-green-300 hover:bg-green-500/30" : "bg-orange-500/20 border-orange-400/40 text-orange-300 hover:bg-orange-500/30"
+                }`}
+                title="Click to toggle Live visibility on website"
+              >
                 <div className={`w-3.5 h-3.5 rounded-full ${hospitalData?.isLive ? "bg-green-400 animate-pulse" : "bg-orange-400"}`} />
-                <div>
-                  <p className="font-black text-xs uppercase tracking-widest">
-                    {hospitalData?.isLive ? "🟢 Hospital is LIVE on Web" : "⚫ Not Live"}
+                <div className="text-left">
+                  <p className="font-black text-xs uppercase tracking-widest flex items-center gap-2">
+                    {hospitalData?.isLive ? "🟢 Hospital is LIVE on Web" : "⚫ Not Live (Click to Activate)"}
                   </p>
                   <p className="text-[10px] text-indigo-200 font-medium">
-                    {hospitalData?.isLive ? "Visible in Offline Hub & Bed Finder" : "Complete profile to activate"}
+                    {hospitalData?.isLive ? "Visible live in Offline Hub & Bed Finder" : "Click to go live immediately"}
                   </p>
                 </div>
-              </div>
+              </button>
             </div>
           </div>
 

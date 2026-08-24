@@ -6,7 +6,11 @@ export const getHospitalProfile = async (req, res) => {
   const userId = req.userId;
 
   try {
-    let hospital = await Hospital.findOne({ user: userId });
+    let hospital = await Hospital.findOne({ user: userId })
+      .populate({
+        path: "reviews",
+        populate: { path: "user", select: "name photo" }
+      });
 
     if (!hospital) {
       // Auto-create blank hospital node
@@ -86,11 +90,12 @@ export const updateHospitalProfile = async (req, res) => {
         unavailabilityDates: updatedHospital.unavailabilityDates,
         isHospital: true
       });
+      io.emit("hospital-profile-updated", updatedHospital);
     }
 
     res.status(200).json({
       success: true,
-      message: "Hospital profile synced",
+      message: "Hospital profile synced and live on network",
       data: updatedHospital,
     });
   } catch (err) {
@@ -288,23 +293,19 @@ export const getTokenQueue = async (req, res) => {
   const userId = req.userId;
   const { date } = req.query;
 
-  let queryDate = date;
-  if (!queryDate) {
-    const today = new Date();
-    queryDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-  }
-
   try {
     const hospital = await Hospital.findOne({ user: userId });
     if (!hospital) return res.status(404).json({ success: false, message: "Hospital not found" });
 
-    const queue = await Booking.find({
-      hospital: hospital._id,
-      appointmentDate: queryDate,
-    })
-    .populate('doctor', 'name photo specialization')
-    .populate('user', 'name phone photo')
-    .sort({ createdAt: 1 }); // sort by booking time = natural queue order
+    const queryFilter = { hospital: hospital._id };
+    if (date) {
+      queryFilter.appointmentDate = date;
+    }
+
+    const queue = await Booking.find(queryFilter)
+      .populate('doctor', 'name photo specialization')
+      .populate('user', 'name phone photo')
+      .sort({ createdAt: -1 }); // Newest bookings first
 
     // Auto-assign token numbers if missing
     const queueWithTokens = await Promise.all(queue.map(async (booking, index) => {

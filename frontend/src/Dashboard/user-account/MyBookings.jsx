@@ -47,7 +47,12 @@ const RatingModal = ({ doctor, doctorId, onClose }) => {
 
     setLoading(true);
     try {
-      const res = await fetch(`${BASE_URL}/doctors/${doctorId}/reviews`, {
+      const isHospital = doctor?.hospitalName || doctor?.hospitalType || doctor?.isHospitalNode || !doctor?.specialization;
+      const endpoint = isHospital
+        ? `${BASE_URL}/hospitals/${doctorId}/reviews`
+        : `${BASE_URL}/doctors/${doctorId}/reviews`;
+
+      const res = await fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -65,7 +70,7 @@ const RatingModal = ({ doctor, doctorId, onClose }) => {
       if (!res.ok) throw new Error(result.message || "Failed to submit review");
 
       setSubmitted(true);
-      toast.success("⭐ Review submitted! It's now live on the doctor's profile!", { autoClose: 4000 });
+      toast.success("⭐ Review submitted! It's now live in real-time!", { autoClose: 4000 });
     } catch (err) {
       toast.error(err.message);
     } finally {
@@ -661,21 +666,32 @@ const MyBookings = ({ initialSection = "bookings" }) => {
                               </button>
                             )}
 
-                            {/* Chat with Doctor */}
-                            <button
-                              onClick={() => setActiveChatDoctor({ partner: item.doctor, bookingId: item._id })}
-                              className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all active:scale-95"
-                            >
-                              <BsChatDotsFill /> Chat with Doctor
-                            </button>
+                            {/* Chat with Doctor / Hospital */}
+                            {(() => {
+                              const targetPartner = item.doctor || item.hospital || { _id: item.hospital?._id || item.hospital, name: "Hospital OPD" };
+                              const targetId = item.doctor?._id || item.hospital?._id || item.hospital;
+                              const isHosp = !item.doctor && (item.hospital || item.bookingMode === "offline");
 
-                            {/* Rate Doctor — available for ANY booking */}
-                            <button
-                              onClick={() => setRatingDoctor({ doctor: item.doctor, doctorId: item.doctor._id })}
-                              className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-[10px] font-black uppercase tracking-wider shadow-md shadow-amber-200 transition-all active:scale-95"
-                            >
-                              <BsStarFill /> Rate Doctor
-                            </button>
+                              return (
+                                <>
+                                  <button
+                                    onClick={() => setActiveChatDoctor({ partner: targetPartner, bookingId: item._id })}
+                                    className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all active:scale-95"
+                                  >
+                                    <BsChatDotsFill /> {isHosp ? "Chat with Hospital" : "Chat with Doctor"}
+                                  </button>
+
+                                  {targetId && (
+                                    <button
+                                      onClick={() => setRatingDoctor({ doctor: targetPartner, doctorId: targetId })}
+                                      className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-[10px] font-black uppercase tracking-wider shadow-md shadow-amber-200 transition-all active:scale-95"
+                                    >
+                                      <BsStarFill /> {isHosp ? "Rate Hospital" : "Rate Doctor"}
+                                    </button>
+                                  )}
+                                </>
+                              );
+                            })()}
 
                             {/* Whiteboard Button - Only for active consultation */}
                             {liveStatus === "CONSULTATION_STARTED" && (

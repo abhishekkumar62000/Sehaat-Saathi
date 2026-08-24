@@ -29,11 +29,23 @@ export const createVideoBooking = async (req, res) => {
     const io = req.app.get("io");
 
     try {
-      // 1. Validate doctor
-      const doctor = await Doctor.findById(doctorId);
-      if (!doctor) return res.status(404).json({ success: false, message: "Doctor not found" });
-      if (doctor.isApproved !== "approved") return res.status(403).json({ success: false, message: "Doctor is not yet approved for consultations" });
-      if (!doctor.isTeleConsultActive) return res.status(403).json({ success: false, message: "This doctor is not accepting video consultations right now" });
+      // 1. Validate doctor or hospital node
+      let doctor = await Doctor.findById(doctorId);
+      if (!doctor) {
+        const Hospital = (await import("../models/HospitalSchema.js")).default;
+        const hospital = await Hospital.findById(doctorId);
+        if (hospital) {
+          doctor = {
+            _id: hospital._id,
+            name: hospital.hospitalName,
+            isApproved: "approved",
+            isTeleConsultActive: true,
+            ticketPrice: hospital.consultationFee || 500
+          };
+        } else {
+          return res.status(404).json({ success: false, message: "Doctor or Hospital node not found" });
+        }
+      }
 
       // 2. Validate patient
       const patient = await User.findById(patientId);

@@ -9,7 +9,7 @@ const MessageSchema = new mongoose.Schema(
     },
     senderModel: {
       type: String,
-      enum: ["User", "Doctor"],
+      enum: ["User", "Doctor", "Hospital"],
       required: true,
     },
     recipient: {
@@ -19,7 +19,7 @@ const MessageSchema = new mongoose.Schema(
     },
     recipientModel: {
       type: String,
-      enum: ["User", "Doctor"],
+      enum: ["User", "Doctor", "Hospital"],
       required: true,
     },
     booking: {
