@@ -529,7 +529,7 @@ const BloodBankHub = () => {
                                             type="button"
                                             key={bg.group}
                                             onClick={() => setSelectedGroup(bg.group)}
-                                            className={`p-2 sm:p-3 rounded-xl border text-center transition-all flex flex-col items-center justify-center gap-1 ${selectedGroup === bg.group ? 'bg-rose-600 border-rose-400 text-white font-black scale-105 shadow-xl' : 'bg-slate-950 border-slate-800 text-slate-300 hover:border-slate-700'}`}
+                                            className={`p-2 sm:p-3 rounded-xl border text-center transition-all cursor-pointer active:scale-95 flex flex-col items-center justify-center gap-1 ${selectedGroup === bg.group ? 'bg-rose-600 border-rose-400 text-white font-black scale-105 shadow-xl ring-2 ring-rose-500/40' : 'bg-slate-950 border-slate-800 text-slate-300 hover:border-slate-700'}`}
                                         >
                                             <span className="text-sm sm:text-lg font-black">{bg.group}</span>
                                             <span className="text-[8px] font-bold opacity-80">{bg.rarity}</span>
