@@ -1,4 +1,4 @@
-// Sehaat Saathi - 50+ Verified Emergency Ambulance Fleet Database using Local Asset Images
+// Sehaat Saathi App - 50+ Verified Emergency Ambulance Fleet Database using Local Asset Images
 
 import ambulance1 from '../assets/Ambulace1set.png';
 import ambulance2 from '../assets/Ambulance2set.png';
@@ -19,8 +19,8 @@ export const LOCAL_AMBULANCE_IMAGES = [
 export const AMBULANCE_FLEET_DATA = [
   {
     id: 1,
-    nameEn: "Sehaat Saathi Rapid Rescue #01",
-    nameHi: "सेहत साथी एम्बुलेंस #01",
+    nameEn: "Sehaat Saathi App Rapid Rescue #01",
+    nameHi: "सेहत साथी ऐप एम्बुलेंस #01",
     image: LOCAL_AMBULANCE_IMAGES[0],
     vehicleModel: "Mahindra Bolero Neo Ambulance",
     plateNo: "BR-32-PA-1001",
@@ -340,8 +340,8 @@ for (let i = 7; i <= 52; i++) {
 
   AMBULANCE_FLEET_DATA.push({
     id: i,
-    nameEn: `Sehaat Saathi Emergency Force #${i < 10 ? '0' + i : i}`,
-    nameHi: `सेहत साथी एम्बुलेंस #${i < 10 ? '0' + i : i}`,
+    nameEn: `Sehaat Saathi App Emergency Force #${i < 10 ? '0' + i : i}`,
+    nameHi: `सेहत साथी ऐप एम्बुलेंस #${i < 10 ? '0' + i : i}`,
     image: LOCAL_AMBULANCE_IMAGES[imgIndex],
     vehicleModel: VEHICLE_MODELS[modelIndex],
     plateNo: `BR-32-PA-10${i < 10 ? '0' + i : i}`,

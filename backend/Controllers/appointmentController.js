@@ -14,6 +14,9 @@ export const bookAppointment = async (req, res) => {
     date, 
     timeSlot, 
     paymentMethod = 'Pay at Hospital', 
+    paymentStatus,
+    paymentId,
+    orderId,
     symptoms = 'OPD Physical Visit', 
     hospitalId, 
     patientName, 
@@ -57,6 +60,9 @@ export const bookAppointment = async (req, res) => {
     const bookingToken = `SS-${Math.floor(1000 + Math.random() * 9000)}`;
     const effectiveHospitalId = isHospitalNode ? hospital._id : (hospitalId && mongoose.Types.ObjectId.isValid(hospitalId) ? hospitalId : doctor.hospital);
 
+    const isOnline = paymentMethod === 'online' || paymentMethod === 'Online Payment';
+    const computedPaymentStatus = paymentStatus || (isOnline ? 'paid' : 'pending');
+
     // 1. Create Appointment Record
     const appointment = new Appointment({
       patient: patientId,
@@ -67,7 +73,10 @@ export const bookAppointment = async (req, res) => {
       date: date || new Date().toISOString().split('T')[0],
       timeSlot: timeSlot || "10:00 AM",
       symptoms: symptoms || "OPD Consultation",
-      paymentMethod: paymentMethod === 'online' || paymentMethod === 'Online Payment' ? 'online' : 'cod',
+      paymentMethod: isOnline ? 'online' : 'cod',
+      paymentStatus: computedPaymentStatus,
+      paymentId: paymentId || undefined,
+      orderId: orderId || undefined,
       ticketPrice: ticketPrice || doctor.ticketPrice || 500,
       bookingToken,
       appointmentType,
@@ -82,16 +91,18 @@ export const bookAppointment = async (req, res) => {
       hospital: effectiveHospitalId,
       ticketPrice: String(ticketPrice || doctor.ticketPrice || 500),
       status: "REQUESTED",
-      isPaid: paymentMethod === "Online Payment" || paymentMethod === "online",
+      isPaid: isOnline,
+      paymentId: paymentId || undefined,
+      orderId: orderId || undefined,
       appointmentDate: date || new Date().toISOString().split('T')[0],
       appointmentTime: timeSlot || "10:00 AM",
       patientName: patientName || "Patient",
       symptoms: symptoms || "OPD Consultation",
       bookingMode: "offline",
       consultationType: "First Visit",
-      paymentMethod: paymentMethod === 'online' || paymentMethod === 'Online Payment' ? 'Online Payment' : 'Pay at Hospital',
+      paymentMethod: isOnline ? 'Online Payment' : 'Pay at Hospital',
       tokenNumber: bookingToken,
-      qrCode: `DATA:${appointment._id}|${bookingToken}|${patientId}`
+      qrCode: `DATA:${appointment._id}|${bookingToken}|${patientId}${isOnline ? '|PAID' : ''}`
     });
 
     await booking.save();

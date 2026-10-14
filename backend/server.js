@@ -27,6 +27,7 @@ import notificationRoute from "./Routes/notification.js";
 import adminRoute from "./Routes/admin.js";
 import appointmentRoute from "./Routes/appointment.js";
 import videoConsultRoute from "./Routes/videoConsultation.js";
+import paymentRoute from "./Routes/payment.js";
 
 import hospitalRoute from "./Routes/hospital.js";
 import http from "http";
@@ -57,11 +58,11 @@ const corsOptions = {
 };
 
 app.get("/", (req, res) => {
-  res.status(200).json({ status: "online", message: "Sehaat Saathi API is active and running ✅" });
+  res.status(200).json({ status: "online", message: "Sehaat Saathi App API is active and running ✅" });
 });
 
 app.get("/api/v1", (req, res) => {
-  res.status(200).json({ status: "online", message: "Sehaat Saathi API v1 is active and running ✅" });
+  res.status(200).json({ status: "online", message: "Sehaat Saathi App API v1 is active and running ✅" });
 });
 
 app.get("/health", (req, res) => {
@@ -134,6 +135,7 @@ app.use("/api/v1/health-copilot", healthCopilotRoute);
 app.use("/api/v1/admin", adminRoute);
 app.use("/api/v1/appointments", appointmentRoute);
 app.use("/api/v1/video-consult", videoConsultRoute);
+app.use("/api/v1/payment", paymentRoute);
 app.use("/api/v1/analytics", analyticsRoute);
 app.use("/api/v1/chat", chatRoute);
 

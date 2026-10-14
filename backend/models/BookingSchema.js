@@ -35,6 +35,8 @@ const bookingSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    paymentId: { type: String },
+    orderId: { type: String },
     appointmentDate: { type: String },
     appointmentTime: { type: String },
     statusMessage: { type: String },

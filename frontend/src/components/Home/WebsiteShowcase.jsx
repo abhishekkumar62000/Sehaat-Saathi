@@ -38,7 +38,7 @@ const WebsiteShowcase = () => {
                             </h2>
 
                             <p className="text-xl sm:text-2xl text-slate-600 leading-tight font-bold uppercase tracking-tight opacity-90 max-w-xl">
-                                The Sehaat Saathi interface reimagined for massive digital dominance.
+                                The Sehaat Saathi App interface reimagined for massive digital dominance.
                             </p>
                         </div>
 
@@ -90,7 +90,7 @@ const WebsiteShowcase = () => {
                                 animate={{ y: [0, -20, 0] }}
                                 transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
                                 src={websiteMockup}
-                                alt="Sehaat Saathi Website Interface"
+                                alt="Sehaat Saathi App Website Interface"
                                 className="relative z-10 w-full drop-shadow-[0_50px_80px_rgba(0,0,0,0.15)] rounded-lg"
                             />
 

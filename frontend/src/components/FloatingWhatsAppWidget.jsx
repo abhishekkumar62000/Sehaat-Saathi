@@ -24,7 +24,7 @@ const FloatingWhatsAppWidget = () => {
   }, []);
 
   const handleWhatsappRedirect = () => {
-    const message = encodeURIComponent("Hello Abhishek! I came from the Sehaat Saathi portal and have a query.");
+    const message = encodeURIComponent("Hello Abhishek! I came from the Sehaat Saathi App portal and have a query.");
     const url = `https://wa.me/916200087830?text=${message}`;
     window.open(url, "_blank", "noopener,noreferrer");
   };
@@ -51,7 +51,7 @@ const FloatingWhatsAppWidget = () => {
                 <h4 className="font-black text-sm tracking-wide uppercase flex items-center gap-1.5 text-white">
                   Abhishek Kumar <BsPatchCheckFill className="text-sky-300 text-xs shrink-0" />
                 </h4>
-                <p className="text-[10px] font-black text-emerald-100 uppercase tracking-widest opacity-90">Founder, Sehaat Saathi</p>
+                <p className="text-[10px] font-black text-emerald-100 uppercase tracking-widest opacity-90">Founder, Sehaat Saathi App</p>
                 <p className="text-[9px] font-bold text-emerald-200 mt-0.5">Replies instantly 🟢</p>
               </div>
               <button
@@ -66,7 +66,7 @@ const FloatingWhatsAppWidget = () => {
             <div className="p-6 space-y-4 max-h-[220px] overflow-y-auto bg-slate-950/40">
               <div className="flex gap-2">
                 <div className="p-4 bg-slate-800/80 border border-slate-700/50 rounded-2xl rounded-tl-none text-[12px] leading-relaxed text-slate-200 font-medium">
-                  Namaste! 🙏 I am Abhishek Kumar, Founder of Sehaat Saathi.
+                  Namaste! 🙏 I am Abhishek Kumar, Founder of Sehaat Saathi App.
                   <br /><br />
                   How can I help you improve your healthcare or hospital experience today? Feel free to ask anything!
                 </div>

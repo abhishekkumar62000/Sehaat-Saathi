@@ -22,6 +22,7 @@ import offlineAdvImg from "../assets/offline_booking_adv.png";
 import MetaHead from "../components/SEO/MetaHead";
 import SEOKeywordIsland from "../components/SEO/SEOKeywordIsland";
 import DoctorBookingSEOIsland from "../components/SEO/DoctorBookingSEOIsland";
+import { initiateRazorpayCheckout } from "../utils/razorpayCheckout";
 
 const OfflineConsultationHub = () => {
     const [selectedDistrict, setSelectedDistrict] = useState('Madhubani');
@@ -380,9 +381,9 @@ const OfflineConsultationHub = () => {
     return (
         <div className="min-h-screen bg-slate-50 text-gray-900 font-sans selection:bg-[#FF9933]/30 overflow-x-hidden relative">
             <MetaHead
-              title="Sehaat Saathi Doctor Booking App | Offline Doctor Booking & OPD Token Pass Bihar India"
-              description="Sehaat Saathi Doctor Booking App (Sehat Sathi Doctor Booking) — Book offline doctor consultations and hospital direct OPD token passes with zero queue waiting time. 500+ verified specialist doctors in Madhubani, Darbhanga, Patna & all Bihar districts. Helpline: +91 6200087830."
-              keywords="Sehaat Saathi doctor booking App, sehat sathi doctor booking App, Sehaat Saathi Offline Doctor Booking app, sehatt sehaathi offline doctor Booking, sehaat saathi doctor bboing app, sehaat saathi bihar doctor booking app, sehat sathi madhubani darbhanga doctor booking app, sehaat saathi patna doctor appointment app, Sehaat Saathi Doctor Booking, Sehat Sathi Doctor Booking, Sehaat Sathi OPD Booking, Sehat Sathi OPD Token, Sehaat Saathi Hospital Pass, Sehaat Saathi App, Sehat Sathi App, Abhishek Kumar Sehaat Saathi"
+              title="Sehaat Saathi App Doctor Booking App | Offline Doctor Booking & OPD Token Pass Bihar India"
+              description="Sehaat Saathi App Doctor Booking App (Sehat Sathi Doctor Booking) — Book offline doctor consultations and hospital direct OPD token passes with zero queue waiting time. 500+ verified specialist doctors in Madhubani, Darbhanga, Patna & all Bihar districts. Helpline: +91 6200087830."
+              keywords="Sehaat Saathi App doctor booking App, sehat sathi doctor booking App, Sehaat Saathi App Offline Doctor Booking app, sehatt sehaathi offline doctor Booking, sehaat saathi doctor bboing app, sehaat saathi bihar doctor booking app, sehat sathi madhubani darbhanga doctor booking app, sehaat saathi patna doctor appointment app, Sehaat Saathi App Doctor Booking, Sehat Sathi Doctor Booking, Sehaat Sathi OPD Booking, Sehat Sathi OPD Token, Sehaat Saathi App Hospital Pass, Sehaat Saathi App, Sehat Sathi App, Abhishek Kumar Sehaat Saathi App"
               canonicalUrl="https://sehaatsaathi.com/offline-consultation"
             />
             <SEOKeywordIsland />
@@ -467,7 +468,7 @@ const OfflineConsultationHub = () => {
                             <div className="bg-white/95 backdrop-blur-3xl p-6 md:p-8 rounded-[2.4rem] h-full flex flex-col justify-center items-center">
                                 <p className="text-gray-700 md:text-xl font-bold leading-relaxed text-center">
                                     <span className="text-[#FF9933] font-black uppercase tracking-widest text-sm block mb-2 border-b-2 border-dashed border-[#FF9933]/30 pb-2">Mission</span> 
-                                    Entire Bihar 38 District me <span className="text-[#000080] font-black text-2xl mx-1">Sehaat Saathi</span> Doctor Book! <br className="hidden md:block mt-2"/> 
+                                    Entire Bihar 38 District me <span className="text-[#000080] font-black text-2xl mx-1">Sehaat Saathi App</span> Doctor Book! <br className="hidden md:block mt-2"/> 
                                     <span className="text-gray-500 text-sm mt-3 block">{language === 'en' ? 'Connect with verified government and private healthcare professionals in real-time.' : 'वास्तविक समय में सत्यापित सरकारी और निजी स्वास्थ्य सेवा पेशेवरों से जुड़ें।'}</span>
                                 </p>
                             </div>
@@ -481,7 +482,7 @@ const OfflineConsultationHub = () => {
                             {/* The Image */}
                             <img 
                                 src={offlineAdvImg} 
-                                alt="Join Sehaat Saathi Doctor Network" 
+                                alt="Join Sehaat Saathi App Doctor Network" 
                                 className="w-48 sm:w-56 xl:w-64 h-auto object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.25)] hover:scale-110 transition-transform duration-700 hover:-translate-y-3 origin-bottom"
                             />
 
@@ -824,6 +825,98 @@ const OfflineConsultationHub = () => {
                         setSelectedDoc(null);
                     }}
                     onSuccess={async (payload) => {
+                        const feeAmount = selectedDoc.fee === 0 ? 0 : (selectedDoc.fee || selectedDoc.ticketPrice || 500);
+                        const docId = selectedDoc.id || selectedDoc._id;
+                        const docName = selectedDoc.isHospitalNode ? `${selectedDoc.name} (OPD)` : selectedDoc.name;
+                        const hospitalId = selectedDoc.isHospitalNode ? docId : (selectedDoc.hospital?._id || selectedDoc.hospital);
+
+                        // If Online Payment is chosen and consultation fee > 0, trigger Razorpay Standard Checkout
+                        if (payload.paymentMethod === 'Online Payment' && feeAmount > 0) {
+                            let userObj = {};
+                            try {
+                                userObj = JSON.parse(localStorage.getItem('user')) || {};
+                            } catch (e) {
+                                userObj = {};
+                            }
+
+                            await initiateRazorpayCheckout({
+                                amount: feeAmount,
+                                doctorId: docId,
+                                doctorName: docName,
+                                patientName: payload.patientName || userObj.name || "Patient",
+                                patientEmail: userObj.email || "",
+                                patientPhone: userObj.phone || "",
+                                notes: {
+                                    date: payload.date,
+                                    timeSlot: payload.timeSlot,
+                                    hospital: selectedDoc.isHospitalNode ? selectedDoc.name : (selectedDoc.hospital || "Hospital OPD"),
+                                },
+                                onSuccess: async (paymentRes, verifyData) => {
+                                    try {
+                                        const response = await fetch(`${BASE_URL}/appointments/book`, {
+                                            method: 'post',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                                'Authorization': `Bearer ${token}`
+                                            },
+                                            body: JSON.stringify({
+                                                doctorId: docId,
+                                                date: payload.date,
+                                                timeSlot: payload.timeSlot,
+                                                paymentMethod: 'online',
+                                                paymentStatus: 'paid',
+                                                paymentId: paymentRes.razorpay_payment_id,
+                                                orderId: paymentRes.razorpay_order_id,
+                                                patientName: payload.patientName,
+                                                ticketPrice: feeAmount,
+                                                symptoms: payload.symptoms || "First Visit offline OPD record entry.",
+                                                hospitalId
+                                            })
+                                        });
+
+                                        const result = await response.json();
+                                        if (!response.ok) {
+                                            throw new Error(result.message || "Failed to record appointment.");
+                                        }
+
+                                        toast.success("🏥 Appointment & Paid Token Pass generated via Razorpay!");
+                                        const generatedToken = result.data?.bookingToken || result.data?.tokenNumber || `SS-${Math.floor(1000 + Math.random() * 9000)}`;
+
+                                        const newPassDetails = {
+                                            doctorId: docId,
+                                            doctorName: docName,
+                                            doctorSpecialty: selectedDoc.specialty || "General Medicine",
+                                            hospital: selectedDoc.isHospitalNode ? selectedDoc.name : (selectedDoc.hospital || "Hospital OPD"),
+                                            hospitalName: selectedDoc.isHospitalNode ? selectedDoc.name : (selectedDoc.hospital || "Hospital OPD"),
+                                            hospitalAddress: selectedDoc.address || selectedDoc.area || selectedDoc.district || "Bihar Healthcare Network",
+                                            date: result.data?.date || payload.date,
+                                            timeSlot: result.data?.timeSlot || payload.timeSlot,
+                                            fee: feeAmount,
+                                            paymentMethod: 'Online Payment (Razorpay)',
+                                            isPaid: true,
+                                            paymentId: paymentRes.razorpay_payment_id,
+                                            orderId: paymentRes.razorpay_order_id,
+                                            tokenNumber: generatedToken,
+                                            patientName: result.data?.patientName || payload.patientName || "Patient",
+                                            bookingMode: "offline",
+                                            qrCode: `DATA:${result.data?._id || 'SS'}|${generatedToken}|PAID`
+                                        };
+
+                                        setShowBookingWizard(false);
+                                        setSelectedDoc(null);
+                                        setBookingPassDetails(newPassDetails);
+                                    } catch (err) {
+                                        toast.error(err.message || "Error finalizing booking record");
+                                    }
+                                },
+                                onError: (err) => {
+                                    console.error("Payment failed or cancelled:", err);
+                                }
+                            });
+                            return;
+                        }
+
+                        // Otherwise: Pay at Hospital (COD / Free)
                         try {
                             const response = await fetch(`${BASE_URL}/appointments/book`, {
                                 method: 'post',
@@ -832,14 +925,15 @@ const OfflineConsultationHub = () => {
                                     'Authorization': `Bearer ${token}`
                                 },
                                 body: JSON.stringify({
-                                    doctorId: selectedDoc.id || selectedDoc._id,
+                                    doctorId: docId,
                                     date: payload.date,
                                     timeSlot: payload.timeSlot,
-                                    paymentMethod: payload.paymentMethod === 'Online Payment' ? 'online' : 'cod',
+                                    paymentMethod: 'cod',
+                                    paymentStatus: 'pending',
                                     patientName: payload.patientName,
-                                    ticketPrice: selectedDoc.fee || selectedDoc.ticketPrice || 500,
+                                    ticketPrice: feeAmount,
                                     symptoms: payload.symptoms || "First Visit offline OPD record entry.",
-                                    hospitalId: selectedDoc.isHospitalNode ? (selectedDoc.id || selectedDoc._id) : (selectedDoc.hospital?._id || selectedDoc.hospital)
+                                    hospitalId
                                 })
                             });
                             
@@ -854,17 +948,17 @@ const OfflineConsultationHub = () => {
                             const generatedToken = result.data?.bookingToken || result.data?.tokenNumber || `SS-${Math.floor(1000 + Math.random() * 9000)}`;
 
                             const newPassDetails = {
-                                doctorId: selectedDoc.id || selectedDoc._id,
-                                doctorName: selectedDoc.isHospitalNode ? `${selectedDoc.name} (OPD)` : selectedDoc.name,
+                                doctorId: docId,
+                                doctorName: docName,
                                 doctorSpecialty: selectedDoc.specialty || "General Medicine",
                                 hospital: selectedDoc.isHospitalNode ? selectedDoc.name : (selectedDoc.hospital || "Hospital OPD"),
                                 hospitalName: selectedDoc.isHospitalNode ? selectedDoc.name : (selectedDoc.hospital || "Hospital OPD"),
                                 hospitalAddress: selectedDoc.address || selectedDoc.area || selectedDoc.district || "Bihar Healthcare Network",
                                 date: result.data?.date || payload.date,
                                 timeSlot: result.data?.timeSlot || payload.timeSlot,
-                                fee: selectedDoc.fee || selectedDoc.ticketPrice || 500,
-                                paymentMethod: payload.paymentMethod === 'Online Payment' ? 'Online Payment' : 'Pay at Hospital',
-                                isPaid: result.data?.paymentStatus === 'paid' || payload.paymentMethod === 'Online Payment',
+                                fee: feeAmount,
+                                paymentMethod: 'Pay at Hospital',
+                                isPaid: false,
                                 tokenNumber: generatedToken,
                                 patientName: result.data?.patientName || payload.patientName || "Patient",
                                 bookingMode: "offline",

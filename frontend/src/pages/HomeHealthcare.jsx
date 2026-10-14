@@ -28,15 +28,15 @@ const TRANSLATIONS = {
     en: {
         smartHub: "Smart Hub",
         founderHotline: "Helpline Support",
-        emergencyBadge: "⚠️ EMERGENCY DISCLAIMER: Sehaat Saathi provides 24/7 Emergency Ambulance Network (50+ ICU, Ventilator & Oxygen Ambulances) across Madhubani & Bihar. Call +91 6200087830 or click to Book Ambulance.",
+        emergencyBadge: "⚠️ EMERGENCY DISCLAIMER: Sehaat Saathi App provides 24/7 Emergency Ambulance Network (50+ ICU, Ventilator & Oxygen Ambulances) across Madhubani & Bihar. Call +91 6200087830 or click to Book Ambulance.",
         ambulanceLink: "Book Ambulance 🚑",
         heroBadge: "🏠 HOSPITAL-GRADE CARE AT YOUR DOORSTEP",
-        heroTitle: "Sehaat Saathi Home Healthcare Services",
+        heroTitle: "Sehaat Saathi App Home Healthcare Services",
         heroSubtitle: "Book Certified Home Nurses, Senior Citizen Care Attendants, Home Physiotherapy & Lab Tests at Home across Madhubani Town & Nearby 1-10 KM Radius. Verified Staff • Transparent Rates • 24/7 Support.",
         pillarsTitle: "3 MAIN CORE HEALTHCARE SERVICES",
         pillarsSubtitle: "Hospital-grade medical care delivered to senior citizens & patients unable to visit clinics in Madhubani Town & surrounding 1-10 KM areas.",
         careCoordinatorTitle: "Unsure which service your patient needs?",
-        careCoordinatorDesc: "Speak directly with a Sehaat Saathi Medical Care Coordinator to evaluate patient condition and recommend the best home care plan.",
+        careCoordinatorDesc: "Speak directly with a Sehaat Saathi App Medical Care Coordinator to evaluate patient condition and recommend the best home care plan.",
         careCoordinatorBtn: "Call Founder Hotline",
         tabServices: "Browse All Services",
         tabBooking: "Book Service Wizard",
@@ -73,17 +73,17 @@ const TRANSLATIONS = {
         trustBadge2: "Sterilized Medical Equipment",
         trustBadge3: "Zero Hidden Tariff",
         trustBadge4: "Founder Supervised Care",
-        contactModalTitle: "Sehaat Saathi Emergency Booking Support Lines"
+        contactModalTitle: "Sehaat Saathi App Emergency Booking Support Lines"
     },
     hi: {
         smartHub: "स्मार्ट हब (Smart Hub)",
         founderHotline: "हेल्पलाइन नंबर",
-        emergencyBadge: "⚠️ इमरजेंसी सूचना: सेहत साथी मधुबनी व बिहार में 50+ इमरजेंसी एम्बुलेंस (ICU, वेंटिलेटर, ऑक्सीजन) की 24/7 सेवा प्रदान करता है। एम्बुलेंस हेतु +91 6200087830 पर कॉल करें या तुरंत एम्बुलेंस बुक करें।",
-        ambulanceLink: "सेहत साथी एम्बुलेंस बुक करें 🚑",
+        emergencyBadge: "⚠️ इमरजेंसी सूचना: सेहत साथी ऐप मधुबनी व बिहार में 50+ इमरजेंसी एम्बुलेंस (ICU, वेंटिलेटर, ऑक्सीजन) की 24/7 सेवा प्रदान करता है। एम्बुलेंस हेतु +91 6200087830 पर कॉल करें या तुरंत एम्बुलेंस बुक करें।",
+        ambulanceLink: "सेहत साथी ऐप एम्बुलेंस बुक करें 🚑",
         heroBadge: "🏠 अस्पताल जैसी देखभाल अब आपके घर पर",
-        heroTitle: "सेहत साथी होम हेल्थकेयर बुकिंग सर्विसेज",
+        heroTitle: "सेहत साथी ऐप होम हेल्थकेयर बुकिंग सर्विसेज",
         heroSubtitle: "घर पर बी.एससी नर्स, बुजुर्गों के लिए मेडिकल अटेंडेंट, फिजियोथेरेपी डॉक्टर और ब्लड/ईसीजी टेस्ट बुक करें। सत्यापित स्टाफ • सही रेट • 24 घंटे मदद।",
-        pillarsTitle: "सेहत साथी द्वारा दी जाने वाली 3 मुख्य स्वास्थ्य सेवाएं (MAIN SERVICES)",
+        pillarsTitle: "सेहत साथी ऐप द्वारा दी जाने वाली 3 मुख्य स्वास्थ्य सेवाएं (MAIN SERVICES)",
         pillarsSubtitle: "मधुबनी टाउन और आसपास 1 से 10 किमी क्षेत्र में बार-बार अस्पताल न जा सकने वाले बुजुर्गों व मरीजों के लिए घर पर ही अस्पताल जैसी देखरेख।",
         careCoordinatorTitle: "क्या आपको समझ नहीं आ रहा कौन सी सेवा चाहिए?",
         careCoordinatorDesc: "हमारे मेडिकल केयर कॉर्डिनेटर से मुफ्त में बात करें और मरीज की स्थिति के अनुसार सही सेवा चुनें।",
@@ -123,7 +123,7 @@ const TRANSLATIONS = {
         trustBadge2: "साफ-सुथरे उपकरण",
         trustBadge3: "कोई छुपे पैसे नहीं",
         trustBadge4: "संस्थापक की सीधी देखरेख",
-        contactModalTitle: "सेहत साथी इमरजेंसी बुकिंग सपोर्ट नंबर"
+        contactModalTitle: "सेहत साथी ऐप इमरजेंसी बुकिंग सपोर्ट नंबर"
     }
 };
 
@@ -276,7 +276,7 @@ const HomeHealthcare = () => {
                         <div>
                             <div className="inline-flex items-center gap-1.5 text-emerald-400 text-[10px] sm:text-xs font-black uppercase tracking-wider mb-1">
                                 <BsPhoneVibrate className="animate-bounce text-sm sm:text-base" />
-                                <span>Sehaat Saathi Emergency Booking & Care Helplines</span>
+                                <span>Sehaat Saathi App Emergency Booking & Care Helplines</span>
                             </div>
                             <h3 className="text-base sm:text-xl font-black text-white leading-tight">
                                 {language === 'hi' ? 'किसी भी सेवा हेतु कॉल या व्हाट्सएप संदेश द्वारा संपर्क करें:' : 'For Any Service Inquiry, Call or WhatsApp Our Helplines:'}
@@ -349,7 +349,7 @@ const HomeHealthcare = () => {
                     {/* Dynamic Tagline Pill Cards */}
                     <div className="max-w-4xl mx-auto space-y-3 pt-1">
                         <p className="text-slate-200 text-xs sm:text-base md:text-lg font-bold leading-relaxed">
-                            <strong className="text-emerald-400 font-black">अस्पताल नहीं जा सकते?</strong> सेहत साथी की 100% सत्यापित मेडिकल टीम अब आपके घर आएगी।
+                            <strong className="text-emerald-400 font-black">अस्पताल नहीं जा सकते?</strong> सेहत साथी ऐप की 100% सत्यापित मेडिकल टीम अब आपके घर आएगी।
                         </p>
 
                         {/* 3 Interactive Highlight Pills */}
@@ -1077,7 +1077,7 @@ const HomeHealthcare = () => {
                         <div className="space-y-1.5 sm:space-y-2 text-center">
                             <BsHeadset className="text-3xl sm:text-4xl text-emerald-400 mx-auto" />
                             <h3 className="text-lg sm:text-xl font-black uppercase text-white">{t.contactModalTitle}</h3>
-                            <p className="text-xs text-slate-400 font-bold">Sehaat Saathi Emergency Booking & Healthcare Support</p>
+                            <p className="text-xs text-slate-400 font-bold">Sehaat Saathi App Emergency Booking & Healthcare Support</p>
                         </div>
 
                         <div className="space-y-2.5 sm:space-y-3">

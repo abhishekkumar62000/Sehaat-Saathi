@@ -119,7 +119,7 @@ const AboutChairman = () => {
               <img
                 className="relative mx-auto rounded-full shadow-2xl w-48 sm:w-56 border-4 border-white/90 object-cover aspect-square transform group-hover:scale-105 transition-transform duration-500"
                 src={founderImg}
-                alt="Abhishek Kumar - Founder & CEO Sehaat Saathi"
+                alt="Abhishek Kumar - Founder & CEO Sehaat Saathi App"
                 itemProp="image"
                 loading="lazy"
               />
@@ -161,7 +161,7 @@ const AboutChairman = () => {
               </h4>
 
               <p className="text-slate-300 text-sm sm:text-base leading-relaxed mt-3">
-                <strong>Abhishek Kumar</strong> is an AI/ML Engineer, serial entrepreneur, and the visionary founder behind <strong>Sehaat Saathi App</strong> and <strong>TechSeva IT Solutions</strong>. Born with a drive to solve grassroots healthcare problems in Bihar, he engineered Sehaat Saathi to bridge the rural-urban medical divide using cutting-edge AI, digital OPD queues, and 24/7 rapid emergency dispatch systems.
+                <strong>Abhishek Kumar</strong> is an AI/ML Engineer, serial entrepreneur, and the visionary founder behind <strong>Sehaat Saathi App</strong> and <strong>TechSeva IT Solutions</strong>. Born with a drive to solve grassroots healthcare problems in Bihar, he engineered Sehaat Saathi App to bridge the rural-urban medical divide using cutting-edge AI, digital OPD queues, and 24/7 rapid emergency dispatch systems.
               </p>
             </div>
 
@@ -250,7 +250,7 @@ const AboutChairman = () => {
                   className="flex items-center gap-2 px-3.5 py-2 bg-rose-600/20 hover:bg-rose-600 text-rose-300 hover:text-white rounded-xl border border-rose-400/30 text-xs font-bold transition-all shadow-sm active:scale-95"
                 >
                   <FaInstagram className="text-sm text-rose-400 group-hover:text-white" />
-                  <span>Sehaat Saathi Official</span>
+                  <span>Sehaat Saathi App Official</span>
                 </a>
                 <a
                   href="https://www.facebook.com/people/Sehaat-Saathi-Healthcare-Platform/61592724564675/"
@@ -330,7 +330,7 @@ const AboutChairman = () => {
             <div className="space-y-4">
               <h4 className="text-lg font-black text-slate-900 flex items-center gap-2">
                 <FaCheckCircle className="text-[#FF9933]" />
-                <span>Kyun Banaya Gaya Sehaat Saathi?</span>
+                <span>Kyun Banaya Gaya Sehaat Saathi App?</span>
               </h4>
               <p className="text-justify text-gray-600 leading-relaxed">
                 Bihar ke gaon aur chhote shehron me jab koi bimaar padta hai, toh use hospital pahunchkar ghanto lambi OPD lines me khada hona padta hai. Emergency me ambulance ka pata nahi chalta aur khoon (blood) ke liye log yahan-wahan bhatakte hain.
@@ -349,7 +349,7 @@ const AboutChairman = () => {
                 <strong>TechSeva IT Solutions</strong> humari full-fledged software engineering aur IT agency hai jo advanced AI models, scalable mobile apps, aur enterprise web systems develop karti hai.
               </p>
               <p className="text-justify text-gray-600 leading-relaxed">
-                TechSeva ki world-class technical expertise ke dam par hi Sehaat Saathi ka architecture itna fast, secure, aur 24/7 reliable ban paya hai.
+                TechSeva ki world-class technical expertise ke dam par hi Sehaat Saathi App ka architecture itna fast, secure, aur 24/7 reliable ban paya hai.
               </p>
             </div>
           </div>

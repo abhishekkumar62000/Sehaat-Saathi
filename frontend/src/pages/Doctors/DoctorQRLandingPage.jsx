@@ -61,7 +61,7 @@ const DoctorQRLandingPage = () => {
         <div className="flex items-center justify-between border-b border-slate-800 pb-4">
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span className="text-[10px] font-black uppercase text-indigo-400 tracking-[0.2em]">Sehaat Saathi Fast-Track</span>
+            <span className="text-[10px] font-black uppercase text-indigo-400 tracking-[0.2em]">Sehaat Saathi App Fast-Track</span>
           </div>
           <span className="text-[9px] bg-slate-800 text-slate-400 font-black px-2 py-0.5 rounded-md">QR Mode</span>
         </div>
@@ -121,7 +121,7 @@ const DoctorQRLandingPage = () => {
       
       {/* Branding Footer */}
       <div className="text-center text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-6">
-        © 2026 Sehaat Saathi System Inc.
+        © 2026 Sehaat Saathi App System Inc.
       </div>
     </div>
   );

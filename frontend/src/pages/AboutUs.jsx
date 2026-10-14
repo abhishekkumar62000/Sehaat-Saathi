@@ -40,9 +40,9 @@ const AboutUs = () => {
   return (
     <div className="min-h-screen bg-gray-50/50 pb-24">
       <MetaHead
-        title="About Sehaat Saathi | Bihar's #1 AI Healthcare Platform Founded by Abhishek Kumar"
-        description="Learn about Sehaat Saathi (Sehat Sathi), India and Bihar's premier AI-powered healthcare platform. Founded by Abhishek Kumar (AI/ML Engineer & Entrepreneur). Our mission: accessible, affordable healthcare for every Indian family."
-        keywords="About Sehaat Saathi, Sehaat Saathi Founder, Abhishek Kumar Sehaat Saathi, Sehaat Saathi Healthcare Platform Bihar India, Sehat Sathi About, Sehaat Saathi Mission Vision"
+        title="About Sehaat Saathi App | Bihar's #1 AI Healthcare Platform Founded by Abhishek Kumar"
+        description="Learn about Sehaat Saathi App (Sehat Sathi), India and Bihar's premier AI-powered healthcare platform. Founded by Abhishek Kumar (AI/ML Engineer & Entrepreneur). Our mission: accessible, affordable healthcare for every Indian family."
+        keywords="About Sehaat Saathi App, Sehaat Saathi App Founder, Abhishek Kumar Sehaat Saathi App, Sehaat Saathi App Healthcare Platform Bihar India, Sehat Sathi About, Sehaat Saathi App Mission Vision"
         canonicalUrl="https://sehaatsaathi.com/about"
       />
       {/* Premium Hero Section */}
@@ -78,7 +78,7 @@ const AboutUs = () => {
           <div className="relative group animate-in fade-in slide-in-from-right duration-700">
             <div className="absolute -inset-6 bg-teal-100/50 rounded-full blur-3xl opacity-40 group-hover:opacity-60 transition-opacity animate-pulse"></div>
             <div className="relative rounded-[60px] overflow-hidden shadow-2xl border-[12px] border-white ring-1 ring-gray-100">
-              <img src={aboutUsHero} alt="About Sehaat Saathi" className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-1000"  loading="lazy" />
+              <img src={aboutUsHero} alt="About Sehaat Saathi App" className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-1000"  loading="lazy" />
             </div>
           </div>
         </div>

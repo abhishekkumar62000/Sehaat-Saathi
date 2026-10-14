@@ -349,7 +349,7 @@ router.post("/chat", async (req, res) => {
                 type: 'LLM_FALLBACK',
                 response: generateFallbackResponse(message, userContext, medicineContext),
                 confidence: 70,
-                citation: "Sehaat Saathi Medical Knowledge Base"
+                citation: "Sehaat Saathi App Medical Knowledge Base"
             });
         }
 

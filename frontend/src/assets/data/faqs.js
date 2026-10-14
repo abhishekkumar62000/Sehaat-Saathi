@@ -13,7 +13,7 @@ export const faqs = [
   },
   {
     id: 3,
-    question: "What services does Sehaat Saathi offer?",
+    question: "What services does Sehaat Saathi App offer?",
     answer:
       "We offer a wide range of diagnostic services, including blood tests, X-rays, MRI, and more. For a full list of services, please visit our 'Services' page.",
   },

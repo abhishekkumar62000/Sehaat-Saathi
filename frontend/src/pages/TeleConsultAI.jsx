@@ -2136,7 +2136,7 @@ const TeleConsultAI = () => {
             "Dr. Sharma just completed a Cardiac Sync in Delhi",
             "Emergency Neural-Relay active in Mumbai Hub",
             "98.4% Match success for Pediatrics in Bangalore",
-            "1,240+ Doctors live on Sehaat Saathi Pulse",
+            "1,240+ Doctors live on Sehaat Saathi App Pulse",
             "Quantum-Vault secured for 15,000+ reports today"
         ];
         const interval = setInterval(() => {
@@ -2674,9 +2674,9 @@ const TeleConsultAI = () => {
     return (
         <div className="min-h-screen bg-[#0f172a] text-white selection:bg-rose-500/30">
             <MetaHead
-              title="TeleConsult AI Doctor Video Call | Instant Online Doctor Consultation Bihar | Sehaat Saathi"
-              description="24/7 AI-Powered Teleconsultation & Live Doctor Video Call on Sehaat Saathi (Sehat Sathi). Real-time vitals, AI prescription, and specialist doctor consultation in Madhubani, Darbhanga, Patna & Bihar."
-              keywords="TeleConsult AI, doctor video calling booking app, online doctor video consultation app bihar, instant doctor video call, Sehaat Saathi Telemedicine, Sehat Sathi Doctor Video Call"
+              title="TeleConsult AI Doctor Video Call | Instant Online Doctor Consultation Bihar | Sehaat Saathi App"
+              description="24/7 AI-Powered Teleconsultation & Live Doctor Video Call on Sehaat Saathi App (Sehat Sathi). Real-time vitals, AI prescription, and specialist doctor consultation in Madhubani, Darbhanga, Patna & Bihar."
+              keywords="TeleConsult AI, doctor video calling booking app, online doctor video consultation app bihar, instant doctor video call, Sehaat Saathi App Telemedicine, Sehat Sathi Doctor Video Call"
               canonicalUrl="https://sehaatsaathi.com/teleconsult-ai"
             />
             <SEOKeywordIsland />
@@ -2946,7 +2946,7 @@ const TeleConsultAI = () => {
                             "Dr. Sharma just completed a Cardiac Sync in Delhi",
                             "Emergency Neural-Relay active in Mumbai Hub",
                             "98.4% Match success for Pediatrics in Bangalore",
-                            "1,240+ Doctors live on Sehaat Saathi Pulse",
+                            "1,240+ Doctors live on Sehaat Saathi App Pulse",
                             "Quantum-Vault secured for 15,000+ reports today"
                         ].map((text, idx) => (
                             <div
@@ -5349,7 +5349,7 @@ const TeleConsultAI = () => {
                         </div>
 
                         <div className="absolute bottom-12 text-[8px] font-black text-slate-700 uppercase tracking-[0.5em]">
-                            Sehaat Saathi • Neural Health Hub v4.0
+                            Sehaat Saathi App • Neural Health Hub v4.0
                         </div>
                     </div>
                 )

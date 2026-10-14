@@ -74,7 +74,7 @@ const OPDLobbyDisplay = () => {
         <div className="bg-white/10 backdrop-blur rounded-3xl px-8 py-4 flex items-center gap-4 border border-white/10">
           <div className="w-14 h-14 rounded-2xl bg-indigo-500/30 flex items-center justify-center text-2xl">👨‍⚕️</div>
           <div>
-            <div className="font-black text-xl">Sehaat Saathi OPD</div>
+            <div className="font-black text-xl">Sehaat Saathi App OPD</div>
             <div className="text-indigo-300 text-sm">Live Token Display — Clinic Reception Screen</div>
           </div>
         </div>
@@ -115,7 +115,7 @@ const OPDLobbyDisplay = () => {
 
       {/* Powered by footer */}
       <div className="text-center py-3 text-white/20 text-xs tracking-widest uppercase">
-        Powered by Sehaat Saathi Healthcare Network
+        Powered by Sehaat Saathi App Healthcare Network
       </div>
     </div>
   );

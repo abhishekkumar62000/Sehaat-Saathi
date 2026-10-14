@@ -240,9 +240,9 @@ const AmbulanceDispatch = () => {
     return (
         <div className="min-h-screen bg-[#020617] text-white selection:bg-rose-500/30 overflow-x-hidden">
             <MetaHead
-                title="Live 2-Minute Emergency Ambulance Dispatch | Sehaat Saathi Rapid Dispatch Network"
+                title="Live 2-Minute Emergency Ambulance Dispatch | Sehaat Saathi App Rapid Dispatch Network"
                 description="Live GPS tracking, AI Emergency Triage, and Instant 2-Minute Ambulance Dispatch across Bihar and India. Real-time driver pairing, vitals sync, and hospital bed reservation."
-                keywords="Live Ambulance Dispatch Bihar, Instant 2-Min Ambulance Booking, Sehaat Saathi Ambulance Dispatch, Sehat Sathi Emergency Live Tracking, ICU Ambulance Dispatch Madhubani Patna"
+                keywords="Live Ambulance Dispatch Bihar, Instant 2-Min Ambulance Booking, Sehaat Saathi App Ambulance Dispatch, Sehat Sathi Emergency Live Tracking, ICU Ambulance Dispatch Madhubani Patna"
                 canonicalUrl="https://sehaatsaathi.com/ambulance-dispatch"
             />
             {/* Header */}

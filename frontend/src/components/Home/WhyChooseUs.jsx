@@ -50,7 +50,7 @@ const WhyChooseUs = () => {
 
               <div className="relative p-1 bg-white rounded-full overflow-hidden">
                 <img src={SehaatSaathiImg}
-                  alt="Sehaat Saathi"
+                  alt="Sehaat Saathi App"
                   className="w-64 h-64 object-cover rounded-full transition-all duration-700 group-hover:scale-110 group-hover:rotate-6 z-10"
                  loading="lazy" />
                 {/* Gloss & Sparkle Overlay */}

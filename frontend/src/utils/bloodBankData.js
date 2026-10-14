@@ -1,4 +1,4 @@
-// Sehaat Saathi Emergency Blood Bank Services Data (Madhubani, Darbhanga, Patna & Bihar Network)
+// Sehaat Saathi App Emergency Blood Bank Services Data (Madhubani, Darbhanga, Patna & Bihar Network)
 
 export const HELPLINE_NUMBERS = [
   { labelEn: "Founder Direct", labelHi: "संस्थापक हॉटलाइन", number: "+91 6200087830", cleanNo: "916200087830" },
@@ -11,17 +11,17 @@ export const EMOTIONAL_MOTIVATIONS = [
   {
     quoteHi: "रक्तदान महा-कल्याण! जब आपकी दी हुई एक बूँद खून किसी की रगों में दौड़ती है, तो एक पूरा परिवार बिखरने से बच जाता है।",
     quoteEn: "Blood Donation is the Supreme Service! When a single drop of your blood flows through someone's veins, an entire family is saved from shattering.",
-    author: "— सेहत साथी प्रेरणा (Sehaat Saathi Mission)"
+    author: "— सेहत साथी ऐप प्रेरणा (Sehaat Saathi App Mission)"
   },
   {
-    quoteHi: "अस्पताल के बेड पर बैठा हर मरीज किसी की माँ, किसी का पिता या किसी का मासूम बच्चा है। उनकी साँसें बचाना सेहत साथी का सबसे पवित्र कर्तव्य है।",
-    quoteEn: "Every patient on a hospital bed is someone's mother, father, or child. Preserving their breath is Sehaat Saathi's most sacred duty.",
+    quoteHi: "अस्पताल के बेड पर बैठा हर मरीज किसी की माँ, किसी का पिता या किसी का मासूम बच्चा है। उनकी साँसें बचाना सेहत साथी ऐप का सबसे पवित्र कर्तव्य है।",
+    quoteEn: "Every patient on a hospital bed is someone's mother, father, or child. Preserving their breath is Sehaat Saathi App's most sacred duty.",
     author: "— संस्थापक संकल्प (Founder Commitment)"
   },
   {
     quoteHi: "हम 100% खून मिलने का झूठा दावा नहीं करते, पर यह 1000% वादा करते हैं कि आपकी जान बचाने के लिए हम जमीनी स्तर पर हर दरवाजे पर दस्तक देंगे!",
     quoteEn: "We make no false 100% claims, but we give 1000% commitment that our team will knock every door on the ground to arrange blood for your loved one!",
-    author: "— सेहत साथी ग्राउंड टीम (Sehaat Saathi Ground Team)"
+    author: "— सेहत साथी ऐप ग्राउंड टीम (Sehaat Saathi App Ground Team)"
   }
 ];
 
@@ -185,8 +185,8 @@ export const REAL_SUCCESS_STORIES = [
     patientName: 'Sunita Devi (Age 48)',
     location: 'DMCH Darbhanga',
     group: 'O Negative (O-)',
-    storyHi: 'रातों-रात इमरजेंसी सर्जरी के लिए 2 यूनिट O- नेगेटिव ब्लड की ज़रूरत थी। सेहत साथी टीम ने 35 मिनट में रेड क्रॉस सेंटर से ब्लड अरेंज करवाया।',
-    storyEn: 'Required 2 units of rare O- Negative blood overnight for emergency surgery. Sehaat Saathi team coordinated and arranged blood within 35 minutes from Red Cross.',
+    storyHi: 'रातों-रात इमरजेंसी सर्जरी के लिए 2 यूनिट O- नेगेटिव ब्लड की ज़रूरत थी। सेहत साथी ऐप टीम ने 35 मिनट में रेड क्रॉस सेंटर से ब्लड अरेंज करवाया।',
+    storyEn: 'Required 2 units of rare O- Negative blood overnight for emergency surgery. Sehaat Saathi App team coordinated and arranged blood within 35 minutes from Red Cross.',
     timeAgo: 'Yesterday at 2:30 AM'
   },
   {
@@ -194,8 +194,8 @@ export const REAL_SUCCESS_STORIES = [
     patientName: 'Rameshwar Thakur (Age 62)',
     location: 'Madhubani Sadar Hospital',
     group: 'B Positive (B+)',
-    storyHi: 'डेंगू में प्लेटलेट्स काउंट 15,000 गिर गया था। सेहत साथी के वॉलिएंटियर डोनर ने अस्पताल पहुंचकर तुरंत 1 यूनिट SDP प्लेटलेट्स डोनेट किया।',
-    storyEn: 'Platelet count dropped to 15,000 in severe Dengue. Sehaat Saathi volunteer donor arrived at hospital and donated 1 Unit SDP Platelets immediately.',
+    storyHi: 'डेंगू में प्लेटलेट्स काउंट 15,000 गिर गया था। सेहत साथी ऐप के वॉलिएंटियर डोनर ने अस्पताल पहुंचकर तुरंत 1 यूनिट SDP प्लेटलेट्स डोनेट किया।',
+    storyEn: 'Platelet count dropped to 15,000 in severe Dengue. Sehaat Saathi App volunteer donor arrived at hospital and donated 1 Unit SDP Platelets immediately.',
     timeAgo: '3 Days Ago'
   }
 ];

@@ -36,7 +36,7 @@ export const generateMeetingLink = (provider) => {
 };
 
 /**
- * Auto-generates a unique Sehaat Saathi Booking Pass ID
+ * Auto-generates a unique Sehaat Saathi App Booking Pass ID
  * Format: SSA-VID-YYYY-XXXXX
  */
 export const generateBookingPassId = () => {

@@ -47,6 +47,12 @@ const AppointmentSchema = new mongoose.Schema(
       type: String,
       default: "pending",
     },
+    paymentId: {
+      type: String,
+    },
+    orderId: {
+      type: String,
+    },
     status: {
       type: String,
       enum: ["pending", "confirmed", "completed", "cancelled"],

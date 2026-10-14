@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 
 const MetaHead = ({ 
-  title = "Sehaat Saathi | India's #1 AI Healthcare Platform & OPD Booking", 
-  description = "Sehaat Saathi is India's premier AI-powered healthcare platform. Book instant hospital OPD token passes, consult top specialist doctors, access 24/7 AI diagnosis, and track live beds across India.",
-  keywords = "Sehaat Saathi, Sehaat Saathi App, Sehaat Saathi HealthCare Platform, Sehaat Saathi OPD Booking, Sehaat Saathi Doctor Booking, Sehaat Saathi Hospital Booking, Sehaat Saathi Ambulance, Sehaat Saathi Gigs, Sehaat Saathi Bihar, Online Doctor Consultation India, Best Health App India",
+  title = "Sehaat Saathi App | India's #1 AI Healthcare Platform & OPD Booking", 
+  description = "Sehaat Saathi App is India's premier AI-powered healthcare platform. Book instant hospital OPD token passes, consult top specialist doctors, access 24/7 AI diagnosis, and track live beds across India.",
+  keywords = "Sehaat Saathi App, Sehaat Saathi, Sehaat Saathi HealthCare Platform, Sehaat Saathi OPD Booking, Sehaat Saathi Doctor Booking, Sehaat Saathi Hospital Booking, Sehaat Saathi Ambulance, Sehaat Saathi Gigs, Sehaat Saathi Bihar, Online Doctor Consultation India, Best Health App India",
   canonicalUrl = "https://sehaatsaathi.com/" 
 }) => {
 

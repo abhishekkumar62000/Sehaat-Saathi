@@ -1,4 +1,4 @@
-// Sehaat Saathi Home Healthcare Services Database (Madhubani Town & Nearby Surrounding 1-10 KM Radius)
+// Sehaat Saathi App Home Healthcare Services Database (Madhubani Town & Nearby Surrounding 1-10 KM Radius)
 
 export const HELPLINE_NUMBERS = [
   { labelEn: "Founder Direct", labelHi: "संस्थापक हॉटलाइन", number: "+91 6200087830", cleanNo: "916200087830" },

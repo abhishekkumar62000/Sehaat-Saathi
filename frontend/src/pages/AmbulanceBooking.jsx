@@ -38,7 +38,7 @@ const TRANSLATIONS = {
         bannerTag3: "🏷️ 100% Transparent Zero Surge Rate",
         callFounderBtn: "Call Founder (+91 6200087830)",
         callHelplineBtn: "Helpline (+91 9934276622)",
-        heroTitle: "Sehaat Saathi Emergency Ambulance Booking Services",
+        heroTitle: "Sehaat Saathi App Emergency Ambulance Booking Services",
         heroSubtitle: "24/7 Rapid Life-Saving Medical Fleet Across Madhubani, Darbhanga, Patna & Inter-State Highways. 50+ Verified Vehicles • Certified Drivers • Zero Hidden Charges.",
         tabDirectory: "50+ Ambulance Fleet Directory",
         tabDispatch: "Instant 2-Min Booking Wizard",
@@ -75,16 +75,16 @@ const TRANSLATIONS = {
         emergencyBedsLabel: "Emergency Casualty Beds",
         modalVerifiedBadge: "Real Vehicle Photo Verified",
         modalDriverProfile: "Driver Credential & Verification",
-        modalFounderHotline: "Sehaat Saathi Founder Direct Hotline",
+        modalFounderHotline: "Sehaat Saathi App Founder Direct Hotline",
         modalEquipmentTitle: "In-Vehicle Medical Equipment & Support"
     },
     hi: {
         smartHub: "स्मार्ट हब (Smart Hub)",
         founderHotline: "संस्थापक: +91 6200087830",
         hotline108: "108 एम्बुलेंस कॉल",
-        bannerBadge: "🚨 24 घंटे आपातकालीन एम्बुलेंस सेवा - सेहत साथी नेटवर्क",
+        bannerBadge: "🚨 24 घंटे आपातकालीन एम्बुलेंस सेवा - सेहत साथी ऐप नेटवर्क",
         bannerTitle: "मधुबनी से दरभंगा, पटना एवं नई दिल्ली के लिए 24 घंटे 365 दिन लाइफलाइन एम्बुलेंस सेवा",
-        bannerSubtitle: "10 से 15 मिनट में एम्बुलेंस आपके घर/लोकेशन तक पहुँचाने की सेहत साथी टीम की 100% पूरी कोशिश।",
+        bannerSubtitle: "10 से 15 मिनट में एम्बुलेंस आपके घर/लोकेशन तक पहुँचाने की सेहत साथी ऐप टीम की 100% पूरी कोशिश।",
         nearbyAreasTitle: "📍 स्टेप 1 (लोकल नेटवर्क):",
         nearbyAreasList: "मधुबनी सदर, राजनगर, भगवानपुर, रंटी, रहिका, खजौली, जयनगर, पंडौल, सकरी, बेनीपट्टी, झंझारपुर, फुलपरास, कलुआही, लौकही।",
         majorHubsTitle: "🏥 स्टेप 2, 3 व 4 (रीजनल व नेशनल हब):",
@@ -94,7 +94,7 @@ const TRANSLATIONS = {
         bannerTag3: "🏷️ 100% पारदर्शी फिक्स्ड किराया",
         callFounderBtn: "संस्थापक को सीधा कॉल करें (+91 6200087830)",
         callHelplineBtn: "इमरजेंसी हेल्पलाइन (+91 9934276622)",
-        heroTitle: "सेहत साथी इमरजेंसी एम्बुलेंस बुकिंग सर्विसेज",
+        heroTitle: "सेहत साथी ऐप इमरजेंसी एम्बुलेंस बुकिंग सर्विसेज",
         heroSubtitle: "24 घंटे 365 दिन — 10 से 15 मिनट में आपके घर से दरभंगा, पटना और दिल्ली तक सुरक्षित एम्बुलेंस यात्रा। 50+ सत्यापित मेडिकल वाहन (Verified Fleet) • अनुशासित ड्राइवर • निश्चित फिक्स्ड किराया।",
         tabDirectory: "50+ एम्बुलेंस की लिस्ट",
         tabDispatch: "इमरजेंसी बुकिंग फॉर्म (Booking Form)",
@@ -131,7 +131,7 @@ const TRANSLATIONS = {
         emergencyBedsLabel: "खाली इमरजेंसी बेड",
         modalVerifiedBadge: "100% सत्यापित मेडिकल वाहन (Verified Vehicle)",
         modalDriverProfile: "ड्राइवर की पूरी जानकारी",
-        modalFounderHotline: "सेहत साथी संस्थापक नंबर",
+        modalFounderHotline: "सेहत साथी ऐप संस्थापक नंबर",
         modalEquipmentTitle: "गाड़ी में मौजूद उपकरण व सुविधाएं:"
     }
 };
@@ -341,9 +341,9 @@ const AmbulanceBooking = () => {
     return (
         <div className="min-h-screen bg-slate-950 text-white font-sans selection:bg-rose-500/30 overflow-x-hidden relative">
           <MetaHead
-            title="Sehaat Saathi Emergency Ambulance Booking Services | 24/7 Bihar & India ICU Ambulance"
-            description="Sehaat Saathi Emergency Ambulance Booking Services (Sehat Sathi Ambulance) — 24/7 Lifeline across Bihar & India. 50+ verified vehicles: ICU Ventilator Ambulance, ALS, BLS, Neonatal Incubator, Oxygen ambulances. 2-min rapid dispatch across Madhubani, Darbhanga, Patna & AIIMS Delhi. Helpline: +91 6200087830."
-            keywords="Sehaat Saathi Emergency Ambulance Booking Services, Sehaat Saathi Ambulance, Sehat Sathi Ambulance, Sehaat Sathi Emergency Ambulance, Sehat Saathi Ambulance, Sehhat Sathi Ambulance, Sehaat Saathi Ambulance Service, Sehat Sathi Ambulance Booking, Sehaat Saathi Ambulance Number, Sehat Sathi Ambulance Helpline, Sehaat Saathi Ambulance Bihar, Sehat Sathi Ambulance Madhubani, Sehaat Saathi Ambulance Patna, Sehat Sathi Ambulance Darbhanga, Sehaat Saathi ICU Ambulance, Sehat Sathi Ventilator Ambulance, Sehaat Saathi Oxygen Ambulance, Sehat Sathi Air Ambulance, 24/7 Ambulance Bihar, Emergency Ambulance Booking India, Abhishek Kumar Sehaat Saathi Ambulance"
+            title="Sehaat Saathi App Emergency Ambulance Booking Services | 24/7 Bihar & India ICU Ambulance"
+            description="Sehaat Saathi App Emergency Ambulance Booking Services (Sehat Sathi Ambulance) — 24/7 Lifeline across Bihar & India. 50+ verified vehicles: ICU Ventilator Ambulance, ALS, BLS, Neonatal Incubator, Oxygen ambulances. 2-min rapid dispatch across Madhubani, Darbhanga, Patna & AIIMS Delhi. Helpline: +91 6200087830."
+            keywords="Sehaat Saathi App Emergency Ambulance Booking Services, Sehaat Saathi App Ambulance, Sehat Sathi Ambulance, Sehaat Sathi Emergency Ambulance, Sehat Saathi Ambulance, Sehhat Sathi Ambulance, Sehaat Saathi App Ambulance Service, Sehat Sathi Ambulance Booking, Sehaat Saathi App Ambulance Number, Sehat Sathi Ambulance Helpline, Sehaat Saathi App Ambulance Bihar, Sehat Sathi Ambulance Madhubani, Sehaat Saathi App Ambulance Patna, Sehat Sathi Ambulance Darbhanga, Sehaat Saathi App ICU Ambulance, Sehat Sathi Ventilator Ambulance, Sehaat Saathi App Oxygen Ambulance, Sehat Sathi Air Ambulance, 24/7 Ambulance Bihar, Emergency Ambulance Booking India, Abhishek Kumar Sehaat Saathi App Ambulance"
             canonicalUrl="https://sehaatsaathi.com/ambulance"
           />
           <AmbulanceSEOIsland />
@@ -395,14 +395,14 @@ const AmbulanceBooking = () => {
 
             <main className="container mx-auto max-w-7xl px-3 sm:px-6 py-6 sm:py-10 relative z-10 space-y-8 sm:space-y-12">
 
-                {/* Full-Width Official Sehaat Saathi Emergency Ambulance Poster Banner - WOW FACTOR */}
+                {/* Full-Width Official Sehaat Saathi App Emergency Ambulance Poster Banner - WOW FACTOR */}
                 <div
-                    onClick={() => handleOpenZoomModal(ambulancePosterImg, "Sehaat Saathi Official Emergency Ambulance Network Poster")}
+                    onClick={() => handleOpenZoomModal(ambulancePosterImg, "Sehaat Saathi App Official Emergency Ambulance Network Poster")}
                     className="w-full relative rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-rose-500/50 shadow-[0_0_40px_rgba(225,29,72,0.35)] group transition-all duration-300 bg-slate-950 cursor-pointer"
                 >
                     <img
                         src={ambulancePosterImg}
-                        alt="Sehaat Saathi Emergency Ambulance Network Poster"
+                        alt="Sehaat Saathi App Emergency Ambulance Network Poster"
                         className="w-full h-auto max-h-72 sm:max-h-96 md:max-h-[420px] lg:max-h-[480px] object-contain sm:object-cover mx-auto group-hover:scale-[1.01] transition-transform duration-500 pointer-events-none"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none"></div>
@@ -487,7 +487,7 @@ const AmbulanceBooking = () => {
                             >
                                 <img
                                     src={ambulanceHeroImg}
-                                    alt="Sehaat Saathi Official Emergency Ambulance Vehicle"
+                                    alt="Sehaat Saathi App Official Emergency Ambulance Vehicle"
                                     className="w-full h-48 sm:h-56 lg:h-64 object-contain bg-slate-950 p-1 group-hover:scale-[1.03] transition-transform duration-500 pointer-events-none"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/10 to-transparent pointer-events-none"></div>
@@ -530,11 +530,11 @@ const AmbulanceBooking = () => {
                 {/* Hero Title */}
                 <div className="text-center space-y-3 sm:space-y-4 relative">
                     <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-amber-400 text-[10px] sm:text-xs font-black uppercase tracking-widest shadow-md">
-                        <BsPatchCheckFill className="text-emerald-400" /> Sehaat Saathi Official Healthcare Network
+                        <BsPatchCheckFill className="text-emerald-400" /> Sehaat Saathi App Official Healthcare Network
                     </div>
 
                     <h1 className="text-2xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-white leading-tight">
-                        Sehaat Saathi Emergency <br className="hidden sm:inline" />
+                        Sehaat Saathi App Emergency <br className="hidden sm:inline" />
                         <span className="bg-gradient-to-r from-rose-500 via-amber-400 to-emerald-400 bg-clip-text text-transparent drop-shadow-2xl">
                             Ambulance Booking Services
                         </span>
@@ -565,10 +565,10 @@ const AmbulanceBooking = () => {
                             🚨 आपातकालीन जीवन रक्षा तुलना (LIFE-SAVING COMPARISON)
                         </span>
                         <h3 className="text-lg sm:text-2xl font-black text-white uppercase">
-                            क्यों सेहत साथी एम्बुलेंस सामान्य लोकल कार/ऑटो से 100% बेहतर व सुरक्षित है?
+                            क्यों सेहत साथी ऐप एम्बुलेंस सामान्य लोकल कार/ऑटो से 100% बेहतर व सुरक्षित है?
                         </h3>
                         <p className="text-xs sm:text-sm text-slate-300 font-bold">
-                            इमरजेंसी में सामान्य कार या ऑटो बुक करना मरीज की जान के लिए जोखिम भरा हो सकता है। जानिए सेहत साथी एम्बुलेंस में क्या खास है:
+                            इमरजेंसी में सामान्य कार या ऑटो बुक करना मरीज की जान के लिए जोखिम भरा हो सकता है। जानिए सेहत साथी ऐप एम्बुलेंस में क्या खास है:
                         </p>
                     </div>
 
@@ -581,7 +581,7 @@ const AmbulanceBooking = () => {
                             </div>
                             <h4 className="font-black text-sm text-white">1. जीवन रक्षक मेडिकल उपकरण (Life-Saving Equipment)</h4>
                             <div className="space-y-1.5 text-xs">
-                                <p className="text-emerald-400 font-bold">✅ सेहत साथी एम्बुलेंस:</p>
+                                <p className="text-emerald-400 font-bold">✅ सेहत साथी ऐप एम्बुलेंस:</p>
                                 <p className="text-slate-300 font-medium">इन-बिल्ट ऑक्सीजन सिलेंडर, वेंटिलेटर, स्ट्रेचर, सीपीआर बीपी मॉनिटर व प्राथमिक चिकित्सा किट।</p>
                                 <p className="text-rose-400 font-bold pt-1">❌ सामान्य लोकल कार / ऑटो:</p>
                                 <p className="text-slate-400 font-medium">कोई ऑक्सीजन या मेडिकल सपोर्ट नहीं — रास्ते में सांस रुकने या इमरजेंसी होने पर कोई सुरक्षा नहीं।</p>
@@ -596,7 +596,7 @@ const AmbulanceBooking = () => {
                             </div>
                             <h4 className="font-black text-sm text-white">2. ट्रेंड पैरामेडिक्स व मेडिकल अटेंडेंट (Medical Staff)</h4>
                             <div className="space-y-1.5 text-xs">
-                                <p className="text-emerald-400 font-bold">✅ सेहत साथी एम्बुलेंस:</p>
+                                <p className="text-emerald-400 font-bold">✅ सेहत साथी ऐप एम्बुलेंस:</p>
                                 <p className="text-slate-300 font-medium">रास्ते में ट्रेंड नर्स/पैरामेडिक्स मरीज की धड़कन, बीपी और ऑक्सीजन लेवल को हर पल संभालते हैं।</p>
                                 <p className="text-rose-400 font-bold pt-1">❌ सामान्य लोकल कार / ऑटो:</p>
                                 <p className="text-slate-400 font-medium">केवल ड्राइवर होता है — रास्ते में मरीज की मेडिकल स्थिति बिगड़ने पर कोई संभालने वाला नहीं।</p>
@@ -611,7 +611,7 @@ const AmbulanceBooking = () => {
                             </div>
                             <h4 className="font-black text-sm text-white">3. सायरन व ट्रैफिक में पहला रास्ता (Traffic Clearance)</h4>
                             <div className="space-y-1.5 text-xs">
-                                <p className="text-emerald-400 font-bold">✅ सेहत साथी एम्बुलेंस:</p>
+                                <p className="text-emerald-400 font-bold">✅ सेहत साथी ऐप एम्बुलेंस:</p>
                                 <p className="text-slate-300 font-medium">लाल बत्ती और सायरन सुनते ही पुलिस व स्थानीय जनता तुरंत रास्ता छोड़ देती है — मरीज बिना समय गंवाए पहुँचता है।</p>
                                 <p className="text-rose-400 font-bold pt-1">❌ सामान्य लोकल कार / ऑटो:</p>
                                 <p className="text-slate-400 font-medium">सामान्य ट्रैफिक जाम में फंस जाते हैं — जिससे 1-2 घंटे की बहुमूल्य जीवन रक्षक देरी हो जाती है।</p>
@@ -626,7 +626,7 @@ const AmbulanceBooking = () => {
                             </div>
                             <h4 className="font-black text-sm text-white">4. 100% आराम व समतल लेटने की सुविधा (Full Stretcher)</h4>
                             <div className="space-y-1.5 text-xs">
-                                <p className="text-emerald-400 font-bold">✅ सेहत साथी एम्बुलेंस:</p>
+                                <p className="text-emerald-400 font-bold">✅ सेहत साथी ऐप एम्बुलेंस:</p>
                                 <p className="text-slate-300 font-medium">मरीज हाइड्रोलिक स्ट्रेचर पर आराम से लेटकर बिना किसी झटके के अस्पताल पहुंचता है।</p>
                                 <p className="text-rose-400 font-bold pt-1">❌ सामान्य लोकल कार / ऑटो:</p>
                                 <p className="text-slate-400 font-medium">संकरी सीट पर बैठने या झटके से मरीज का दर्द व हालत और ज्यादा गंभीर हो जाती है।</p>
@@ -641,7 +641,7 @@ const AmbulanceBooking = () => {
                             </div>
                             <h4 className="font-black text-sm text-white">5. निश्चित पारदर्शी किराया — कोई हिडन चार्ज नहीं (Fixed Fare Guarantee)</h4>
                             <div className="space-y-1.5 text-xs">
-                                <p className="text-emerald-400 font-bold">✅ सेहत साथी एम्बुलेंस:</p>
+                                <p className="text-emerald-400 font-bold">✅ सेहत साथी ऐप एम्बुलेंस:</p>
                                 <p className="text-slate-300 font-medium">100% फिक्स्ड सरकारी रेट कार्ड — दरभंगा व पटना के लिए पहले से निश्चित पारदर्शी किराया।</p>
                                 <p className="text-rose-400 font-bold pt-1">❌ सामान्य लोकल कार / ऑटो:</p>
                                 <p className="text-slate-400 font-medium">इमरजेंसी लाचारी का फायदा उठाकर ₹5,000 से ₹10,000 तक मनमाना किराया वसूलते हैं।</p>
@@ -1163,7 +1163,7 @@ const AmbulanceBooking = () => {
 
                             <div className="p-4 bg-rose-500/10 rounded-xl sm:rounded-2xl border border-rose-500/30 space-y-1 text-xs">
                                 <h4 className="font-bold text-rose-400 uppercase text-[10px]">{t.modalFounderHotline}</h4>
-                                <p className="text-xs font-bold text-white">Sehaat Saathi Emergency Help</p>
+                                <p className="text-xs font-bold text-white">Sehaat Saathi App Emergency Help</p>
                                 <p className="font-bold text-emerald-400 font-mono text-xs sm:text-sm">📞 +91 6200087830</p>
                                 <p className="font-bold text-emerald-400 font-mono text-xs sm:text-sm">📞 +91 9934276622</p>
                             </div>
@@ -1218,7 +1218,7 @@ const AmbulanceBooking = () => {
                         <div className="space-y-1.5 sm:space-y-2 text-center">
                             <BsHeadset className="text-3xl sm:text-4xl text-rose-400 mx-auto animate-pulse" />
                             <h3 className="text-lg sm:text-xl font-black uppercase text-white tracking-wide">
-                                {language === 'hi' ? 'सेहत साथी इमरजेंसी एम्बुलेंस हेल्पलाइन' : 'Sehaat Saathi Emergency Ambulance Helpline'}
+                                {language === 'hi' ? 'सेहत साथी ऐप इमरजेंसी एम्बुलेंस हेल्पलाइन' : 'Sehaat Saathi App Emergency Ambulance Helpline'}
                             </h3>
                             <p className="text-xs text-slate-400 font-bold">
                                 {language === 'hi' ? '24/7 एम्बुलेंस बुकिंग व सहायता केंद्र' : '24/7 Emergency Ambulance Booking & Support Center'}

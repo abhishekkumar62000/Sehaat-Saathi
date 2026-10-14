@@ -38,13 +38,13 @@ const TRANSLATIONS = {
     en: {
         smartHub: "Smart Hub",
         founderHotline: "Blood Helpline",
-        emergencyBadge: "⚠️ DISCLAIMER: Demo Stock Data shown for demonstration. Sehaat Saathi team verifies live stock & coordinates blood dispatch personally with authorized blood banks upon your request.",
+        emergencyBadge: "⚠️ DISCLAIMER: Demo Stock Data shown for demonstration. Sehaat Saathi App team verifies live stock & coordinates blood dispatch personally with authorized blood banks upon your request.",
         honestPromiseTitle: "OUR SACRED COMMITMENT & HONEST PROMISE (100% HONEST PLEDGE)",
-        honestPromiseText: "We make no fake claims of guaranteed 100% stock in every rare situation, but we promise 1000% effort from Sehaat Saathi ground team! We will knock every blood bank door and reach every volunteer donor on the ground to save your patient.",
+        honestPromiseText: "We make no fake claims of guaranteed 100% stock in every rare situation, but we promise 1000% effort from Sehaat Saathi App ground team! We will knock every blood bank door and reach every volunteer donor on the ground to save your patient.",
         ambulanceLink: "Book Ambulance 🚑",
         heroBadge: "🩸 24/7 EMERGENCY BLOOD ASSISTANCE NETWORK",
-        heroTitle: "Sehaat Saathi Emergency Blood Bank Assistance Network",
-        heroSubtitle: "No patient will lose life due to blood shortage! Sehaat Saathi ground coordinators personally arrange blood units from verified blood banks and registered voluntary donors across Madhubani, Darbhanga & Bihar.",
+        heroTitle: "Sehaat Saathi App Emergency Blood Bank Assistance Network",
+        heroSubtitle: "No patient will lose life due to blood shortage! Sehaat Saathi App ground coordinators personally arrange blood units from verified blood banks and registered voluntary donors across Madhubani, Darbhanga & Bihar.",
         missionTitle: "FOUNDER VISION — ZERO DEATHS DUE TO BLOOD SHORTAGE",
         missionDesc: "Every life is precious. Our dedicated 24/7 emergency team works on the ground to coordinate with government Sadar Hospitals, DMCH, Red Cross centers, and registered youth donors to dispatch blood to your patient in minutes.",
         tabRequest: "Urgent Blood Request",
@@ -60,26 +60,26 @@ const TRANSLATIONS = {
         patientNameLabel: "Patient Full Name",
         attendantPhoneLabel: "Attendant Contact Mobile Number *",
         submitRequestBtn: "SUBMIT URGENT BLOOD REQUEST TO SEHAAT SAATHI",
-        registerDonorTitle: "Become a Sehaat Saathi Volunteer Donor",
+        registerDonorTitle: "Become a Sehaat Saathi App Volunteer Donor",
         registerDonorBtn: "Register as Hero Donor 🩸",
         stockTitle: "Real-World Blood Availability (Demo Stock Data)",
         stockSubtitle: "Clearly labeled demo data for illustration. Real live stock will be verified personally by our ground coordinator.",
         filterGroupLabel: "Filter Stock by Blood Group:",
         allGroups: "All Blood Groups",
-        contactModalTitle: "Sehaat Saathi Emergency Blood Helplines"
+        contactModalTitle: "Sehaat Saathi App Emergency Blood Helplines"
     },
     hi: {
         smartHub: "स्मार्ट हब (Smart Hub)",
         founderHotline: "ब्लड हेल्पलाइन",
-        emergencyBadge: "⚠️ जरूरी सूचना: यह डेमो स्टॉक डेटा है। आपकी रिक्वेस्ट मिलते ही सेहत साथी की टीम तुरंत अधिकृत ब्लड बैंकों और डोनर्स से संपर्क कर खून का इंतजाम करवाती है।",
-        honestPromiseTitle: "सेहत साथी का पवित्र संकल्प व सच्चा वादा (100% HONEST PLEDGE)",
-        honestPromiseText: "हम यह 100% झूठा दावा नहीं करते कि हर स्थिति में तुरंत खून मिल ही जाएगा, लेकिन हम यह 1000% वादा करते हैं कि सेहत साथी टीम मरीज की जान बचाने के लिए अपना 100% पूरा जोर (Full Ground Effort) लगा देगी! हम मधुबनी व बिहार के हर ब्लड बैंक और डोनर के दरवाजे पर जाकर खून का इंतजाम करने का पूरा प्रयास करेंगे।",
+        emergencyBadge: "⚠️ जरूरी सूचना: यह डेमो स्टॉक डेटा है। आपकी रिक्वेस्ट मिलते ही सेहत साथी ऐप की टीम तुरंत अधिकृत ब्लड बैंकों और डोनर्स से संपर्क कर खून का इंतजाम करवाती है।",
+        honestPromiseTitle: "सेहत साथी ऐप का पवित्र संकल्प व सच्चा वादा (100% HONEST PLEDGE)",
+        honestPromiseText: "हम यह 100% झूठा दावा नहीं करते कि हर स्थिति में तुरंत खून मिल ही जाएगा, लेकिन हम यह 1000% वादा करते हैं कि सेहत साथी ऐप टीम मरीज की जान बचाने के लिए अपना 100% पूरा जोर (Full Ground Effort) लगा देगी! हम मधुबनी व बिहार के हर ब्लड बैंक और डोनर के दरवाजे पर जाकर खून का इंतजाम करने का पूरा प्रयास करेंगे।",
         ambulanceLink: "एम्बुलेंस बुक करें 🚑",
         heroBadge: "🩸 24/7 आपातकालीन रक्त सहायता नेटवर्क",
-        heroTitle: "सेहत साथी इमरजेंसी ब्लड बैंक असिस्टेंस नेटवर्क 🩸",
-        heroSubtitle: "कोई भी मरीज खून की कमी से अपनी जान नहीं गंवाएगा! सेहत साथी की टीम मधुबनी, दरभंगा व बिहार के प्रमुख ब्लड बैंकों और वॉलिएंटियर डोनर्स से सीधे संपर्क करके मरीज के लिए तुरंत रक्त उपलब्ध करवाती है।",
+        heroTitle: "सेहत साथी ऐप इमरजेंसी ब्लड बैंक असिस्टेंस नेटवर्क 🩸",
+        heroSubtitle: "कोई भी मरीज खून की कमी से अपनी जान नहीं गंवाएगा! सेहत साथी ऐप की टीम मधुबनी, दरभंगा व बिहार के प्रमुख ब्लड बैंकों और वॉलिएंटियर डोनर्स से सीधे संपर्क करके मरीज के लिए तुरंत रक्त उपलब्ध करवाती है।",
         missionTitle: "संस्थापक का संकल्प — खून की कमी से कोई जान नहीं गंवाएगा",
-        missionDesc: "हर जीवन अनमोल है! सेहत साथी की ग्राउंड टीम 24 घंटे सदर अस्पताल, डीएमसीएच, रेड क्रॉस और पंजीकृत युवा रक्तदाताओं से सीधे संपर्क बनाकर आपके मरीज के लिए खून का पक्का इंतजाम करने का प्रयास करती है।",
+        missionDesc: "हर जीवन अनमोल है! सेहत साथी ऐप की ग्राउंड टीम 24 घंटे सदर अस्पताल, डीएमसीएच, रेड क्रॉस और पंजीकृत युवा रक्तदाताओं से सीधे संपर्क बनाकर आपके मरीज के लिए खून का पक्का इंतजाम करने का प्रयास करती है।",
         tabRequest: "आपातकालीन ब्लड रिक्वेस्ट",
         tabStock: "ब्लड बैंक स्टॉक (Demo Data)",
         tabDonors: "वॉलिएंटियर डोनर्स नेटवर्क",
@@ -93,13 +93,13 @@ const TRANSLATIONS = {
         patientNameLabel: "मरीज का नाम",
         attendantPhoneLabel: "अटेंडेंट का मोबाइल नंबर *",
         submitRequestBtn: "आपातकालीन ब्लड रिक्वेस्ट तुरंत भेजें (SUBMIT REQUEST)",
-        registerDonorTitle: "सेहत साथी वॉलिएंटियर रक्तदाता बनें",
+        registerDonorTitle: "सेहत साथी ऐप वॉलिएंटियर रक्तदाता बनें",
         registerDonorBtn: "ब्लड डोनर के रूप में जुड़ें 🩸",
         stockTitle: "ब्लड बैंक में उपलब्ध स्टॉक (डेमो डेटा)",
         stockSubtitle: "यह केवल प्रदर्शित डेमो स्टॉक डेटा है। आपकी रिक्वेस्ट आते ही हमारी टीम लाइव स्टॉक सत्यापित करके ब्लड भिजवाती है।",
         filterGroupLabel: "ब्लड ग्रुप से स्टॉक खोजें:",
         allGroups: "सभी ब्लड ग्रुप्स",
-        contactModalTitle: "सेहत साथी इमरजेंसी ब्लड हेल्पलाइन"
+        contactModalTitle: "सेहत साथी ऐप इमरजेंसी ब्लड हेल्पलाइन"
     }
 };
 
@@ -163,7 +163,7 @@ const BloodBankHub = () => {
 
         setActiveBloodRequest(newRequest);
         setActiveTab('tracking');
-        toast.success(language === 'hi' ? "🎉 ब्लड रिक्वेस्ट दर्ज हो गई है! सेहत साथी टीम तुरंत संपर्क कर रही है।" : "🎉 Urgent Blood Request Registered!");
+        toast.success(language === 'hi' ? "🎉 ब्लड रिक्वेस्ट दर्ज हो गई है! सेहत साथी ऐप टीम तुरंत संपर्क कर रही है।" : "🎉 Urgent Blood Request Registered!");
     };
 
     const handleDonorRegistrationSubmit = (e) => {
@@ -172,7 +172,7 @@ const BloodBankHub = () => {
             toast.error(language === 'hi' ? "कृपया सभी जानकारी भरें!" : "Please fill all donor details!");
             return;
         }
-        toast.success(language === 'hi' ? "❤️ धन्यवाद! आप सेहत साथी वॉलिएंटियर डोनर नेटवर्क में शामिल हो गए हैं।" : "❤️ Thank you! Registered as Sehaat Saathi Volunteer Donor!");
+        toast.success(language === 'hi' ? "❤️ धन्यवाद! आप सेहत साथी ऐप वॉलिएंटियर डोनर नेटवर्क में शामिल हो गए हैं।" : "❤️ Thank you! Registered as Sehaat Saathi App Volunteer Donor!");
         setShowDonorModal(false);
         setDonorName('');
         setDonorPhone('');
@@ -182,9 +182,9 @@ const BloodBankHub = () => {
     return (
         <div className="min-h-screen bg-slate-950 text-white font-sans selection:bg-rose-500/30 overflow-x-hidden relative">
             <MetaHead
-              title="Sehaat Saathi Emergency Blood Bank Hub Booking | 24/7 Blood Availability Bihar & India"
-              description="Sehaat Saathi Emergency Blood Bank Hub Booking (Sehat Sathi Blood Bank) — 24/7 Emergency Blood Assistance across Bihar & India. Real-time blood availability & voluntary donor coordination for A+, A-, B+, B-, O+, O-, AB+, AB-, Platelets (SDP/RDP), and FFP in Madhubani, Darbhanga, Patna & Bihar. Helpline: +91 6200087830."
-              keywords="Sehaat Saathi Blood Bank Hub Booking, Sehaat Saathi Blood Bank, Sehat Sathi Blood Bank, Sehaat Sathi Bloodbank, Sehat Saathi Blood Bank, Sehhat Sathi Blood Bank, SehaatSaathi Blood Bank, SehatSathi Blood Bank, Sehaat Saathi Blood Donation, Sehat Sathi Blood Donor, Sehaat Saathi Blood Availability, Sehat Sathi Emergency Blood Bihar, Sehaat Saathi Blood Bank Madhubani, Sehat Sathi Blood Bank Patna, Sehaat Saathi Blood Bank Darbhanga, Sehat Sathi Platelets Booking, Abhishek Kumar Sehaat Saathi Blood Bank"
+              title="Sehaat Saathi App Emergency Blood Bank Hub Booking | 24/7 Blood Availability Bihar & India"
+              description="Sehaat Saathi App Emergency Blood Bank Hub Booking (Sehat Sathi Blood Bank) — 24/7 Emergency Blood Assistance across Bihar & India. Real-time blood availability & voluntary donor coordination for A+, A-, B+, B-, O+, O-, AB+, AB-, Platelets (SDP/RDP), and FFP in Madhubani, Darbhanga, Patna & Bihar. Helpline: +91 6200087830."
+              keywords="Sehaat Saathi App Blood Bank Hub Booking, Sehaat Saathi App Blood Bank, Sehat Sathi Blood Bank, Sehaat Sathi Bloodbank, Sehat Saathi Blood Bank, Sehhat Sathi Blood Bank, SehaatSaathi Blood Bank, SehatSathi Blood Bank, Sehaat Saathi App Blood Donation, Sehat Sathi Blood Donor, Sehaat Saathi App Blood Availability, Sehat Sathi Emergency Blood Bihar, Sehaat Saathi App Blood Bank Madhubani, Sehat Sathi Blood Bank Patna, Sehaat Saathi App Blood Bank Darbhanga, Sehat Sathi Platelets Booking, Abhishek Kumar Sehaat Saathi App Blood Bank"
               canonicalUrl="https://sehaatsaathi.com/blood-bank-hub"
             />
             <SEOKeywordIsland />
@@ -249,7 +249,7 @@ const BloodBankHub = () => {
                     <div className="flex items-center gap-2 text-center sm:text-left">
                         <BsDropletFill className="text-rose-400 text-xl sm:text-2xl shrink-0 animate-bounce" />
                         <span className="leading-relaxed">
-                            <strong className="text-rose-400 font-black">⚠️ जरूरी सूचना:</strong> यह डेमो स्टॉक डेटा है। आपकी रिक्वेस्ट मिलते ही सेहत साथी की टीम तुरंत अधिकृत ब्लड बैंकों और डोनर्स से संपर्क कर खून का इंतजाम करवाती है।
+                            <strong className="text-rose-400 font-black">⚠️ जरूरी सूचना:</strong> यह डेमो स्टॉक डेटा है। आपकी रिक्वेस्ट मिलते ही सेहत साथी ऐप की टीम तुरंत अधिकृत ब्लड बैंकों और डोनर्स से संपर्क कर खून का इंतजाम करवाती है।
                         </span>
                     </div>
                     <button
@@ -261,14 +261,14 @@ const BloodBankHub = () => {
                     </button>
                 </div>
 
-                {/* Official Sehaat Saathi Emergency Blood Bank Poster Showcase Banner - CLICK TO FULLSCREEN & ZOOM */}
+                {/* Official Sehaat Saathi App Emergency Blood Bank Poster Showcase Banner - CLICK TO FULLSCREEN & ZOOM */}
                 <div
-                    onClick={() => handleOpenZoomModal(bloodBankPosterImg, "Sehaat Saathi Official Emergency Blood Bank Platform Poster")}
+                    onClick={() => handleOpenZoomModal(bloodBankPosterImg, "Sehaat Saathi App Official Emergency Blood Bank Platform Poster")}
                     className="w-full relative rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-rose-500/60 shadow-[0_0_40px_rgba(225,29,72,0.4)] group transition-all duration-300 bg-slate-950 cursor-pointer"
                 >
                     <img
                         src={bloodBankPosterImg}
-                        alt="Sehaat Saathi Official Emergency Blood Bank Platform Poster"
+                        alt="Sehaat Saathi App Official Emergency Blood Bank Platform Poster"
                         className="w-full h-auto max-h-72 sm:max-h-96 md:max-h-[440px] lg:max-h-[500px] object-contain sm:object-cover mx-auto group-hover:scale-[1.01] transition-transform duration-500 pointer-events-none"
                     />
                     <div className="absolute bottom-3 right-3 px-2.5 py-1 rounded-full bg-slate-900/90 text-rose-300 text-[10px] font-black uppercase flex items-center gap-1 border border-rose-500/40 opacity-0 group-hover:opacity-100 transition-opacity shadow-md backdrop-blur-md">
@@ -287,7 +287,7 @@ const BloodBankHub = () => {
                     </h1>
 
                     <p className="text-slate-200 max-w-3xl mx-auto text-xs sm:text-base md:text-lg font-bold leading-relaxed px-1">
-                        <strong className="text-amber-400 font-black">कोई भी मरीज खून की कमी से अपनी जान नहीं गंवाएगा!</strong> सेहत साथी की 24/7 आपातकालीन टीम मधुबनी, दरभंगा व बिहार के प्रमुख ब्लड बैंकों, अस्पतालों एवं रजिस्टर्ड वॉलिएंटियर डोनर्स से सीधे संपर्क करके मरीज के लिए तुरंत रक्त उपलब्ध करवाती है।
+                        <strong className="text-amber-400 font-black">कोई भी मरीज खून की कमी से अपनी जान नहीं गंवाएगा!</strong> सेहत साथी ऐप की 24/7 आपातकालीन टीम मधुबनी, दरभंगा व बिहार के प्रमुख ब्लड बैंकों, अस्पतालों एवं रजिस्टर्ड वॉलिएंटियर डोनर्स से सीधे संपर्क करके मरीज के लिए तुरंत रक्त उपलब्ध करवाती है।
                     </p>
 
                     <div className="flex flex-wrap justify-center gap-2.5 pt-2">
@@ -310,7 +310,7 @@ const BloodBankHub = () => {
                         <span>{t.honestPromiseTitle}</span>
                     </div>
                     <p className="text-slate-200 text-xs sm:text-sm font-bold leading-relaxed">
-                        हम यह <strong className="text-amber-400 font-black underline">100% झूठा दावा नहीं करते</strong> कि हर स्थिति में तुरंत खून मिल ही जाएगा, लेकिन हम यह <strong className="text-emerald-400 font-black underline">1000% वादा करते हैं</strong> कि सेहत साथी टीम मरीज की जान बचाने के लिए अपना <strong className="text-emerald-300 font-black">100% पूरा जोर (Full Ground Effort)</strong> लगा देगी! हम मधुबनी व बिहार के हर ब्लड बैंक और डोनर के दरवाजे पर जाकर खून का इंतजाम करने का पूरा प्रयास करेंगे।
+                        हम यह <strong className="text-amber-400 font-black underline">100% झूठा दावा नहीं करते</strong> कि हर स्थिति में तुरंत खून मिल ही जाएगा, लेकिन हम यह <strong className="text-emerald-400 font-black underline">1000% वादा करते हैं</strong> कि सेहत साथी ऐप टीम मरीज की जान बचाने के लिए अपना <strong className="text-emerald-300 font-black">100% पूरा जोर (Full Ground Effort)</strong> लगा देगी! हम मधुबनी व बिहार के हर ब्लड बैंक और डोनर के दरवाजे पर जाकर खून का इंतजाम करने का पूरा प्रयास करेंगे।
                     </p>
                 </div>
 
@@ -320,7 +320,7 @@ const BloodBankHub = () => {
                         <div>
                             <div className="inline-flex items-center gap-1.5 text-rose-400 text-[10px] sm:text-xs font-black uppercase tracking-wider mb-1">
                                 <BsPhoneVibrate className="animate-bounce text-sm sm:text-base" />
-                                <span>Need Blood Urgently? Call Sehaat Saathi Emergency Blood Assistance</span>
+                                <span>Need Blood Urgently? Call Sehaat Saathi App Emergency Blood Assistance</span>
                             </div>
                             <h3 className="text-base sm:text-xl font-black text-white leading-tight">
                                 {language === 'hi' ? 'किसी भी ब्लड ग्रुप हेतु सीधे संस्थापक या सहायता टीम से संपर्क करें:' : 'Call or WhatsApp Founder Helpline for Immediate Blood Dispatch:'}
@@ -372,7 +372,7 @@ const BloodBankHub = () => {
                 <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/90 border border-rose-500/30 space-y-3 shadow-xl">
                     <div className="flex items-center gap-2 text-rose-400 text-xs sm:text-sm font-black uppercase tracking-wider">
                         <BsSpeedometer className="text-base animate-pulse" />
-                        <span><strong className="text-white font-black">Sehaat Saathi Cold-Chain Dispatch Response SLA Time</strong></span>
+                        <span><strong className="text-white font-black">Sehaat Saathi App Cold-Chain Dispatch Response SLA Time</strong></span>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
                         {DISPATCH_SLAS.map((sla, sidx) => (
@@ -397,10 +397,10 @@ const BloodBankHub = () => {
                                 <FaHeart className="text-rose-500 animate-pulse text-xs sm:text-sm" /> {t.missionTitle}
                             </span>
                             <h2 className="text-xl sm:text-3xl md:text-4xl font-black text-white leading-tight">
-                                {language === 'hi' ? 'कोई भी मरीज खून के अभाव में जान नहीं गंवाएगा — यही है सेहत साथी का मिशन' : 'No Patient Will Lose Life Due to Blood Shortage — The Sehaat Saathi Commitment'}
+                                {language === 'hi' ? 'कोई भी मरीज खून के अभाव में जान नहीं गंवाएगा — यही है सेहत साथी ऐप का मिशन' : 'No Patient Will Lose Life Due to Blood Shortage — The Sehaat Saathi App Commitment'}
                             </h2>
                             <p className="text-slate-200 text-xs sm:text-sm font-bold leading-relaxed">
-                                <strong className="text-rose-400 font-black">हर जीवन अनमोल है!</strong> सेहत साथी की ग्राउंड टीम <strong className="text-emerald-400 font-black">24 घंटे सदर अस्पताल, डीएमसीएच, रेड क्रॉस व पंजीकृत युवा डोनर्स</strong> से संपर्क बनाकर आपके मरीज के लिए खून का पक्का इंतजाम करती है।
+                                <strong className="text-rose-400 font-black">हर जीवन अनमोल है!</strong> सेहत साथी ऐप की ग्राउंड टीम <strong className="text-emerald-400 font-black">24 घंटे सदर अस्पताल, डीएमसीएच, रेड क्रॉस व पंजीकृत युवा डोनर्स</strong> से संपर्क बनाकर आपके मरीज के लिए खून का पक्का इंतजाम करती है।
                             </p>
                         </div>
 
@@ -430,7 +430,7 @@ const BloodBankHub = () => {
                             🚩 "रक्तदान महा-कल्याण — एक बूँद रक्त, एक नया जीवन!"
                         </span>
                         <h3 className="text-lg sm:text-2xl font-black text-white uppercase">
-                            {language === 'hi' ? 'मानवता व जीवन रक्षा के लिए सेहत साथी का संदेश' : 'Sehaat Saathi Message of Hope & Humanity'}
+                            {language === 'hi' ? 'मानवता व जीवन रक्षा के लिए सेहत साथी ऐप का संदेश' : 'Sehaat Saathi App Message of Hope & Humanity'}
                         </h3>
                     </div>
 
@@ -527,7 +527,7 @@ const BloodBankHub = () => {
                                     <h3 className="text-lg sm:text-2xl font-black uppercase text-white tracking-wide">
                                         🚨 {language === 'hi' ? 'आपातकालीन ब्लड असिस्टेंस रिक्वेस्ट' : 'URGENT BLOOD ASSISTANCE REQUEST'}
                                     </h3>
-                                    <p className="text-xs text-slate-400 font-bold">Sehaat Saathi team coordinates ground blood stock in minutes across Madhubani & Bihar.</p>
+                                    <p className="text-xs text-slate-400 font-bold">Sehaat Saathi App team coordinates ground blood stock in minutes across Madhubani & Bihar.</p>
                                 </div>
                             </div>
 
@@ -631,7 +631,7 @@ const BloodBankHub = () => {
                         <div className="space-y-3 sm:space-y-4 pt-2 sm:pt-4">
                             <div className="text-center space-y-1">
                                 <h4 className="text-base sm:text-xl font-black text-white uppercase">
-                                    {language === 'hi' ? '❤️ हाल ही में बचाई गई अनमोल जानें (Recent Success Stories)' : '❤️ Lives Saved Recently by Sehaat Saathi'}
+                                    {language === 'hi' ? '❤️ हाल ही में बचाई गई अनमोल जानें (Recent Success Stories)' : '❤️ Lives Saved Recently by Sehaat Saathi App'}
                                 </h4>
                                 <p className="text-xs text-slate-400 font-bold">Real assistance provided in Madhubani & Darbhanga hospitals.</p>
                             </div>
@@ -781,7 +781,7 @@ const BloodBankHub = () => {
                                 {language === 'hi' ? 'अस्पताल व ब्लड बैंक हेतु आधिकारिक पार्टनरशिप' : 'Official Hospital & Blood Bank Network Partnership'}
                             </h3>
                             <p className="text-xs text-slate-400 font-bold">
-                                {language === 'hi' ? 'बिहार के सभी डॉक्टरों व ब्लड बैंक प्रभारियों से सेहत साथी का विनम्र निवेदन — मिलकर हर मरीज की जान बचाएं।' : 'Appeal to all Hospital Doctors & Blood Bank In-Charges across Bihar — Let us unite to save lives.'}
+                                {language === 'hi' ? 'बिहार के सभी डॉक्टरों व ब्लड बैंक प्रभारियों से सेहत साथी ऐप का विनम्र निवेदन — मिलकर हर मरीज की जान बचाएं।' : 'Appeal to all Hospital Doctors & Blood Bank In-Charges across Bihar — Let us unite to save lives.'}
                             </p>
                         </div>
 
@@ -804,7 +804,7 @@ const BloodBankHub = () => {
                                 {language === 'hi' ? 'अस्पताल / डॉक्टर डायरेक्ट टाई-अप हेल्पलाइन' : 'Direct Hospital Tie-Up Helpline'}
                             </h4>
                             <p className="text-xs text-slate-200 font-bold max-w-xl mx-auto">
-                                {language === 'hi' ? 'यदि आप अस्पताल निदेशक, डॉक्टर या ब्लड बैंक प्रभारी हैं तो सेहत साथी संस्थापक से सीधे संपर्क करें।' : 'If you are a Hospital Director, Doctor or Blood Bank Manager, contact Sehaat Saathi Founder directly for MoU.'}
+                                {language === 'hi' ? 'यदि आप अस्पताल निदेशक, डॉक्टर या ब्लड बैंक प्रभारी हैं तो सेहत साथी ऐप संस्थापक से सीधे संपर्क करें।' : 'If you are a Hospital Director, Doctor or Blood Bank Manager, contact Sehaat Saathi App Founder directly for MoU.'}
                             </p>
 
                             <div className="flex flex-col sm:flex-row justify-center gap-3 pt-2">
@@ -1016,7 +1016,7 @@ const BloodBankHub = () => {
                         <div className="space-y-1.5 sm:space-y-2 text-center">
                             <BsHeadset className="text-3xl sm:text-4xl text-rose-400 mx-auto" />
                             <h3 className="text-lg sm:text-xl font-black uppercase text-white">{t.contactModalTitle}</h3>
-                            <p className="text-xs text-slate-400 font-bold">Sehaat Saathi Emergency Blood Assistance Helpline</p>
+                            <p className="text-xs text-slate-400 font-bold">Sehaat Saathi App Emergency Blood Assistance Helpline</p>
                         </div>
 
                         <div className="space-y-2.5 sm:space-y-3">

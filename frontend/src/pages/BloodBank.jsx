@@ -181,9 +181,9 @@ const BloodBank = () => {
     return (
         <div className="min-h-screen bg-[#FDF2F2] selection:bg-red-200 font-sans overflow-x-hidden relative">
             <MetaHead
-              title="Sehaat Saathi Blood Bank | Instant Blood Group Availability & Emergency Blood Bihar"
-              description="24/7 Emergency Blood Bank & Donor Network on Sehaat Saathi (Sehat Sathi). Check instant stock of A+, A-, B+, B-, O+, O-, AB+, AB-, Platelets, SDP, FFP in Madhubani, Darbhanga, Patna & Bihar. Helpline: +91 6200087830."
-              keywords="Sehaat Saathi Blood Bank, Sehat Sathi Blood Bank, Sehaat Sathi Blood Bank, Sehaat Saathi Bloodbank, Sehat Sathi Bloodbank, Sehaat Saathi Blood Donation, Sehat Sathi Blood Availability Bihar, Sehaat Saathi Blood Madhubani Patna, Sehat Sathi Blood Helpline"
+              title="Sehaat Saathi App Blood Bank | Instant Blood Group Availability & Emergency Blood Bihar"
+              description="24/7 Emergency Blood Bank & Donor Network on Sehaat Saathi App (Sehat Sathi). Check instant stock of A+, A-, B+, B-, O+, O-, AB+, AB-, Platelets, SDP, FFP in Madhubani, Darbhanga, Patna & Bihar. Helpline: +91 6200087830."
+              keywords="Sehaat Saathi App Blood Bank, Sehat Sathi Blood Bank, Sehaat Sathi Blood Bank, Sehaat Saathi App Bloodbank, Sehat Sathi Bloodbank, Sehaat Saathi App Blood Donation, Sehat Sathi Blood Availability Bihar, Sehaat Saathi App Blood Madhubani Patna, Sehat Sathi Blood Helpline"
               canonicalUrl="https://sehaatsaathi.com/blood-bank"
             />
             <SEOKeywordIsland />

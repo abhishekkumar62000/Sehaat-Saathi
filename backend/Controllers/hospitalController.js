@@ -47,7 +47,7 @@ export const getHospitalProfile = async (req, res) => {
     console.error("getHospitalProfile fallback activated:", err.message);
     const fallbackHospital = {
       _id: "650000000000000000000099",
-      hospitalName: "Sehaat Saathi Care Center",
+      hospitalName: "Sehaat Saathi App Care Center",
       tagline: "Super-Specialty Multi-Care Hospital",
       district: "Patna",
       city: "Patna",

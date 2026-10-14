@@ -56,6 +56,9 @@ const Dashboard = lazy(() => import("../Dashboard/doctor-account/Dashboard"));
 const MyAccount = lazy(() => import("../Dashboard/user-account/MyAccount"));
 const HospitalDashboard = lazy(() => import("../Dashboard/hospital-account/HospitalDashboard"));
 const AdminDashboard = lazy(() => import("../Dashboard/admin-account/AdminDashboard"));
+const Terms = lazy(() => import("../pages/Terms"));
+const Privacy = lazy(() => import("../pages/Privacy"));
+const AccountDeletion = lazy(() => import("../pages/AccountDeletion"));
 
 const LoadingFallback = () => (
   <div className="flex items-center justify-center min-h-[60vh]">
@@ -146,6 +149,13 @@ const Routers = () => {
             </ProtectedRoutes>
           }
         />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/terms-and-conditions" element={<Terms />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/privacy-policy" element={<Privacy />} />
+        <Route path="/account-deletion" element={<AccountDeletion />} />
+        <Route path="/delete-account" element={<AccountDeletion />} />
+        <Route path="/data-deletion" element={<AccountDeletion />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>

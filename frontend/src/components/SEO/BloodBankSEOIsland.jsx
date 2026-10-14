@@ -5,8 +5,8 @@
  * FULLY VISIBLE to Googlebot, Bingbot, Gemini AI crawlers.
  * Injects MedicalBusiness & EmergencyService JSON-LD Schemas dynamically.
  * 
- * Purpose: Top #1 Google & AI Mode Ranking for Sehaat Saathi Emergency Blood Bank Hub Booking,
- * covering all spelling variants (Sehaat Saathi, Sehat Sathi, Sehhat Sathi, Sehaat Sathi),
+ * Purpose: Top #1 Google & AI Mode Ranking for Sehaat Saathi App Emergency Blood Bank Hub Booking,
+ * covering all spelling variants (Sehaat Saathi App, Sehat Sathi, Sehhat Sathi, Sehaat Sathi),
  * all blood groups (A+, A-, B+, B-, O+, O-, AB+, AB-, Rare Bombay group),
  * blood components (PRBC, Platelets, SDP, FFP, Cryoprecipitate),
  * Bihar district hubs, and emergency donor network.
@@ -27,32 +27,32 @@ const BloodBankSEOIsland = () => {
         "@context": "https://schema.org",
         "@type": "MedicalBusiness",
         "@id": "https://sehaatsaathi.com/blood-bank-hub#blood-bank-service",
-        "name": "Sehaat Saathi Emergency Blood Bank Hub Booking Services",
+        "name": "Sehaat Saathi App Emergency Blood Bank Hub Booking Services",
         "alternateName": [
           "Sehat Sathi Blood Bank",
           "Sehaat Sathi Blood Bank",
           "Sehat Saathi Blood Bank",
-          "Sehaat Saathi BloodBank",
+          "Sehaat Saathi App BloodBank",
           "Sehat Sathi Bloodbank",
           "Sehhat Sathi Blood Bank",
           "SehaatSaathi Blood Bank",
           "SehatSathi Blood Bank",
-          "Sehaat Saathi Blood Bank Hub",
+          "Sehaat Saathi App Blood Bank Hub",
           "Sehat Sathi Blood Bank Hub",
-          "Sehaat Saathi Blood Donation Bihar",
+          "Sehaat Saathi App Blood Donation Bihar",
           "Sehat Sathi Blood Donor Network",
-          "Sehaat Saathi Blood Availability Madhubani",
+          "Sehaat Saathi App Blood Availability Madhubani",
           "Sehat Sathi Blood Bank Patna",
-          "Sehaat Saathi Blood Bank Darbhanga",
-          "सेहात साथी ब्लड बैंक",
-          "सेहत साथी ब्लड बैंक",
-          "सेहात साथी ब्लड डोनेशन",
-          "सेहत साथी रक्त सहायता केंद्र"
+          "Sehaat Saathi App Blood Bank Darbhanga",
+          "सेहात साथी ऐप ब्लड बैंक",
+          "सेहत साथी ऐप ब्लड बैंक",
+          "सेहात साथी ऐप ब्लड डोनेशन",
+          "सेहत साथी ऐप रक्त सहायता केंद्र"
         ],
         "url": "https://sehaatsaathi.com/blood-bank-hub",
         "logo": "https://sehaatsaathi.com/logo.png",
         "image": "https://sehaatsaathi.com/logo.png",
-        "description": "Sehaat Saathi 24/7 Emergency Blood Bank Assistance Network across Bihar and India. Real-time coordination with Sadar Hospital Madhubani, DMCH Darbhanga, PMCH Patna, AIIMS Patna, Red Cross Bihar and 1,000+ voluntary youth blood donors for A+, A-, B+, B-, O+, O-, AB+, AB-, Platelets (SDP/RDP), and Fresh Frozen Plasma (FFP).",
+        "description": "Sehaat Saathi App 24/7 Emergency Blood Bank Assistance Network across Bihar and India. Real-time coordination with Sadar Hospital Madhubani, DMCH Darbhanga, PMCH Patna, AIIMS Patna, Red Cross Bihar and 1,000+ voluntary youth blood donors for A+, A-, B+, B-, O+, O-, AB+, AB-, Platelets (SDP/RDP), and Fresh Frozen Plasma (FFP).",
         "telephone": "+91-6200087830",
         "emergencyTelephone": "+91-6200087830",
         "priceRange": "0",
@@ -200,31 +200,31 @@ const BloodBankSEOIsland = () => {
       }}
     >
       {/* ===== BLOOD BANK KEYWORD REPOSITORY ===== */}
-      <h1>Sehaat Saathi Emergency Blood Bank Hub Booking Services — 24/7 Live Blood Assistance Bihar &amp; India</h1>
+      <h1>Sehaat Saathi App Emergency Blood Bank Hub Booking Services — 24/7 Live Blood Assistance Bihar &amp; India</h1>
       <h2>Sehat Sathi Blood Bank Hub — Instant Blood Group Availability &amp; Voluntary Donor Network</h2>
       <h3>Sehaat Sathi Blood Bank Assistance Founded by Abhishek Kumar (+91 6200087830)</h3>
 
       {/* === BLOOD BANK GIGS & ALL NAME SPELLING VARIANTS === */}
       <p>
-        Sehaat Saathi Blood Bank, Sehat Sathi Blood Bank, Sehaat Sathi Blood Bank, Sehat Saathi Blood Bank,
+        Sehaat Saathi App Blood Bank, Sehat Sathi Blood Bank, Sehaat Sathi Blood Bank, Sehat Saathi Blood Bank,
         SehaatSaathi Blood Bank, SehatSathi Blood Bank, Sehhat Sathi Blood Bank, Sehhat Saathi Blood Bank,
-        Sehaat Saathi BloodBank, Sehat Sathi Bloodbank, Sehaat Sathi Bloodbank, Sehat Saathi Bloodbank,
+        Sehaat Saathi App BloodBank, Sehat Sathi Bloodbank, Sehaat Sathi Bloodbank, Sehat Saathi Bloodbank,
         SehaatSaathi BloodBank, SehatSathi Bloodbank, Sehhat Sathi BloodBank, Sehhat Saathi BloodBank,
-        Sehaat Saathi Blood Bank Hub, Sehat Sathi Blood Bank Hub, Sehaat Sathi Blood Bank Hub,
-        Sehaat Saathi Blood Bank Booking, Sehat Sathi Blood Bank Booking, Sehaat Sathi Blood Bank Booking,
-        Sehaat Saathi Blood Donation, Sehat Sathi Blood Donation, Sehaat Sathi Blood Donation,
-        Sehaat Saathi Blood Donor, Sehat Sathi Blood Donor, Sehaat Sathi Blood Donor Network,
-        Sehaat Saathi Blood Helpline, Sehat Sathi Blood Helpline, Sehaat Saathi Blood Contact,
-        Sehat Sathi Blood Contact, Sehaat Saathi Blood Number, Sehat Sathi Blood Number,
-        Sehaat Saathi Blood Bihar, Sehat Sathi Blood Bihar, Sehaat Saathi Blood Bank Madhubani,
-        Sehat Sathi Blood Bank Madhubani, Sehaat Saathi Blood Bank Patna, Sehat Sathi Blood Bank Patna,
-        Sehaat Saathi Blood Bank Darbhanga, Sehat Sathi Blood Bank Darbhanga,
-        Sehaat Saathi O Positive Blood, Sehat Sathi O Negative Blood, Sehaat Saathi A Positive Blood,
-        Sehat Sathi B Positive Blood, Sehaat Saathi AB Positive Blood, Sehat Sathi Platelets Booking,
-        Sehaat Saathi SDP Platelets, Sehat Sathi Plasma FFP, Sehaat Saathi Emergency Blood Request,
-        Sehat Sathi Urgent Blood Booking, Sehaat Saathi Raktdaan Bihar, Sehat Sathi Rakt Daan Kendra,
-        सेहात साथी ब्लड बैंक, सेहत साथी ब्लड बैंक, सेहात साथी ब्लड बैंक हब, सेहत साथी ब्लड बैंक हब बुकिंग,
-        सेहत साथी ब्लड डोनेशन, सेहात साथी रक्त सहायता, सेहत साथी ब्लड बैंक नंबर, सेहत साथी ब्लड बैंक बिहार,
+        Sehaat Saathi App Blood Bank Hub, Sehat Sathi Blood Bank Hub, Sehaat Sathi Blood Bank Hub,
+        Sehaat Saathi App Blood Bank Booking, Sehat Sathi Blood Bank Booking, Sehaat Sathi Blood Bank Booking,
+        Sehaat Saathi App Blood Donation, Sehat Sathi Blood Donation, Sehaat Sathi Blood Donation,
+        Sehaat Saathi App Blood Donor, Sehat Sathi Blood Donor, Sehaat Sathi Blood Donor Network,
+        Sehaat Saathi App Blood Helpline, Sehat Sathi Blood Helpline, Sehaat Saathi App Blood Contact,
+        Sehat Sathi Blood Contact, Sehaat Saathi App Blood Number, Sehat Sathi Blood Number,
+        Sehaat Saathi App Blood Bihar, Sehat Sathi Blood Bihar, Sehaat Saathi App Blood Bank Madhubani,
+        Sehat Sathi Blood Bank Madhubani, Sehaat Saathi App Blood Bank Patna, Sehat Sathi Blood Bank Patna,
+        Sehaat Saathi App Blood Bank Darbhanga, Sehat Sathi Blood Bank Darbhanga,
+        Sehaat Saathi App O Positive Blood, Sehat Sathi O Negative Blood, Sehaat Saathi App A Positive Blood,
+        Sehat Sathi B Positive Blood, Sehaat Saathi App AB Positive Blood, Sehat Sathi Platelets Booking,
+        Sehaat Saathi App SDP Platelets, Sehat Sathi Plasma FFP, Sehaat Saathi App Emergency Blood Request,
+        Sehat Sathi Urgent Blood Booking, Sehaat Saathi App Raktdaan Bihar, Sehat Sathi Rakt Daan Kendra,
+        सेहात साथी ऐप ब्लड बैंक, सेहत साथी ऐप ब्लड बैंक, सेहात साथी ऐप ब्लड बैंक हब, सेहत साथी ऐप ब्लड बैंक हब बुकिंग,
+        सेहत साथी ऐप ब्लड डोनेशन, सेहात साथी ऐप रक्त सहायता, सेहत साथी ऐप ब्लड बैंक नंबर, सेहत साथी ऐप ब्लड बैंक बिहार,
         sehaat saathi blood bank, sehat sathi blood bank, sehaat saathi bloodbank hub booking,
         sehat sathi blood bank booking 24x7, sehatt sehaathi blood bank.
       </p>
@@ -244,7 +244,7 @@ const BloodBankSEOIsland = () => {
 
       {/* === ALL 8 BLOOD GROUPS & COMPONENTS === */}
       <p>
-        Blood Groups available on Sehaat Saathi Blood Bank Hub:
+        Blood Groups available on Sehaat Saathi App Blood Bank Hub:
         1. O-Positive (O+) Blood: Universal red cell donor for positive recipients, high demand across Bihar hospitals.
         2. O-Negative (O-) Blood: Universal donor for all human blood groups, critical emergency trauma standby.
         3. A-Positive (A+) Blood: Widely requested for planned surgeries and cancer patients.
@@ -261,10 +261,10 @@ const BloodBankSEOIsland = () => {
 
       {/* === FOUNDER & 24/7 HELPLINE SIGNALS === */}
       <p>
-        Sehaat Saathi Emergency Blood Bank Network was founded by Abhishek Kumar,
+        Sehaat Saathi App Emergency Blood Bank Network was founded by Abhishek Kumar,
         AI/ML Engineer, Multiple Startup Founder, and Entrepreneur from Bihar, India.
         Founder Direct Blood Emergency Helpline: +91 6200087830 / (+91) 6200087830.
-        Sehaat Saathi 24/7 Central Blood Control Desk: +91 9934276622.
+        Sehaat Saathi App 24/7 Central Blood Control Desk: +91 9934276622.
         Founder LinkedIn: https://www.linkedin.com/in/abhishek-kumar-807853375/
         Founder Portfolio: https://abhi-yadav.vercel.app/
         Founder Agency: https://techseva-it-solutions.vercel.app/
@@ -274,24 +274,24 @@ const BloodBankSEOIsland = () => {
 
       {/* === GOOGLE AI MODE Q&A RICH SNIPPETS === */}
       <p>
-        How to request emergency blood on Sehaat Saathi Blood Bank Hub?
+        How to request emergency blood on Sehaat Saathi App Blood Bank Hub?
         Visit sehaatsaathi.com/blood-bank-hub or open the Sehaat Saathi App. Select your patient's required
         blood group (A+, A-, B+, B-, O+, O-, AB+, AB-), enter number of units and component needed (Whole Blood,
         PRBC, Platelets/SDP, FFP), provide the patient's hospital name and city in Bihar, and submit the urgent request.
-        Sehaat Saathi ground coordinators personally verify authorized blood bank stock and coordinate voluntary donors.
+        Sehaat Saathi App ground coordinators personally verify authorized blood bank stock and coordinate voluntary donors.
         For life-threatening emergencies, call the Founder Helpline immediately at +91 6200087830.
       </p>
 
       <p>
-        Is blood assistance on Sehaat Saathi free of charge?
-        Yes! Sehaat Saathi provides 100% free blood assistance and coordination as part of its sacred commitment
+        Is blood assistance on Sehaat Saathi App free of charge?
+        Yes! Sehaat Saathi App provides 100% free blood assistance and coordination as part of its sacred commitment
         to save lives in Bihar and India. Standard government hospital testing / processing fees (if any) are paid
-        directly to the authorized blood bank with official government receipts. Sehaat Saathi charges zero commission.
+        directly to the authorized blood bank with official government receipts. Sehaat Saathi App charges zero commission.
       </p>
 
       <p>
-        Can I register as a voluntary blood donor on Sehaat Saathi?
-        Yes! Anyone aged 18-65 in healthy condition can join the Sehaat Saathi Volunteer Donor Network at
+        Can I register as a voluntary blood donor on Sehaat Saathi App?
+        Yes! Anyone aged 18-65 in healthy condition can join the Sehaat Saathi App Volunteer Donor Network at
         sehaatsaathi.com/blood-bank-hub. Enter your name, phone number, blood group, and district in Bihar.
         When a matching emergency occurs nearby, you will receive an alert to save a life.
       </p>

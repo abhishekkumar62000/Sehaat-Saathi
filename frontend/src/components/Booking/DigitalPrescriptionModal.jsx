@@ -171,7 +171,7 @@ const DigitalPrescriptionModal = ({
   const doctorName = booking?.doctor?.name || user?.name || "Doctor";
   const doctorSpec = booking?.doctor?.specialization || user?.specialization || "Clinical Specialist";
   const doctorLicense = booking?.doctor?.licenseNumber || user?.licenseNumber || "SS-VERIFIED";
-  const hospitalName = booking?.doctor?.hospitalName || user?.hospitalName || "Sehaat Saathi Medical Hub";
+  const hospitalName = booking?.doctor?.hospitalName || user?.hospitalName || "Sehaat Saathi App Medical Hub";
 
   const isCompleted = !!existingRx;
 
@@ -246,7 +246,7 @@ const DigitalPrescriptionModal = ({
                   <div className="flex items-center gap-2 mb-1">
                     <FaUserMd className="text-indigo-600 text-lg" />
                     <h3 className="font-black text-slate-900 text-lg">Dr. {doctorName}</h3>
-                    <MdVerified className="text-emerald-500 text-lg" title="Sehaat Saathi Verified" />
+                    <MdVerified className="text-emerald-500 text-lg" title="Sehaat Saathi App Verified" />
                   </div>
                   <p className="text-xs text-indigo-600 font-bold uppercase tracking-wider">{doctorSpec}</p>
                   <p className="text-[11px] text-slate-500 mt-0.5">
@@ -262,7 +262,7 @@ const DigitalPrescriptionModal = ({
                 <div className="text-right">
                   <div className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-green-600 text-white px-4 py-2 rounded-xl shadow-lg mb-2">
                     <MdHealthAndSafety className="text-xl" />
-                    <span className="font-black text-sm tracking-tight">Sehaat Saathi</span>
+                    <span className="font-black text-sm tracking-tight">Sehaat Saathi App</span>
                   </div>
                   <p className="text-[11px] text-slate-500">
                     Date: <span className="font-bold text-slate-700">{new Date(issuedAt).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}</span>
@@ -639,13 +639,13 @@ const DigitalPrescriptionModal = ({
                       <span className="text-emerald-400 font-black text-xs uppercase">Digitally Verified</span>
                     </div>
                     <p className="text-slate-500 text-[10px] font-mono mt-1">Rx: {rxId}</p>
-                    <p className="text-slate-600 text-[10px]">Sehaat Saathi — India's AI Health Hub</p>
+                    <p className="text-slate-600 text-[10px]">Sehaat Saathi App — India's AI Health Hub</p>
                   </div>
                 </div>
 
                 {/* Disclaimer */}
                 <p className="text-center text-[10px] text-slate-400 italic">
-                  This is a digitally issued prescription generated via Sehaat Saathi's verified medical platform.
+                  This is a digitally issued prescription generated via Sehaat Saathi App's verified medical platform.
                   Always consult your doctor before making changes to the prescribed treatment.
                 </p>
               </div>
@@ -656,7 +656,7 @@ const DigitalPrescriptionModal = ({
           <div className="bg-white border-t border-slate-200 px-6 py-4 flex flex-wrap items-center justify-between gap-3 flex-shrink-0 no-print">
             <div className="flex items-center gap-2 text-xs text-slate-400 font-bold">
               <MdVerified className="text-emerald-500" />
-              Sehaat Saathi Verified Digital Prescription
+              Sehaat Saathi App Verified Digital Prescription
             </div>
             <div className="flex gap-3">
               <button onClick={handlePrint}

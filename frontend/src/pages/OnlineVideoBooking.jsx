@@ -163,10 +163,10 @@ const DURATION_TIERS = [
 
 // ─── Testimonials ───
 const TESTIMONIALS = [
-    { name: 'Anjali Verma', location: 'Patna, Bihar', photo: 'https://i.pravatar.cc/80?img=5', rating: 5, text: 'Mujhe hospital jaana bahut mushkil lagta tha. Sehaat Saathi se ghar baithe doctor se baat ki. Bahut easy and helpful!', specialization: 'Gynecology' },
+    { name: 'Anjali Verma', location: 'Patna, Bihar', photo: 'https://i.pravatar.cc/80?img=5', rating: 5, text: 'Mujhe hospital jaana bahut mushkil lagta tha. Sehaat Saathi App se ghar baithe doctor se baat ki. Bahut easy and helpful!', specialization: 'Gynecology' },
     { name: 'Ravi Kumar', location: 'Muzaffarpur, Bihar', photo: 'https://i.pravatar.cc/80?img=11', rating: 5, text: 'My father has heart problem. Dr. Verma helped us on Zoom. Medicine is working well now. Saved ₹1500 of travel cost.', specialization: 'Cardiology' },
     { name: 'Seema Devi', location: 'Darbhanga, Bihar', photo: 'https://i.pravatar.cc/80?img=47', rating: 5, text: 'Meri beti ko fever tha. 10 minute mein Dr. Meena ne sab samjha diya. Prescription bhi mili turant. Bahut acha service!', specialization: 'Pediatrics' },
-    { name: 'Mohan Lal', location: 'Bhagalpur, Bihar', photo: 'https://i.pravatar.cc/80?img=52', rating: 5, text: 'Sehaat Saathi is best! WhatsApp pe doctor se baat ki. Ek baar me samajh gaya problem. Highly recommend karta hu.', specialization: 'Orthopedics' },
+    { name: 'Mohan Lal', location: 'Bhagalpur, Bihar', photo: 'https://i.pravatar.cc/80?img=52', rating: 5, text: 'Sehaat Saathi App is best! WhatsApp pe doctor se baat ki. Ek baar me samajh gaya problem. Highly recommend karta hu.', specialization: 'Orthopedics' },
 ];
 
 // ─── Countdown Timer ───
@@ -320,7 +320,7 @@ const VideoBookingPass = ({ booking, onClose }) => {
                     <div className="bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-700 p-6 text-white text-center relative overflow-hidden">
                         <div className="absolute inset-0 opacity-10 flex items-center justify-center"><span className="text-6xl font-black tracking-tighter -rotate-12">SEHAAT SAATHI</span></div>
                         <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-3"><MdVideoCall className="w-7 h-7 text-white" /></div>
-                        <h2 className="text-lg font-black uppercase tracking-[0.2em]">Sehaat Saathi</h2>
+                        <h2 className="text-lg font-black uppercase tracking-[0.2em]">Sehaat Saathi App</h2>
                         <p className="text-[9px] font-black uppercase tracking-[0.4em] text-violet-200 mt-0.5">Video Consultation Pass</p>
                         <button onClick={onClose} className="absolute top-3 right-3 text-white/60 hover:text-white"><BsXCircleFill /></button>
                     </div>
@@ -474,7 +474,7 @@ const PrescriptionModal = ({ booking, onClose }) => {
                 
                 <div className="bg-slate-900 p-4 text-center">
                     <p className="text-white/40 text-[9px] font-black uppercase tracking-[0.5em] flex items-center justify-center gap-2">
-                        <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" /> Verified by Sehaat Saathi Healthcare
+                        <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" /> Verified by Sehaat Saathi App Healthcare
                     </p>
                 </div>
             </div>
@@ -1025,9 +1025,9 @@ const OnlineVideoBooking = () => {
     return (
         <div className="min-h-screen bg-gradient-to-br from-violet-50 via-white to-indigo-50">
             <MetaHead
-              title="Sehaat Saathi Online Doctor Video Calling Booking App | 24/7 Teleconsultation Bihar & India"
-              description="Sehaat Saathi doctor video calling booking App (Sehat Sathi Doctor Video Call) — Connect with verified specialist doctors in 5 minutes via Google Meet, Zoom or WhatsApp video call across Madhubani, Darbhanga, Patna & India. Digital prescription included. Helpline: +91 6200087830."
-              keywords="doctor video caaling booking app, doctor video calling booking app, doctor video call booking app, online doctor video consultation app bihar, sehat sathi madhubani darbhanga instant doctor video booking app, sehat sathi doctor video call booking App, Sehaat Saathi online Doctor Booking app, sehatt sehaathi doctor video caalling Booking, Sehaat Saathi Doctor Video Calling, Sehat Sathi Telemedicine, Online Doctor Consultation India"
+              title="Sehaat Saathi App Online Doctor Video Calling Booking App | 24/7 Teleconsultation Bihar & India"
+              description="Sehaat Saathi App doctor video calling booking App (Sehat Sathi Doctor Video Call) — Connect with verified specialist doctors in 5 minutes via Google Meet, Zoom or WhatsApp video call across Madhubani, Darbhanga, Patna & India. Digital prescription included. Helpline: +91 6200087830."
+              keywords="doctor video caaling booking app, doctor video calling booking app, doctor video call booking app, online doctor video consultation app bihar, sehat sathi madhubani darbhanga instant doctor video booking app, sehat sathi doctor video call booking App, Sehaat Saathi App online Doctor Booking app, sehatt sehaathi doctor video caalling Booking, Sehaat Saathi App Doctor Video Calling, Sehat Sathi Telemedicine, Online Doctor Consultation India"
               canonicalUrl="https://sehaatsaathi.com/online-video-booking"
             />
             <SEOKeywordIsland />
@@ -1106,7 +1106,7 @@ const OnlineVideoBooking = () => {
                         {/* Why Video Call */}
                         <div className="mt-8 bg-gradient-to-br from-violet-600 to-indigo-700 rounded-3xl p-8 text-white">
                             <h2 className="text-2xl font-black mb-2 text-center">{t.whyChoose}</h2>
-                            <p className="text-violet-200 text-sm text-center mb-8">{lang === 'en' ? '1,000+ patients saved time and money with Sehaat Saathi' : '1,000+ मरीजों ने सेहत साथी के साथ समय और पैसा बचाया'}</p>
+                            <p className="text-violet-200 text-sm text-center mb-8">{lang === 'en' ? '1,000+ patients saved time and money with Sehaat Saathi App' : '1,000+ मरीजों ने सेहत साथी ऐप के साथ समय और पैसा बचाया'}</p>
                             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                                 {[{ icon: '🏠', title: t.noTravel, desc: lang === 'en' ? 'No travel, no waiting room, no infection risk' : 'कोई यात्रा नहीं, कोई प्रतीक्षा कक्ष नहीं, कोई संक्रमण का खतरा नहीं' }, { icon: '💰', title: t.saveMoney, desc: lang === 'en' ? 'No travel, no hospital entry fees' : 'कोई यात्रा नहीं, कोई अस्पताल प्रवेश शुल्क नहीं' }, { icon: '⚡', title: t.quickPrescription, desc: lang === 'en' ? 'Medicine list ready in 10–20 minutes' : 'दवा की सूची 10-20 मिनट में तैयार' }, { icon: '🔒', title: '100% Private', desc: lang === 'en' ? 'Your health info is never shared' : 'आपकी स्वास्थ्य जानकारी कभी साझा नहीं की जाती' }, { icon: '👨‍👩‍👧', title: 'Book for Family', desc: lang === 'en' ? 'Book for child, parent or any member' : 'बच्चे, माता-पिता या किसी भी सदस्य के लिए बुक करें' }, { icon: '⏱️', title: 'Choose Duration', desc: lang === 'en' ? '10, 20 or 45-minute sessions available' : '10, 20 या 45 मिनट के सत्र उपलब्ध' }].map(item => (
                                     <div key={item.title} className="bg-white/10 rounded-2xl p-4 text-center hover:bg-white/20 transition-all"><div className="text-3xl mb-2">{item.icon}</div><h3 className="font-black text-sm text-white mb-1">{item.title}</h3><p className="text-violet-200 text-xs font-medium leading-relaxed">{item.desc}</p></div>

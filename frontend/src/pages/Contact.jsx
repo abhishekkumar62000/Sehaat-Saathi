@@ -38,9 +38,9 @@ const Contact = () => {
   return (
     <div className="min-h-screen bg-gray-50/50">
       <MetaHead
-        title="Contact Sehaat Saathi | 24/7 Healthcare Support | Madhubani, Bihar India"
-        description="Contact Sehaat Saathi healthcare platform. Phone: +91-6200087830. Email: support@sehaatsaathi.com. Location: Bara Bazar Madhubani, Bihar. We provide 24/7 support for OPD booking, doctor consultation, and health emergencies across India."
-        keywords="Contact Sehaat Saathi, Sehaat Saathi Phone Number, Sehaat Saathi Email, Sehaat Saathi Bihar, Sehaat Saathi Support, Sehat Sathi Contact"
+        title="Contact Sehaat Saathi App | 24/7 Healthcare Support | Madhubani, Bihar India"
+        description="Contact Sehaat Saathi App healthcare platform. Phone: +91-6200087830. Email: support@sehaatsaathi.com. Location: Bara Bazar Madhubani, Bihar. We provide 24/7 support for OPD booking, doctor consultation, and health emergencies across India."
+        keywords="Contact Sehaat Saathi App, Sehaat Saathi App Phone Number, Sehaat Saathi App Email, Sehaat Saathi App Bihar, Sehaat Saathi App Support, Sehat Sathi Contact"
         canonicalUrl="https://sehaatsaathi.com/contact"
       />
       {/* Hero Header */}

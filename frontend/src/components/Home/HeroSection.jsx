@@ -170,7 +170,7 @@ const HeroSection = () => {
                 The right doctor, at the right time —{" "}<span style={{ color: "#FF9933" }} className="inline-block hover:scale-110 transition-transform">always</span>{" "}by your{" "}<span style={{ color: "#138808" }} className="inline-block hover:scale-110 transition-transform">side</span>.
               </p>
               <p className="text-slate-600 font-medium text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">
-                Sehaat Saathi makes it easy to find a good doctor, book an appointment, check your health, order medicines, and get emergency help — all from your phone, any time of the day. We are here for every family in Bharat. 🌿
+                Sehaat Saathi App makes it easy to find a good doctor, book an appointment, check your health, order medicines, and get emergency help — all from your phone, any time of the day. We are here for every family in Bharat. 🌿
               </p>
             </div>
  
@@ -227,7 +227,7 @@ const HeroSection = () => {
 
             <div className="relative overflow-hidden rounded-[2rem] lg:rounded-[3.8rem] bg-slate-900/10 shadow-inner group-hover:shadow-[0_0_50px_rgba(0,0,0,0.1)] transition-all duration-500">
               <img src={heroImg01}
-                alt="Sehaat Saathi Doctors"
+                alt="Sehaat Saathi App Doctors"
                 className="w-full max-w-[280px] sm:max-w-[400px] lg:max-w-[650px] h-auto object-cover transform transition-all duration-1000 lg:group-hover:scale-110"
                loading="lazy" />
 

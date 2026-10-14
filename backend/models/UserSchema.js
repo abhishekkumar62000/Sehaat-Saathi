@@ -21,7 +21,7 @@ const UserSchema = new mongoose.Schema({
   city: { type: String },
   pincode: { type: Number },
   
-  // Sehaat Saathi Localized Rural Fields
+  // Sehaat Saathi App Localized Rural Fields
   abhaId: { type: String }, // Ayushman Bharat ID
   bplCardHolder: { type: Boolean, default: false }, // Below Poverty Line
   primaryLanguage: { type: String, enum: ["Hindi", "Bhojpuri", "Maithili", "Magahi", "Angika", "English"] },

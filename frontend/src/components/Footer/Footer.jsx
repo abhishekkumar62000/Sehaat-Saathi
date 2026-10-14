@@ -9,17 +9,18 @@ import { Link } from "react-router-dom";
 const aboutLinks = [
   { path: "/", display: "Home" },
   { path: "/about", display: "About Us" },
-  { path: "/work-with-us", display: "Work With Us" },
   { path: "/blog", display: "Our Blog" },
   { path: "/terms", display: "Terms & Conditions" },
+  { path: "/privacy", display: "Privacy Policy" },
+  { path: "/account-deletion", display: "Account Deletion" },
 ];
 
 const serviceLinks = [
-  { path: "/search-terms", display: "Search Terms" },
-  { path: "/advance-search", display: "Advance Search" },
-  { path: "/privacy", display: "Privacy Policy" },
-  { path: "/suppliers", display: "Suppliers" },
-  { path: "/stores", display: "Our Stores" },
+  { path: "/doctors", display: "Find Doctors" },
+  { path: "/services", display: "Our Services" },
+  { path: "/smarthub", display: "Smart Hub Portal" },
+  { path: "/contact", display: "Contact Us" },
+  { path: "/account-deletion", display: "Delete My Account" },
 ];
 
 export const socialLinks = [
@@ -98,6 +99,7 @@ const Footer = () => {
                 <span className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:animate-shine"></span>
               </span>
               <span className="text-[#138808] ml-1.5">Saathi</span>
+              <span className="text-orange-600 ml-2 text-xl sm:text-2xl font-black uppercase bg-orange-100/80 px-2.5 py-0.5 rounded-lg border border-orange-200">App</span>
             </h2>
 
             <div className="space-y-4 mb-6">
@@ -107,7 +109,7 @@ const Footer = () => {
                   <span>भारत का अपना 24/7 डिजिटल हेल्थकेयर नेटवर्क</span>
                 </h3>
                 <p className="text-slate-800 font-bold text-xs sm:text-sm leading-relaxed">
-                  सेहत साथी का एक ही लक्ष्य — <strong className="text-rose-600 font-black">इमरजेंसी एम्बुलेंस 🚑</strong>, <strong className="text-red-600 font-black">आपातकालीन ब्लड बैंक 🩸</strong>, <strong className="text-emerald-700 font-black">घर पर नर्सिंग व बुजुर्ग केयर 🩺</strong>, और <strong className="text-cyan-700 font-black">विशेषज्ञ डॉक्टर अपॉइंटमेंट 👨‍⚕️</strong> की सेवा 24 घंटे सीधे आपके घर तक पहुंचाना।
+                  सेहत साथी ऐप का एक ही लक्ष्य — <strong className="text-rose-600 font-black">इमरजेंसी एम्बुलेंस 🚑</strong>, <strong className="text-red-600 font-black">आपातकालीन ब्लड बैंक 🩸</strong>, <strong className="text-emerald-700 font-black">घर पर नर्सिंग व बुजुर्ग केयर 🩺</strong>, और <strong className="text-cyan-700 font-black">विशेषज्ञ डॉक्टर अपॉइंटमेंट 👨‍⚕️</strong> की सेवा 24 घंटे सीधे आपके घर तक पहुंचाना।
                 </p>
               </div>
 
@@ -231,17 +233,23 @@ const Footer = () => {
 
           <div className="flex flex-col items-center md:items-end">
             <div className="flex gap-10 mb-3">
-              <span className="text-[14px] font-bold text-teal-800 hover:text-[#fca311] cursor-pointer transition-colors relative group/link">
+              <Link
+                to="/privacy"
+                className="text-[14px] font-bold text-teal-800 hover:text-[#fca311] cursor-pointer transition-colors relative group/link"
+              >
                 Privacy Policy
                 <span className="absolute bottom-[-2px] left-0 w-0 h-0.5 bg-[#fca311] transition-all group-hover/link:w-full"></span>
-              </span>
-              <span className="text-[14px] font-bold text-teal-800 hover:text-[#fca311] cursor-pointer transition-colors relative group/link">
-                Terms of Service
+              </Link>
+              <Link
+                to="/terms"
+                className="text-[14px] font-bold text-teal-800 hover:text-[#fca311] cursor-pointer transition-colors relative group/link"
+              >
+                Terms & Conditions
                 <span className="absolute bottom-[-2px] left-0 w-0 h-0.5 bg-[#fca311] transition-all group-hover/link:w-full"></span>
-              </span>
+              </Link>
             </div>
             <p className="text-gray-500 text-[14px] font-medium tracking-wide">
-              &copy; {new Date().getFullYear()} <span className="font-black"><span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span></span>. Crafted with Excellence.
+              &copy; {new Date().getFullYear()} <span className="font-black"><span style={{ color: "#FF9933" }}>Sehaat</span> <span style={{ color: "#138808" }}>Saathi</span> <span className="text-orange-600">App</span></span>. Crafted with Excellence.
             </p>
           </div>
         </div>

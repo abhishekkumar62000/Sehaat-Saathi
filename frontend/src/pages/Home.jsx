@@ -23,9 +23,9 @@ const Home = () => {
   return (
     <>
       <MetaHead
-        title="Sehaat Saathi | India's #1 AI Healthcare Platform & Instant OPD Booking"
-        description="Sehaat Saathi (Sehat Sathi) is India's premier AI-powered healthcare platform. Book instant hospital OPD token passes, consult top specialist doctors, track live bed availability, book emergency 24/7 ambulances, and receive AI-driven diagnosis across India. Founded by Abhishek Kumar."
-        keywords="Sehaat Saathi, Sehat Sathi, Sehaat Sathi, Sehat Saathi, SehaatSaathi, SehatSathi, Sehhat Sathi, Sehhat Saathi, Sehaat Saathi App, Sehat Sathi App, Sehaat Saathi Healthcare Platform, Sehaat Saathi HealthCarePlatform, Sehaat Saathi Bihar, Sehaat Saathi India, Sehaat Saathi Founder, Abhishek Kumar Sehaat Saathi, Sehaat Saathi OPD Booking, Sehaat Saathi Doctor Booking, Sehaat Saathi Hospital, Sehaat Saathi Ambulance, Sehaat Saathi Blood Bank, Sehaat Saathi Gigs, Online Doctor Consultation India, Best Health App India, AI Doctor Assistant, Digital OPD Pass Bihar, TechSeva IT Solutions"
+        title="Sehaat Saathi App | India's #1 AI Healthcare Platform & Instant OPD Booking"
+        description="Sehaat Saathi App (Sehat Sathi) is India's premier AI-powered healthcare platform. Book instant hospital OPD token passes, consult top specialist doctors, track live bed availability, book emergency 24/7 ambulances, and receive AI-driven diagnosis across India. Founded by Abhishek Kumar."
+        keywords="Sehaat Saathi App, Sehat Sathi, Sehaat Sathi, Sehat Saathi, SehaatSaathi, SehatSathi, Sehhat Sathi, Sehhat Saathi, Sehaat Saathi App, Sehat Sathi App, Sehaat Saathi App Healthcare Platform, Sehaat Saathi App HealthCarePlatform, Sehaat Saathi App Bihar, Sehaat Saathi App India, Sehaat Saathi App Founder, Abhishek Kumar Sehaat Saathi App, Sehaat Saathi App OPD Booking, Sehaat Saathi App Doctor Booking, Sehaat Saathi App Hospital, Sehaat Saathi App Ambulance, Sehaat Saathi App Blood Bank, Sehaat Saathi App Gigs, Online Doctor Consultation India, Best Health App India, AI Doctor Assistant, Digital OPD Pass Bihar, TechSeva IT Solutions"
         canonicalUrl="https://sehaatsaathi.com/"
       />
       <SEOKeywordIsland />

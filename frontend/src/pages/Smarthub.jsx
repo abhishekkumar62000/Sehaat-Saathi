@@ -6,6 +6,7 @@ import {
     BsArrowRight, BsInfoCircle, BsChatDots, BsPhone, BsCapsule, BsShieldFillPlus, BsBellFill, BsCpuFill, BsCameraFill, BsCartCheck, BsPeopleFill, BsDropletFill, BsHeartPulse, BsFileEarmarkMedical, BsInboxesFill, BsGenderFemale, BsFlower1, BsTreeFill, BsCart4, BsHospital, BsShieldLockFill, BsGeoAltFill
 } from "react-icons/bs";
 import { MdFitnessCenter } from "react-icons/md";
+import { FaTrashAlt, FaShieldAlt } from "react-icons/fa";
 import useRecordActivity from '../hooks/useRecordActivity';
 import MetaHead from '../components/SEO/MetaHead';
 import SEOKeywordIsland from '../components/SEO/SEOKeywordIsland';
@@ -26,9 +27,9 @@ const Smarthub = () => {
     return (
         <div className="min-h-screen bg-gray-50 pb-20">
           <MetaHead
-            title="Sehaat Saathi Smart Hub | Doctor Video Calling App, Ambulance & Blood Bank India"
-            description="Sehaat Saathi Smart Hub (Sehat Sathi) — India's #1 digital healthcare portal. Doctor Video Calling Booking App, offline doctor booking, 24/7 Emergency Ambulance Booking, blood bank network, and home nursing care across Bihar and India. Founded by Abhishek Kumar."
-            keywords="doctor video caaling booking app, doctor video calling booking app, Sehaat Saathi doctor booking App, sehat sathi doctor video call booking App, Sehaat Saathi Offline Doctor Booking app, sehatt sehaathi doctor video caalling Booking, Sehaat Saathi Smart Hub, Sehat Sathi Smart Hub, Sehaat Saathi Emergency Ambulance Booking Services, Sehat Sathi Ambulance Booking, Sehaat Saathi Blood Bank, Sehat Sathi Blood Bank, Sehaat Saathi OPD Booking, Sehaat Saathi App, Sehat Sathi App, Sehaat Saathi Bihar, Sehat Sathi Madhubani Patna Darbhanga, Abhishek Kumar Sehaat Saathi"
+            title="Sehaat Saathi App Smart Hub | Doctor Video Calling App, Ambulance & Blood Bank India"
+            description="Sehaat Saathi App Smart Hub (Sehat Sathi) — India's #1 digital healthcare portal. Doctor Video Calling Booking App, offline doctor booking, 24/7 Emergency Ambulance Booking, blood bank network, and home nursing care across Bihar and India. Founded by Abhishek Kumar."
+            keywords="doctor video caaling booking app, doctor video calling booking app, Sehaat Saathi App doctor booking App, sehat sathi doctor video call booking App, Sehaat Saathi App Offline Doctor Booking app, sehatt sehaathi doctor video caalling Booking, Sehaat Saathi App Smart Hub, Sehat Sathi Smart Hub, Sehaat Saathi App Emergency Ambulance Booking Services, Sehat Sathi Ambulance Booking, Sehaat Saathi App Blood Bank, Sehat Sathi Blood Bank, Sehaat Saathi App OPD Booking, Sehaat Saathi App, Sehat Sathi App, Sehaat Saathi App Bihar, Sehat Sathi Madhubani Patna Darbhanga, Abhishek Kumar Sehaat Saathi App"
             canonicalUrl="https://sehaatsaathi.com/smarthub"
           />
           <SEOKeywordIsland />
@@ -234,7 +235,7 @@ const Smarthub = () => {
                         <div className="mt-4 sm:mt-6 flex justify-center items-center lg:hidden">
                             <img
                                 src={founderAdvImg}
-                                alt="Sehaat Saathi Founder"
+                                alt="Sehaat Saathi App Founder"
                                 className="max-h-56 sm:max-h-72 md:max-h-88 w-auto object-contain drop-shadow-2xl hover:scale-[1.02] transition-transform duration-300 pointer-events-none"
                             />
                         </div>
@@ -760,6 +761,62 @@ const Smarthub = () => {
                             }}
                         />
                     </Link>
+                </div>
+
+                {/* Account & Data Deletion / Privacy Rights Section */}
+                <div className="mt-12 sm:mt-16 tri-glass p-6 sm:p-8 md:p-10 rounded-3xl sm:rounded-[40px] shadow-2xl border-2 border-rose-200/60 relative overflow-hidden bg-gradient-to-br from-white via-rose-50/40 to-slate-50">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-rose-500/5 rounded-full blur-3xl pointer-events-none"></div>
+                    <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8">
+                        <div className="flex items-start gap-4 sm:gap-5 max-w-2xl">
+                            <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-tr from-rose-500 to-red-600 text-white flex items-center justify-center text-xl sm:text-2xl shrink-0 shadow-lg shadow-rose-200 animate-pulse">
+                                <FaShieldAlt />
+                            </div>
+                            <div className="space-y-1.5">
+                                <div className="flex flex-wrap items-center gap-2">
+                                    <span className="text-[10px] font-black uppercase tracking-wider bg-rose-100 text-rose-700 px-2.5 py-0.5 rounded-full">
+                                        Data Privacy &amp; User Rights
+                                    </span>
+                                    <span className="text-[10px] font-bold text-slate-500">
+                                        Google Play &amp; DPDP 2023 Compliant
+                                    </span>
+                                </div>
+                                <h3 className="text-lg sm:text-xl md:text-2xl font-black text-slate-900 tracking-tight">
+                                    Need to Delete Your Account or Purge Health Data?
+                                </h3>
+                                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
+                                    You have full control over your profile and EHR records. In compliance with Google Play Developer Policies, you can permanently delete your account, patient profile, or doctor listing at any time.
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Attractive Account Deletion Button */}
+                        <div className="shrink-0 w-full md:w-auto">
+                            <Link 
+                                to="/account-deletion"
+                                className="group relative w-full md:w-auto inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-rose-600 via-red-600 to-rose-700 hover:from-rose-700 hover:to-red-800 text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider shadow-xl shadow-rose-500/25 transition-all duration-300 hover:scale-105 active:scale-95 border border-rose-400/40"
+                            >
+                                <FaTrashAlt className="text-rose-200 group-hover:rotate-12 transition-transform text-sm sm:text-base" />
+                                <span>Account Deletion</span>
+                                <BsArrowRight className="group-hover:translate-x-1.5 transition-transform text-base" />
+                            </Link>
+                        </div>
+                    </div>
+
+                    {/* Trust badges */}
+                    <div className="mt-6 pt-5 border-t border-rose-100 flex flex-wrap items-center justify-between gap-3 text-[11px] sm:text-xs text-slate-500 font-semibold">
+                        <div className="flex items-center gap-2">
+                            <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            <span>7-Day Guaranteed Complete Purge</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <span className="w-2 h-2 rounded-full bg-blue-500"></span>
+                            <span>Direct Email &amp; Web Request Support</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <span className="w-2 h-2 rounded-full bg-orange-500"></span>
+                            <span>Zero Data Monetization / No Resale</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 

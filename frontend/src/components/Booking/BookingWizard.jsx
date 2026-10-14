@@ -289,16 +289,97 @@ const BookingWizard = ({ doc, onClose, onSuccess }) => {
 
                         {step === 5 && (
                             <div className="space-y-4 animate-in slide-in-from-right duration-300">
-                                <h4 className="text-lg font-black uppercase tracking-widest text-slate-800 mb-6">Payment Method</h4>
-                                {['Online Payment', 'Pay at Hospital'].map(m => (
-                                    <button 
-                                        key={m}
-                                        onClick={() => setPaymentMethod(m)}
-                                        className={`w-full py-4 px-6 rounded-2xl border text-left font-bold ${paymentMethod === m ? 'border-green-500 bg-green-50 text-green-600' : 'border-slate-200 hover:border-slate-300'}`}
-                                    >
-                                        {m}
-                                    </button>
-                                ))}
+                                <div className="flex items-center justify-between mb-2">
+                                    <h4 className="text-lg font-black uppercase tracking-widest text-slate-800">Select Payment Method</h4>
+                                    <span className="text-[10px] font-black uppercase px-2.5 py-1 bg-emerald-100 text-emerald-800 rounded-full border border-emerald-300">
+                                        🔒 256-Bit SSL Secured
+                                    </span>
+                                </div>
+
+                                {/* Order & Doctor Summary Card */}
+                                <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl flex items-center justify-between">
+                                    <div>
+                                        <p className="text-xs font-bold text-slate-500 uppercase">Consultation Fee</p>
+                                        <p className="text-xl font-black text-slate-900">
+                                            ₹{doc.fee === 0 ? "0 (FREE)" : (doc.fee || doc.ticketPrice || 500)}
+                                        </p>
+                                    </div>
+                                    <div className="text-right">
+                                        <p className="text-xs font-bold text-slate-500 uppercase">{date || "Selected Date"}</p>
+                                        <p className="text-xs font-black text-slate-800">{timeSlot || "Selected Slot"}</p>
+                                    </div>
+                                </div>
+
+                                {/* Payment Option 1: Online Payment via Razorpay */}
+                                <button 
+                                    type="button"
+                                    onClick={() => setPaymentMethod('Online Payment')}
+                                    className={`w-full p-4 rounded-2xl border text-left transition-all relative overflow-hidden ${
+                                        paymentMethod === 'Online Payment' 
+                                            ? 'border-emerald-500 bg-emerald-50/50 shadow-md ring-2 ring-emerald-500/20' 
+                                            : 'border-slate-200 hover:border-slate-300 bg-white'
+                                    }`}
+                                >
+                                    <div className="flex items-start justify-between">
+                                        <div className="flex items-center gap-3">
+                                            <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                                                paymentMethod === 'Online Payment' ? 'border-emerald-600 bg-emerald-600' : 'border-slate-300'
+                                            }`}>
+                                                {paymentMethod === 'Online Payment' && <div className="w-2 h-2 rounded-full bg-white" />}
+                                            </div>
+                                            <div>
+                                                <div className="flex items-center gap-2">
+                                                    <span className="font-black text-slate-900 text-sm">Online Payment</span>
+                                                    <span className="px-2 py-0.5 bg-blue-100 text-blue-800 text-[10px] font-black rounded-md uppercase tracking-wider">
+                                                        Razorpay
+                                                    </span>
+                                                    <span className="px-2 py-0.5 bg-amber-100 text-amber-800 text-[9px] font-bold rounded-md uppercase">
+                                                        Test Mode
+                                                    </span>
+                                                </div>
+                                                <p className="text-xs text-slate-500 font-medium mt-0.5">
+                                                    UPI (GPay / PhonePe / Paytm), Debit/Credit Cards, Netbanking &amp; Wallets
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="mt-2.5 pt-2 border-t border-emerald-200/60 flex items-center justify-between text-[11px] text-emerald-700 font-bold">
+                                        <span>⚡ Instant Confirmed OPD Token Pass</span>
+                                        <span className="text-[10px] text-slate-400">Zero Convenience Fee</span>
+                                    </div>
+                                </button>
+
+                                {/* Payment Option 2: Pay at Hospital */}
+                                <button 
+                                    type="button"
+                                    onClick={() => setPaymentMethod('Pay at Hospital')}
+                                    className={`w-full p-4 rounded-2xl border text-left transition-all ${
+                                        paymentMethod === 'Pay at Hospital' 
+                                            ? 'border-emerald-500 bg-emerald-50/50 shadow-md ring-2 ring-emerald-500/20' 
+                                            : 'border-slate-200 hover:border-slate-300 bg-white'
+                                    }`}
+                                >
+                                    <div className="flex items-start justify-between">
+                                        <div className="flex items-center gap-3">
+                                            <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                                                paymentMethod === 'Pay at Hospital' ? 'border-emerald-600 bg-emerald-600' : 'border-slate-300'
+                                            }`}>
+                                                {paymentMethod === 'Pay at Hospital' && <div className="w-2 h-2 rounded-full bg-white" />}
+                                            </div>
+                                            <div>
+                                                <div className="flex items-center gap-2">
+                                                    <span className="font-black text-slate-900 text-sm">Pay at Hospital</span>
+                                                    <span className="px-2 py-0.5 bg-slate-100 text-slate-700 text-[10px] font-bold rounded-md">
+                                                        Cash / Counter
+                                                    </span>
+                                                </div>
+                                                <p className="text-xs text-slate-500 font-medium mt-0.5">
+                                                    Pay consultation fee directly at hospital reception desk during your visit
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </button>
                             </div>
                         )}
                     </div>
